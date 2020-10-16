@@ -61,25 +61,22 @@ var createScene = function () {
     var light2 = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(0, -0.5, -1.0), scene);
     light2.position = new BABYLON.Vector3(0, 5, 5);
 
-
-
     // Load hero character and play animation
-    //BABYLON.SceneLoader.ImportMesh("", "https://assets.babylonjs.com/meshes/", "HVGIrl.glb", scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
-    BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/nisha-chat/hourofcode/master/", "untitled.glb", scene);
+    BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/nisha-chat/hourofcode/main/", "test-robot.glb", scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
 
         var hero = newMeshes[0];
 
         //Scale the model down        
-        hero.scaling.scaleInPlace(0.1);
+        hero.scaling.scaleInPlace(0.01);
 
         //Lock camera on the character 
         camera1.target = hero;
 
         //Get the Samba animation Group
-        const sambaAnim = scene.getAnimationGroupByName("Idle");
+        const idleAnim = scene.getAnimationGroupByName("Idle");
 
         //Play the Samba animation  
-        sambaAnim.start(true, 1.0, sambaAnim.from, sambaAnim.to, false);
+        idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 
     });
 
@@ -99,7 +96,5 @@ var createScene = function () {
                 engine.resize();
         });
     </script>
-
    </body>
-
 </html>
