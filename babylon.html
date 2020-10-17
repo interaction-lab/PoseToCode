@@ -96,12 +96,12 @@ var createScene = function () {
     }));
 
     // Load hero character and play animation
-    BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/nisha-chat/hourofcode/main/", "test-robot.glb", scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
+    BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/nisha-chat/hourofcode/main/", "robot.glb", scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
 
         var hero = newMeshes[0];
 
         //Scale the model down        
-        hero.scaling.scaleInPlace(0.01);
+        hero.scaling.scaleInPlace(0.005);
 
         //Lock camera on the character 
         camera1.target = hero;
@@ -109,17 +109,17 @@ var createScene = function () {
         var animating = true;
 
         //Get the animation Group
-        const idleAnim = scene.getAnimationGroupByName("Idle");
+        const idleAnim = scene.getAnimationGroupByName("idle");
         const placementAnim = scene.getAnimationGroupByName("placement");
-
-        //Play the animation  
-        // idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
-        // placementAnim.start(true, 1.0, placementAnim.from, placementAnim.to, false);
+        const danceAnim = scene.getAnimationGroupByName("dance");
 
     //Rendering loop (executed for everyframe)
         scene.onBeforeRenderObservable.add(() => {
             var keydown = false;
             if (inputMap["p"]) {
+                keydown = true;
+            }
+            if (inputMap["d"]) {
                 keydown = true;
             }
             if (inputMap["i"]) {
@@ -139,8 +139,13 @@ var createScene = function () {
                         //Placement!
                         placementAnim.start(true, 1.0, placementAnim.from, placementAnim.to, false);
                     }
+                    else if
+                        (inputMap["d"]) {
+                        //Dance!
+                        danceAnim.start(true, 1.0, danceAnim.from, danceAnim.to, false);
+                    }
                     else {
-                        //Walk
+                        //Idle
                         idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
                     }
                 }
@@ -152,6 +157,7 @@ var createScene = function () {
 
                     //Stop all animations besides Idle Anim when no key is down
                     placementAnim.stop();
+                    danceAnim.stop();
 
                     //Ensure animation are played only once per rendering loop
                     animating = false;
