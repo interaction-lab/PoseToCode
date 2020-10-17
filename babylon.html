@@ -37,14 +37,38 @@
         /******* Add the create scene function ******/
 
 var createScene = function () {
+    // This creates a basic Babylon Scene object (non-mesh)
+    var scene = new BABYLON.Scene(engine);
 
-    // Low Poly Character with Blender Tutorial of Grant Abbitt: https://www.youtube.com/user/mediagabbitt
-    // Character animations by Mixamo: https://www.mixamo.com/
+    // This creates and positions a free camera (non-mesh)
+    var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
+
+    // This targets the camera to scene origin
+    camera.setTarget(BABYLON.Vector3.Zero());
+
+    // This attaches the camera to the canvas
+    camera.attachControl(canvas, true);
+
+    // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
+    var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+
+    // Default intensity is 1. Let's dim the light a small amount
+    light.intensity = 0.7;
+
+    // Our built-in 'sphere' shape.
+    var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 1, segments: 32}, scene);
+
+    // Move the sphere upward 1/2 its height
+    sphere.position.y = 1;
+    sphere.position.x = 2;
+
+    // Our built-in 'ground' shape.
+    var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 6, height: 6}, scene);
 
     engine.enableOfflineSupport = false;
 
     // Scene and Camera
-    var scene = new BABYLON.Scene(engine);
+    // var scene = new BABYLON.Scene(engine);
 
     var camera1 = new BABYLON.ArcRotateCamera("camera1", Math.PI / 2, Math.PI / 4, 10, new BABYLON.Vector3(0, -5, 0), scene);
     scene.activeCamera = camera1;
@@ -61,6 +85,16 @@ var createScene = function () {
     var light2 = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(0, -0.5, -1.0), scene);
     light2.position = new BABYLON.Vector3(0, 5, 5);
 
+    // Keyboard events
+    var inputMap = {};
+    scene.actionManager = new BABYLON.ActionManager(scene);
+    scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, function (evt) {
+        inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
+    }));
+    scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
+        inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
+    }));
+
     // Load hero character and play animation
     BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/nisha-chat/hourofcode/main/", "test-robot.glb", scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
 
@@ -72,16 +106,62 @@ var createScene = function () {
         //Lock camera on the character 
         camera1.target = hero;
 
-        //Get the Samba animation Group
+        var animating = true;
+
+        //Get the animation Group
         const idleAnim = scene.getAnimationGroupByName("Idle");
+        const placementAnim = scene.getAnimationGroupByName("placement");
 
-        //Play the Samba animation  
-        idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
+        //Play the animation  
+        // idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
+        // placementAnim.start(true, 1.0, placementAnim.from, placementAnim.to, false);
 
+    //Rendering loop (executed for everyframe)
+        scene.onBeforeRenderObservable.add(() => {
+            var keydown = false;
+            if (inputMap["p"]) {
+                keydown = true;
+            }
+            if (inputMap["i"]) {
+                keydown = true;
+            }
+
+            //Manage animations to be played  
+            if (keydown) {
+                if (!animating) {
+                    animating = true;
+                    if (inputMap["i"]) {
+                        //Idle
+                        idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
+                    }
+                    else if
+                        (inputMap["p"]) {
+                        //Placement!
+                        placementAnim.start(true, 1.0, placementAnim.from, placementAnim.to, false);
+                    }
+                    else {
+                        //Walk
+                        idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
+                    }
+                }
+            }
+            else {
+                if (animating) {
+                    //Default animation is idle when no key is down     
+                    idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
+
+                    //Stop all animations besides Idle Anim when no key is down
+                    placementAnim.stop();
+
+                    //Ensure animation are played only once per rendering loop
+                    animating = false;
+                }
+            }
+        });
     });
 
     return scene;
-}
+};
         /******* End of the create scene function ******/
 
         var scene = createScene(); //Call the createScene function
