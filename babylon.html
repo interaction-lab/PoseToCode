@@ -36,6 +36,7 @@
 
         /******* Add the create scene function ******/
 
+
 var createScene = function () {
     // This creates a basic Babylon Scene object (non-mesh)
     var scene = new BABYLON.Scene(engine);
@@ -54,21 +55,30 @@ var createScene = function () {
 
     // Default intensity is 1. Let's dim the light a small amount
     light.intensity = 0.7;
+    var large = false;
+    var med = false;
+    var small = false;
 
-    // Our built-in 'sphere' shape.
-    var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 1, segments: 32}, scene);
+    // Large sphere
+    var sphereLarge = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 1.2, segments: 32}, scene);
+    var startLarge = new BABYLON.Vector3(0.2, 1.2, 0.5);
+    sphereLarge.position = startLarge;
 
-    // Move the sphere upward 1/2 its height
-    sphere.position.y = 1;
-    sphere.position.x = 2;
+    // Medium sphere
+    var sphereMed = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 0.9, segments: 32}, scene);
+    var startMed = new BABYLON.Vector3(-2, 1, 0);
+    sphereMed.position = startMed;
+
+
+    // Small sphere
+    var sphereSmall = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 0.6, segments: 32}, scene);
+    var startSmall = new BABYLON.Vector3(-2, 2, 0);
+    sphereSmall.position = startSmall;
 
     // Our built-in 'ground' shape.
     var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 6, height: 6}, scene);
 
     engine.enableOfflineSupport = false;
-
-    // Scene and Camera
-    // var scene = new BABYLON.Scene(engine);
 
     var camera1 = new BABYLON.ArcRotateCamera("camera1", Math.PI / 2, Math.PI / 4, 10, new BABYLON.Vector3(0, -5, 0), scene);
     scene.activeCamera = camera1;
@@ -137,7 +147,46 @@ var createScene = function () {
                     else if
                         (inputMap["p"]) {
                         //Placement!
-                        placementAnim.start(true, 1.0, placementAnim.from, placementAnim.to, false);
+                        deltaDistance = 0.01;
+                        var i = 0;
+                        if(!large) {
+                            placementAnim.start(true, 1.0, placementAnim.from, placementAnim.to, false);
+                            var translateVector = new BABYLON.Vector3(0.4, -0.7, 0.2);
+                            var distance = translateVector.length();
+                            var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
+                            direction.normalize();
+                            large = true;
+                            scene.registerAfterRender(function () { 
+                                if((i++) * deltaDistance <= distance) sphereLarge.translate(direction, deltaDistance, BABYLON.Space.WORLD);
+                            });
+                        }   
+                        else if(!med) {
+                            placementAnim.start(true, 1.0, 0, 1.5, false);
+                            var startPoint = new BABYLON.Vector3(0.2, 1.2, 0.5);                            
+                            sphereMed.position = startPoint;
+                            var translateVector = new BABYLON.Vector3(0.4, 0, 0.2);
+                            var distance = translateVector.length();
+                            var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
+                            direction.normalize();
+                            med = true;
+                            scene.registerAfterRender(function () { 
+                                if((i++) * deltaDistance <= distance) sphereMed.translate(direction, deltaDistance, BABYLON.Space.WORLD);
+                            });
+                        }
+                        else if(!small) {
+                            hero.position.y += 0.5;
+                            placementAnim.start(true, 1.0, 0, 1, false);
+                            var startPoint = new BABYLON.Vector3(0.2, 1.2, 0.5);                            
+                            sphereSmall.position = startPoint;
+                            var translateVector = new BABYLON.Vector3(0.4, 0.5, 0.2);
+                            var distance = translateVector.length();
+                            var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
+                            direction.normalize();
+                            small = true;
+                            scene.registerAfterRender(function () { 
+                                if((i++) * deltaDistance <= distance) sphereSmall.translate(direction, deltaDistance, BABYLON.Space.WORLD);
+                            });
+                        }
                     }
                     else if
                         (inputMap["d"]) {
