@@ -37,6 +37,7 @@
         /******* Add the create scene function ******/
 
 
+
 var createScene = function () {
     // This creates a basic Babylon Scene object (non-mesh)
     var scene = new BABYLON.Scene(engine);
@@ -135,7 +136,7 @@ var createScene = function () {
             if (inputMap["i"]) {
                 keydown = true;
             }
-
+        
             //Manage animations to be played  
             if (keydown) {
                 if (!animating) {
