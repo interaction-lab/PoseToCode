@@ -37,6 +37,7 @@
         /******* Add the create scene function ******/
 
 
+
 var createScene = function () {
     // This creates a basic Babylon Scene object (non-mesh)
     var scene = new BABYLON.Scene(engine);
@@ -107,18 +108,13 @@ var createScene = function () {
 
     // Load hero character and play animation
     BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/nisha-chat/hourofcode/main/", "robot.glb", scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
-
         var hero = newMeshes[0];
-
         //Scale the model down        
         hero.scaling.scaleInPlace(0.005);
         hero.position.x += 0.2;
-
         //Lock camera on the character 
         camera1.target = hero;
-
         var animating = true;
-
         //Get the animation Group
         const idleAnim = scene.getAnimationGroupByName("idle");
         const placementAnim = scene.getAnimationGroupByName("placement");
