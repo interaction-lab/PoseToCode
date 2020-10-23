@@ -37,7 +37,6 @@
         /******* Add the create scene function ******/
 
 
-
 var createScene = function () {
     // This creates a basic Babylon Scene object (non-mesh)
     var scene = new BABYLON.Scene(engine);
@@ -113,6 +112,7 @@ var createScene = function () {
 
         //Scale the model down        
         hero.scaling.scaleInPlace(0.005);
+        hero.position.x += 0.2;
 
         //Lock camera on the character 
         camera1.target = hero;
@@ -163,9 +163,9 @@ var createScene = function () {
                         }   
                         else if(!med) {
                             placementAnim.start(true, 1.0, 0, 1.5, false);
-                            var startPoint = new BABYLON.Vector3(0.2, 1.2, 0.5);                            
+                            var startPoint = new BABYLON.Vector3(0, 1.2, 0.5);                            
                             sphereMed.position = startPoint;
-                            var translateVector = new BABYLON.Vector3(0.4, 0, 0.2);
+                            var translateVector = new BABYLON.Vector3(0.6, 0, 0.2);
                             var distance = translateVector.length();
                             var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
                             direction.normalize();
@@ -177,9 +177,11 @@ var createScene = function () {
                         else if(!small) {
                             hero.position.y += 0.5;
                             placementAnim.start(true, 1.0, 0, 1, false);
-                            var startPoint = new BABYLON.Vector3(0.2, 1.2, 0.5);                            
+                            var startPoint = new BABYLON.Vector3(0.2, 1.7, 0.5);                            
                             sphereSmall.position = startPoint;
-                            var translateVector = new BABYLON.Vector3(0.4, 0.5, 0.2);
+                            //engine.stopRenderLoop()
+                            //engine.runRenderLoop()
+                            var translateVector = new BABYLON.Vector3(0.4, 0.1, 0.2);
                             var distance = translateVector.length();
                             var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
                             direction.normalize();
