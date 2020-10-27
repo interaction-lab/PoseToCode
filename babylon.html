@@ -35,15 +35,12 @@
         var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
 
         /******* Add the create scene function ******/
-
-
-
 var createScene = function () {
     // This creates a basic Babylon Scene object (non-mesh)
     var scene = new BABYLON.Scene(engine);
 
     // This creates and positions a free camera (non-mesh)
-    var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
+    var camera = new BABYLON.FreeCamera("camera", new BABYLON.Vector3(0, 0, 0), scene);
 
     // This targets the camera to scene origin
     camera.setTarget(BABYLON.Vector3.Zero());
@@ -62,32 +59,31 @@ var createScene = function () {
 
     // Large sphere
     var sphereLarge = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 1.2, segments: 32}, scene);
-    var startLarge = new BABYLON.Vector3(0.2, 1.2, 0.5);
+    var startLarge = new BABYLON.Vector3(2, 2.5, 0);
     sphereLarge.position = startLarge;
 
     // Medium sphere
     var sphereMed = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 0.9, segments: 32}, scene);
-    var startMed = new BABYLON.Vector3(-2, 1, 0);
+    var startMed = new BABYLON.Vector3(2, 1.4, 0);
     sphereMed.position = startMed;
-
 
     // Small sphere
     var sphereSmall = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 0.6, segments: 32}, scene);
-    var startSmall = new BABYLON.Vector3(-2, 2, 0);
+    var startSmall = new BABYLON.Vector3(2, 0.5, 0);
     sphereSmall.position = startSmall;
 
     // Our built-in 'ground' shape.
-    var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 6, height: 6}, scene);
+    var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 9, height: 9}, scene);
 
     engine.enableOfflineSupport = false;
 
-    var camera1 = new BABYLON.ArcRotateCamera("camera1", Math.PI / 2, Math.PI / 4, 10, new BABYLON.Vector3(0, -5, 0), scene);
+    var camera1 = new BABYLON.ArcRotateCamera("camera1", Math.PI / 2, Math.PI / 4, 10, new BABYLON.Vector3(0, -4, 0), scene);
     scene.activeCamera = camera1;
     scene.activeCamera.attachControl(canvas, true);
-    camera1.lowerRadiusLimit = 2;
+    camera1.lowerRadiusLimit = 10;
     camera1.upperRadiusLimit = 10;
-    camera1.wheelDeltaPercentage = 0.01;
-
+    camera1.wheelDeltaPercentage = 0.1;
+    
     // Lights
     var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
     light.intensity = 0.6;
@@ -110,15 +106,18 @@ var createScene = function () {
     BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/nisha-chat/hourofcode/main/", "robot.glb", scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
         var hero = newMeshes[0];
         //Scale the model down        
-        hero.scaling.scaleInPlace(0.005);
-        hero.position.x += 0.2;
+        hero.scaling.scaleInPlace(0.6);
+        hero.position.x -= 1.5;
         //Lock camera on the character 
         camera1.target = hero;
         var animating = true;
         //Get the animation Group
-        const idleAnim = scene.getAnimationGroupByName("idle");
-        const placementAnim = scene.getAnimationGroupByName("placement");
-        const danceAnim = scene.getAnimationGroupByName("dance");
+        const idleAnim = scene.getAnimationGroupByName("Idle");
+        const placeLargeAnim = scene.getAnimationGroupByName("placeLarge");
+        const placeMediumAnim = scene.getAnimationGroupByName("placeMedium");
+        const placeSmallAnim = scene.getAnimationGroupByName("placeSmall");
+        const danceAnim = scene.getAnimationGroupByName("Dance");
+        const gestureAnim = scene.getAnimationGroupByName("Gesture");
 
     //Rendering loop (executed for everyframe)
         scene.onBeforeRenderObservable.add(() => {
@@ -132,6 +131,9 @@ var createScene = function () {
             if (inputMap["i"]) {
                 keydown = true;
             }
+            if (inputMap["g"]) {
+                keydown = true;
+            }
         
             //Manage animations to be played  
             if (keydown) {
@@ -141,27 +143,61 @@ var createScene = function () {
                         //Idle
                         idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
                     }
+                    else if(inputMap["g"]) {
+                        //Gesture to Side
+                        gestureAnim.start(true, 1.0, gestureAnim.from, gestureAnim.to, false);
+                        deltaDistance = 0.03;
+                        var i = 0;
+                        if(!large)
+                        {
+                            var translateVector = new BABYLON.Vector3(-3.3, -0.7, 1);
+                            var distance = translateVector.length();
+                            var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
+                            direction.normalize();
+                            scene.registerAfterRender(function () { 
+                                if((i++) * deltaDistance <= distance) sphereLarge.translate(direction, deltaDistance, BABYLON.Space.WORLD);
+                            });
+                        }
+                        else if(!med)
+                        {
+                            var translateVector = new BABYLON.Vector3(-3.3, 0, 1);
+                            var distance = translateVector.length();
+                            var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
+                            direction.normalize();
+                            scene.registerAfterRender(function () { 
+                                if((i++) * deltaDistance <= distance) sphereMed.translate(direction, deltaDistance, BABYLON.Space.WORLD);
+                            });
+                        }
+                        else if(!small)
+                        {
+                            var translateVector = new BABYLON.Vector3(-3.3, 2, 1);
+                            var distance = translateVector.length();
+                            var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
+                            direction.normalize();
+                            scene.registerAfterRender(function () { 
+                                if((i++) * deltaDistance <= distance) sphereSmall.translate(direction, deltaDistance, BABYLON.Space.WORLD);
+                            });
+                        }
+                    }
                     else if
                         (inputMap["p"]) {
                         //Placement!
                         deltaDistance = 0.01;
-                        var i = 0;
+                        i = 0;
                         if(!large) {
-                            placementAnim.start(true, 1.0, placementAnim.from, placementAnim.to, false);
-                            var translateVector = new BABYLON.Vector3(0.4, -0.7, 0.2);
-                            var distance = translateVector.length();
-                            var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
-                            direction.normalize();
+                            placeLargeAnim.start(true, 1.0, placeLargeAnim.from, placeLargeAnim.to, false);
+                            var translate = new BABYLON.Vector3(2.3, -0.8, 0);
+                            var dist = translate.length();
+                            var dir = new BABYLON.Vector3(translate.x, translate.y, translate.z);
+                            dir.normalize();
                             large = true;
                             scene.registerAfterRender(function () { 
-                                if((i++) * deltaDistance <= distance) sphereLarge.translate(direction, deltaDistance, BABYLON.Space.WORLD);
+                                if((i++) * deltaDistance <= dist) sphereLarge.translate(dir, deltaDistance, BABYLON.Space.WORLD);
                             });
                         }   
                         else if(!med) {
-                            placementAnim.start(true, 1.0, 0, 1.5, false);
-                            var startPoint = new BABYLON.Vector3(0, 1.2, 0.5);                            
-                            sphereMed.position = startPoint;
-                            var translateVector = new BABYLON.Vector3(0.6, 0, 0.2);
+                            placeMediumAnim.start(true, 1.0, 0, 1, false);
+                            var translateVector = new BABYLON.Vector3(2, 0, 0);
                             var distance = translateVector.length();
                             var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
                             direction.normalize();
@@ -172,12 +208,8 @@ var createScene = function () {
                         }
                         else if(!small) {
                             hero.position.y += 0.5;
-                            placementAnim.start(true, 1.0, 0, 1, false);
-                            var startPoint = new BABYLON.Vector3(0.2, 1.7, 0.5);                            
-                            sphereSmall.position = startPoint;
-                            //engine.stopRenderLoop()
-                            //engine.runRenderLoop()
-                            var translateVector = new BABYLON.Vector3(0.4, 0.1, 0.2);
+                            placeSmallAnim.start(true, 1.0, 0, 1, false);
+                            var translateVector = new BABYLON.Vector3(1, 0, 0);
                             var distance = translateVector.length();
                             var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
                             direction.normalize();
@@ -204,7 +236,10 @@ var createScene = function () {
                     idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 
                     //Stop all animations besides Idle Anim when no key is down
-                    placementAnim.stop();
+                    placeLargeAnim.stop();
+                    placeSmallAnim.stop();
+                    placeMediumAnim.stop();
+                    gestureAnim.stop()
                     danceAnim.stop();
 
                     //Ensure animation are played only once per rendering loop
