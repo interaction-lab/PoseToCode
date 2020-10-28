@@ -139,6 +139,7 @@ var createScene = function () {
             if (keydown) {
                 if (!animating) {
                     animating = true;
+                    var deltaDistance = 0.02;
                     if (inputMap["i"]) {
                         //Idle
                         idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
@@ -146,11 +147,11 @@ var createScene = function () {
                     else if(inputMap["g"]) {
                         //Gesture to Side
                         gestureAnim.start(true, 1.0, gestureAnim.from, gestureAnim.to, false);
-                        deltaDistance = 0.03;
+                        
                         var i = 0;
                         if(!large)
                         {
-                            var translateVector = new BABYLON.Vector3(-3.3, -0.7, 1);
+                            var translateVector = new BABYLON.Vector3(-3.7, -0.7, 1.5);
                             var distance = translateVector.length();
                             var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
                             direction.normalize();
@@ -160,7 +161,7 @@ var createScene = function () {
                         }
                         else if(!med)
                         {
-                            var translateVector = new BABYLON.Vector3(-3.3, 0, 1);
+                            var translateVector = new BABYLON.Vector3(-3.7, 0.9, 1);
                             var distance = translateVector.length();
                             var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
                             direction.normalize();
@@ -170,7 +171,7 @@ var createScene = function () {
                         }
                         else if(!small)
                         {
-                            var translateVector = new BABYLON.Vector3(-3.3, 2, 1);
+                            var translateVector = new BABYLON.Vector3(-3.4, -0.8, 1);
                             var distance = translateVector.length();
                             var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
                             direction.normalize();
@@ -182,40 +183,42 @@ var createScene = function () {
                     else if
                         (inputMap["p"]) {
                         //Placement!
+                        var j = 0;
                         deltaDistance = 0.01;
-                        i = 0;
                         if(!large) {
                             placeLargeAnim.start(true, 1.0, placeLargeAnim.from, placeLargeAnim.to, false);
-                            var translate = new BABYLON.Vector3(2.3, -0.8, 0);
-                            var dist = translate.length();
-                            var dir = new BABYLON.Vector3(translate.x, translate.y, translate.z);
-                            dir.normalize();
+                            var translateL = new BABYLON.Vector3(0.7, -1, 0.2);
+                            var distL = translateL.length();
+                            var dirL = new BABYLON.Vector3(translateL.x, translateL.y, translateL.z);
+                            dirL.normalize();
                             large = true;
                             scene.registerAfterRender(function () { 
-                                if((i++) * deltaDistance <= dist) sphereLarge.translate(dir, deltaDistance, BABYLON.Space.WORLD);
+                                if((j++) * deltaDistance <= distL) sphereLarge.translate(dirL, deltaDistance, BABYLON.Space.WORLD);
                             });
                         }   
                         else if(!med) {
-                            placeMediumAnim.start(true, 1.0, 0, 1, false);
-                            var translateVector = new BABYLON.Vector3(2, 0, 0);
-                            var distance = translateVector.length();
-                            var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
-                            direction.normalize();
+                            placeMediumAnim.start(true, 1.0, placeMediumAnim.from, placeMediumAnim.to, false);
+                            hero.position.y += 0.5;
+                            var translateM = new BABYLON.Vector3(0.7, -0.6, 0.8);
+                            var distM = translateM.length();
+                            var dirM = new BABYLON.Vector3(translateM.x, translateM.y, translateM.z);
+                            dirM.normalize();
                             med = true;
                             scene.registerAfterRender(function () { 
-                                if((i++) * deltaDistance <= distance) sphereMed.translate(direction, deltaDistance, BABYLON.Space.WORLD);
+                                if((j++) * deltaDistance <= distM) sphereMed.translate(dirM, deltaDistance, BABYLON.Space.WORLD);
                             });
+                            sphereSmall.position.y += 2.7;
                         }
                         else if(!small) {
                             hero.position.y += 0.5;
-                            placeSmallAnim.start(true, 1.0, 0, 1, false);
-                            var translateVector = new BABYLON.Vector3(1, 0, 0);
-                            var distance = translateVector.length();
-                            var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
-                            direction.normalize();
+                            placeSmallAnim.start(true, 1.0, 1, 2.5, false);
+                            var translateS = new BABYLON.Vector3(0.4, -0.1, 0.8);
+                            var distS = translateS.length();
+                            var dirS = new BABYLON.Vector3(translateS.x, translateS.y, translateS.z);
+                            dirS.normalize();
                             small = true;
                             scene.registerAfterRender(function () { 
-                                if((i++) * deltaDistance <= distance) sphereSmall.translate(direction, deltaDistance, BABYLON.Space.WORLD);
+                                if((j++) * deltaDistance <= distS) sphereSmall.translate(dirS, deltaDistance, BABYLON.Space.WORLD);
                             });
                         }
                     }
