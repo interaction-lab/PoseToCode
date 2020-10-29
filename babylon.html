@@ -56,24 +56,12 @@ var createScene = function () {
     var large = false;
     var med = false;
     var small = false;
-
-    // Large sphere
-    var sphereLarge = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 1.2, segments: 32}, scene);
-    var startLarge = new BABYLON.Vector3(2, 2.5, 0);
-    sphereLarge.position = startLarge;
-
-    // Medium sphere
-    var sphereMed = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 0.9, segments: 32}, scene);
-    var startMed = new BABYLON.Vector3(2, 1.4, 0);
-    sphereMed.position = startMed;
-
-    // Small sphere
-    var sphereSmall = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 0.6, segments: 32}, scene);
-    var startSmall = new BABYLON.Vector3(2, 0.5, 0);
-    sphereSmall.position = startSmall;
+    var sphereLarge;
+    var sphereMed;
+    var sphereSmall;
 
     // Our built-in 'ground' shape.
-    var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 9, height: 9}, scene);
+    //var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 9, height: 9}, scene);
 
     engine.enableOfflineSupport = false;
 
@@ -122,6 +110,7 @@ var createScene = function () {
     //Rendering loop (executed for everyframe)
         scene.onBeforeRenderObservable.add(() => {
             var keydown = false;
+            var diam = 1.2
             if (inputMap["p"]) {
                 keydown = true;
             }
@@ -134,15 +123,48 @@ var createScene = function () {
             if (inputMap["g"]) {
                 keydown = true;
             }
+            if(inputMap["l"]) {
+                keydown = true;
+                diam = 1.2
+            }
+            if(inputMap["m"]) {
+                keydown = true;
+                diam = 0.9
+            }
+            if(inputMap["s"]) {
+                keydown = true;
+                diam = 0.6
+            }
         
             //Manage animations to be played  
             if (keydown) {
                 if (!animating) {
                     animating = true;
                     var deltaDistance = 0.02;
-                    if (inputMap["i"]) {
+                    if(inputMap["i"]) {
                         //Idle
                         idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
+                    }
+                    else if(inputMap["l"])
+                    {
+                        // Large sphere
+                        sphereLarge = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: diam, segments: 32}, scene);
+                        var startLarge = new BABYLON.Vector3(2, 2.5, 0);
+                        sphereLarge.position = startLarge;
+                    }
+                    else if(inputMap["m"])
+                    {
+                        //Medium sphere
+                        sphereMed = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 0.9, segments: 32}, scene);
+                        var startMed = new BABYLON.Vector3(2, 1.4, 0);
+                        sphereMed.position = startMed;
+                    }
+                    else if(inputMap["s"])
+                    {
+                        //Small sphere
+                        sphereSmall = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 0.6, segments: 32}, scene);
+                        var startSmall = new BABYLON.Vector3(2, 0.5, 0);
+                        sphereSmall.position = startSmall;
                     }
                     else if(inputMap["g"]) {
                         //Gesture to Side
@@ -171,6 +193,7 @@ var createScene = function () {
                         }
                         else if(!small)
                         {
+                            sphereSmall.position.y += 2.7;
                             var translateVector = new BABYLON.Vector3(-3.4, -0.8, 1);
                             var distance = translateVector.length();
                             var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
@@ -207,7 +230,6 @@ var createScene = function () {
                             scene.registerAfterRender(function () { 
                                 if((j++) * deltaDistance <= distM) sphereMed.translate(dirM, deltaDistance, BABYLON.Space.WORLD);
                             });
-                            sphereSmall.position.y += 2.7;
                         }
                         else if(!small) {
                             hero.position.y += 0.5;
