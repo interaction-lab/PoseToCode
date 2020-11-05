@@ -81,13 +81,20 @@ var createScene = function () {
         run.onPointerUpObservable.add(function() {
             var i = 0;
             var delay = 500;
+            var startX = -1.5;
+            var startY = 1.3;
+            var startZ = 1;
+            var endX = 0.7;
+            var endY = -1.5;
+            var endZ = 0.2;
             while(i < animations.length) {
                 console.log(delay);
                 console.log(animations[i]);
                 if(animations[i] == "make sphere") {
                     i++;
                     setTimeout(() => {
-                        var startPosition = new BABYLON.Vector3(-1.5,1.3,1);
+                        startY += 0.5;
+                        var startPosition = new BABYLON.Vector3(startX,startY,startZ);
                         //var startPosition = new BABYLON.Vector3(2, 2.5, 0);
                         currSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 1.2, segments: 32}, scene);
                         currSphere.position = startPosition;
@@ -112,8 +119,10 @@ var createScene = function () {
                 else if(animations[i] == "place") {
                     idleAnim.stop();
                     i++;
+                    
                     setTimeout(() => {
-                        var translate = new BABYLON.Vector3(0.7, -1, 0.2);
+                        endY += 0.5;
+                        var translate = new BABYLON.Vector3(endX, endY, endZ);
                         var dist = translate.length();
                         var dir = new BABYLON.Vector3(translate.x, translate.y, translate.z);
                         dir.normalize();
@@ -124,10 +133,14 @@ var createScene = function () {
                         placeLargeAnim.start(false, 1.0, placeLargeAnim.from, placeLargeAnim.to, false);       
                     }, delay);
                     setTimeout(() => {
-                        placeLargeAnim.start(false, 1.0, placeLargeAnim.from, placeLargeAnim.to, false);       
+                        placeLargeAnim.start(false, 1.0, placeLargeAnim.from, placeLargeAnim.to, false);
                     }, delay);
                     idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
                     delay += 5000;
+                    setTimeout(() => {
+                        hero.position.y += 0.5                    
+                    }, delay);
+                    
                 }
             }
         });
