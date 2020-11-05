@@ -1,3 +1,5 @@
+window.addEventListener('DOMContentLoaded', function() {
+
 var canvas = document.getElementById("renderCanvas"); // Get the canvas element
 var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
 
@@ -20,37 +22,9 @@ var createScene = function () {
 
     // Default intensity is 1. Let's dim the light a small amount
     light.intensity = 0.7;
-    var large = false;
-    var med = false;
-    var small = false;
-    var sphereLarge;
-    var sphereMed;
-    var sphereSmall;
+    var currSphere;
     var animations = []
-
-    // Create GUI
-    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-
-    // Run Button
-    var run = BABYLON.GUI.Button.CreateSimpleButton("but", "Click to Run!");
-    run.width = 0.1;
-    run.height = "40px";
-    run.color = "white";
-    run.background = "green";
-    advancedTexture.addControl(run);  
-    run.left = 300;
-    run.top = 300;
-    run.onPointerUpObservable.add(function() {
-        var i;
-        for (i = 0; i < animations.length; i++)
-        {
-            console.log(animations[i]);
-        }
-    });
-
-    var topBlock = -400;
-
-    
+    var deltaDistance = 0.007;
 
     // Our built-in 'ground' shape.
     //var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 9, height: 9}, scene);
@@ -72,277 +46,170 @@ var createScene = function () {
     var light2 = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(0, -0.5, -1.0), scene);
     light2.position = new BABYLON.Vector3(0, 5, 5);
 
-    // Keyboard events
-    var inputMap = {};
-    scene.actionManager = new BABYLON.ActionManager(scene);
-    scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, function (evt) {
-    inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
-    }));
-    scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
-    inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
-    }));
-
     // Load hero character and play animation
     BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/nisha-chat/hourofcode/main/", "robot.glb", scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
-    var hero = newMeshes[0];
-    //Scale the model down        
-    hero.scaling.scaleInPlace(0.6);
-    hero.position.x -= 1.5;
-    //Lock camera on the character 
-    camera1.target = hero;
-    var animating = true;
-    //Get the animation Group
-    const idleAnim = scene.getAnimationGroupByName("Idle");
-    const placeLargeAnim = scene.getAnimationGroupByName("placeLarge");
-    const placeMediumAnim = scene.getAnimationGroupByName("placeMedium");
-    const placeSmallAnim = scene.getAnimationGroupByName("placeSmall");
-    const danceAnim = scene.getAnimationGroupByName("Dance");
-    const gestureAnim = scene.getAnimationGroupByName("Gesture");
+        var hero = newMeshes[0];
+        //Scale the model down        
+        hero.scaling.scaleInPlace(0.6);
+        hero.position.x -= 1.5;
+        //Lock camera on the character 
+        camera1.target = hero;
+    
+        // Create GUI
+        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+        // Run Button
+        var topBlock = -400;
+        var run = BABYLON.GUI.Button.CreateSimpleButton("but", "Click to Run!");
+        run.width = 0.1;
+        run.height = "40px";
+        run.color = "white";
+        run.background = "green";
+        advancedTexture.addControl(run);  
+        run.left = 300;
+        run.top = 300;
 
-    //Rendering loop (executed for everyframe)
-    scene.onBeforeRenderObservable.add(() => {
-    var keydown = false;
-    if (inputMap["p"]) {
-        keydown = true;
-    }
-    if (inputMap["d"]) {
-        keydown = true;
-    }
-    if (inputMap["i"]) {
-        keydown = true;
-    }
-    if (inputMap["g"]) {
-        keydown = true;
-    }
-    if(inputMap["l"]) {
-        keydown = true;
-    }
-    if(inputMap["m"]) {
-        keydown = true;
-    }
-    if(inputMap["s"]) {
-        keydown = true;
-    }
+        //Get the animations
+        const idleAnim = scene.getAnimationGroupByName("Idle");
+        const placeLargeAnim = scene.getAnimationGroupByName("placeLarge");
+        const placeMediumAnim = scene.getAnimationGroupByName("placeMedium");
+        const placeSmallAnim = scene.getAnimationGroupByName("placeSmall");
+        const danceAnim = scene.getAnimationGroupByName("Dance");
+        const gestureAnim = scene.getAnimationGroupByName("Gesture");
+        //start with Idle
+        idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 
-    //Manage animations to be played  
-    if (keydown) {
-        if (!animating) {
-            animating = true;
-            var deltaDistance = 0.02;
-            if(inputMap["i"]) {
-                //Idle
-                idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
-            }
-            else if(inputMap["l"])
-            {
-                // Large sphere
-                var makeSphere = BABYLON.GUI.Button.CreateSimpleButton("but", "Create Sphere");
-                makeSphere.position = new BABYLON.Vector3(1,1,1);
-                makeSphere.width = 0.1;
-                makeSphere.height = "40px";
-                makeSphere.color = "white";
-                makeSphere.background = "green";
-                advancedTexture.addControl(makeSphere);  
-                makeSphere.left = 300;
-                topBlock += 40;
-                makeSphere.top = topBlock;
-                animations.push("make sphere");
+        run.onPointerUpObservable.add(function() {
+            var i = 0;
+            while(i < animations.length) {
+                console.log(animations[i]);
+                if(animations[i] == "make sphere") {
+                    var startPosition = new BABYLON.Vector3(-1.5,1.3,1);
+                    //var startPosition = new BABYLON.Vector3(2, 2.5, 0);
+                    currSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 1.2, segments: 32}, scene);
+                    currSphere.position = startPosition;
+                    i++;
 
-                sphereLarge = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 1.2, segments: 32}, scene);
-                var startLarge = new BABYLON.Vector3(2, 2.5, 0);
-                sphereLarge.position = startLarge;
-            }
-            else if(inputMap["m"])
-            {
-                //Medium sphere
-                var makeSphere = BABYLON.GUI.Button.CreateSimpleButton("but", "Create Sphere");
-                makeSphere.position = new BABYLON.Vector3(1,1,1);
-                makeSphere.width = 0.1;
-                makeSphere.height = "40px";
-                makeSphere.color = "white";
-                makeSphere.background = "green";
-                advancedTexture.addControl(makeSphere);  
-                makeSphere.left = 300;
-                topBlock += 40;
-                makeSphere.top = topBlock;
-                animations.push("make sphere");
+                    scene.animationsEnabled = false;
+                    setTimeout(() => {
+                        scene.animationsEnabled = true;
+                        
+                    }, 800);
+                    
+                    // input.onTextChangedObservable.add(function() {
+                    //     if(input.text == "1")
+                    //     {
 
-                sphereMed = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 0.9, segments: 32}, scene);
-                var startMed = new BABYLON.Vector3(2, 1.4, 0);
-                sphereMed.position = startMed;
-            }
-            else if(inputMap["s"])
-            {
-                //Small sphere
-                var makeSphere = BABYLON.GUI.Button.CreateSimpleButton("but", "Create Sphere");
-                makeSphere.position = new BABYLON.Vector3(1,1,1);
-                makeSphere.width = 0.1;
-                makeSphere.height = "40px";
-                makeSphere.color = "white";
-                makeSphere.background = "green";
-                advancedTexture.addControl(makeSphere);  
-                makeSphere.left = 300;
-                topBlock += 40;
-                makeSphere.top = topBlock;
-                animations.push("make sphere");
-
-                sphereSmall = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 0.6, segments: 32}, scene);
-                var startSmall = new BABYLON.Vector3(2, 0.5, 0);
-                sphereSmall.position = startSmall;
-            }
-            else if(inputMap["g"]) {
-                //Gesture to Side
-                var grab = BABYLON.GUI.Button.CreateSimpleButton("but", "Grab Snowball");
-                grab.position = new BABYLON.Vector3(1,1,1);
-                grab.width = 0.1;
-                grab.height = "40px";
-                grab.color = "white";
-                grab.background = "green";
-                advancedTexture.addControl(grab);  
-                grab.left = 300;
-                topBlock += 40;
-                grab.top = topBlock;
-
-                gestureAnim.start(true, 1.0, gestureAnim.from, gestureAnim.to, false);
-                
-                var i = 0;
-                if(!large)
-                {
-                    var translateVector = new BABYLON.Vector3(-3.7, -0.7, 1.5);
-                    var distance = translateVector.length();
-                    var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
-                    direction.normalize();
-                    scene.registerAfterRender(function () { 
-                        if((i++) * deltaDistance <= distance) sphereLarge.translate(direction, deltaDistance, BABYLON.Space.WORLD);
-                    });
+        
+                    //     }
+                    // })
                 }
-                else if(!med)
-                {
-                    var translateVector = new BABYLON.Vector3(-3.7, 0.9, 1);
-                    var distance = translateVector.length();
-                    var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
-                    direction.normalize();
-                    scene.registerAfterRender(function () { 
-                        if((i++) * deltaDistance <= distance) sphereMed.translate(direction, deltaDistance, BABYLON.Space.WORLD);
-                    });
+                else if(animations[i] == "dance") {
+                    idleAnim.stop();
+                    setTimeout(() => {
+                        danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
+                      }, 100);
+                    danceAnim.stop();
+                    idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
                 }
-                else if(!small)
-                {
-                    var translateVector = new BABYLON.Vector3(-3.4, 1.9, 1);
-                    var distance = translateVector.length();
-                    var direction = new BABYLON.Vector3(translateVector.x, translateVector.y, translateVector.z);
-                    direction.normalize();
-                    scene.registerAfterRender(function () { 
-                        if((i++) * deltaDistance <= distance) sphereSmall.translate(direction, deltaDistance, BABYLON.Space.WORLD);
-                    });
+                else if(animations[i] == "place") {
+                    idleAnim.stop();
+                    i++;
+                    setTimeout(() => {
+                        var translate = new BABYLON.Vector3(0.7, -1, 0.2);
+                        var dist = translate.length();
+                        var dir = new BABYLON.Vector3(translate.x, translate.y, translate.z);
+                        dir.normalize();
+                        var j = 0;
+                        scene.registerAfterRender(function () { 
+                            if((j++) * deltaDistance <= dist) currSphere.translate(dir, deltaDistance, BABYLON.Space.WORLD);
+                        });
+                        placeLargeAnim.start(false, 1.0, placeLargeAnim.from, placeLargeAnim.to, false);       
+                    }, 1000);
+                    idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
                 }
-            }
-            else if
-                (inputMap["p"]) {
-                //Placement!
-                var j = 0;
-                deltaDistance = 0.01;
-                var place = BABYLON.GUI.Button.CreateSimpleButton("but", "Place Snowball");
-                place.position = new BABYLON.Vector3(1,1,1);
-                place.width = 0.1;
-                place.height = "40px";
-                place.color = "white";
-                place.background = "green";
-                advancedTexture.addControl(place);  
-                place.left = 300;
-                topBlock += 40;
-                place.top = topBlock;
-                animations.push("place");
 
-                if(!large) {
-                    placeLargeAnim.start(true, 1.0, placeLargeAnim.from, placeLargeAnim.to, false);
-                    var translateL = new BABYLON.Vector3(0.7, -1, 0.2);
-                    var distL = translateL.length();
-                    var dirL = new BABYLON.Vector3(translateL.x, translateL.y, translateL.z);
-                    dirL.normalize();
-                    large = true;
-                    scene.registerAfterRender(function () { 
-                        if((j++) * deltaDistance <= distL) sphereLarge.translate(dirL, deltaDistance, BABYLON.Space.WORLD);
-                    });
-                }   
-                else if(!med) {
-                    placeMediumAnim.start(true, 1.0, placeMediumAnim.from, placeMediumAnim.to, false);
-                    hero.position.y += 0.5;
-                    var translateM = new BABYLON.Vector3(0.7, -0.6, 0.8);
-                    var distM = translateM.length();
-                    var dirM = new BABYLON.Vector3(translateM.x, translateM.y, translateM.z);
-                    dirM.normalize();
-                    med = true;
-                    scene.registerAfterRender(function () { 
-                        if((j++) * deltaDistance <= distM) sphereMed.translate(dirM, deltaDistance, BABYLON.Space.WORLD);
-                    });
-                }
-                else if(!small) {
-                    hero.position.y += 0.5;
-                    placeSmallAnim.start(true, 1.0, 1, 2.5, false);
-                    var translateS = new BABYLON.Vector3(0.4, -0.1, 0.8);
-                    var distS = translateS.length();
-                    var dirS = new BABYLON.Vector3(translateS.x, translateS.y, translateS.z);
-                    dirS.normalize();
-                    small = true;
-                    scene.registerAfterRender(function () { 
-                        if((j++) * deltaDistance <= distS) sphereSmall.translate(dirS, deltaDistance, BABYLON.Space.WORLD);
-                    });
-                }
             }
-            else if
-                (inputMap["d"]) {
-                //Dance!
-                var dance = BABYLON.GUI.Button.CreateSimpleButton("but", "Dance");
-                dance.position = new BABYLON.Vector3(1,1,1);
-                dance.width = 0.1;
-                dance.height = "40px";
-                dance.color = "white";
-                dance.background = "green";
-                advancedTexture.addControl(dance);  
-                dance.left = 300;
-                topBlock += 40;
-                dance.top = topBlock;
-                animations.push("dance")
+        });
 
-                danceAnim.start(true, 1.0, danceAnim.from, danceAnim.to, false);
+        //take in keyboard input
+        scene.onKeyboardObservable.add((kbInfo) => {
+            switch (kbInfo.type) {
+                case BABYLON.KeyboardEventTypes.KEYDOWN:
+                    switch (kbInfo.event.key) {
+                        case "m":
+                            var makeSphere = BABYLON.GUI.Button.CreateSimpleButton("but", "Make Sphere");
+                            makeSphere.position = new BABYLON.Vector3(1,1,1);
+                            makeSphere.width = 0.1;
+                            makeSphere.height = "40px";
+                            makeSphere.color = "white";
+                            makeSphere.background = "blue";
+                            advancedTexture.addControl(makeSphere);  
+                            makeSphere.left = 300;
+                            topBlock += 40;
+                            makeSphere.top = topBlock;
+                            animations.push("make sphere");
+
+                            // var input = new BABYLON.GUI.InputText();
+                            // input.left = 300;
+                            // topBlock += 40;
+                            // input.top = topBlock;
+                            // input.width = 0.2;
+                            // input.maxWidth = 0.2;
+                            // input.height = "40px";
+                            // input.text = "Enter snowball size (1, 2, or 3)"
+                            // input.color = "white";
+                            // input.background = "green";
+                            // advancedTexture.addControl(input);
+                        break
+                        case "d":
+                            var dance = BABYLON.GUI.Button.CreateSimpleButton("but", "Dance");
+                            dance.position = new BABYLON.Vector3(1,1,1);
+                            dance.width = 0.1;
+                            dance.height = "40px";
+                            dance.color = "white";
+                            dance.background = "purple";
+                            advancedTexture.addControl(dance);  
+                            dance.left = 300;
+                            topBlock += 40;
+                            dance.top = topBlock;
+                            animations.push("dance");
+                        break
+                        case "p":
+                            var place = BABYLON.GUI.Button.CreateSimpleButton("but", "Place Snowball");
+                            place.position = new BABYLON.Vector3(1,1,1);
+                            place.width = 0.1;
+                            place.height = "40px";
+                            place.color = "white";
+                            place.background = "red";
+                            advancedTexture.addControl(place);  
+                            place.left = 300;
+                            topBlock += 40;
+                            place.top = topBlock;
+                            animations.push("place");
+                        break
+                        case "g":
+                            hero.position.y -= 0.1;
+                        break
+                    }
+                break;
             }
-            else {
-                //Idle
-                idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
-            }
-        }
-    }
-    else {
-        if (animating) {
-            //Default animation is idle when no key is down     
-            idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
-
-            //Stop all animations besides Idle Anim when no key is down
-            placeLargeAnim.stop();
-            placeSmallAnim.stop();
-            placeMediumAnim.stop();
-            gestureAnim.stop()
-            danceAnim.stop();
-
-            //Ensure animation are played only once per rendering loop
-            animating = false;
-        }
-    }
+        });
     });
-});
-
-return scene;
+    return scene;
 };
+
 /******* End of the create scene function ******/
 var scene = createScene();
 
-// Register a render loop to repeatedly render the scene
 engine.runRenderLoop(function () {
+    if (scene) {
         scene.render();
+    }
 });
 
 // Watch for browser/canvas resize events
 window.addEventListener("resize", function () {
         engine.resize();
+});
+
 });
