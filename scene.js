@@ -80,21 +80,19 @@ var createScene = function () {
 
         run.onPointerUpObservable.add(function() {
             var i = 0;
+            var delay = 500;
             while(i < animations.length) {
+                console.log(delay);
                 console.log(animations[i]);
                 if(animations[i] == "make sphere") {
-                    var startPosition = new BABYLON.Vector3(-1.5,1.3,1);
-                    //var startPosition = new BABYLON.Vector3(2, 2.5, 0);
-                    currSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 1.2, segments: 32}, scene);
-                    currSphere.position = startPosition;
                     i++;
-
-                    scene.animationsEnabled = false;
                     setTimeout(() => {
-                        scene.animationsEnabled = true;
-                        
-                    }, 800);
-                    
+                        var startPosition = new BABYLON.Vector3(-1.5,1.3,1);
+                        //var startPosition = new BABYLON.Vector3(2, 2.5, 0);
+                        currSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 1.2, segments: 32}, scene);
+                        currSphere.position = startPosition;
+                    }, delay);
+                    delay += 500;
                     // input.onTextChangedObservable.add(function() {
                     //     if(input.text == "1")
                     //     {
@@ -124,10 +122,13 @@ var createScene = function () {
                             if((j++) * deltaDistance <= dist) currSphere.translate(dir, deltaDistance, BABYLON.Space.WORLD);
                         });
                         placeLargeAnim.start(false, 1.0, placeLargeAnim.from, placeLargeAnim.to, false);       
-                    }, 1000);
+                    }, delay);
+                    setTimeout(() => {
+                        placeLargeAnim.start(false, 1.0, placeLargeAnim.from, placeLargeAnim.to, false);       
+                    }, delay);
                     idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
+                    delay += 5000;
                 }
-
             }
         });
 
