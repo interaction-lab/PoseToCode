@@ -110,11 +110,13 @@ var createScene = function () {
                 }
                 else if(animations[i] == "dance") {
                     idleAnim.stop();
+                    i++;
                     setTimeout(() => {
                         danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
                       }, 100);
                     danceAnim.stop();
                     idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
+                    delay += 10000;
                 }
                 else if(animations[i] == "place") {
                     idleAnim.stop();
