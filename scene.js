@@ -25,7 +25,7 @@ var createScene = function () {
     var currSphere;
     var animations = [];
     var sizes = [];
-    var deltaDistance = 0.007;
+    var deltaDistance = 0.009;
 
     // Our built-in 'ground' shape.
     //var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 9, height: 9}, scene);
@@ -98,17 +98,21 @@ var createScene = function () {
                     i++;
                     setTimeout(() => {
                         startY += 0.5;
-                        var startPosition = new BABYLON.Vector3(startX,startY,startZ);
                         sizeIndex++;
                         console.log(sizeIndex);
                         console.log(sizes[sizeIndex]);
                         currSize = sizes[sizeIndex];
                         if(sizes[sizeIndex] == "small") {
                             diam = 0.6;
+                            startX -= 0.2;
                         }
                         else if(sizes[sizeIndex] == "medium") {
                             diam = 0.9;
                         }
+                        else if(sizes[sizeIndex] == "large"){
+                            diam = 1.2;
+                        }
+                        var startPosition = new BABYLON.Vector3(startX,startY,startZ);
                         currSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: diam, segments: 32}, scene);
                         currSphere.position = startPosition;
                     }, delay);
@@ -129,25 +133,35 @@ var createScene = function () {
                     i++;
                     
                     setTimeout(() => {
-                        endY += 0.5;
-                        var translate = new BABYLON.Vector3(endX, endY, endZ);
-                        var dist = translate.length();
-                        var dir = new BABYLON.Vector3(translate.x, translate.y, translate.z);
-                        dir.normalize();
                         var j = 0;
                         if(currSize == "small") {
+                            endY += 0.1;
+                            var translate = new BABYLON.Vector3(endX, endY, endZ);
+                            var dist = translate.length();
+                            var dir = new BABYLON.Vector3(translate.x, translate.y, translate.z);
+                            dir.normalize();
                             scene.registerAfterRender(function () { 
                                 if((j++) * deltaDistance <= dist) currSphere.translate(dir, deltaDistance, BABYLON.Space.WORLD);
                             });
-                            placeSmallAnim.start(false, 1.0, placeSmallAnim.from, placeSmallAnim.to, false);   
+                            placeSmallAnim.start(false, 1.0, 0, 2.3, false);   
                         } 
                         else if(currSize == "medium") {
+                            endY += 0.3;
+                            var translate = new BABYLON.Vector3(endX, endY, endZ);
+                            var dist = translate.length();
+                            var dir = new BABYLON.Vector3(translate.x, translate.y, translate.z);
+                            dir.normalize();
                             scene.registerAfterRender(function () { 
                                 if((j++) * deltaDistance <= dist) currSphere.translate(dir, deltaDistance, BABYLON.Space.WORLD);
                             });
                             placeMediumAnim.start(false, 1.0, placeMediumAnim.from, placeMediumAnim.to, false);  
                         }   
-                        else {
+                        else if(currSize == "large"){
+                            endY += 0.5;
+                            var translate = new BABYLON.Vector3(endX, endY, endZ);
+                            var dist = translate.length();
+                            var dir = new BABYLON.Vector3(translate.x, translate.y, translate.z);
+                            dir.normalize();
                             scene.registerAfterRender(function () { 
                                 if((j++) * deltaDistance <= dist) currSphere.translate(dir, deltaDistance, BABYLON.Space.WORLD);
                             });
@@ -238,13 +252,25 @@ var createScene = function () {
                             checkboxSmall.onIsCheckedChangedObservable.add(function(value) {
                                 if(value) {
                                     sizes.push("small");
+                                    advancedTexture.removeControl(checkboxMed);
+                                    advancedTexture.removeControl(labelMed);
+                                    advancedTexture.removeControl(checkboxLarge);
+                                    advancedTexture.removeControl(labelLarge);
                                 }
                             });
                             checkboxMed.onIsCheckedChangedObservable.add(function(value) {
                                 sizes.push("medium");
+                                advancedTexture.removeControl(checkboxSmall);
+                                advancedTexture.removeControl(labelSmall);
+                                advancedTexture.removeControl(checkboxLarge);
+                                advancedTexture.removeControl(labelLarge);
                             });
                             checkboxLarge.onIsCheckedChangedObservable.add(function(value) {
                                 sizes.push("large");
+                                advancedTexture.removeControl(checkboxMed);
+                                advancedTexture.removeControl(labelMed);
+                                advancedTexture.removeControl(checkboxSmall);
+                                advancedTexture.removeControl(labelSmall);
                             });
                             animations.push("make sphere");
                         break
