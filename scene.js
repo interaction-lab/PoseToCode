@@ -77,6 +77,13 @@ var createScene = function () {
         idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 
         run.onPointerUpObservable.add(function() {
+            var arrow = new BABYLON.GUI.TextBlock();
+            var arrowPos = -360;
+            arrow.text = "←";
+            arrow.color = "red";
+            arrow.fontSize = 24; 
+            arrow.left = 420;
+
             var i = 0;
             var delay = 500;
             var startX = -1.5;
@@ -101,7 +108,7 @@ var createScene = function () {
                         currSize = sizes[sizeIndex];
                         if(sizes[sizeIndex] == "small") {
                             diam = 0.6;
-                            startX -= 0.2;
+                            //startX -= 0.2;
                         }
                         else if(sizes[sizeIndex] == "medium") {
                             diam = 0.9;
@@ -109,6 +116,9 @@ var createScene = function () {
                         else if(sizes[sizeIndex] == "large"){
                             diam = 1.2;
                         }
+                        arrow.top = arrowPos;
+                        advancedTexture.addControl(arrow);  
+                        arrowPos += 80;
                         var startPosition = new BABYLON.Vector3(startX,startY,startZ);
                         currSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: diam, segments: 32}, scene);
                         currSphere.position = startPosition;
@@ -119,6 +129,9 @@ var createScene = function () {
                     idleAnim.stop();
                     i++;
                     setTimeout(() => {
+                        arrow.top = arrowPos;
+                        advancedTexture.addControl(arrow); 
+                        arrowPos += 40;
                         danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
                       }, delay);
                     danceAnim.stop();
@@ -131,6 +144,9 @@ var createScene = function () {
                     
                     setTimeout(() => {
                         var j = 0;
+                        arrow.top = arrowPos;
+                        advancedTexture.addControl(arrow); 
+                        arrowPos += 40;
                         if(currSize == "small") {
                             endY += 0.1;
                             var translate = new BABYLON.Vector3(endX, endY, endZ);
