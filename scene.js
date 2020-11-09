@@ -23,7 +23,8 @@ var createScene = function () {
     // Default intensity is 1. Let's dim the light a small amount
     light.intensity = 0.7;
     var currSphere;
-    var animations = []
+    var animations = [];
+    var sizes = [];
     var deltaDistance = 0.007;
 
     // Our built-in 'ground' shape.
@@ -87,26 +88,31 @@ var createScene = function () {
             var endX = 0.7;
             var endY = -1.5;
             var endZ = 0.2;
+            var sizeIndex = -1;
+            var currSize = "large";
             while(i < animations.length) {
                 console.log(delay);
                 console.log(animations[i]);
+                var diam = 1.2;
                 if(animations[i] == "make sphere") {
                     i++;
                     setTimeout(() => {
                         startY += 0.5;
                         var startPosition = new BABYLON.Vector3(startX,startY,startZ);
-                        //var startPosition = new BABYLON.Vector3(2, 2.5, 0);
-                        currSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 1.2, segments: 32}, scene);
+                        sizeIndex++;
+                        console.log(sizeIndex);
+                        console.log(sizes[sizeIndex]);
+                        currSize = sizes[sizeIndex];
+                        if(sizes[sizeIndex] == "small") {
+                            diam = 0.6;
+                        }
+                        else if(sizes[sizeIndex] == "medium") {
+                            diam = 0.9;
+                        }
+                        currSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: diam, segments: 32}, scene);
                         currSphere.position = startPosition;
                     }, delay);
                     delay += 500;
-                    // input.onTextChangedObservable.add(function() {
-                    //     if(input.text == "1")
-                    //     {
-
-        
-                    //     }
-                    // })
                 }
                 else if(animations[i] == "dance") {
                     idleAnim.stop();
@@ -129,20 +135,30 @@ var createScene = function () {
                         var dir = new BABYLON.Vector3(translate.x, translate.y, translate.z);
                         dir.normalize();
                         var j = 0;
-                        scene.registerAfterRender(function () { 
-                            if((j++) * deltaDistance <= dist) currSphere.translate(dir, deltaDistance, BABYLON.Space.WORLD);
-                        });
-                        placeLargeAnim.start(false, 1.0, placeLargeAnim.from, placeLargeAnim.to, false);       
-                    }, delay);
-                    setTimeout(() => {
-                        placeLargeAnim.start(false, 1.0, placeLargeAnim.from, placeLargeAnim.to, false);
+                        if(currSize == "small") {
+                            scene.registerAfterRender(function () { 
+                                if((j++) * deltaDistance <= dist) currSphere.translate(dir, deltaDistance, BABYLON.Space.WORLD);
+                            });
+                            placeSmallAnim.start(false, 1.0, placeSmallAnim.from, placeSmallAnim.to, false);   
+                        } 
+                        else if(currSize == "medium") {
+                            scene.registerAfterRender(function () { 
+                                if((j++) * deltaDistance <= dist) currSphere.translate(dir, deltaDistance, BABYLON.Space.WORLD);
+                            });
+                            placeMediumAnim.start(false, 1.0, placeMediumAnim.from, placeMediumAnim.to, false);  
+                        }   
+                        else {
+                            scene.registerAfterRender(function () { 
+                                if((j++) * deltaDistance <= dist) currSphere.translate(dir, deltaDistance, BABYLON.Space.WORLD);
+                            });
+                            placeLargeAnim.start(false, 1.0, placeLargeAnim.from, placeLargeAnim.to, false);  
+                        }   
                     }, delay);
                     idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
                     delay += 5000;
                     setTimeout(() => {
                         hero.position.y += 0.5                    
                     }, delay);
-                    
                 }
             }
         });
@@ -163,19 +179,74 @@ var createScene = function () {
                             makeSphere.left = 300;
                             topBlock += 40;
                             makeSphere.top = topBlock;
-                            animations.push("make sphere");
+                            topBlock += 40;
 
-                            // var input = new BABYLON.GUI.InputText();
-                            // input.left = 300;
-                            // topBlock += 40;
-                            // input.top = topBlock;
-                            // input.width = 0.2;
-                            // input.maxWidth = 0.2;
-                            // input.height = "40px";
-                            // input.text = "Enter snowball size (1, 2, or 3)"
-                            // input.color = "white";
-                            // input.background = "green";
-                            // advancedTexture.addControl(input);
+                            var checkboxSmall = new BABYLON.GUI.Checkbox();
+                            checkboxSmall.width = "20px";
+                            checkboxSmall.height = "20px";
+                            checkboxSmall.isChecked = false;
+                            checkboxSmall.color = "blue";
+                            checkboxSmall.left = 200;
+                            checkboxSmall.top = topBlock;
+                            advancedTexture.addControl(checkboxSmall);    
+                        
+                            var labelSmall = new BABYLON.GUI.TextBlock();
+                            labelSmall.text = "small";
+                            labelSmall.width = "50px";
+                            labelSmall.marginLeft = "5px";
+                            labelSmall.left = 233;
+                            labelSmall.top = topBlock;
+                            labelSmall.color = "white";
+                            advancedTexture.addControl(labelSmall); 
+
+                            var checkboxMed = new BABYLON.GUI.Checkbox();
+                            checkboxMed.width = "20px";
+                            checkboxMed.height = "20px";
+                            checkboxMed.isChecked = false;
+                            checkboxMed.color = "blue";
+                            checkboxMed.left = 280;
+                            checkboxMed.top = topBlock;
+                            advancedTexture.addControl(checkboxMed);    
+                        
+                            var labelMed = new BABYLON.GUI.TextBlock();
+                            labelMed.text = "medium";
+                            labelMed.width = "70px";
+                            labelMed.marginLeft = "5px";
+                            labelMed.left = 323;
+                            labelMed.top = topBlock;
+                            labelMed.color = "white";
+                            advancedTexture.addControl(labelMed); 
+
+                            var checkboxLarge = new BABYLON.GUI.Checkbox();
+                            checkboxLarge.width = "20px";
+                            checkboxLarge.height = "20px";
+                            checkboxLarge.isChecked = false;
+                            checkboxLarge.color = "blue";
+                            checkboxLarge.left = 376;
+                            checkboxLarge.top = topBlock;
+                            advancedTexture.addControl(checkboxLarge);    
+                        
+                            var labelLarge = new BABYLON.GUI.TextBlock();
+                            labelLarge.text = "large";
+                            labelLarge.width = "50px";
+                            labelLarge.marginLeft = "5px";
+                            labelLarge.color = "white";
+                            labelLarge.left = 408;
+                            labelLarge.top = topBlock;
+                            advancedTexture.addControl(labelLarge); 
+                            
+                            checkboxSmall.onIsCheckedChangedObservable.add(function(value) {
+                                if(value) {
+                                    sizes.push("small");
+                                }
+                            });
+                            checkboxMed.onIsCheckedChangedObservable.add(function(value) {
+                                sizes.push("medium");
+                            });
+                            checkboxLarge.onIsCheckedChangedObservable.add(function(value) {
+                                sizes.push("large");
+                            });
+                            animations.push("make sphere");
                         break
                         case "d":
                             var dance = BABYLON.GUI.Button.CreateSimpleButton("but", "Dance");
