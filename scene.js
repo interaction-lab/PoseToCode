@@ -27,9 +27,6 @@ var createScene = function () {
     var sizes = [];
     var deltaDistance = 0.009;
 
-    // Our built-in 'ground' shape.
-    //var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 9, height: 9}, scene);
-
     engine.enableOfflineSupport = false;
 
     var camera1 = new BABYLON.ArcRotateCamera("camera1", Math.PI / 2, Math.PI / 4, 10, new BABYLON.Vector3(0, -4, 0), scene);
