@@ -11,16 +11,3 @@ html, body {
     height: 100%;
     touch-action: none;
 }
-
-button {
-    background-color: red;
-    z-index: 1;
-    position: relative;
-    border-color: white;
-    color: white;
-    font-size: 18px;
-    padding: 10px 10px;
-    font-family: sans-serif;
-    margin-top: 20px;
-    margin-left: 20px;
-}
