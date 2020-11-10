@@ -1,6 +1,27 @@
+// Global variables
 var canvas = document.getElementById("renderCanvas"); // Get the canvas element
 var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
 var topBlock = -300;
+const largeDiameter = 1.2;
+const mediumDiameter = 0.9;
+const smallDiameter = 0.6;
+const startDelay = 500;
+const makeSphereDelay = 500;
+const placeSphereDelay = 5000;
+const danceDelay = 7000;
+
+function setUpScene(scene, camera, camera1, light, light1) {
+    camera.setTarget(BABYLON.Vector3.Zero());
+    camera.attachControl(canvas, true);
+    light.intensity = 0.7;
+    light1.intensity = 0.6;
+    light1.specular = BABYLON.Color3.Black();
+    scene.activeCamera = camera1;
+    scene.activeCamera.attachControl(canvas, true);
+    camera1.lowerRadiusLimit = 10;
+    camera1.upperRadiusLimit = 10;
+    camera1.wheelDeltaPercentage = 0.1;
+}
 
 function createRunButton() {
     var run = BABYLON.GUI.Button.CreateSimpleButton("but", "Click to Run!");
@@ -121,23 +142,13 @@ function makePlacementBlock(gui) {
 
 /******* main function ******/
 var createScene = function () {
+    // Create scene + set up
     var scene = new BABYLON.Scene(engine);
     var camera = new BABYLON.FreeCamera("camera", new BABYLON.Vector3(0, 0, 0), scene);
-    camera.setTarget(BABYLON.Vector3.Zero());
-    camera.attachControl(canvas, true);
-    var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
-    light.intensity = 0.7;
-    // Camera
     var camera1 = new BABYLON.ArcRotateCamera("camera1", Math.PI / 2, Math.PI / 4, 10, new BABYLON.Vector3(0, -4, 0), scene);
-    scene.activeCamera = camera1;
-    scene.activeCamera.attachControl(canvas, true);
-    camera1.lowerRadiusLimit = 10;
-    camera1.upperRadiusLimit = 10;
-    camera1.wheelDeltaPercentage = 0.1;
-    // Lights
-    var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
-    light.intensity = 0.6;
-    light.specular = BABYLON.Color3.Black();
+    var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+    var light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+    setUpScene(scene, camera, camera1, light, light1);
 
     var animations = [];
     var sizes = [];
@@ -153,7 +164,7 @@ var createScene = function () {
     
         // Create GUI
         var gui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-        // Run Button
+        // Create Run Button
         var run = createRunButton();
         gui.addControl(run);  
 
@@ -168,10 +179,11 @@ var createScene = function () {
 
         //function for when the "run" button is clicked
         run.onPointerUpObservable.add(function() {
+            alert("running code!");
             // Create pointer arrow that follows current code block
             var arrow = createPointer();
             var arrowPos = -260;
-            var delay = 500;
+            var delay = startDelay;
             //Initialize start and end coordinates for snowballs
             var startX = -1.5;
             var startY = 1.3;
@@ -190,16 +202,16 @@ var createScene = function () {
                         startY += 0.5;
                         currSize = sizes[sizeIndex];
                         //set default diameter to largest size
-                        var diam = 1.2;
+                        var diam = largeDiameter;
                         //change diameter of the ball based on selected size
                         if(currSize == "small") {
-                            diam = 0.6;
+                            diam = smallDiameter;
                         }
                         else if(currSize == "medium") {
-                            diam = 0.9;
+                            diam = mediumDiameter;
                         }
                         else if(currSize == "large"){
-                            diam = 1.2;
+                            diam = largeDiameter;
                         }
                         arrowPos = movePointer(arrow, arrowPos, 80, gui);
                         //create a new snowball at the position of the robot's hands
@@ -207,7 +219,7 @@ var createScene = function () {
                         currSphere.position = new BABYLON.Vector3(startX,startY,startZ);
                         sizeIndex++;
                     }, delay);
-                    delay += 500;
+                    delay += makeSphereDelay;
                 }
                 else if(animations[i] == "dance") {
                     idleAnim.stop();
@@ -215,9 +227,9 @@ var createScene = function () {
                         arrowPos = movePointer(arrow, arrowPos, 40, gui);
                         danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
                       }, delay);
+                      delay += danceDelay;
                     danceAnim.stop();
                     idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
-                    delay += 7000;
                 }
                 else if(animations[i] == "place") {
                     idleAnim.stop();
@@ -239,39 +251,50 @@ var createScene = function () {
                             placeLargeAnim.start(false, 1.0, placeLargeAnim.from, placeLargeAnim.to, false);  
                         }   
                     }, delay);
+                    delay += placeSphereDelay;
                     idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
-                    delay += 5000;
                     moveRobotUp(robot, delay);
                 }
             }
         });
 
-        //take in keyboard input
+        // take in keyboard input
         scene.onKeyboardObservable.add((kbInfo) => {
             switch (kbInfo.type) {
                 case BABYLON.KeyboardEventTypes.KEYDOWN:
                     switch (kbInfo.event.key) {
                         case "m":
+                            // make sphere block
                             makeSphereBlock(gui);
+                            //create checkboxes for size
                             var checkboxSmall = createCheckBox("small", gui);
                             var checkboxMed = createCheckBox("medium", gui);
                             var checkboxLarge = createCheckBox("large", gui);
                             checkboxSmall.onIsCheckedChangedObservable.add(function(value) {
                                 sizes.push("small");
+                                // "grey out" other options once one is selected
+                                checkboxMed.background = "grey";
+                                checkboxLarge.background = "grey";
                             });
                             checkboxMed.onIsCheckedChangedObservable.add(function(value) {
                                 sizes.push("medium");
+                                checkboxSmall.background = "grey";
+                                checkboxLarge.background = "grey";
                             });
                             checkboxLarge.onIsCheckedChangedObservable.add(function(value) {
                                 sizes.push("large");
+                                checkboxMed.background = "grey";
+                                checkboxSmall.background = "grey";
                             });
                             animations.push("make sphere");
                         break
                         case "d":
+                            // create dance block
                             makeDanceBlock(gui);
                             animations.push("dance");
                         break
                         case "p":
+                            // create placement block
                             makePlacementBlock(gui);
                             animations.push("place");
                         break
@@ -285,16 +308,12 @@ var createScene = function () {
 
 window.addEventListener('DOMContentLoaded', function() {
     var scene = createScene();
-
     engine.runRenderLoop(function () {
         if (scene) {
             scene.render();
         }
     });
-
-    // Watch for browser/canvas resize events
     window.addEventListener("resize", function () {
             engine.resize();
     });
-
 });
