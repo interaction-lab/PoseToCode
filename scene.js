@@ -23,6 +23,20 @@ function setUpScene(scene, camera, camera1, light, light1) {
     camera1.wheelDeltaPercentage = 0.1;
 }
 
+function createResetButton(gui) {
+    var reset = BABYLON.GUI.Button.CreateSimpleButton("but", "Reset");
+    reset.width = 0.1;
+    reset.height = "40px";
+    reset.color = "white";
+    reset.background = "green";
+    reset.left = -400;
+    reset.top = 300;
+    gui.addControl(reset);
+    reset.onPointerUpObservable.add(function() {
+        window.location.reload();
+    });
+}
+
 function createRunButton() {
     var run = BABYLON.GUI.Button.CreateSimpleButton("but", "Click to Run!");
     run.width = 0.1;
@@ -149,11 +163,16 @@ var createScene = function () {
     var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
     var light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
     setUpScene(scene, camera, camera1, light, light1);
+
     // Create GUI
-    var gui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+    var gui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");    
     // Arrays to store robot actions and sizes of snowballs
     var animations = [];
     var sizes = [];
+
+    // Create Reset Button
+    createResetButton(gui);
+
     // Load robot character from github and play animation
     BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/nisha-chat/hourofcode/main/", "robot.glb", scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
         var robot = newMeshes[0];
