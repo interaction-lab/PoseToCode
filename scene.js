@@ -9,7 +9,7 @@ const startDelay = 500;
 const makeSphereDelay = 500;
 const placeSphereDelay = 5000;
 const danceDelay = 7000;
-
+// Helper functions
 function setUpScene(scene, camera, camera1, light, light1) {
     camera.setTarget(BABYLON.Vector3.Zero());
     camera.attachControl(canvas, true);
@@ -142,17 +142,18 @@ function makePlacementBlock(gui) {
 
 /******* main function ******/
 var createScene = function () {
-    // Create scene + set up
+    // Create scene + Set up
     var scene = new BABYLON.Scene(engine);
     var camera = new BABYLON.FreeCamera("camera", new BABYLON.Vector3(0, 0, 0), scene);
     var camera1 = new BABYLON.ArcRotateCamera("camera1", Math.PI / 2, Math.PI / 4, 10, new BABYLON.Vector3(0, -4, 0), scene);
     var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
     var light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
     setUpScene(scene, camera, camera1, light, light1);
-
+    // Create GUI
+    var gui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+    // Arrays to store robot actions and sizes of snowballs
     var animations = [];
     var sizes = [];
-
     // Load robot character from github and play animation
     BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/nisha-chat/hourofcode/main/", "robot.glb", scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
         var robot = newMeshes[0];
@@ -161,12 +162,6 @@ var createScene = function () {
         robot.position.x -= 1.5;
         // Lock camera on the character 
         camera1.target = robot;
-    
-        // Create GUI
-        var gui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-        // Create Run Button
-        var run = createRunButton();
-        gui.addControl(run);  
 
         // Get all the animations
         const idleAnim = scene.getAnimationGroupByName("Idle");
@@ -177,6 +172,9 @@ var createScene = function () {
         // Start with Idle Animation
         idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 
+        // Create Run Button
+        var run = createRunButton();
+        gui.addControl(run);  
         //function for when the "run" button is clicked
         run.onPointerUpObservable.add(function() {
             alert("running code!");
@@ -306,6 +304,7 @@ var createScene = function () {
     return scene;
 };
 
+// function to call createScene()
 window.addEventListener('DOMContentLoaded', function() {
     var scene = createScene();
     engine.runRenderLoop(function () {
