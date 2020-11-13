@@ -196,7 +196,6 @@ var createScene = function () {
         gui.addControl(run);  
         //function for when the "run" button is clicked
         run.onPointerUpObservable.add(function() {
-            alert("running code!");
             // Create pointer arrow that follows current code block
             var arrow = createPointer();
             var arrowPos = -260;
