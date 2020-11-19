@@ -8,9 +8,62 @@
         <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
         <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
         <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+        <script src="blockly/blockly_compressed.js"></script>
+        <script src="blockly/javascript_compressed.js"></script>
+        <script src="blockly/blocks_compressed.js"></script>
+        
+        <script src="blockly/msg/js/en.js"></script>
+        <script src="sphere.js"></script>
     </head>
     <body>
+        <button onclick="runCode()">Run JavaScript</button>
+        <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
         <canvas id="renderCanvas" touch-action="none"></canvas>
-        <script src="scene.js"></script>    
+        <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+        <sep></sep>
+        <category name="Robot Actions">
+            <block type="create_sphere">
+            <field name="NAME">small</field>
+            </block>
+        </category>
+        </xml>
+        <xml xmlns="https://developers.google.com/blockly/xml" id="workspaceBlocks" style="display: none"></xml>
+        <script>
+            var toolbox = document.getElementById("toolbox");
+            var options = { 
+                toolbox : toolbox, 
+                collapse : true, 
+                comments : true, 
+                disable : true, 
+                maxBlocks : Infinity, 
+                trashcan : true, 
+                horizontalLayout : false, 
+                toolboxPosition : 'start', 
+                css : true, 
+                media : 'https://blockly-demo.appspot.com/static/media/', 
+                rtl : false, 
+                scrollbars : true, 
+                sounds : true, 
+                oneBasedIndex : true
+            };
+            /* Inject your workspace */ 
+            var blocklyDiv =  document.getElementById('blocklyDiv');
+            var workspace = Blockly.inject(blocklyDiv, options);
+            var workspaceBlocks = document.getElementById("workspaceBlocks"); 
+            Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
+            </script>
+            <script>
+            function runCode() {
+                // Generate JavaScript code and run it.
+                Blockly.JavaScript.addReservedWords('code');
+                var code = Blockly.JavaScript.workspaceToCode(this.workspace);
+                try {
+                    eval(code);
+                } catch (e) {
+                    alert(e);
+                }
+            }
+        </script>
+        <script src="scene.js"></script>
    </body>
 </html>

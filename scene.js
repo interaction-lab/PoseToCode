@@ -9,7 +9,26 @@ const startDelay = 500;
 const makeSphereDelay = 500;
 const placeSphereDelay = 5000;
 const danceDelay = 7000;
+var animations = [];
+var sizes = [];
 // Helper functions
+
+// Blockly.JavaScript['create_sphere'] = function(block) {
+//     var dropdown_name = block.getFieldValue('NAME');
+//     var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+//     // TODO: Assemble JavaScript into code variable.
+//     var code = animations.push("make_sphere");
+//     alert(animations);
+//     return code;
+// }; 
+
+Blockly.JavaScript['create_sphere'] = function(block) {
+    // Search the text for a substring.
+    var dropdown_name = block.getFieldValue('NAME');
+    var code = 'alert(' + dropdown_name + ')';
+    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+  };
+    
 function setUpScene(scene, camera, camera1, light, light1) {
     camera.setTarget(BABYLON.Vector3.Zero());
     camera.attachControl(canvas, true);
@@ -167,8 +186,8 @@ var createScene = function () {
     // Create GUI
     var gui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");    
     // Arrays to store robot actions and sizes of snowballs
-    var animations = [];
-    var sizes = [];
+    //var animations = [];
+    //var sizes = [];
 
     // Create Reset Button
     createResetButton(gui);
@@ -196,6 +215,7 @@ var createScene = function () {
         gui.addControl(run);  
         //function for when the "run" button is clicked
         run.onPointerUpObservable.add(function() {
+            alert(animations);
             // Create pointer arrow that follows current code block
             var arrow = createPointer();
             var arrowPos = -260;
@@ -213,10 +233,12 @@ var createScene = function () {
             var currSize = "large";
             // Loop through all animations/actions
             for(var i = 0; i < animations.length; i++) {
+                alert(animations[i]);
                 if(animations[i] == "make sphere") {
                     setTimeout(() => {
                         startY += 0.5;
-                        currSize = sizes[sizeIndex];
+                        //currSize = sizes[sizeIndex];
+                        currSize = "small";
                         //set default diameter to largest size
                         var diam = largeDiameter;
                         //change diameter of the ball based on selected size
