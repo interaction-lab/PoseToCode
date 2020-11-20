@@ -46,22 +46,17 @@
                 sounds : true, 
                 oneBasedIndex : true
             };
-            /* Inject your workspace */ 
+            /* Inject your Blockly workspace */ 
             var blocklyDiv =  document.getElementById('blocklyDiv');
             var workspace = Blockly.inject(blocklyDiv, options);
             var workspaceBlocks = document.getElementById("workspaceBlocks"); 
             Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
-            </script>
-            <script>
+        </script>
+        <script>
             function runCode() {
                 // Generate JavaScript code and run it.
-                Blockly.JavaScript.addReservedWords('code');
-                var code = Blockly.JavaScript.workspaceToCode(this.workspace);
-                try {
-                    eval(code);
-                } catch (e) {
-                    alert(e);
-                }
+                var code = Blockly.JavaScript.workspaceToCode(workspace);
+                eval(code);
             }
         </script>
         <script src="scene.js"></script>

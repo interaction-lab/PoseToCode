@@ -13,21 +13,21 @@ var animations = [];
 var sizes = [];
 // Helper functions
 
-// Blockly.JavaScript['create_sphere'] = function(block) {
-//     var dropdown_name = block.getFieldValue('NAME');
-//     var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
-//     // TODO: Assemble JavaScript into code variable.
-//     var code = animations.push("make_sphere");
-//     alert(animations);
-//     return code;
-// }; 
-
 Blockly.JavaScript['create_sphere'] = function(block) {
-    // Search the text for a substring.
     var dropdown_name = block.getFieldValue('NAME');
-    var code = 'alert(' + dropdown_name + ')';
-    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
-  };
+    var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+    var functionName = Blockly.JavaScript.provideFunction_(
+        'list_lastElement',
+        [ 'function ' + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ + '(animations) {',
+          '  // Return the last element of a list.',
+          '  animations.push("make sphere");',
+          '  return animations[animations.length - 1];',
+          '}']);
+    // Generate the function call for this block.
+    animations.push("make sphere");
+    var code = 'console.log("make sphere");\n';
+    return code;
+}; 
     
 function setUpScene(scene, camera, camera1, light, light1) {
     camera.setTarget(BABYLON.Vector3.Zero());
@@ -67,21 +67,21 @@ function createRunButton() {
     return run;
 }
 
-function createPointer() {
-    var arrow = new BABYLON.GUI.TextBlock();
-    arrow.text = "←";
-    arrow.color = "red";
-    arrow.fontSize = 24; 
-    arrow.left = 420;
-    return arrow;
-}
+// function createPointer() {
+//     var arrow = new BABYLON.GUI.TextBlock();
+//     arrow.text = "←";
+//     arrow.color = "red";
+//     arrow.fontSize = 24; 
+//     arrow.left = 420;
+//     return arrow;
+// }
 
-function movePointer(arrow, arrowPos, height, gui) {
-    arrow.top = arrowPos;
-    gui.addControl(arrow);  
-    arrowPos += height;
-    return arrowPos;
-}
+// function movePointer(arrow, arrowPos, height, gui) {
+//     arrow.top = arrowPos;
+//     gui.addControl(arrow);  
+//     arrowPos += height;
+//     return arrowPos;
+// }
 
 function moveSphere(translate, currSphere, scene) {
     var j = 0;
@@ -217,8 +217,8 @@ var createScene = function () {
         run.onPointerUpObservable.add(function() {
             alert(animations);
             // Create pointer arrow that follows current code block
-            var arrow = createPointer();
-            var arrowPos = -260;
+            //var arrow = createPointer();
+            //var arrowPos = -260;
             var delay = startDelay;
             //Initialize start and end coordinates for snowballs
             var startX = -1.5;
@@ -233,7 +233,6 @@ var createScene = function () {
             var currSize = "large";
             // Loop through all animations/actions
             for(var i = 0; i < animations.length; i++) {
-                alert(animations[i]);
                 if(animations[i] == "make sphere") {
                     setTimeout(() => {
                         startY += 0.5;
@@ -251,7 +250,7 @@ var createScene = function () {
                         else if(currSize == "large"){
                             diam = largeDiameter;
                         }
-                        arrowPos = movePointer(arrow, arrowPos, 80, gui);
+                        //arrowPos = movePointer(arrow, arrowPos, 80, gui);
                         //create a new snowball at the position of the robot's hands
                         currSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: diam, segments: 32}, scene);
                         currSphere.position = new BABYLON.Vector3(startX,startY,startZ);
@@ -262,7 +261,7 @@ var createScene = function () {
                 else if(animations[i] == "dance") {
                     idleAnim.stop();
                     setTimeout(() => {
-                        arrowPos = movePointer(arrow, arrowPos, 40, gui);
+                        //arrowPos = movePointer(arrow, arrowPos, 40, gui);
                         danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
                       }, delay);
                       delay += danceDelay;
@@ -272,7 +271,7 @@ var createScene = function () {
                 else if(animations[i] == "place") {
                     idleAnim.stop();
                     setTimeout(() => {
-                        arrowPos = movePointer(arrow, arrowPos, 40, gui);
+                        //arrowPos = movePointer(arrow, arrowPos, 40, gui);
                         if(currSize == "small") {
                             endY += 0.1;
                             moveSphere(new BABYLON.Vector3(endX, endY, endZ), currSphere, scene);
