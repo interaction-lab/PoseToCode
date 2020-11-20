@@ -8,9 +8,67 @@
         <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
         <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
         <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+        <script src="blockly/blockly_compressed.js"></script>
+        <script src="blockly/javascript_compressed.js"></script>
+        <script src="blockly/blocks_compressed.js"></script>
+        <script src="blockly/msg/js/en.js"></script>
+        <script src="code_blocks.js"></script>
     </head>
     <body>
+        <div id="blocklyDiv"><button id="run" onclick="runCode()">Click to Run!</button></div>
         <canvas id="renderCanvas" touch-action="none"></canvas>
-        <script src="scene.js"></script>    
+        <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+        <sep></sep>
+        <category name="Actions">
+            <block type="create_sphere">
+            <field name="NAME">small</field>
+            </block>
+            <block type="place"></block>
+            <block type="dance"></block>
+        </category>
+        </xml>
+        <xml xmlns="https://developers.google.com/blockly/xml" id="workspaceBlocks" style="display: none"></xml>
+        <script>
+            var toolbox = document.getElementById("toolbox");
+            var options = { 
+                toolbox : toolbox, 
+                collapse : true, 
+                comments : true, 
+                disable : true, 
+                maxBlocks : Infinity, 
+                trashcan : true, 
+                horizontalLayout : false, 
+                toolboxPosition : 'start', 
+                css : true, 
+                media : 'https://blockly-demo.appspot.com/static/media/', 
+                rtl : false, 
+                scrollbars : true, 
+                sounds : true, 
+                oneBasedIndex : true
+            };
+            /* Inject your Blockly workspace */ 
+            var blocklyDiv =  document.getElementById('blocklyDiv');
+            var workspace = Blockly.inject(blocklyDiv, options);
+            var workspaceBlocks = document.getElementById("workspaceBlocks"); 
+            Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
+        </script>
+        <script>
+            function highlightBlock(id) {
+                workspace.highlightBlock(id);
+            }
+            function runCode() {
+                // Generate JavaScript code and run it.
+                window.LoopTrap = 1000;
+                Blockly.JavaScript.INFINITE_LOOP_TRAP = 'if(--window.LoopTrap == 0) throw "Infinite loop.";\n';
+                var code = Blockly.JavaScript.workspaceToCode(workspace);
+                try {
+                    eval(code);
+                } catch (e) {
+                    alert(e);
+                }
+                runOnGUI();
+            }
+        </script>
+        <script src="scene.js"></script>
    </body>
 </html>
