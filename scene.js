@@ -26,12 +26,14 @@ Blockly.JavaScript['create_sphere'] = function(block) {
     animations.push("make sphere");
     sizes.push(dropdown_name);
     var code = 'console.log("make sphere");\n';
+    console.log(animations);
     return code;
 }; 
 
 Blockly.JavaScript['place'] = function(block) {
     animations.push("place");
     var code = 'console.log("place");\n';
+    console.log(animations);
     return code;
 };
 
@@ -81,6 +83,7 @@ function moveRobotUp(robot, delay) {
     }, delay);
 }
 function runOnGUI() {
+    console.log(animations);
     run.onPointerUpObservable.notifyObservers();
 }
 function resetGUI() {
