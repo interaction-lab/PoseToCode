@@ -1,6 +1,15 @@
 // Global variables
-var canvas = document.getElementById("renderCanvas"); // Get the canvas element
-var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+var canvas = document.getElementById("renderCanvas");
+var engine = new BABYLON.Engine(canvas, true);
+var scene = new BABYLON.Scene(engine);
+// Create GUI
+var gui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+// Keep track of all GUI elements
+var guiElements = [];
+// Arrays to store robot actions and sizes of snowballs
+var animations = [];
+var sizes = [];
+
 var topBlock = -300;
 const largeDiameter = 1.2;
 const mediumDiameter = 0.9;
@@ -9,26 +18,36 @@ const startDelay = 500;
 const makeSphereDelay = 500;
 const placeSphereDelay = 5000;
 const danceDelay = 7000;
-var animations = [];
-var sizes = [];
-// Helper functions
 
+// functions for code blocks
 Blockly.JavaScript['create_sphere'] = function(block) {
     var dropdown_name = block.getFieldValue('NAME');
-    var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
-    var functionName = Blockly.JavaScript.provideFunction_(
-        'list_lastElement',
-        [ 'function ' + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ + '(animations) {',
-          '  // Return the last element of a list.',
-          '  animations.push("make sphere");',
-          '  return animations[animations.length - 1];',
-          '}']);
-    // Generate the function call for this block.
     animations.push("make sphere");
+    sizes.push(dropdown_name);
     var code = 'console.log("make sphere");\n';
     return code;
 }; 
-    
+
+Blockly.JavaScript['place'] = function(block) {
+    animations.push("place");
+    var code = 'console.log("place");\n';
+    return code;
+};
+
+Blockly.JavaScript['dance'] = function(block) {
+    animations.push("dance");
+    var code = 'console.log("dance");\n';
+    return code;
+};
+
+function clearGUI() {
+    for (i = 0; i < guiElements.length; i++) {
+        guiElements[i].isVisible = false;
+    }
+    animations = [];
+}
+
+// Helper functions
 function setUpScene(scene, camera, camera1, light, light1) {
     camera.setTarget(BABYLON.Vector3.Zero());
     camera.attachControl(canvas, true);
@@ -42,7 +61,7 @@ function setUpScene(scene, camera, camera1, light, light1) {
     camera1.wheelDeltaPercentage = 0.1;
 }
 
-function createResetButton(gui) {
+function createResetButton() {
     var reset = BABYLON.GUI.Button.CreateSimpleButton("but", "Reset");
     reset.width = 0.1;
     reset.height = "40px";
@@ -51,9 +70,7 @@ function createResetButton(gui) {
     reset.left = -400;
     reset.top = 300;
     gui.addControl(reset);
-    reset.onPointerUpObservable.add(function() {
-        window.location.reload();
-    });
+    return reset;
 }
 
 function createRunButton() {
@@ -64,24 +81,9 @@ function createRunButton() {
     run.background = "green";
     run.left = 300;
     run.top = 300;
+    gui.addControl(run);
     return run;
 }
-
-// function createPointer() {
-//     var arrow = new BABYLON.GUI.TextBlock();
-//     arrow.text = "←";
-//     arrow.color = "red";
-//     arrow.fontSize = 24; 
-//     arrow.left = 420;
-//     return arrow;
-// }
-
-// function movePointer(arrow, arrowPos, height, gui) {
-//     arrow.top = arrowPos;
-//     gui.addControl(arrow);  
-//     arrowPos += height;
-//     return arrowPos;
-// }
 
 function moveSphere(translate, currSphere, scene) {
     var j = 0;
@@ -100,97 +102,14 @@ function moveRobotUp(robot, delay) {
     }, delay);
 }
 
-function makeSphereBlock(gui) {
-    var makeSphere = BABYLON.GUI.Button.CreateSimpleButton("but", "Make Sphere");
-    makeSphere.position = new BABYLON.Vector3(1,1,1);
-    makeSphere.width = 0.1;
-    makeSphere.height = "40px";
-    makeSphere.color = "white";
-    makeSphere.background = "blue";
-    gui.addControl(makeSphere);  
-    makeSphere.left = 300;
-    topBlock += 40;
-    makeSphere.top = topBlock;
-    topBlock += 40;
-}
-
-function createCheckBox(size, gui) {
-    var checkbox = new BABYLON.GUI.Checkbox();
-    checkbox.width = "20px";
-    checkbox.height = "20px";
-    checkbox.isChecked = false;
-    checkbox.color = "blue";
-    checkbox.top = topBlock; 
-
-    var label = new BABYLON.GUI.TextBlock();
-    label.text = size;
-    label.top = topBlock;
-    label.color = "white";
-    label.marginLeft = "5px";
-    label.width = "50px";
-    if(size == "medium")
-    {
-        checkbox.left = 280;
-        label.width = "70px";
-        label.left = 323;
-    }
-    else if (size == "large") {
-        checkbox.left = 376;
-        label.left = 408;
-    }
-    else {
-        checkbox.left = 200;
-        label.left = 233;
-    }
-    gui.addControl(checkbox);
-    gui.addControl(label); 
-    return checkbox;
-}
-
-function makeDanceBlock(gui) {
-    var dance = BABYLON.GUI.Button.CreateSimpleButton("but", "Dance");
-    dance.position = new BABYLON.Vector3(1,1,1);
-    dance.width = 0.1;
-    dance.height = "40px";
-    dance.color = "white";
-    dance.background = "purple";
-    dance.left = 300;
-    topBlock += 40;
-    dance.top = topBlock;
-    gui.addControl(dance);
-}
-
-function makePlacementBlock(gui) {
-    var place = BABYLON.GUI.Button.CreateSimpleButton("but", "Place Snowball");
-    place.position = new BABYLON.Vector3(1,1,1);
-    place.width = 0.1;
-    place.height = "40px";
-    place.color = "white";
-    place.background = "red";
-    place.left = 300;
-    topBlock += 40;
-    place.top = topBlock;
-    gui.addControl(place);
-}
-
 /******* main function ******/
 var createScene = function () {
     // Create scene + Set up
-    var scene = new BABYLON.Scene(engine);
     var camera = new BABYLON.FreeCamera("camera", new BABYLON.Vector3(0, 0, 0), scene);
     var camera1 = new BABYLON.ArcRotateCamera("camera1", Math.PI / 2, Math.PI / 4, 10, new BABYLON.Vector3(0, -4, 0), scene);
     var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
     var light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
     setUpScene(scene, camera, camera1, light, light1);
-
-    // Create GUI
-    var gui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");    
-    // Arrays to store robot actions and sizes of snowballs
-    //var animations = [];
-    //var sizes = [];
-
-    // Create Reset Button
-    createResetButton(gui);
 
     // Load robot character from github and play animation
     BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/nisha-chat/hourofcode/main/", "robot.glb", scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
@@ -210,12 +129,17 @@ var createScene = function () {
         // Start with Idle Animation
         idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 
+        // Create Reset Button
+        var reset = createResetButton();
+        //function for when the "reset" button is clicked
+        reset.onPointerUpObservable.add(function() {
+            clearGUI();
+            robot.position.y = 0;
+        });
         // Create Run Button
         var run = createRunButton();
-        gui.addControl(run);  
         //function for when the "run" button is clicked
         run.onPointerUpObservable.add(function() {
-            alert(animations);
             // Create pointer arrow that follows current code block
             //var arrow = createPointer();
             //var arrowPos = -260;
@@ -236,8 +160,7 @@ var createScene = function () {
                 if(animations[i] == "make sphere") {
                     setTimeout(() => {
                         startY += 0.5;
-                        //currSize = sizes[sizeIndex];
-                        currSize = "small";
+                        currSize = sizes[sizeIndex];
                         //set default diameter to largest size
                         var diam = largeDiameter;
                         //change diameter of the ball based on selected size
@@ -250,10 +173,10 @@ var createScene = function () {
                         else if(currSize == "large"){
                             diam = largeDiameter;
                         }
-                        //arrowPos = movePointer(arrow, arrowPos, 80, gui);
                         //create a new snowball at the position of the robot's hands
                         currSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: diam, segments: 32}, scene);
                         currSphere.position = new BABYLON.Vector3(startX,startY,startZ);
+                        guiElements.push(currSphere);
                         sizeIndex++;
                     }, delay);
                     delay += makeSphereDelay;
@@ -261,7 +184,6 @@ var createScene = function () {
                 else if(animations[i] == "dance") {
                     idleAnim.stop();
                     setTimeout(() => {
-                        //arrowPos = movePointer(arrow, arrowPos, 40, gui);
                         danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
                       }, delay);
                       delay += danceDelay;
@@ -271,7 +193,6 @@ var createScene = function () {
                 else if(animations[i] == "place") {
                     idleAnim.stop();
                     setTimeout(() => {
-                        //arrowPos = movePointer(arrow, arrowPos, 40, gui);
                         if(currSize == "small") {
                             endY += 0.1;
                             moveSphere(new BABYLON.Vector3(endX, endY, endZ), currSphere, scene);
@@ -292,51 +213,6 @@ var createScene = function () {
                     idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
                     moveRobotUp(robot, delay);
                 }
-            }
-        });
-
-        // take in keyboard input
-        scene.onKeyboardObservable.add((kbInfo) => {
-            switch (kbInfo.type) {
-                case BABYLON.KeyboardEventTypes.KEYDOWN:
-                    switch (kbInfo.event.key) {
-                        case "m":
-                            // make sphere block
-                            makeSphereBlock(gui);
-                            //create checkboxes for size
-                            var checkboxSmall = createCheckBox("small", gui);
-                            var checkboxMed = createCheckBox("medium", gui);
-                            var checkboxLarge = createCheckBox("large", gui);
-                            checkboxSmall.onIsCheckedChangedObservable.add(function(value) {
-                                sizes.push("small");
-                                // "grey out" other options once one is selected
-                                checkboxMed.background = "grey";
-                                checkboxLarge.background = "grey";
-                            });
-                            checkboxMed.onIsCheckedChangedObservable.add(function(value) {
-                                sizes.push("medium");
-                                checkboxSmall.background = "grey";
-                                checkboxLarge.background = "grey";
-                            });
-                            checkboxLarge.onIsCheckedChangedObservable.add(function(value) {
-                                sizes.push("large");
-                                checkboxMed.background = "grey";
-                                checkboxSmall.background = "grey";
-                            });
-                            animations.push("make sphere");
-                        break
-                        case "d":
-                            // create dance block
-                            makeDanceBlock(gui);
-                            animations.push("dance");
-                        break
-                        case "p":
-                            // create placement block
-                            makePlacementBlock(gui);
-                            animations.push("place");
-                        break
-                    }
-                break;
             }
         });
     });
