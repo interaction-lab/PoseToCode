@@ -10,6 +10,7 @@ var guiElements = [];
 var animations = [];
 var sizes = [];
 var run = createRunTrigger();
+var reset = createResetTrigger();
 
 var largeDiameter = 1.2;
 var mediumDiameter = 0.9;
@@ -40,7 +41,7 @@ Blockly.JavaScript['dance'] = function(block) {
     return code;
 };
 // Helper functions
-function setUpScene(scene, camera, camera1, light, light1) {
+function setUpScene(camera, camera1, light, light1) {
     camera.setTarget(BABYLON.Vector3.Zero());
     camera.attachControl(canvas, true);
     light.intensity = 0.7;
@@ -52,27 +53,19 @@ function setUpScene(scene, camera, camera1, light, light1) {
     camera1.upperRadiusLimit = 10;
     camera1.wheelDeltaPercentage = 0.1;
 }
-
-function createResetButton() {
+function createResetTrigger() {
     var reset = BABYLON.GUI.Button.CreateSimpleButton("but", "Reset");
-    reset.width = 0.1;
-    reset.height = "40px";
-    reset.color = "white";
-    reset.background = "green";
-    reset.left = -400;
-    reset.top = 300;
+    reset.isVisible = false;
     gui.addControl(reset);
     return reset;
 }
-
 function createRunTrigger() {
     var run = BABYLON.GUI.Button.CreateSimpleButton("but", "Run");
     run.isVisible = false;
     gui.addControl(run);
     return run;
 }
-
-function moveSphere(translate, currSphere, scene) {
+function moveSphere(translate, currSphere) {
     var j = 0;
     var deltaDistance = 0.009;
     var dist = translate.length();
@@ -82,7 +75,6 @@ function moveSphere(translate, currSphere, scene) {
         if((j++) * deltaDistance <= dist) currSphere.translate(dir, deltaDistance, BABYLON.Space.WORLD);
     });
 }
-
 function moveRobotUp(robot, delay) {
     setTimeout(() => {
         robot.position.y += 0.5                    
@@ -91,12 +83,14 @@ function moveRobotUp(robot, delay) {
 function runOnGUI() {
     run.onPointerUpObservable.notifyObservers();
 }
-function clearGUI() {
+function resetGUI() {
     for (i = 0; i < guiElements.length; i++) {
         guiElements[i].isVisible = false;
     }
+    guiElements = [];
     animations = [];
     sizes = [];
+    reset.onPointerUpObservable.notifyObservers();
 }
 
 /******* main function ******/
@@ -106,7 +100,7 @@ var createScene = function () {
     var camera1 = new BABYLON.ArcRotateCamera("camera1", Math.PI / 2, Math.PI / 4, 10, new BABYLON.Vector3(0, -4, 0), scene);
     var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
     var light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
-    setUpScene(scene, camera, camera1, light, light1);
+    setUpScene(camera, camera1, light, light1);
 
     // Load robot character from github and play animation
     BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/nisha-chat/hourofcode/main/", "robot.glb", scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
@@ -126,11 +120,9 @@ var createScene = function () {
         // Start with Idle Animation
         idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 
-        // Create Reset Button
-        var reset = createResetButton();
         //function for when the "reset" button is clicked
         reset.onPointerUpObservable.add(function() {
-            clearGUI();
+            //reset robot position
             robot.position.y = 0;
         });
 
@@ -166,7 +158,7 @@ var createScene = function () {
                             diam = largeDiameter;
                         }
                         //create a new snowball at the position of the robot's hands
-                        currSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: diam, segments: 32}, scene);
+                        currSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: diam, segments: 32});
                         currSphere.position = new BABYLON.Vector3(startX,startY,startZ);
                         guiElements.push(currSphere);
                         sizeIndex++;
@@ -187,17 +179,17 @@ var createScene = function () {
                     setTimeout(() => {
                         if(currSize == "small") {
                             endY += 0.1;
-                            moveSphere(new BABYLON.Vector3(endX, endY, endZ), currSphere, scene);
+                            moveSphere(new BABYLON.Vector3(endX, endY, endZ), currSphere);
                             placeSmallAnim.start(false, 1.0, 0, 2.3, false);   
                         } 
                         else if(currSize == "medium") {
                             endY += 0.3;
-                            moveSphere(new BABYLON.Vector3(endX, endY, endZ), currSphere, scene);
+                            moveSphere(new BABYLON.Vector3(endX, endY, endZ), currSphere);
                             placeMediumAnim.start(false, 1.0, placeMediumAnim.from, placeMediumAnim.to, false);  
                         }   
                         else if(currSize == "large"){
                             endY += 0.5;
-                            moveSphere(new BABYLON.Vector3(endX, endY, endZ), currSphere, scene);
+                            moveSphere(new BABYLON.Vector3(endX, endY, endZ), currSphere);
                             placeLargeAnim.start(false, 1.0, placeLargeAnim.from, placeLargeAnim.to, false);  
                         }   
                     }, delay);
