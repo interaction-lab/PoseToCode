@@ -9,15 +9,15 @@ var guiElements = [];
 // Arrays to store robot actions and sizes of snowballs
 var animations = [];
 var sizes = [];
+var run = createRunTrigger();
 
-var topBlock = -300;
-const largeDiameter = 1.2;
-const mediumDiameter = 0.9;
-const smallDiameter = 0.6;
-const startDelay = 500;
-const makeSphereDelay = 500;
-const placeSphereDelay = 5000;
-const danceDelay = 7000;
+var largeDiameter = 1.2;
+var mediumDiameter = 0.9;
+var smallDiameter = 0.6;
+var startDelay = 500;
+var makeSphereDelay = 500;
+var placeSphereDelay = 5000;
+var danceDelay = 7000;
 
 // functions for code blocks
 Blockly.JavaScript['create_sphere'] = function(block) {
@@ -39,14 +39,6 @@ Blockly.JavaScript['dance'] = function(block) {
     var code = 'console.log("dance");\n';
     return code;
 };
-
-function clearGUI() {
-    for (i = 0; i < guiElements.length; i++) {
-        guiElements[i].isVisible = false;
-    }
-    animations = [];
-}
-
 // Helper functions
 function setUpScene(scene, camera, camera1, light, light1) {
     camera.setTarget(BABYLON.Vector3.Zero());
@@ -73,14 +65,9 @@ function createResetButton() {
     return reset;
 }
 
-function createRunButton() {
-    var run = BABYLON.GUI.Button.CreateSimpleButton("but", "Click to Run!");
-    run.width = 0.1;
-    run.height = "40px";
-    run.color = "white";
-    run.background = "green";
-    run.left = 300;
-    run.top = 300;
+function createRunTrigger() {
+    var run = BABYLON.GUI.Button.CreateSimpleButton("but", "Run");
+    run.isVisible = false;
     gui.addControl(run);
     return run;
 }
@@ -100,6 +87,16 @@ function moveRobotUp(robot, delay) {
     setTimeout(() => {
         robot.position.y += 0.5                    
     }, delay);
+}
+function runOnGUI() {
+    run.onPointerUpObservable.notifyObservers();
+}
+function clearGUI() {
+    for (i = 0; i < guiElements.length; i++) {
+        guiElements[i].isVisible = false;
+    }
+    animations = [];
+    sizes = [];
 }
 
 /******* main function ******/
@@ -136,15 +133,10 @@ var createScene = function () {
             clearGUI();
             robot.position.y = 0;
         });
-        // Create Run Button
-        var run = createRunButton();
+
         //function for when the "run" button is clicked
         run.onPointerUpObservable.add(function() {
-            // Create pointer arrow that follows current code block
-            //var arrow = createPointer();
-            //var arrowPos = -260;
             var delay = startDelay;
-            //Initialize start and end coordinates for snowballs
             var startX = -1.5;
             var startY = 1.3;
             var startZ = 1;
@@ -185,8 +177,8 @@ var createScene = function () {
                     idleAnim.stop();
                     setTimeout(() => {
                         danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
-                      }, delay);
-                      delay += danceDelay;
+                    }, delay);
+                    delay += danceDelay;
                     danceAnim.stop();
                     idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
                 }
@@ -214,7 +206,7 @@ var createScene = function () {
                     moveRobotUp(robot, delay);
                 }
             }
-        });
+        });   
     });
     return scene;
 };

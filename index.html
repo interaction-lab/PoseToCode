@@ -53,10 +53,20 @@
             Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
         </script>
         <script>
+            function highlightBlock(id) {
+                workspace.highlightBlock(id);
+            }
             function runCode() {
                 // Generate JavaScript code and run it.
+                window.LoopTrap = 1000;
+                Blockly.JavaScript.INFINITE_LOOP_TRAP = 'if(--window.LoopTrap == 0) throw "Infinite loop.";\n';
                 var code = Blockly.JavaScript.workspaceToCode(workspace);
-                eval(code);
+                try {
+                    eval(code);
+                } catch (e) {
+                    alert(e);
+                }
+                runOnGUI();
             }
         </script>
         <script src="scene.js"></script>
