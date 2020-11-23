@@ -72,6 +72,9 @@
                     alert(e);
                 }
                 runOnGUI();
+                setTimeout(function() { 
+                    document.activeElement.blur();
+                }, 250);
             }
         </script>
         <script src="scene.js"></script>
