@@ -94,6 +94,9 @@ function resetGUI() {
     animations = [];
     sizes = [];
     reset.onPointerUpObservable.notifyObservers();
+    setTimeout(function() { 
+        document.activeElement.blur();
+    }, 150);
 }
 
 /******* main function ******/
