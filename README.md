@@ -2,4 +2,4 @@
 
 A code block-based activity to guides a virtual robot to build a snowman
 
-(https://github.com/nisha-chat/hourofcode/blob/main/screenshot.png)
+![Screenshot](screenshot.png)
