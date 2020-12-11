@@ -15,6 +15,13 @@
         <script src="code_blocks.js"></script>
     </head>
     <body>
+        <div id="levelUpModal" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="inject-text">Some text</p>
+          </div>
+        </div>
         <div id="blocklyDiv">
             <button id="run" onclick="runCode()">Click to Run!</button>
             <button id="reset" onclick="resetGUI()">Reset</button>
@@ -75,6 +82,18 @@
                 setTimeout(function() { 
                     document.activeElement.blur();
                 }, 150);
+            }
+        </script>
+        <script>
+            var modal = document.getElementById("levelUpModal");
+            var span = document.getElementsByClassName("close")[0];
+            span.onclick = function() {
+              modal.style.display = "none";
+            }
+            window.onclick = function(event) {
+              if (event.target == modal) {
+                modal.style.display = "none";
+              }
             }
         </script>
         <script src="scene.js"></script>

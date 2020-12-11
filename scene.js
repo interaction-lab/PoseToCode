@@ -20,6 +20,12 @@ var makeSphereDelay = 500;
 var placeSphereDelay = 5000;
 var danceDelay = 7000;
 
+var level = 1;
+var levelOneDone = false; 
+// Can initialize ahead of time because we know these six actions MUST happen
+// in order for a user to pass level one
+var levelOneDoneDelay = 3*makeSphereDelay + 3*placeSphereDelay;
+
 // functions for code blocks
 Blockly.JavaScript['create_sphere'] = function(block) {
     var dropdown_name = block.getFieldValue('NAME');
@@ -79,12 +85,21 @@ function moveSphere(translate, currSphere) {
 }
 function moveRobotUp(robot, delay) {
     setTimeout(() => {
-        robot.position.y += 0.5                    
+        robot.position.y += 0.5                 
     }, delay);
 }
 function runOnGUI() {
-    console.log(animations);
     run.onPointerUpObservable.notifyObservers();
+    if (level == 1 && detectLevelOneDone()) {
+        setTimeout(() => {
+            var audio = new Audio('party_horn-Mike_Koenig-76599891.mp3');
+            audio.play();
+            document.getElementById("levelUpModal").style.display = "block";
+            document.getElementById("levelUpModal")
+                .querySelector("p").innerHTML = "You passed level 1!"
+            level++;
+        }, levelOneDoneDelay);
+    }
 }
 function resetGUI() {
     for (i = 0; i < guiElements.length; i++) {
@@ -97,6 +112,40 @@ function resetGUI() {
     setTimeout(function() { 
         document.activeElement.blur();
     }, 150);
+}
+
+// Returns flag for whether the user's programmed sequence of events will
+// create a three-tiered snowman. Assumes that to pass this level, there's no 
+// "side trips" on the way to making this snowman (i.e. no other snowballs are
+// created and placed in between the desired sequence). Dance moves are okay. :)
+function detectLevelOneDone() {
+    // Look for right sequence of animations
+    var sequence = ["make sphere", "place", "make sphere", "place", "make sphere", "place"];
+    var spotInSequence = 0;
+    for (i = 0; i < animations.length; i++) {
+        if (spotInSequence == 6) break;
+        if (animations[i] == "dance") continue;
+        if (animations[i] == sequence[spotInSequence]) {
+            spotInSequence++;
+        } else {
+            break;
+        }
+    }
+
+    if (spotInSequence != 6) return false;
+
+    sequence = ["large", "medium", "small"];
+    spotInSequence = 0;
+    for (i = 0; i < sizes.length; i++) {
+        if (spotInSequence == 3) break;
+        if (sizes[i] == sequence[i]) {
+            spotInSequence++;
+        } else break;
+    }
+
+    if (spotInSequence != 3) return false;
+
+    return true;
 }
 
 /******* main function ******/
@@ -160,7 +209,7 @@ var createScene = function () {
                         else if(currSize == "medium") {
                             diam = mediumDiameter;
                         }
-                        else if(currSize == "large"){
+                        else if(currSize == "large") {
                             diam = largeDiameter;
                         }
                         //create a new snowball at the position of the robot's hands
@@ -169,7 +218,7 @@ var createScene = function () {
                         guiElements.push(currSphere);
                         sizeIndex++;
                     }, delay);
-                    delay += makeSphereDelay;
+                    levelOneDoneDelay += makeSphereDelay;
                 }
                 else if(animations[i] == "dance") {
                     idleAnim.stop();
@@ -177,6 +226,7 @@ var createScene = function () {
                         danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
                     }, delay);
                     delay += danceDelay;
+                    levelOneDoneDelay += danceDelay;
                     danceAnim.stop();
                     idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
                 }
