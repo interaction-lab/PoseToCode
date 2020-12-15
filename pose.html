@@ -24,12 +24,18 @@ const canvasCtx = canvasElement.getContext('2d');
 function onResults(results) {
   canvasCtx.save();
   canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+  // console.log("hi")
+  // console.log(results.poseLandmarks[14].x)
   canvasCtx.drawImage(
       results.image, 0, 0, canvasElement.width, canvasElement.height);
   drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS,
                  {color: '#00FF00', lineWidth: 4});
   drawLandmarks(canvasCtx, results.poseLandmarks,
                 {color: '#FF0000', lineWidth: 2});
+  if(results.poseLandmarks[14].y < results.poseLandmarks[10].y){
+  	console.log("right up")
+  	alert("Run!")
+  }
   canvasCtx.restore();
 }
 
