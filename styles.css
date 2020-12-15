@@ -19,6 +19,12 @@ html, body {
     float: right;
 }
 
+#poseDiv {
+    height: 100%; 
+    width: 25%;
+    float: left;
+}
+
 #run {
     float: right;
     position: absolute;
