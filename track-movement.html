@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="container">
+    <video class="input_video" hidden></video>
+    <canvas class="output_canvas" width="1280px" height="720px"></canvas>
+  </div>        
+</body>
+</html>
+
+<script type="module">
+const videoElement = document.getElementsByClassName('input_video')[0];
+const canvasElement = document.getElementsByClassName('output_canvas')[0];
+const canvasCtx = canvasElement.getContext('2d');
+
+function onResults(results) {
+  canvasCtx.save();
+  canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+  canvasCtx.drawImage(
+      results.image, 0, 0, canvasElement.width, canvasElement.height);
+  drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS,
+                 {color: '#00FF00', lineWidth: 4});
+  drawLandmarks(canvasCtx, results.poseLandmarks,
+                {color: '#FF0000', lineWidth: 2});
+  var makeDistLeft = Math.abs(results.poseLandmarks[22].x - results.poseLandmarks[12].x)
+  var makeDistRight = Math.abs(results.poseLandmarks[21].x - results.poseLandmarks[11].x)
+  //dance (raise the roof --> hands above head)
+  if(results.poseLandmarks[21].y < results.poseLandmarks[2].y && results.poseLandmarks[22].y < results.poseLandmarks[2].y) {
+    setTimeout(() => {    
+      console.log("dance")
+    }, 500);
+    canvasCtx.restore();
+  }
+  //run (running motion --> start with right hand above shoulder)
+  else if(results.poseLandmarks[19].y < results.poseLandmarks[2].y && !(results.poseLandmarks[16].y < results.poseLandmarks[5].y)) {
+    setTimeout(() => {     
+      //left hand above shoulder
+      if(results.poseLandmarks[20].y < results.poseLandmarks[5].y && !(results.poseLandmarks[19].y < results.poseLandmarks[2].y)) {
+        console.log("run")
+      } 
+    }, 600);
+    canvasCtx.restore();
+  }
+  else if(
+  makeDistLeft < 0.01 && 
+  makeDistRight < 0.01 &&
+  results.poseLandmarks[22].y < results.poseLandmarks[12].y &&
+  results.poseLandmarks[21].y < results.poseLandmarks[11].y
+  ) {
+    setTimeout(() => {    
+      console.log("make sphere")
+    }, 500);
+    alert("choose a size")
+    setTimeout(() => {  
+      var dist = Math.abs(results.poseLandmarks[19].x - results.poseLandmarks[20].x)
+      console.log(dist)
+      if(dist < 0.25) {
+        console.log("small")
+      }
+      else if (dist < 0.5) {
+        console.log("medium")
+      }
+      else {
+        console.log("large")
+      }
+    }, 2000);
+    canvasCtx.restore();
+  }
+
+  //var dist = Math.abs(results.poseLandmarks[19].x - results.poseLandmarks[20].x)
+  //small = dist < 0.1
+  //medium = dist < 0.4
+  //large = dist > 0.4
+}
+
+const pose = new Pose({locateFile: (file) => {
+  return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
+}});
+pose.setOptions({
+  selfieMode: true,
+  upperBodyOnly: false,
+  smoothLandmarks: true,
+  minDetectionConfidence: 0.5,
+  minTrackingConfidence: 0.5
+});
+pose.onResults(onResults);
+
+const camera = new Camera(videoElement, {
+  onFrame: async () => {
+    await pose.send({image: videoElement});
+  },
+  width: 1280,
+  height: 720
+});
+camera.start();
+</script>
