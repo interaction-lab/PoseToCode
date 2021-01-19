@@ -30,8 +30,7 @@ function onResults(results) {
                  {color: '#00FF00', lineWidth: 4});
   drawLandmarks(canvasCtx, results.poseLandmarks,
                 {color: '#FF0000', lineWidth: 2});
-  var makeDistLeft = Math.abs(results.poseLandmarks[22].x - results.poseLandmarks[12].x)
-  var makeDistRight = Math.abs(results.poseLandmarks[21].x - results.poseLandmarks[11].x)
+
   //dance (raise the roof --> hands above head)
   if(results.poseLandmarks[21].y < results.poseLandmarks[2].y && results.poseLandmarks[22].y < results.poseLandmarks[2].y) {
     setTimeout(() => {    
@@ -49,7 +48,13 @@ function onResults(results) {
     }, 600);
     canvasCtx.restore();
   }
-  
+  //reset (x with hands across chest)
+  else if(results.poseLandmarks[19].x < results.poseLandmarks[20].x) {
+    setTimeout(() => {     
+      console.log("reset")
+    }, 600);
+    canvasCtx.restore();
+  }
 }
 
 const pose = new Pose({locateFile: (file) => {
