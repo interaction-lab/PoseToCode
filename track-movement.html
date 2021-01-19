@@ -49,36 +49,7 @@ function onResults(results) {
     }, 600);
     canvasCtx.restore();
   }
-  else if(
-  makeDistLeft < 0.01 && 
-  makeDistRight < 0.01 &&
-  results.poseLandmarks[22].y < results.poseLandmarks[12].y &&
-  results.poseLandmarks[21].y < results.poseLandmarks[11].y
-  ) {
-    setTimeout(() => {    
-      console.log("make sphere")
-    }, 500);
-    alert("choose a size")
-    setTimeout(() => {  
-      var dist = Math.abs(results.poseLandmarks[19].x - results.poseLandmarks[20].x)
-      console.log(dist)
-      if(dist < 0.25) {
-        console.log("small")
-      }
-      else if (dist < 0.5) {
-        console.log("medium")
-      }
-      else {
-        console.log("large")
-      }
-    }, 2000);
-    canvasCtx.restore();
-  }
-
-  //var dist = Math.abs(results.poseLandmarks[19].x - results.poseLandmarks[20].x)
-  //small = dist < 0.1
-  //medium = dist < 0.4
-  //large = dist > 0.4
+  
 }
 
 const pose = new Pose({locateFile: (file) => {
