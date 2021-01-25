@@ -42,8 +42,8 @@ function onResults(results) {
     startMotion += 1;
   }
 
-  //dance (raise the roof --> hands above head)
-  if(results.poseLandmarks[21].y < results.poseLandmarks[2].y && results.poseLandmarks[22].y < results.poseLandmarks[2].y) {
+  //dance (both arms out to the side)
+  if(results.poseLandmarks[14].y == results.poseLandmarks[12].y && results.poseLandmarks[11].y == results.poseLandmarks[13].y) {
     setTimeout(() => {    
       console.log("dance")
     }, 500);
@@ -59,8 +59,8 @@ function onResults(results) {
     }, 600);
     canvasCtx.restore();
   }
-  //reset (x with hands across chest)
-  else if(results.poseLandmarks[19].x < results.poseLandmarks[20].x) {
+  //reset (both hands above head)
+  else if(results.poseLandmarks[21].y < results.poseLandmarks[2].y && results.poseLandmarks[22].y < results.poseLandmarks[2].y) {
     setTimeout(() => {     
       console.log("reset")
     }, 600);
