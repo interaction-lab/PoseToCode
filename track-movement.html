@@ -46,16 +46,13 @@ function onResults(results) {
   if(results.poseLandmarks[14].y == results.poseLandmarks[12].y && results.poseLandmarks[11].y == results.poseLandmarks[13].y) {
     setTimeout(() => {    
       console.log("dance")
-    }, 500);
+    }, 600);
     canvasCtx.restore();
   }
-  //run (running motion --> start with right hand above shoulder)
-  else if(results.poseLandmarks[19].y < results.poseLandmarks[2].y && !(results.poseLandmarks[16].y < results.poseLandmarks[5].y)) {
+  //run (paused running motion --> left hand up + right hand down)
+  else if(results.poseLandmarks[20].y < results.poseLandmarks[5].y && !(results.poseLandmarks[19].y < results.poseLandmarks[2].y)) {
     setTimeout(() => {     
-      //left hand above shoulder
-      if(results.poseLandmarks[20].y < results.poseLandmarks[5].y && !(results.poseLandmarks[19].y < results.poseLandmarks[2].y)) {
-        console.log("run")
-      } 
+      console.log("run")
     }, 600);
     canvasCtx.restore();
   }
@@ -99,13 +96,13 @@ function onResults(results) {
     canvasCtx.restore();
   }
   //place sphere (squat)
-  else if(results.poseLandmarks[28].y - results.poseLandmarks[24].y < standingDistLeft && results.poseLandmarks[27].y - results.poseLandmarks[23].y < standingDistRight) {
-    setTimeout(() => {     
-      console.log("place sphere")
-    }, 600);
-    sphereSizeFlag = false;
-    canvasCtx.restore();
-  }
+  //else if(results.poseLandmarks[28].y - results.poseLandmarks[24].y < standingDistLeft && results.poseLandmarks[27].y - results.poseLandmarks[23].y < standingDistRight) {
+    //setTimeout(() => {     
+      //console.log("place sphere")
+    //}, 600);
+    //sphereSizeFlag = false;
+    //canvasCtx.restore();
+  //}
 }
 
 const pose = new Pose({locateFile: (file) => {
