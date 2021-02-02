@@ -26,28 +26,28 @@ function onResults(results) {
     var rightDist = Math.abs(results.poseLandmarks[11].y - results.poseLandmarks[13].y)
     if(rightDist < 0.01 && leftDist < 0.01) {
         setTimeout(() => {    
-        console.log("dance")
+        console.log("dance");
         }, 600);
         canvasCtx.restore();
     }
     //run (paused running motion --> left hand up + right hand down)
     else if(results.poseLandmarks[20].y < results.poseLandmarks[5].y && !(results.poseLandmarks[19].y < results.poseLandmarks[2].y)) {
         setTimeout(() => {     
-        console.log("run")
+        console.log("run");
         }, 600);
         canvasCtx.restore();
     }
     //reset (both hands above head)
     else if(results.poseLandmarks[21].y < results.poseLandmarks[2].y && results.poseLandmarks[22].y < results.poseLandmarks[2].y) {
         setTimeout(() => {     
-        console.log("reset")
+        console.log("reset");
         }, 600);
         canvasCtx.restore();
     }
     //make sphere (hands in front of chest)
     else if((results.poseLandmarks[20].x > results.poseLandmarks[12].x) && (results.poseLandmarks[19].x < results.poseLandmarks[11].x) && (results.poseLandmarks[20].y < results.poseLandmarks[14].y && results.poseLandmarks[20].y > results.poseLandmarks[12].y) && (results.poseLandmarks[19].y < results.poseLandmarks[13].y && results.poseLandmarks[19].y > results.poseLandmarks[11].y)) {
         setTimeout(() => {     
-        console.log("make sphere")
+        console.log("make sphere");
         }, 600);
         sphereSizeFlag = true;
         canvasCtx.restore();
@@ -55,7 +55,7 @@ function onResults(results) {
     //size of sphere (right arm: low)
     else if(results.poseLandmarks[19].y > results.poseLandmarks[23].y && sphereSizeFlag) {
         setTimeout(() => {     
-        console.log("small sphere")
+        console.log("small sphere");
         }, 600);
         sphereSizeFlag = false;
         canvasCtx.restore();
@@ -63,7 +63,7 @@ function onResults(results) {
     //size of sphere (right arm: med)
     else if(results.poseLandmarks[19].y < results.poseLandmarks[23].y && results.poseLandmarks[19].y > results.poseLandmarks[11].y && sphereSizeFlag) {
         setTimeout(() => {     
-        console.log("med sphere")
+        console.log("med sphere");
         }, 600);
         sphereSizeFlag = false;
         canvasCtx.restore();
@@ -71,7 +71,7 @@ function onResults(results) {
     //size of sphere (right arm: high)
     else if(results.poseLandmarks[19].y < results.poseLandmarks[11].y && sphereSizeFlag) {
         setTimeout(() => {     
-        console.log("high sphere")
+        console.log("high sphere");
         }, 600);
         sphereSizeFlag = false;
         canvasCtx.restore();

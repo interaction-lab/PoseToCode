@@ -59,7 +59,7 @@
       var options = { 
           toolbox : toolbox, 
           collapse : true, 
-          comments : true, 
+          comments : false, 
           disable : true, 
           maxBlocks : Infinity, 
           trashcan : true, 
@@ -77,6 +77,20 @@
       var workspace = Blockly.inject(blocklyDiv, options);
       var workspaceBlocks = document.getElementById("workspaceBlocks"); 
       Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
+      /* example of programatically adding code block */
+      var parentBlock = workspace.newBlock('create_sphere');
+      parentBlock.initSvg();
+      parentBlock.render();
+
+      var childBlock = workspace.newBlock('size');
+      childBlock.setFieldValue('SMALL', 'TEXT');
+      childBlock.initSvg();
+      childBlock.render();
+
+      var parentConnection = parentBlock.getInput('TEXT').connection;
+      var childConnection = childBlock.outputConnection;
+      parentConnection.connect(childConnection);
+
     </script>
     <script>
       function runCode() {
