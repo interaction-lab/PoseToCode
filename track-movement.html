@@ -43,8 +43,8 @@ function onResults(results) {
   }
 
   //dance (both arms out to the side)
-  var rightDist = Math.abs(results.poseLandmarks[14].y - results.poseLandmarks[12].y)
-  var leftDist = Math.abs(results.poseLandmarks[11].y - results.poseLandmarks[13].y)
+  var leftDist = Math.abs(results.poseLandmarks[14].y - results.poseLandmarks[12].y)
+  var rightDist = Math.abs(results.poseLandmarks[11].y - results.poseLandmarks[13].y)
   if(rightDist < 0.01 && leftDist < 0.01) {
     setTimeout(() => {    
       console.log("dance")
