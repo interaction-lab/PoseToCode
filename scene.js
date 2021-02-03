@@ -10,7 +10,6 @@ var guiElements = [];
 var animations = [];
 var sizes = [];
 var run = createRunTrigger();
-var reset = createResetTrigger();
 
 var largeDiameter = 1.2;
 var mediumDiameter = 0.9;
@@ -61,12 +60,7 @@ function setUpScene(camera, camera1, light, light1) {
     camera1.upperRadiusLimit = 10;
     camera1.wheelDeltaPercentage = 0.1;
 }
-function createResetTrigger() {
-    var reset = BABYLON.GUI.Button.CreateSimpleButton("but", "Reset");
-    reset.isVisible = false;
-    gui.addControl(reset);
-    return reset;
-}
+
 function createRunTrigger() {
     var run = BABYLON.GUI.Button.CreateSimpleButton("but", "Run");
     run.isVisible = false;
@@ -101,18 +95,6 @@ function runOnGUI() {
         }, levelOneDoneDelay);
     }
 }
-function resetGUI() {
-    for (i = 0; i < guiElements.length; i++) {
-        guiElements[i].isVisible = false;
-    }
-    guiElements = [];
-    animations = [];
-    sizes = [];
-    reset.onPointerUpObservable.notifyObservers();
-    setTimeout(function() { 
-        document.activeElement.blur();
-    }, 150);
-}
 
 // Returns flag for whether the user's programmed sequence of events will
 // create a three-tiered snowman. Assumes that to pass this level, there's no 
@@ -144,7 +126,6 @@ function detectLevelOneDone() {
     }
 
     if (spotInSequence != 3) return false;
-
     return true;
 }
 
@@ -174,12 +155,6 @@ var createScene = function () {
         const danceAnim = scene.getAnimationGroupByName("Dance");
         // Start with Idle Animation
         idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
-
-        //function for when the "reset" button is clicked
-        reset.onPointerUpObservable.add(function() {
-            //reset robot position
-            robot.position.y = 0;
-        });
 
         //function for when the "run" button is clicked
         run.onPointerUpObservable.add(function() {
