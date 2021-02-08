@@ -82,6 +82,7 @@
       var allBlocks = [];
 
       var sphereSizeFlag = false;
+      var sleepFlag = false;
       var startMotion = 0;
       var standingDistLeft = 0;
       var standingDistRight = 0;
@@ -98,7 +99,6 @@
         } while (currentDate - date < milliseconds);
       }
 
-      var sleepFlag = false;
       function onResults(results) {
         canvasCtx.save();
         canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
@@ -118,9 +118,8 @@
         var leftDist = Math.abs(results.poseLandmarks[14].y - results.poseLandmarks[12].y)
         var rightDist = Math.abs(results.poseLandmarks[11].y - results.poseLandmarks[13].y)
 
-        console.log(sleepFlag);
         if(!sleepFlag) {
-          if(rightDist < 0.05 && leftDist < 0.05) {
+          if(rightDist < 0.05 && leftDist < 0.05 && !sphereSizeFlag) {
             setTimeout(() => {    
               console.log("dance");
               /* programatically adding code block */
@@ -146,7 +145,7 @@
             canvasCtx.restore();
           }
           //run (paused running motion --> left hand up + right hand down)
-          else if(results.poseLandmarks[20].y < results.poseLandmarks[5].y && !(results.poseLandmarks[19].y < results.poseLandmarks[2].y)) {
+          else if(results.poseLandmarks[20].y < results.poseLandmarks[5].y && !(results.poseLandmarks[19].y < results.poseLandmarks[2].y) && !sphereSizeFlag) {
             setTimeout(() => {     
               console.log("run");
             }, 600);
@@ -156,7 +155,7 @@
             canvasCtx.restore();
           }
           //reset (both hands above head)
-          else if(results.poseLandmarks[21].y < results.poseLandmarks[2].y && results.poseLandmarks[22].y < results.poseLandmarks[2].y) {
+          else if(results.poseLandmarks[21].y < results.poseLandmarks[2].y && results.poseLandmarks[22].y < results.poseLandmarks[2].y  && !sphereSizeFlag) {
             setTimeout(() => {     
               console.log("reset");
               //delete all code blocks in the workspace
@@ -172,7 +171,7 @@
             canvasCtx.restore();
           }
           //make sphere (hands in front of chest)
-          else if((results.poseLandmarks[20].x > results.poseLandmarks[12].x) && (results.poseLandmarks[19].x < results.poseLandmarks[11].x) && (results.poseLandmarks[20].y < results.poseLandmarks[14].y && results.poseLandmarks[20].y > results.poseLandmarks[12].y) && (results.poseLandmarks[19].y < results.poseLandmarks[13].y && results.poseLandmarks[19].y > results.poseLandmarks[11].y)) {
+          else if((results.poseLandmarks[20].x > results.poseLandmarks[12].x) && (results.poseLandmarks[19].x < results.poseLandmarks[11].x) && (results.poseLandmarks[20].y < results.poseLandmarks[14].y && results.poseLandmarks[20].y > results.poseLandmarks[12].y) && (results.poseLandmarks[19].y < results.poseLandmarks[13].y && results.poseLandmarks[19].y > results.poseLandmarks[11].y) && !sphereSizeFlag) {
             setTimeout(() => {     
               console.log("create sphere");
               /* add code block */
@@ -256,7 +255,7 @@
             canvasCtx.restore();
           }
           //place sphere (point down to ankles)
-          else if(results.poseLandmarks[19].y > results.poseLandmarks[25].y && results.poseLandmarks[20].y > results.poseLandmarks[26].y) {
+          else if(results.poseLandmarks[19].y > results.poseLandmarks[25].y && results.poseLandmarks[20].y > results.poseLandmarks[26].y && !sphereSizeFlag) {
             setTimeout(() => {     
               console.log("place sphere");
               if(parentBlock == null) {
