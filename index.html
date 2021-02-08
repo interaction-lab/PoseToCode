@@ -212,10 +212,10 @@
               }
             }, 600);
             sphereSizeFlag = false;
-            canvasCtx.restore();
             sleepFlag = true;
             sleep(1000);
             sleepFlag = false;
+            canvasCtx.restore();
           }
           //size of sphere (right arm: med)
           else if(results.poseLandmarks[19].y < results.poseLandmarks[23].y && results.poseLandmarks[19].y > results.poseLandmarks[11].y && sphereSizeFlag) {
@@ -231,10 +231,10 @@
               }
             }, 600);
             sphereSizeFlag = false;
-            canvasCtx.restore();
             sleepFlag = true;
             sleep(1000);
             sleepFlag = false;
+            canvasCtx.restore();
           }
           //size of sphere (right arm: high)
           else if(results.poseLandmarks[19].y < results.poseLandmarks[11].y && sphereSizeFlag) {
@@ -249,22 +249,37 @@
                 parentConnection.connect(childConnection);
               }
             }, 600);
-            sphereSizeFlag = false;
-            canvasCtx.restore();            
+            sphereSizeFlag = false;          
             sleepFlag = true;
             sleep(1000);
             sleepFlag = false;
+            canvasCtx.restore();
           }
           //place sphere (point down to ankles)
           else if(results.poseLandmarks[19].y > results.poseLandmarks[25].y && results.poseLandmarks[20].y > results.poseLandmarks[26].y) {
             setTimeout(() => {     
-              console.log("place sphere")
+              console.log("place sphere");
+              if(parentBlock == null) {
+                parentBlock = workspace.newBlock('place');
+                parentBlock.initSvg();
+                parentBlock.render();
+              } 
+              else {
+                childBlock = workspace.newBlock('place');
+                childBlock.initSvg();
+                childBlock.render();
+                var parentConnection = parentBlock.nextConnection;
+                var childConnection = childBlock.previousConnection;
+                parentConnection.connect(childConnection);
+                parentBlock = childBlock;
+              }
+              allBlocks.push(parentBlock);
             }, 600);
             sphereSizeFlag = false;
-            canvasCtx.restore();
             sleepFlag = true;
             sleep(1000);
             sleepFlag = false;
+            canvasCtx.restore();
           }
         }
       }
