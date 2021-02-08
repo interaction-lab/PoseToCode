@@ -243,6 +243,6 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     });
     window.addEventListener("resize", function () {
-            engine.resize();
+        engine.resize();
     });
 });

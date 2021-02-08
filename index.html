@@ -90,6 +90,15 @@
       const canvasElement = document.getElementsByClassName('output_canvas')[0];
       const canvasCtx = canvasElement.getContext('2d');
 
+      function sleep(milliseconds) {
+        const date = Date.now();
+        let currentDate = null;
+        do {
+          currentDate = Date.now();
+        } while (currentDate - date < milliseconds);
+      }
+
+      var sleepFlag = false;
       function onResults(results) {
         canvasCtx.save();
         canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
@@ -108,129 +117,158 @@
         //dance (both arms out to the side)
         var leftDist = Math.abs(results.poseLandmarks[14].y - results.poseLandmarks[12].y)
         var rightDist = Math.abs(results.poseLandmarks[11].y - results.poseLandmarks[13].y)
-        if(rightDist < 0.01 && leftDist < 0.01) {
-          setTimeout(() => {    
-            console.log("dance");
-            /* programatically adding code block */
-            if(parentBlock == null) {
-              parentBlock = workspace.newBlock('dance');
-              parentBlock.initSvg();
-              parentBlock.render();
-            } 
-            else {
-              childBlock = workspace.newBlock('dance');
-              childBlock.initSvg();
-              childBlock.render();
-              var parentConnection = parentBlock.nextConnection;
-              var childConnection = childBlock.previousConnection;
-              parentConnection.connect(childConnection);
-              parentBlock = childBlock;
-            }
-            allBlocks.push(parentBlock);
-          }, 600);
-          canvasCtx.restore();
+
+        console.log(sleepFlag);
+        if(!sleepFlag) {
+          if(rightDist < 0.05 && leftDist < 0.05) {
+            setTimeout(() => {    
+              console.log("dance");
+              /* programatically adding code block */
+              if(parentBlock == null) {
+                parentBlock = workspace.newBlock('dance');
+                parentBlock.initSvg();
+                parentBlock.render();
+              } 
+              else {
+                childBlock = workspace.newBlock('dance');
+                childBlock.initSvg();
+                childBlock.render();
+                var parentConnection = parentBlock.nextConnection;
+                var childConnection = childBlock.previousConnection;
+                parentConnection.connect(childConnection);
+                parentBlock = childBlock;
+              }
+              allBlocks.push(parentBlock);
+            }, 600);
+            sleepFlag = true;
+            sleep(1000);
+            sleepFlag = false;
+            canvasCtx.restore();
+          }
+          //run (paused running motion --> left hand up + right hand down)
+          else if(results.poseLandmarks[20].y < results.poseLandmarks[5].y && !(results.poseLandmarks[19].y < results.poseLandmarks[2].y)) {
+            setTimeout(() => {     
+              console.log("run");
+            }, 600);
+            sleepFlag = true;
+            sleep(1000);
+            sleepFlag = false;
+            canvasCtx.restore();
+          }
+          //reset (both hands above head)
+          else if(results.poseLandmarks[21].y < results.poseLandmarks[2].y && results.poseLandmarks[22].y < results.poseLandmarks[2].y) {
+            setTimeout(() => {     
+              console.log("reset");
+              //delete all code blocks in the workspace
+              for(i = 0; i < allBlocks.length; i++) {
+                allBlocks[i].dispose(true);
+              }
+              // TODO: move robot position back to y=0
+              // robot.position.y = 0;
+            }, 600);
+            sleepFlag = true;
+            sleep(1000);
+            sleepFlag = false;
+            canvasCtx.restore();
+          }
+          //make sphere (hands in front of chest)
+          else if((results.poseLandmarks[20].x > results.poseLandmarks[12].x) && (results.poseLandmarks[19].x < results.poseLandmarks[11].x) && (results.poseLandmarks[20].y < results.poseLandmarks[14].y && results.poseLandmarks[20].y > results.poseLandmarks[12].y) && (results.poseLandmarks[19].y < results.poseLandmarks[13].y && results.poseLandmarks[19].y > results.poseLandmarks[11].y)) {
+            setTimeout(() => {     
+              console.log("create sphere");
+              /* add code block */
+              if(parentBlock == null) {
+                parentBlock = workspace.newBlock('create_sphere');
+                parentBlock.initSvg();
+                parentBlock.render();
+              } 
+              else {
+                childBlock = workspace.newBlock('create_sphere');
+                childBlock.initSvg();
+                childBlock.render();
+                var parentConnection = parentBlock.nextConnection;
+                var childConnection = childBlock.previousConnection;
+                parentConnection.connect(childConnection);
+                parentBlock = childBlock;
+              }
+              allBlocks.push(parentBlock);
+            }, 600);
+            sleepFlag = true;
+            sleep(1000);
+            sleepFlag = false;
+            sphereSizeFlag = true;
+            canvasCtx.restore();
+          }
+          //size of sphere (right arm: low)
+          else if(results.poseLandmarks[19].y > results.poseLandmarks[23].y && sphereSizeFlag) {
+            setTimeout(() => {     
+              console.log("small sphere");
+              //change field value of create_sphere block
+              if(parentBlock != null) {
+                childBlock = workspace.newBlock('size');
+                childBlock.setFieldValue('small', 'TEXT');
+                var parentConnection = parentBlock.getInput('TEXT').connection;
+                var childConnection = childBlock.outputConnection;
+                parentConnection.connect(childConnection);
+              }
+            }, 600);
+            sphereSizeFlag = false;
+            canvasCtx.restore();
+            sleepFlag = true;
+            sleep(1000);
+            sleepFlag = false;
+          }
+          //size of sphere (right arm: med)
+          else if(results.poseLandmarks[19].y < results.poseLandmarks[23].y && results.poseLandmarks[19].y > results.poseLandmarks[11].y && sphereSizeFlag) {
+            setTimeout(() => {     
+              console.log("med sphere");
+              //change field value of create_sphere block
+              if(parentBlock != null) {
+                childBlock = workspace.newBlock('size');
+                childBlock.setFieldValue('medium', 'TEXT');
+                var parentConnection = parentBlock.getInput('TEXT').connection;
+                var childConnection = childBlock.outputConnection;
+                parentConnection.connect(childConnection);
+              }
+            }, 600);
+            sphereSizeFlag = false;
+            canvasCtx.restore();
+            sleepFlag = true;
+            sleep(1000);
+            sleepFlag = false;
+          }
+          //size of sphere (right arm: high)
+          else if(results.poseLandmarks[19].y < results.poseLandmarks[11].y && sphereSizeFlag) {
+            setTimeout(() => {     
+              console.log("large sphere");
+              //change field value of create_sphere block
+              if(parentBlock != null) {
+                childBlock = workspace.newBlock('size');
+                childBlock.setFieldValue('large', 'TEXT');
+                var parentConnection = parentBlock.getInput('TEXT').connection;
+                var childConnection = childBlock.outputConnection;
+                parentConnection.connect(childConnection);
+              }
+            }, 600);
+            sphereSizeFlag = false;
+            canvasCtx.restore();            
+            sleepFlag = true;
+            sleep(1000);
+            sleepFlag = false;
+          }
+          //place sphere (squat)
+          //else if(results.poseLandmarks[28].y - results.poseLandmarks[24].y < standingDistLeft && results.poseLandmarks[27].y - results.poseLandmarks[23].y < standingDistRight) {
+              //setTimeout(() => {     
+                //console.log("place sphere")
+              //}, 600);
+              //sphereSizeFlag = false;
+              //canvasCtx.restore();
+              //sleepFlag = true;
+              //sleep(1000);
+              //sleepFlag = false;
+          //}
         }
-        //run (paused running motion --> left hand up + right hand down)
-        else if(results.poseLandmarks[20].y < results.poseLandmarks[5].y && !(results.poseLandmarks[19].y < results.poseLandmarks[2].y)) {
-          setTimeout(() => {     
-            console.log("run");
-          }, 600);
-          canvasCtx.restore();
-        }
-        //reset (both hands above head)
-        else if(results.poseLandmarks[21].y < results.poseLandmarks[2].y && results.poseLandmarks[22].y < results.poseLandmarks[2].y) {
-          setTimeout(() => {     
-            console.log("reset");
-            //delete all code blocks in the workspace
-            for(i = 0; i < allBlocks.length; i++) {
-              allBlocks[i].dispose(true);
-            }
-            // TODO: move robot position back to y=0
-            // robot.position.y = 0;
-          }, 600);
-          canvasCtx.restore();
-        }
-        //make sphere (hands in front of chest)
-        else if((results.poseLandmarks[20].x > results.poseLandmarks[12].x) && (results.poseLandmarks[19].x < results.poseLandmarks[11].x) && (results.poseLandmarks[20].y < results.poseLandmarks[14].y && results.poseLandmarks[20].y > results.poseLandmarks[12].y) && (results.poseLandmarks[19].y < results.poseLandmarks[13].y && results.poseLandmarks[19].y > results.poseLandmarks[11].y)) {
-          setTimeout(() => {     
-            console.log("create sphere");
-            /* add code block */
-            if(parentBlock == null) {
-              parentBlock = workspace.newBlock('create_sphere');
-              parentBlock.initSvg();
-              parentBlock.render();
-            } 
-            else {
-              childBlock = workspace.newBlock('create_sphere');
-              childBlock.initSvg();
-              childBlock.render();
-              var parentConnection = parentBlock.nextConnection;
-              var childConnection = childBlock.previousConnection;
-              parentConnection.connect(childConnection);
-              parentBlock = childBlock;
-            }
-            allBlocks.push(parentBlock);
-          }, 600);
-          sphereSizeFlag = true;
-          canvasCtx.restore();
-        }
-        //size of sphere (right arm: low)
-        else if(results.poseLandmarks[19].y > results.poseLandmarks[23].y && sphereSizeFlag) {
-          setTimeout(() => {     
-            console.log("small sphere");
-            //change field value of create_sphere block
-            if(parentBlock != null) {
-              childBlock = workspace.newBlock('size');
-              childBlock.setFieldValue('small', 'TEXT');
-              var parentConnection = parentBlock.getInput('TEXT').connection;
-              var childConnection = childBlock.outputConnection;
-              parentConnection.connect(childConnection);
-            }
-          }, 600);
-          sphereSizeFlag = false;
-          canvasCtx.restore();
-        }
-        //size of sphere (right arm: med)
-        else if(results.poseLandmarks[19].y < results.poseLandmarks[23].y && results.poseLandmarks[19].y > results.poseLandmarks[11].y && sphereSizeFlag) {
-          setTimeout(() => {     
-            console.log("med sphere");
-            //change field value of create_sphere block
-            if(parentBlock != null) {
-              childBlock = workspace.newBlock('size');
-              childBlock.setFieldValue('medium', 'TEXT');
-              var parentConnection = parentBlock.getInput('TEXT').connection;
-              var childConnection = childBlock.outputConnection;
-              parentConnection.connect(childConnection);
-            }
-          }, 600);
-          sphereSizeFlag = false;
-          canvasCtx.restore();
-        }
-        //size of sphere (right arm: high)
-        else if(results.poseLandmarks[19].y < results.poseLandmarks[11].y && sphereSizeFlag) {
-          setTimeout(() => {     
-            console.log("large sphere");
-            //change field value of create_sphere block
-            if(parentBlock != null) {
-              childBlock = workspace.newBlock('size');
-              childBlock.setFieldValue('large', 'TEXT');
-              var parentConnection = parentBlock.getInput('TEXT').connection;
-              var childConnection = childBlock.outputConnection;
-              parentConnection.connect(childConnection);
-            }
-          }, 600);
-          sphereSizeFlag = false;
-          canvasCtx.restore();
-        }
-        //place sphere (squat)
-        //else if(results.poseLandmarks[28].y - results.poseLandmarks[24].y < standingDistLeft && results.poseLandmarks[27].y - results.poseLandmarks[23].y < standingDistRight) {
-            //setTimeout(() => {     
-            //console.log("place sphere")
-            //}, 600);
-            //sphereSizeFlag = false;
-            //canvasCtx.restore();
-        //}
       }
+
       const pose = new Pose({locateFile: (file) => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
       }});
