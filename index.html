@@ -31,9 +31,15 @@
         <button id="run" onclick="runCode()">Run!</button>
     </div>
     <div class="poseDiv">
-			<video class="input_video" hidden></video>
-			<canvas class="output_canvas"></canvas>
-		</div>
+		<video class="input_video" hidden></video>
+		<canvas class="output_canvas" style="float: left;"></canvas>
+        <div class="poseKey" style="float:center; text-align: center">
+            <h1>Pose Key</h1>
+            <p>reset (both hands above head), dance (both arms out to the side)</p>
+            <p>run (paused running motion - left hand up + right hand down)</p>
+            <p>place sphere (point down to ankles), make sphere (hands in front of chest)</p>
+        </div>
+	</div>
     <canvas id="renderCanvas" touch-action="none"></canvas>
     <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
       <sep></sep>
