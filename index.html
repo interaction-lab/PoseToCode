@@ -146,7 +146,7 @@
               allBlocks.push(parentBlock);
             }, 600);
             sleepFlag = true;
-            sleep(1000);
+            sleep(800);
             sleepFlag = false;
             canvasCtx.restore();
           }
@@ -154,10 +154,10 @@
           else if(results.poseLandmarks[20].y < results.poseLandmarks[5].y && !(results.poseLandmarks[19].y < results.poseLandmarks[2].y) && !sphereSizeFlag) {
             setTimeout(() => {     
               console.log("run");
+              runCode();
             }, 600);
-            runCode();
             sleepFlag = true;
-            sleep(1000);
+            sleep(800);
             sleepFlag = false;
             canvasCtx.restore();
           }
@@ -169,11 +169,13 @@
               for(i = 0; i < allBlocks.length; i++) {
                 allBlocks[i].dispose(true);
               }
+              parentBlock = null;
+              resetGUI();
               // TODO: move robot position back to y=0
               // robot.position.y = 0;
             }, 600);
             sleepFlag = true;
-            sleep(1000);
+            sleep(800);
             sleepFlag = false;
             canvasCtx.restore();
           }
@@ -199,7 +201,7 @@
               allBlocks.push(parentBlock);
             }, 600);
             sleepFlag = true;
-            sleep(1000);
+            sleep(800);
             sleepFlag = false;
             sphereSizeFlag = true;
             canvasCtx.restore();
@@ -219,7 +221,7 @@
             }, 600);
             sphereSizeFlag = false;
             sleepFlag = true;
-            sleep(1000);
+            sleep(800);
             sleepFlag = false;
             canvasCtx.restore();
           }
@@ -238,7 +240,7 @@
             }, 600);
             sphereSizeFlag = false;
             sleepFlag = true;
-            sleep(1000);
+            sleep(800);
             sleepFlag = false;
             canvasCtx.restore();
           }
@@ -283,7 +285,7 @@
             }, 600);
             sphereSizeFlag = false;
             sleepFlag = true;
-            sleep(1000);
+            sleep(800);
             sleepFlag = false;
             canvasCtx.restore();
           }
@@ -313,13 +315,14 @@
     </script>
     <script>
       function runCode() {
+        alert("Running!");
         window.LoopTrap = 1000;
         Blockly.JavaScript.INFINITE_LOOP_TRAP = 'if(--window.LoopTrap == 0) throw "Infinite loop.";\n';
         var code = Blockly.JavaScript.workspaceToCode(workspace);
         try {
-            eval(code);
+          eval(code);
         } catch (e) {
-            alert(e);
+          alert(e);
         }
         runOnGUI();
         setTimeout(function() { 

@@ -95,6 +95,18 @@ function runOnGUI() {
         }, levelOneDoneDelay);
     }
 }
+function resetGUI() {
+    for (i = 0; i < guiElements.length; i++) {
+        guiElements[i].isVisible = false;
+    }
+    guiElements = [];
+    animations = [];
+    sizes = [];
+    reset.onPointerUpObservable.notifyObservers();
+    setTimeout(function() { 
+        document.activeElement.blur();
+    }, 150);
+}
 
 // Returns flag for whether the user's programmed sequence of events will
 // create a three-tiered snowman. Assumes that to pass this level, there's no 
@@ -113,9 +125,7 @@ function detectLevelOneDone() {
             break;
         }
     }
-
     if (spotInSequence != 6) return false;
-
     sequence = ["large", "medium", "small"];
     spotInSequence = 0;
     for (i = 0; i < sizes.length; i++) {
@@ -124,7 +134,6 @@ function detectLevelOneDone() {
             spotInSequence++;
         } else break;
     }
-
     if (spotInSequence != 3) return false;
     return true;
 }
@@ -170,6 +179,7 @@ var createScene = function () {
             // Variable to hold the current size of snowball
             var currSize = "large";
             // Loop through all animations/actions
+            console.log(animations);
             for(var i = 0; i < animations.length; i++) {
                 if(animations[i] == "make sphere") {
                     setTimeout(() => {
@@ -229,6 +239,7 @@ var createScene = function () {
                     moveRobotUp(robot, delay);
                 }
             }
+            animations = [];
         });   
     });
     return scene;
