@@ -28,7 +28,7 @@
       </div>
     </div>
     <div id="blocklyDiv">
-        <button id="run" onclick="runCode()">Run!</button>
+        <!--<button id="run" onclick="runCode()">Run!</button>-->
     </div>
     <div class="poseDiv">
 		<video class="input_video" hidden></video>
@@ -155,6 +155,7 @@
             setTimeout(() => {     
               console.log("run");
             }, 600);
+            runCode();
             sleepFlag = true;
             sleep(1000);
             sleepFlag = false;
