@@ -87,7 +87,6 @@ function onResults(results) {
         loader.style.visibility = "hidden";
       }, 3500);
       setTimeout(() => {
-        console.log("dance");
         /* programatically adding code block */
         if (parentBlock == null) {
           parentBlock = workspace.newBlock("dance");
@@ -106,6 +105,7 @@ function onResults(results) {
       }, 3000);
       sleepFlag = true;
       loader.style.visibility = "visible";
+      console.log("dance");
       setTimeout(() => {
         sleep(2000);
       }, 5);
@@ -122,11 +122,11 @@ function onResults(results) {
         loader.style.visibility = "hidden";
       }, 3500);
       setTimeout(() => {
-        console.log("run");
         runCode();
       }, 3000);
       sleepFlag = true;
       loader.style.visibility = "visible";
+      console.log("run");
       setTimeout(() => {
         sleep(2000);
       }, 5);
@@ -143,7 +143,6 @@ function onResults(results) {
         loader.style.visibility = "hidden";
       }, 3500);
       setTimeout(() => {
-        console.log("reset");
         // delete all code blocks in the workspace
         for (i = 0; i < allBlocks.length; i++) {
           allBlocks[i].dispose(true);
@@ -153,6 +152,7 @@ function onResults(results) {
       }, 3000);
       sleepFlag = true;
       loader.style.visibility = "visible";
+      console.log("reset");
       setTimeout(() => {
         sleep(2000);
       }, 5);
@@ -173,7 +173,6 @@ function onResults(results) {
         loader.style.visibility = "hidden";
       }, 3500);
       setTimeout(() => {
-        console.log("create sphere");
         /* add code block */
         if (parentBlock == null) {
           parentBlock = workspace.newBlock("create_sphere");
@@ -192,6 +191,7 @@ function onResults(results) {
       }, 3000);
       sleepFlag = true;
       loader.style.visibility = "visible";
+      console.log("create sphere");
       setTimeout(() => {
         sleep(2000);
       }, 5);
@@ -208,7 +208,6 @@ function onResults(results) {
         loader.style.visibility = "hidden";
       }, 3500);
       setTimeout(() => {
-        console.log("small sphere");
         // change field value of create_sphere block
         if (parentBlock != null) {
           childBlock = workspace.newBlock("size");
@@ -221,6 +220,7 @@ function onResults(results) {
       sphereSizeFlag = false;
       sleepFlag = true;
       loader.style.visibility = "visible";
+      console.log("small sphere");
       setTimeout(() => {
         sleep(2000);
       }, 5);
@@ -237,7 +237,6 @@ function onResults(results) {
         loader.style.visibility = "hidden";
       }, 3500);
       setTimeout(() => {
-        console.log("medium sphere");
         // change field value of create_sphere block
         if (parentBlock != null) {
           childBlock = workspace.newBlock("size");
@@ -250,6 +249,7 @@ function onResults(results) {
       sphereSizeFlag = false;
       sleepFlag = true;
       loader.style.visibility = "visible";
+      console.log("medium sphere");
       setTimeout(() => {
         sleep(2000);
       }, 5);
@@ -265,7 +265,6 @@ function onResults(results) {
         loader.style.visibility = "hidden";
       }, 3500);
       setTimeout(() => {
-        console.log("large sphere");
         // change field value of create_sphere block
         if (parentBlock != null) {
           childBlock = workspace.newBlock("size");
@@ -278,6 +277,7 @@ function onResults(results) {
       sphereSizeFlag = false;
       sleepFlag = true;
       loader.style.visibility = "visible";
+      console.log("large sphere");
       setTimeout(() => {
         sleep(2000);
       }, 5);
@@ -294,7 +294,6 @@ function onResults(results) {
         loader.style.visibility = "hidden";
       }, 3500);
       setTimeout(() => {
-        console.log("place sphere");
         if (parentBlock == null) {
           parentBlock = workspace.newBlock("place");
           parentBlock.initSvg();
@@ -313,6 +312,7 @@ function onResults(results) {
       sphereSizeFlag = false;
       sleepFlag = true;
       loader.style.visibility = "visible";
+      console.log("place sphere");
       setTimeout(() => {
         sleep(2000);
       }, 5);
