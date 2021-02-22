@@ -8,21 +8,21 @@
  * @fileoverview Object that controls settings for the workspace.
  * @author fenichel@google.com (Rachel Fenichel)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.Options')
+goog.provide("Blockly.Options");
 
-goog.require('Blockly.Theme')
-goog.require('Blockly.Themes.Classic')
-goog.require('Blockly.registry')
-goog.require('Blockly.user.keyMap')
-goog.require('Blockly.utils.IdGenerator')
-goog.require('Blockly.utils.Metrics')
-goog.require('Blockly.utils.toolbox')
-goog.require('Blockly.utils.userAgent')
-goog.require('Blockly.Xml')
+goog.require("Blockly.Theme");
+goog.require("Blockly.Themes.Classic");
+goog.require("Blockly.registry");
+goog.require("Blockly.user.keyMap");
+goog.require("Blockly.utils.IdGenerator");
+goog.require("Blockly.utils.Metrics");
+goog.require("Blockly.utils.toolbox");
+goog.require("Blockly.utils.userAgent");
+goog.require("Blockly.Xml");
 
-goog.requireType('Blockly.WorkspaceSvg')
+goog.requireType("Blockly.WorkspaceSvg");
 
 /**
  * Parse the user-specified options, using reasonable defaults where behaviour
@@ -32,146 +32,149 @@ goog.requireType('Blockly.WorkspaceSvg')
  * @constructor
  */
 Blockly.Options = function (options) {
-  const readOnly = !!options.readOnly
+  const readOnly = !!options.readOnly;
   if (readOnly) {
-    var toolboxJsonDef = null
-    var hasCategories = false
-    var hasTrashcan = false
-    var hasCollapse = false
-    var hasComments = false
-    var hasDisable = false
-    var hasSounds = false
+    var toolboxJsonDef = null;
+    var hasCategories = false;
+    var hasTrashcan = false;
+    var hasCollapse = false;
+    var hasComments = false;
+    var hasDisable = false;
+    var hasSounds = false;
   } else {
-    var toolboxJsonDef = Blockly.utils.toolbox.convertToolboxDefToJson(options.toolbox)
-    var hasCategories = Blockly.utils.toolbox.hasCategories(toolboxJsonDef)
-    var hasTrashcan = options.trashcan
+    var toolboxJsonDef = Blockly.utils.toolbox.convertToolboxDefToJson(
+      options.toolbox
+    );
+    var hasCategories = Blockly.utils.toolbox.hasCategories(toolboxJsonDef);
+    var hasTrashcan = options.trashcan;
     if (hasTrashcan === undefined) {
-      hasTrashcan = hasCategories
+      hasTrashcan = hasCategories;
     }
-    var maxTrashcanContents = options.maxTrashcanContents
+    var maxTrashcanContents = options.maxTrashcanContents;
     if (hasTrashcan) {
       if (maxTrashcanContents === undefined) {
-        maxTrashcanContents = 32
+        maxTrashcanContents = 32;
       }
     } else {
-      maxTrashcanContents = 0
+      maxTrashcanContents = 0;
     }
-    var hasCollapse = options.collapse
+    var hasCollapse = options.collapse;
     if (hasCollapse === undefined) {
-      hasCollapse = hasCategories
+      hasCollapse = hasCategories;
     }
-    var hasComments = options.comments
+    var hasComments = options.comments;
     if (hasComments === undefined) {
-      hasComments = hasCategories
+      hasComments = hasCategories;
     }
-    var hasDisable = options.disable
+    var hasDisable = options.disable;
     if (hasDisable === undefined) {
-      hasDisable = hasCategories
+      hasDisable = hasCategories;
     }
-    var hasSounds = options.sounds
+    var hasSounds = options.sounds;
     if (hasSounds === undefined) {
-      hasSounds = true
+      hasSounds = true;
     }
   }
-  const rtl = !!options.rtl
-  let horizontalLayout = options.horizontalLayout
+  const rtl = !!options.rtl;
+  let horizontalLayout = options.horizontalLayout;
   if (horizontalLayout === undefined) {
-    horizontalLayout = false
+    horizontalLayout = false;
   }
-  let toolboxAtStart = options.toolboxPosition
-  toolboxAtStart = toolboxAtStart !== 'end'
+  let toolboxAtStart = options.toolboxPosition;
+  toolboxAtStart = toolboxAtStart !== "end";
 
   /** @type {!Blockly.utils.toolbox.Position} */
-  let toolboxPosition
+  let toolboxPosition;
   if (horizontalLayout) {
     toolboxPosition = toolboxAtStart
       ? Blockly.utils.toolbox.Position.TOP
-      : Blockly.utils.toolbox.Position.BOTTOM
+      : Blockly.utils.toolbox.Position.BOTTOM;
   } else {
-    toolboxPosition = (toolboxAtStart == rtl)
-      ? Blockly.utils.toolbox.Position.RIGHT
-      : Blockly.utils.toolbox.Position.LEFT
+    toolboxPosition =
+      toolboxAtStart == rtl
+        ? Blockly.utils.toolbox.Position.RIGHT
+        : Blockly.utils.toolbox.Position.LEFT;
   }
 
-  let hasCss = options.css
+  let hasCss = options.css;
   if (hasCss === undefined) {
-    hasCss = true
+    hasCss = true;
   }
-  let pathToMedia = 'https://blockly-demo.appspot.com/static/media/'
+  let pathToMedia = "https://blockly-demo.appspot.com/static/media/";
   if (options.media) {
-    pathToMedia = options.media
+    pathToMedia = options.media;
   } else if (options.path) {
     // 'path' is a deprecated option which has been replaced by 'media'.
-    pathToMedia = options.path + 'media/'
+    pathToMedia = options.path + "media/";
   }
   if (options.oneBasedIndex === undefined) {
-    var oneBasedIndex = true
+    var oneBasedIndex = true;
   } else {
-    var oneBasedIndex = !!options.oneBasedIndex
+    var oneBasedIndex = !!options.oneBasedIndex;
   }
-  const keyMap = options.keyMap || Blockly.user.keyMap.createDefaultKeyMap()
+  const keyMap = options.keyMap || Blockly.user.keyMap.createDefaultKeyMap();
 
-  const renderer = options.renderer || 'geras'
+  const renderer = options.renderer || "geras";
 
-  const plugins = options.plugins || {}
+  const plugins = options.plugins || {};
 
   /** @type {boolean} */
-  this.RTL = rtl
+  this.RTL = rtl;
   /** @type {boolean} */
-  this.oneBasedIndex = oneBasedIndex
+  this.oneBasedIndex = oneBasedIndex;
   /** @type {boolean} */
-  this.collapse = hasCollapse
+  this.collapse = hasCollapse;
   /** @type {boolean} */
-  this.comments = hasComments
+  this.comments = hasComments;
   /** @type {boolean} */
-  this.disable = hasDisable
+  this.disable = hasDisable;
   /** @type {boolean} */
-  this.readOnly = readOnly
+  this.readOnly = readOnly;
   /** @type {number} */
-  this.maxBlocks = options.maxBlocks || Infinity
+  this.maxBlocks = options.maxBlocks || Infinity;
   /** @type {?Object.<string, number>} */
-  this.maxInstances = options.maxInstances
+  this.maxInstances = options.maxInstances;
   /** @type {string} */
-  this.pathToMedia = pathToMedia
+  this.pathToMedia = pathToMedia;
   /** @type {boolean} */
-  this.hasCategories = hasCategories
+  this.hasCategories = hasCategories;
   /** @type {!Blockly.Options.MoveOptions} */
-  this.moveOptions = Blockly.Options.parseMoveOptions_(options, hasCategories)
+  this.moveOptions = Blockly.Options.parseMoveOptions_(options, hasCategories);
   /** @deprecated  January 2019 */
-  this.hasScrollbars = this.moveOptions.scrollbars
+  this.hasScrollbars = this.moveOptions.scrollbars;
   /** @type {boolean} */
-  this.hasTrashcan = hasTrashcan
+  this.hasTrashcan = hasTrashcan;
   /** @type {number} */
-  this.maxTrashcanContents = maxTrashcanContents
+  this.maxTrashcanContents = maxTrashcanContents;
   /** @type {boolean} */
-  this.hasSounds = hasSounds
+  this.hasSounds = hasSounds;
   /** @type {boolean} */
-  this.hasCss = hasCss
+  this.hasCss = hasCss;
   /** @type {boolean} */
-  this.horizontalLayout = horizontalLayout
+  this.horizontalLayout = horizontalLayout;
   /** @type {?Blockly.utils.toolbox.ToolboxInfo} */
-  this.languageTree = toolboxJsonDef
+  this.languageTree = toolboxJsonDef;
   /** @type {!Blockly.Options.GridOptions} */
-  this.gridOptions = Blockly.Options.parseGridOptions_(options)
+  this.gridOptions = Blockly.Options.parseGridOptions_(options);
   /** @type {!Blockly.Options.ZoomOptions} */
-  this.zoomOptions = Blockly.Options.parseZoomOptions_(options)
+  this.zoomOptions = Blockly.Options.parseZoomOptions_(options);
   /** @type {!Blockly.utils.toolbox.Position} */
-  this.toolboxPosition = toolboxPosition
+  this.toolboxPosition = toolboxPosition;
   /** @type {!Blockly.Theme} */
-  this.theme = Blockly.Options.parseThemeOptions_(options)
+  this.theme = Blockly.Options.parseThemeOptions_(options);
   /** @type {!Object<string,Blockly.Action>} */
-  this.keyMap = keyMap
+  this.keyMap = keyMap;
   /** @type {string} */
-  this.renderer = renderer
+  this.renderer = renderer;
   /** @type {?Object} */
-  this.rendererOverrides = options.rendererOverrides
+  this.rendererOverrides = options.rendererOverrides;
 
   /**
    * The SVG element for the grid pattern.
    * Created during injection.
    * @type {?SVGElement}
    */
-  this.gridPattern = null
+  this.gridPattern = null;
 
   /**
    * The parent of the current workspace, or null if there is no parent
@@ -179,14 +182,14 @@ Blockly.Options = function (options) {
    * Workspace as this is only used in a rendered workspace.
    * @type {Blockly.WorkspaceSvg}
    */
-  this.parentWorkspace = options.parentWorkspace
+  this.parentWorkspace = options.parentWorkspace;
 
   /**
    * Map of plugin type to name of registered plugin or plugin class.
    * @type {!Object.<string, (function(new:?, ...?)|string)>}
    */
-  this.plugins = plugins
-}
+  this.plugins = plugins;
+};
 
 /**
  * Blockly options.
@@ -194,7 +197,7 @@ Blockly.Options = function (options) {
  * `typings/parts/blockly-interfaces.d.ts`.
  * @interface
  */
-Blockly.BlocklyOptions = function () {}
+Blockly.BlocklyOptions = function () {};
 
 /**
  * Grid Options.
@@ -205,7 +208,7 @@ Blockly.BlocklyOptions = function () {}
  *     spacing: number
  * }}
  */
-Blockly.Options.GridOptions
+Blockly.Options.GridOptions;
 
 /**
  * Move Options.
@@ -215,7 +218,7 @@ Blockly.Options.GridOptions
  *     wheel: boolean
  * }}
  */
-Blockly.Options.MoveOptions
+Blockly.Options.MoveOptions;
 
 /**
  * Zoom Options.
@@ -229,7 +232,7 @@ Blockly.Options.MoveOptions
  *     wheel: boolean
  * }}
  */
-Blockly.Options.ZoomOptions
+Blockly.Options.ZoomOptions;
 
 /**
  * If set, sets the translation of the workspace to match the scrollbars.
@@ -237,13 +240,13 @@ Blockly.Options.ZoomOptions
  *     is a float between 0 and 1 specifying the degree of scrolling.
  * @return {void}
  */
-Blockly.Options.prototype.setMetrics
+Blockly.Options.prototype.setMetrics;
 
 /**
  * Return an object with the metrics required to size the workspace.
  * @return {!Blockly.utils.Metrics} Contains size and position metrics.
  */
-Blockly.Options.prototype.getMetrics
+Blockly.Options.prototype.getMetrics;
 
 /**
  * Parse the user-specified move options, using reasonable defaults where
@@ -254,29 +257,29 @@ Blockly.Options.prototype.getMetrics
  * @private
  */
 Blockly.Options.parseMoveOptions_ = function (options, hasCategories) {
-  const move = options.move || {}
-  const moveOptions = {}
+  const move = options.move || {};
+  const moveOptions = {};
   if (move.scrollbars === undefined && options.scrollbars === undefined) {
-    moveOptions.scrollbars = hasCategories
+    moveOptions.scrollbars = hasCategories;
   } else {
-    moveOptions.scrollbars = !!move.scrollbars || !!options.scrollbars
+    moveOptions.scrollbars = !!move.scrollbars || !!options.scrollbars;
   }
   if (!moveOptions.scrollbars || move.wheel === undefined) {
     // Defaults to false so that developers' settings don't appear to change.
-    moveOptions.wheel = false
+    moveOptions.wheel = false;
   } else {
-    moveOptions.wheel = !!move.wheel
+    moveOptions.wheel = !!move.wheel;
   }
   if (!moveOptions.scrollbars) {
-    moveOptions.drag = false
+    moveOptions.drag = false;
   } else if (move.drag === undefined) {
     // Defaults to true if scrollbars is true.
-    moveOptions.drag = true
+    moveOptions.drag = true;
   } else {
-    moveOptions.drag = !!move.drag
+    moveOptions.drag = !!move.drag;
   }
-  return moveOptions
-}
+  return moveOptions;
+};
 
 /**
  * Parse the user-specified zoom options, using reasonable defaults where
@@ -287,45 +290,45 @@ Blockly.Options.parseMoveOptions_ = function (options, hasCategories) {
  * @private
  */
 Blockly.Options.parseZoomOptions_ = function (options) {
-  const zoom = options.zoom || {}
-  const zoomOptions = {}
+  const zoom = options.zoom || {};
+  const zoomOptions = {};
   if (zoom.controls === undefined) {
-    zoomOptions.controls = false
+    zoomOptions.controls = false;
   } else {
-    zoomOptions.controls = !!zoom.controls
+    zoomOptions.controls = !!zoom.controls;
   }
   if (zoom.wheel === undefined) {
-    zoomOptions.wheel = false
+    zoomOptions.wheel = false;
   } else {
-    zoomOptions.wheel = !!zoom.wheel
+    zoomOptions.wheel = !!zoom.wheel;
   }
   if (zoom.startScale === undefined) {
-    zoomOptions.startScale = 1
+    zoomOptions.startScale = 1;
   } else {
-    zoomOptions.startScale = Number(zoom.startScale)
+    zoomOptions.startScale = Number(zoom.startScale);
   }
   if (zoom.maxScale === undefined) {
-    zoomOptions.maxScale = 3
+    zoomOptions.maxScale = 3;
   } else {
-    zoomOptions.maxScale = Number(zoom.maxScale)
+    zoomOptions.maxScale = Number(zoom.maxScale);
   }
   if (zoom.minScale === undefined) {
-    zoomOptions.minScale = 0.3
+    zoomOptions.minScale = 0.3;
   } else {
-    zoomOptions.minScale = Number(zoom.minScale)
+    zoomOptions.minScale = Number(zoom.minScale);
   }
   if (zoom.scaleSpeed === undefined) {
-    zoomOptions.scaleSpeed = 1.2
+    zoomOptions.scaleSpeed = 1.2;
   } else {
-    zoomOptions.scaleSpeed = Number(zoom.scaleSpeed)
+    zoomOptions.scaleSpeed = Number(zoom.scaleSpeed);
   }
   if (zoom.pinch === undefined) {
-    zoomOptions.pinch = zoomOptions.wheel || zoomOptions.controls
+    zoomOptions.pinch = zoomOptions.wheel || zoomOptions.controls;
   } else {
-    zoomOptions.pinch = !!zoom.pinch
+    zoomOptions.pinch = !!zoom.pinch;
   }
-  return zoomOptions
-}
+  return zoomOptions;
+};
 
 /**
  * Parse the user-specified grid options, using reasonable defaults where
@@ -336,15 +339,14 @@ Blockly.Options.parseZoomOptions_ = function (options) {
  * @private
  */
 Blockly.Options.parseGridOptions_ = function (options) {
-  const grid = options.grid || {}
-  const gridOptions = {}
-  gridOptions.spacing = Number(grid.spacing) || 0
-  gridOptions.colour = grid.colour || '#888'
-  gridOptions.length =
-      (grid.length === undefined) ? 1 : Number(grid.length)
-  gridOptions.snap = gridOptions.spacing > 0 && !!grid.snap
-  return gridOptions
-}
+  const grid = options.grid || {};
+  const gridOptions = {};
+  gridOptions.spacing = Number(grid.spacing) || 0;
+  gridOptions.colour = grid.colour || "#888";
+  gridOptions.length = grid.length === undefined ? 1 : Number(grid.length);
+  gridOptions.snap = gridOptions.spacing > 0 && !!grid.snap;
+  return gridOptions;
+};
 
 /**
  * Parse the user-specified theme options, using the classic theme as a default.
@@ -354,16 +356,20 @@ Blockly.Options.parseGridOptions_ = function (options) {
  * @private
  */
 Blockly.Options.parseThemeOptions_ = function (options) {
-  const theme = options.theme || Blockly.Themes.Classic
-  if (typeof theme === 'string') {
-    return /** @type {!Blockly.Theme} */ (
-      Blockly.registry.getObject(Blockly.registry.Type.THEME, theme))
+  const theme = options.theme || Blockly.Themes.Classic;
+  if (typeof theme === "string") {
+    return /** @type {!Blockly.Theme} */ (Blockly.registry.getObject(
+      Blockly.registry.Type.THEME,
+      theme
+    ));
   } else if (theme instanceof Blockly.Theme) {
-    return /** @type {!Blockly.Theme} */ (theme)
+    return /** @type {!Blockly.Theme} */ (theme);
   }
-  return Blockly.Theme.defineTheme(theme.name ||
-      ('builtin' + Blockly.utils.IdGenerator.getNextUniqueId()), theme)
-}
+  return Blockly.Theme.defineTheme(
+    theme.name || "builtin" + Blockly.utils.IdGenerator.getNextUniqueId(),
+    theme
+  );
+};
 
 /**
  * Parse the provided toolbox tree into a consistent DOM format.
@@ -374,9 +380,10 @@ Blockly.Options.parseThemeOptions_ = function (options) {
  */
 Blockly.Options.parseToolboxTree = function (toolboxDef) {
   Blockly.utils.deprecation.warn(
-    'Blockly.Options.parseToolboxTree',
-    'September 2020',
-    'September 2021',
-    'Blockly.utils.toolbox.parseToolboxTree')
-  return Blockly.utils.toolbox.parseToolboxTree(toolboxDef)
-}
+    "Blockly.Options.parseToolboxTree",
+    "September 2020",
+    "September 2021",
+    "Blockly.utils.toolbox.parseToolboxTree"
+  );
+  return Blockly.utils.toolbox.parseToolboxTree(toolboxDef);
+};

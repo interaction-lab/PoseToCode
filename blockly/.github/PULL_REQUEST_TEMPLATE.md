@@ -12,6 +12,7 @@
 - [ ] My code follows the [style guide](https://developers.google.com/blockly/guides/modify/web/style-guide)
 
 ## The details
+
 ### Resolves
 
 <!-- TODO: What Github issue does this resolve? Please include a link. -->
@@ -32,6 +33,7 @@
   -->
 
 Tested on:
+
 <!-- * Desktop Chrome -->
 <!-- * Desktop Firefox -->
 <!-- * Desktop Safari -->

@@ -12,7 +12,7 @@
  *
  * @author quachtina96 (Tina Quach)
  */
-'use strict'
+"use strict";
 
 /**
  * BlockOption Class
@@ -26,24 +26,24 @@
  */
 const BlockOption = function (blockSelector, blockType, previewBlockXml) {
   // The div to contain the block option.
-  this.blockSelector = blockSelector
+  this.blockSelector = blockSelector;
   // The type of block represented by the option.
-  this.blockType = blockType
+  this.blockType = blockType;
   // The checkbox for the option. Set in createDom.
-  this.checkbox = null
+  this.checkbox = null;
   // The dom for the option. Set in createDom.
-  this.dom = null
+  this.dom = null;
   // Xml element containing the preview block.
-  this.previewBlockXml = previewBlockXml
+  this.previewBlockXml = previewBlockXml;
   // Workspace containing preview of block. Set upon injection of workspace in
   // showPreviewBlock.
-  this.previewWorkspace = null
+  this.previewWorkspace = null;
   // Whether or not block the option is selected.
-  this.selected = false
+  this.selected = false;
   // Using this.selected rather than this.checkbox.checked allows for proper
   // handling of click events on the block option; Without this, clicking
   // directly on the checkbox does not toggle selection.
-}
+};
 
 /**
  * Creates the dom for a single block option. Includes checkbox, label, and div
@@ -53,83 +53,87 @@ const BlockOption = function (blockSelector, blockType, previewBlockXml) {
  */
 BlockOption.prototype.createDom = function () {
   // Create the div for the block option.
-  const blockOptContainer = document.createElement('div')
-  blockOptContainer.id = this.blockType
-  blockOptContainer.classList.add('blockOption')
+  const blockOptContainer = document.createElement("div");
+  blockOptContainer.id = this.blockType;
+  blockOptContainer.classList.add("blockOption");
 
   // Create and append div in which to inject the workspace for viewing the
   // block option.
-  const blockOptionPreview = document.createElement('div')
-  blockOptionPreview.id = this.blockType + '_workspace'
-  blockOptionPreview.classList.add('blockOption_preview')
-  blockOptContainer.appendChild(blockOptionPreview)
+  const blockOptionPreview = document.createElement("div");
+  blockOptionPreview.id = this.blockType + "_workspace";
+  blockOptionPreview.classList.add("blockOption_preview");
+  blockOptContainer.appendChild(blockOptionPreview);
 
   // Create and append container to hold checkbox and label.
-  const checkLabelContainer = document.createElement('div')
-  checkLabelContainer.classList.add('blockOption_checkLabel')
-  blockOptContainer.appendChild(checkLabelContainer)
+  const checkLabelContainer = document.createElement("div");
+  checkLabelContainer.classList.add("blockOption_checkLabel");
+  blockOptContainer.appendChild(checkLabelContainer);
 
   // Create and append container for checkbox.
-  const checkContainer = document.createElement('div')
-  checkContainer.classList.add('blockOption_check')
-  checkLabelContainer.appendChild(checkContainer)
+  const checkContainer = document.createElement("div");
+  checkContainer.classList.add("blockOption_check");
+  checkLabelContainer.appendChild(checkContainer);
 
   // Create and append checkbox.
-  this.checkbox = document.createElement('input')
-  this.checkbox.id = this.blockType + '_check'
-  this.checkbox.setAttribute('type', 'checkbox')
-  checkContainer.appendChild(this.checkbox)
+  this.checkbox = document.createElement("input");
+  this.checkbox.id = this.blockType + "_check";
+  this.checkbox.setAttribute("type", "checkbox");
+  checkContainer.appendChild(this.checkbox);
 
   // Create and append container for block label.
-  const labelContainer = document.createElement('div')
-  labelContainer.classList.add('blockOption_label')
-  checkLabelContainer.appendChild(labelContainer)
+  const labelContainer = document.createElement("div");
+  labelContainer.classList.add("blockOption_label");
+  checkLabelContainer.appendChild(labelContainer);
 
   // Create and append text node for the label.
-  const labelText = document.createElement('p')
-  labelText.id = this.blockType + '_text'
-  labelText.textContent = this.blockType
-  labelContainer.appendChild(labelText)
+  const labelText = document.createElement("p");
+  labelText.id = this.blockType + "_text";
+  labelText.textContent = this.blockType;
+  labelContainer.appendChild(labelText);
 
-  this.dom = blockOptContainer
-  return this.dom
-}
+  this.dom = blockOptContainer;
+  return this.dom;
+};
 
 /**
  * Injects a workspace containing the block into the block option's preview div.
  */
 BlockOption.prototype.showPreviewBlock = function () {
   // Get ID of preview workspace.
-  const blockOptPreviewID = this.dom.id + '_workspace'
+  const blockOptPreviewID = this.dom.id + "_workspace";
 
   // Inject preview block.
-  const demoWorkspace = Blockly.inject(blockOptPreviewID, { readOnly: true })
-  Blockly.Xml.domToWorkspace(this.previewBlockXml, demoWorkspace)
-  this.previewWorkspace = demoWorkspace
+  const demoWorkspace = Blockly.inject(blockOptPreviewID, { readOnly: true });
+  Blockly.Xml.domToWorkspace(this.previewBlockXml, demoWorkspace);
+  this.previewWorkspace = demoWorkspace;
 
   // Center the preview block in the workspace.
-  this.centerBlock()
-}
+  this.centerBlock();
+};
 
 /**
  * Centers the preview block in the workspace.
  */
 BlockOption.prototype.centerBlock = function () {
   // Get metrics.
-  const block = this.previewWorkspace.getTopBlocks()[0]
-  const blockMetrics = block.getHeightWidth()
-  const blockCoordinates = block.getRelativeToSurfaceXY()
-  const workspaceMetrics = this.previewWorkspace.getMetrics()
+  const block = this.previewWorkspace.getTopBlocks()[0];
+  const blockMetrics = block.getHeightWidth();
+  const blockCoordinates = block.getRelativeToSurfaceXY();
+  const workspaceMetrics = this.previewWorkspace.getMetrics();
 
   // Calculate new coordinates.
-  const x = workspaceMetrics.viewWidth / 2 - blockMetrics.width / 2 -
-      blockCoordinates.x
-  const y = workspaceMetrics.viewHeight / 2 - blockMetrics.height / 2 -
-      blockCoordinates.y
+  const x =
+    workspaceMetrics.viewWidth / 2 -
+    blockMetrics.width / 2 -
+    blockCoordinates.x;
+  const y =
+    workspaceMetrics.viewHeight / 2 -
+    blockMetrics.height / 2 -
+    blockCoordinates.y;
 
   // Move block.
-  block.moveBy(x, y)
-}
+  block.moveBy(x, y);
+};
 
 /**
  * Selects or deselects the block option.
@@ -137,11 +141,11 @@ BlockOption.prototype.centerBlock = function () {
  *    option.
  */
 BlockOption.prototype.setSelected = function (selected) {
-  this.selected = selected
+  this.selected = selected;
   if (this.checkbox) {
-    this.checkbox.checked = selected
+    this.checkbox.checked = selected;
   }
-}
+};
 
 /**
  * Returns boolean telling whether or not block is selected.
@@ -149,5 +153,5 @@ BlockOption.prototype.setSelected = function (selected) {
  *    option.
  */
 BlockOption.prototype.isSelected = function () {
-  return this.selected
-}
+  return this.selected;
+};

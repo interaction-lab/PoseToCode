@@ -10,21 +10,21 @@
  * a JavaScript framework such as Closure.
  * @author samelh@google.com (Sam El-Husseini)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.utils.aria')
+goog.provide("Blockly.utils.aria");
 
 /**
  * ARIA states/properties prefix.
  * @private
  */
-Blockly.utils.aria.ARIA_PREFIX_ = 'aria-'
+Blockly.utils.aria.ARIA_PREFIX_ = "aria-";
 
 /**
  * ARIA role attribute.
  * @private
  */
-Blockly.utils.aria.ROLE_ATTRIBUTE_ = 'role'
+Blockly.utils.aria.ROLE_ATTRIBUTE_ = "role";
 
 /**
  * ARIA role values.
@@ -33,42 +33,42 @@ Blockly.utils.aria.ROLE_ATTRIBUTE_ = 'role'
  */
 Blockly.utils.aria.Role = {
   // ARIA role for an interactive control of tabular data.
-  GRID: 'grid',
+  GRID: "grid",
 
   // ARIA role for a cell in a grid.
-  GRIDCELL: 'gridcell',
+  GRIDCELL: "gridcell",
 
   // ARIA role for a group of related elements like tree item siblings.
-  GROUP: 'group',
+  GROUP: "group",
 
   // ARIA role for a listbox.
-  LISTBOX: 'listbox',
+  LISTBOX: "listbox",
 
   // ARIA role for a popup menu.
-  MENU: 'menu',
+  MENU: "menu",
 
   // ARIA role for menu item elements.
-  MENUITEM: 'menuitem',
+  MENUITEM: "menuitem",
 
   // ARIA role for a checkbox box element inside a menu.
-  MENUITEMCHECKBOX: 'menuitemcheckbox',
+  MENUITEMCHECKBOX: "menuitemcheckbox",
 
   // ARIA role for option items that are  children of combobox, listbox, menu,
   // radiogroup, or tree elements.
-  OPTION: 'option',
+  OPTION: "option",
 
   // ARIA role for ignorable cosmetic elements with no semantic significance.
-  PRESENTATION: 'presentation',
+  PRESENTATION: "presentation",
 
   // ARIA role for a row of cells in a grid.
-  ROW: 'row',
+  ROW: "row",
 
   // ARIA role for a tree.
-  TREE: 'tree',
+  TREE: "tree",
 
   // ARIA role for a tree item that sometimes may be expanded or collapsed.
-  TREEITEM: 'treeitem'
-}
+  TREEITEM: "treeitem",
+};
 
 /**
  * ARIA states and properties.
@@ -78,62 +78,62 @@ Blockly.utils.aria.Role = {
 Blockly.utils.aria.State = {
   // ARIA property for setting the currently active descendant of an element,
   // for example the selected item in a list box. Value: ID of an element.
-  ACTIVEDESCENDANT: 'activedescendant',
+  ACTIVEDESCENDANT: "activedescendant",
 
   // ARIA property defines the total number of columns in a table, grid, or
   // treegrid.
   // Value: integer.
-  COLCOUNT: 'colcount',
+  COLCOUNT: "colcount",
 
   // ARIA state for a disabled item. Value: one of {true, false}.
-  DISABLED: 'disabled',
+  DISABLED: "disabled",
 
   // ARIA state for setting whether the element like a tree node is expanded.
   // Value: one of {true, false, undefined}.
-  EXPANDED: 'expanded',
+  EXPANDED: "expanded",
 
   // ARIA state indicating that the entered value does not conform. Value:
   // one of {false, true, 'grammar', 'spelling'}
-  INVALID: 'invalid',
+  INVALID: "invalid",
 
   // ARIA property that provides a label to override any other text, value, or
   // contents used to describe this element. Value: string.
-  LABEL: 'label',
+  LABEL: "label",
 
   // ARIA property for setting the element which labels another element.
   // Value: space-separated IDs of elements.
-  LABELLEDBY: 'labelledby',
+  LABELLEDBY: "labelledby",
 
   // ARIA property for setting the level of an element in the hierarchy.
   // Value: integer.
-  LEVEL: 'level',
+  LEVEL: "level",
 
   // ARIA property indicating if the element is horizontal or vertical.
   // Value: one of {'vertical', 'horizontal'}.
-  ORIENTATION: 'orientation',
+  ORIENTATION: "orientation",
 
   // ARIA property that defines an element's number of position in a list.
   // Value: integer.
-  POSINSET: 'posinset',
+  POSINSET: "posinset",
 
   // ARIA property defines the total number of rows in a table, grid, or
   // treegrid.
   // Value: integer.
-  ROWCOUNT: 'rowcount',
+  ROWCOUNT: "rowcount",
 
   // ARIA state for setting the currently selected item in the list.
   // Value: one of {true, false, undefined}.
-  SELECTED: 'selected',
+  SELECTED: "selected",
 
   // ARIA property defining the number of items in a list. Value: integer.
-  SETSIZE: 'setsize',
+  SETSIZE: "setsize",
 
   // ARIA property for slider maximum value. Value: number.
-  VALUEMAX: 'valuemax',
+  VALUEMAX: "valuemax",
 
   // ARIA property for slider minimum value. Value: number.
-  VALUEMIN: 'valuemin'
-}
+  VALUEMIN: "valuemin",
+};
 
 /**
  * Sets the role of an element.
@@ -144,8 +144,8 @@ Blockly.utils.aria.State = {
  * @param {!Blockly.utils.aria.Role} roleName Role name.
  */
 Blockly.utils.aria.setRole = function (element, roleName) {
-  element.setAttribute(Blockly.utils.aria.ROLE_ATTRIBUTE_, roleName)
-}
+  element.setAttribute(Blockly.utils.aria.ROLE_ATTRIBUTE_, roleName);
+};
 
 /**
  * Sets the state or property of an element.
@@ -159,8 +159,8 @@ Blockly.utils.aria.setRole = function (element, roleName) {
  */
 Blockly.utils.aria.setState = function (element, stateName, value) {
   if (Array.isArray(value)) {
-    value = value.join(' ')
+    value = value.join(" ");
   }
-  const attrStateName = Blockly.utils.aria.ARIA_PREFIX_ + stateName
-  element.setAttribute(attrStateName, value)
-}
+  const attrStateName = Blockly.utils.aria.ARIA_PREFIX_ + stateName;
+  element.setAttribute(attrStateName, value);
+};

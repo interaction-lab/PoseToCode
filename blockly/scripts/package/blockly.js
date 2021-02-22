@@ -9,4 +9,4 @@
  */
 
 /* eslint-disable */
-'use strict';
+"use strict";

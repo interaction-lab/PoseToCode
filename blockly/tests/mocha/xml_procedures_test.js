@@ -4,305 +4,329 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-goog.require('Blockly.Blocks.procedures')
-goog.require('Blockly.Msg')
+goog.require("Blockly.Blocks.procedures");
+goog.require("Blockly.Msg");
 
-suite('Procedures XML', function () {
+suite("Procedures XML", function () {
   setup(function () {
-    sharedTestSetup.call(this)
-  })
+    sharedTestSetup.call(this);
+  });
   teardown(function () {
-    sharedTestTeardown.call(this)
-  })
+    sharedTestTeardown.call(this);
+  });
 
-  suite('Deserialization', function () {
+  suite("Deserialization", function () {
     setup(function () {
-      this.workspace = new Blockly.Workspace()
+      this.workspace = new Blockly.Workspace();
 
       this.callForAllTypes = function (func) {
         const typesArray = [
-          ['procedures_defnoreturn', 'procedures_callnoreturn'],
-          ['procedures_defreturn', 'procedures_callreturn']
-        ]
+          ["procedures_defnoreturn", "procedures_callnoreturn"],
+          ["procedures_defreturn", "procedures_callreturn"],
+        ];
 
         for (var i = 0, types; (types = typesArray[i]); i++) {
-          const context = Object.create(null)
-          context.workspace = this.workspace
-          context.defType = types[0]
-          context.callType = types[1]
+          const context = Object.create(null);
+          context.workspace = this.workspace;
+          context.defType = types[0];
+          context.callType = types[1];
 
-          func.call(context)
+          func.call(context);
 
-          this.workspace.clear()
+          this.workspace.clear();
         }
-      }
-    })
+      };
+    });
     teardown(function () {
-      workspaceTeardown.call(this, this.workspace)
-    })
+      workspaceTeardown.call(this, this.workspace);
+    });
 
-    suite('Definition Blocks', function () {
-      test('Minimal', function () {
+    suite("Definition Blocks", function () {
+      test("Minimal", function () {
         this.callForAllTypes(function () {
           const xml = Blockly.Xml.textToDom(
             '<block type="' + this.defType + '"></block>'
-          )
-          const block = Blockly.Xml.domToBlock(xml, this.workspace)
+          );
+          const block = Blockly.Xml.domToBlock(xml, this.workspace);
 
           // TODO: Is this how you want this to work? or do you want it to
           //    be 'unnamed'?
-          chai.assert.equal(block.getFieldValue('NAME'), '')
-          chai.assert.isArray(block.arguments_)
-          chai.assert.isEmpty(block.arguments_)
-          chai.assert.isArray(block.argumentVarModels_)
-          chai.assert.isEmpty(block.argumentVarModels_)
-          chai.assert.isNotNull(block.getInput('STACK'))
-        })
-      })
+          chai.assert.equal(block.getFieldValue("NAME"), "");
+          chai.assert.isArray(block.arguments_);
+          chai.assert.isEmpty(block.arguments_);
+          chai.assert.isArray(block.argumentVarModels_);
+          chai.assert.isEmpty(block.argumentVarModels_);
+          chai.assert.isNotNull(block.getInput("STACK"));
+        });
+      });
       // This is like what's in the toolbox.
-      test('Common', function () {
+      test("Common", function () {
         this.callForAllTypes(function () {
           const xml = Blockly.Xml.textToDom(
-            '<block type="' + this.defType + '">' +
+            '<block type="' +
+              this.defType +
+              '">' +
               '  <field name="NAME">do something</field>' +
-              '</block>'
-          )
-          const block = Blockly.Xml.domToBlock(xml, this.workspace)
+              "</block>"
+          );
+          const block = Blockly.Xml.domToBlock(xml, this.workspace);
 
-          chai.assert.equal(
-            block.getFieldValue('NAME'),
-            'do something')
-          chai.assert.isArray(block.arguments_)
-          chai.assert.isEmpty(block.arguments_)
-          chai.assert.isArray(block.argumentVarModels_)
-          chai.assert.isEmpty(block.argumentVarModels_)
-          chai.assert.isNotNull(block.getInput('STACK'))
-        })
-      })
-      test('Arg Vars Pre-Created', function () {
+          chai.assert.equal(block.getFieldValue("NAME"), "do something");
+          chai.assert.isArray(block.arguments_);
+          chai.assert.isEmpty(block.arguments_);
+          chai.assert.isArray(block.argumentVarModels_);
+          chai.assert.isEmpty(block.argumentVarModels_);
+          chai.assert.isNotNull(block.getInput("STACK"));
+        });
+      });
+      test("Arg Vars Pre-Created", function () {
         this.callForAllTypes(function () {
-          this.workspace.createVariable('x', '', 'arg')
+          this.workspace.createVariable("x", "", "arg");
           const xml = Blockly.Xml.textToDom(
-            '<block type="' + this.defType + '">' +
+            '<block type="' +
+              this.defType +
+              '">' +
               '  <field name="NAME">do something</field>' +
-              '  <mutation>' +
+              "  <mutation>" +
               '    <arg name="x" varid="arg"></arg>' +
-              '  </mutation>' +
-              '</block>'
-          )
-          const block = Blockly.Xml.domToBlock(xml, this.workspace)
+              "  </mutation>" +
+              "</block>"
+          );
+          const block = Blockly.Xml.domToBlock(xml, this.workspace);
 
-          chai.assert.equal(
-            block.getFieldValue('NAME'),
-            'do something')
-          chai.assert.deepEqual(block.arguments_, ['x'])
-          chai.assert.deepEqual(block.argumentVarModels_,
-            [this.workspace.getVariableById('arg')])
-          chai.assert.isNotNull(block.getInput('STACK'))
-        })
-      })
-      test('Arg Vars Not Created', function () {
+          chai.assert.equal(block.getFieldValue("NAME"), "do something");
+          chai.assert.deepEqual(block.arguments_, ["x"]);
+          chai.assert.deepEqual(block.argumentVarModels_, [
+            this.workspace.getVariableById("arg"),
+          ]);
+          chai.assert.isNotNull(block.getInput("STACK"));
+        });
+      });
+      test("Arg Vars Not Created", function () {
         this.callForAllTypes(function () {
           const xml = Blockly.Xml.textToDom(
-            '<block type="' + this.defType + '">' +
+            '<block type="' +
+              this.defType +
+              '">' +
               '  <field name="NAME">do something</field>' +
-              '  <mutation>' +
+              "  <mutation>" +
               '    <arg name="x" varid="arg"></arg>' +
-              '  </mutation>' +
-              '</block>'
-          )
-          const block = Blockly.Xml.domToBlock(xml, this.workspace)
+              "  </mutation>" +
+              "</block>"
+          );
+          const block = Blockly.Xml.domToBlock(xml, this.workspace);
 
-          chai.assert.equal(
-            block.getFieldValue('NAME'),
-            'do something')
-          chai.assert.deepEqual(block.arguments_, ['x'])
-          chai.assert.deepEqual(block.argumentVarModels_,
-            [this.workspace.getVariableById('arg')])
-          chai.assert.isNotNull(block.getInput('STACK'))
-        })
-      })
+          chai.assert.equal(block.getFieldValue("NAME"), "do something");
+          chai.assert.deepEqual(block.arguments_, ["x"]);
+          chai.assert.deepEqual(block.argumentVarModels_, [
+            this.workspace.getVariableById("arg"),
+          ]);
+          chai.assert.isNotNull(block.getInput("STACK"));
+        });
+      });
       // TODO: I don't know a lot about typing vars, and even less out it in
       //  this context. Is allowing typed vars to be args the correct behavior?
-      test('Arg Vars Pre-Created Typed', function () {
+      test("Arg Vars Pre-Created Typed", function () {
         this.callForAllTypes(function () {
-          this.workspace.createVariable('x', 'type', 'arg')
+          this.workspace.createVariable("x", "type", "arg");
           const xml = Blockly.Xml.textToDom(
-            '<block type="' + this.defType + '">' +
+            '<block type="' +
+              this.defType +
+              '">' +
               '  <field name="NAME">do something</field>' +
-              '  <mutation>' +
+              "  <mutation>" +
               '    <arg name="x" varid="arg"></arg>' +
-              '  </mutation>' +
-              '</block>'
-          )
-          const block = Blockly.Xml.domToBlock(xml, this.workspace)
+              "  </mutation>" +
+              "</block>"
+          );
+          const block = Blockly.Xml.domToBlock(xml, this.workspace);
 
-          chai.assert.equal(
-            block.getFieldValue('NAME'),
-            'do something')
-          chai.assert.deepEqual(block.arguments_, ['x'])
-          chai.assert.deepEqual(block.argumentVarModels_,
-            [this.workspace.getVariableById('arg')])
-          chai.assert.isNotNull(block.getInput('STACK'))
-        })
-      })
-      test('Statements False', function () {
+          chai.assert.equal(block.getFieldValue("NAME"), "do something");
+          chai.assert.deepEqual(block.arguments_, ["x"]);
+          chai.assert.deepEqual(block.argumentVarModels_, [
+            this.workspace.getVariableById("arg"),
+          ]);
+          chai.assert.isNotNull(block.getInput("STACK"));
+        });
+      });
+      test("Statements False", function () {
         const xml = Blockly.Xml.textToDom(
           '<block type="procedures_defreturn">' +
             '  <field name="NAME">do something</field>' +
             '  <mutation statements="false"></mutation>' +
-            '</block>'
-        )
-        const block = Blockly.Xml.domToBlock(xml, this.workspace)
+            "</block>"
+        );
+        const block = Blockly.Xml.domToBlock(xml, this.workspace);
 
-        chai.assert.equal(
-          block.getFieldValue('NAME'),
-          'do something')
-        chai.assert.isArray(block.arguments_)
-        chai.assert.isEmpty(block.arguments_)
-        chai.assert.isArray(block.argumentVarModels_)
-        chai.assert.isEmpty(block.argumentVarModels_)
-        chai.assert.isNull(block.getInput('STACK'))
-      })
-      test('Statements True', function () {
+        chai.assert.equal(block.getFieldValue("NAME"), "do something");
+        chai.assert.isArray(block.arguments_);
+        chai.assert.isEmpty(block.arguments_);
+        chai.assert.isArray(block.argumentVarModels_);
+        chai.assert.isEmpty(block.argumentVarModels_);
+        chai.assert.isNull(block.getInput("STACK"));
+      });
+      test("Statements True", function () {
         const xml = Blockly.Xml.textToDom(
           '<block type="procedures_defreturn">' +
             '  <field name="NAME">do something</field>' +
             '  <mutation statements="true"></mutation>' +
-            '</block>'
-        )
-        const block = Blockly.Xml.domToBlock(xml, this.workspace)
+            "</block>"
+        );
+        const block = Blockly.Xml.domToBlock(xml, this.workspace);
 
-        chai.assert.equal(
-          block.getFieldValue('NAME'),
-          'do something')
-        chai.assert.isArray(block.arguments_)
-        chai.assert.isEmpty(block.arguments_)
-        chai.assert.isArray(block.argumentVarModels_)
-        chai.assert.isEmpty(block.argumentVarModels_)
-        chai.assert.isNotNull(block.getInput('STACK'))
-      })
-    })
-    suite('Call Blocks', function () {
-      test('Caller W/ Def', function () {
+        chai.assert.equal(block.getFieldValue("NAME"), "do something");
+        chai.assert.isArray(block.arguments_);
+        chai.assert.isEmpty(block.arguments_);
+        chai.assert.isArray(block.argumentVarModels_);
+        chai.assert.isEmpty(block.argumentVarModels_);
+        chai.assert.isNotNull(block.getInput("STACK"));
+      });
+    });
+    suite("Call Blocks", function () {
+      test("Caller W/ Def", function () {
         this.callForAllTypes(function () {
-          Blockly.Xml.domToBlock(Blockly.Xml.textToDom(
-            '<block type="' + this.defType + '">' +
-              '  <field name="NAME">do something</field>' +
-              '</block>'
-          ), this.workspace)
+          Blockly.Xml.domToBlock(
+            Blockly.Xml.textToDom(
+              '<block type="' +
+                this.defType +
+                '">' +
+                '  <field name="NAME">do something</field>' +
+                "</block>"
+            ),
+            this.workspace
+          );
           const callerXML = Blockly.Xml.textToDom(
-            '<block type="' + this.callType + '">' +
+            '<block type="' +
+              this.callType +
+              '">' +
               '  <mutation name="do something"/>' +
-              '</block>'
-          )
-          const block = Blockly.Xml.domToBlock(callerXML, this.workspace)
+              "</block>"
+          );
+          const block = Blockly.Xml.domToBlock(callerXML, this.workspace);
 
-          chai.assert.equal(
-            block.getFieldValue('NAME'),
-            'do something')
-          chai.assert.isArray(block.arguments_)
-          chai.assert.isEmpty(block.arguments_)
+          chai.assert.equal(block.getFieldValue("NAME"), "do something");
+          chai.assert.isArray(block.arguments_);
+          chai.assert.isEmpty(block.arguments_);
           // TODO: argumentVarModels_ is undefined for call_return, but
           //  defined for call_noreturn. Make it defined for both.
           /* chai.assert.isArray(block.argumentVarModels_);
           chai.assert.isEmpty(block.argumentVarModels_); */
-        })
-      })
+        });
+      });
       // TODO: I couldn't get this test (of creating a definition) to work
       //  b/c of the events delay.
-      test.skip('Caller No Def', function () {
+      test.skip("Caller No Def", function () {
         this.callForAllTypes(function () {
           const callerXML = Blockly.Xml.textToDom(
-            '<block type="' + this.callType + '">' +
+            '<block type="' +
+              this.callType +
+              '">' +
               '  <mutation name="do something"/>' +
-              '</block>'
-          )
-          const block = Blockly.Xml.domToBlock(callerXML, this.workspace)
+              "</block>"
+          );
+          const block = Blockly.Xml.domToBlock(callerXML, this.workspace);
 
-          chai.assert.equal(
-            block.getFieldValue('NAME'),
-            'do something')
-          chai.assert.isArray(block.arguments_)
-          chai.assert.isEmpty(block.arguments_)
+          chai.assert.equal(block.getFieldValue("NAME"), "do something");
+          chai.assert.isArray(block.arguments_);
+          chai.assert.isEmpty(block.arguments_);
           // TODO: argumentVarModels_ is undefined for call_return, but
           //  defined for call_noreturn. Make it defined for both.
           /* chai.assert.isArray(block.argumentVarModels_);
           chai.assert.isEmpty(block.argumentVarModels_); */
-          chai.assert.equal(this.workspace.getAllBlocks(false).count, 2)
-        })
-      })
-      test('Caller W/ Params', function () {
+          chai.assert.equal(this.workspace.getAllBlocks(false).count, 2);
+        });
+      });
+      test("Caller W/ Params", function () {
         this.callForAllTypes(function () {
-          Blockly.Xml.domToBlock(Blockly.Xml.textToDom(
-            '<block type="' + this.defType + '">' +
-              '  <field name="NAME">do something</field>' +
-              '  <mutation>' +
-              '    <arg name="x" varid="arg"></arg>' +
-              '  </mutation>' +
-              '</block>'
-          ), this.workspace)
+          Blockly.Xml.domToBlock(
+            Blockly.Xml.textToDom(
+              '<block type="' +
+                this.defType +
+                '">' +
+                '  <field name="NAME">do something</field>' +
+                "  <mutation>" +
+                '    <arg name="x" varid="arg"></arg>' +
+                "  </mutation>" +
+                "</block>"
+            ),
+            this.workspace
+          );
           const callerXML = Blockly.Xml.textToDom(
-            '<block type="' + this.callType + '">' +
+            '<block type="' +
+              this.callType +
+              '">' +
               '  <mutation name="do something">' +
               '    <arg name="x"></arg>' +
-              '  </mutation>' +
-              '</block>'
-          )
-          const block = Blockly.Xml.domToBlock(callerXML, this.workspace)
+              "  </mutation>" +
+              "</block>"
+          );
+          const block = Blockly.Xml.domToBlock(callerXML, this.workspace);
 
-          chai.assert.equal(
-            block.getFieldValue('NAME'),
-            'do something')
-          chai.assert.deepEqual(block.arguments_, ['x'])
-          chai.assert.deepEqual(block.argumentVarModels_,
-            [this.workspace.getVariableById('arg')])
-        })
-      })
+          chai.assert.equal(block.getFieldValue("NAME"), "do something");
+          chai.assert.deepEqual(block.arguments_, ["x"]);
+          chai.assert.deepEqual(block.argumentVarModels_, [
+            this.workspace.getVariableById("arg"),
+          ]);
+        });
+      });
       // TODO: How do you want it to behave in this situation?
-      test.skip('Caller W/out Params', function () {
+      test.skip("Caller W/out Params", function () {
         this.callForAllTypes(function () {
-          Blockly.Xml.domToBlock(Blockly.Xml.textToDom(
-            '<block type="' + this.defType + '">' +
-              '  <field name="NAME">do something</field>' +
-              '  <mutation>' +
-              '    <arg name="x" varid="arg"></arg>' +
-              '  </mutation>' +
-              '</block>'
-          ), this.workspace)
+          Blockly.Xml.domToBlock(
+            Blockly.Xml.textToDom(
+              '<block type="' +
+                this.defType +
+                '">' +
+                '  <field name="NAME">do something</field>' +
+                "  <mutation>" +
+                '    <arg name="x" varid="arg"></arg>' +
+                "  </mutation>" +
+                "</block>"
+            ),
+            this.workspace
+          );
           const callerXML = Blockly.Xml.textToDom(
-            '<block type="' + this.callType + '">' +
+            '<block type="' +
+              this.callType +
+              '">' +
               '  <mutation name="do something"></mutation>' +
-              '</block>'
-          )
+              "</block>"
+          );
           // TODO: Remove this when you fix this test.
           // eslint-disable-next-line no-unused-vars
-          const block = Blockly.Xml.domToBlock(callerXML, this.workspace)
-        })
-      })
+          const block = Blockly.Xml.domToBlock(callerXML, this.workspace);
+        });
+      });
       // TODO: How do you want it to behave in this situation?
-      test.skip('Caller W/ Bad Params', function () {
+      test.skip("Caller W/ Bad Params", function () {
         this.callForAllTypes(function () {
-          Blockly.Xml.domToBlock(Blockly.Xml.textToDom(
-            '<block type="' + this.defType + '">' +
-              '  <field name="NAME">do something</field>' +
-              '  <mutation>' +
-              '    <arg name="x" varid="arg"></arg>' +
-              '  </mutation>' +
-              '</block>'
-          ), this.workspace)
+          Blockly.Xml.domToBlock(
+            Blockly.Xml.textToDom(
+              '<block type="' +
+                this.defType +
+                '">' +
+                '  <field name="NAME">do something</field>' +
+                "  <mutation>" +
+                '    <arg name="x" varid="arg"></arg>' +
+                "  </mutation>" +
+                "</block>"
+            ),
+            this.workspace
+          );
           const callerXML = Blockly.Xml.textToDom(
-            '<block type="' + this.callType + '">' +
+            '<block type="' +
+              this.callType +
+              '">' +
               '  <mutation name="do something">' +
               '    <arg name="y"></arg>' +
-              '  </mutation>' +
-              '</block>'
-          )
+              "  </mutation>" +
+              "</block>"
+          );
           // TODO: Remove this when you fix this test.
           // eslint-disable-next-line no-unused-vars
-          const block = Blockly.Xml.domToBlock(callerXML, this.workspace)
-        })
-      })
-    })
-  })
-})
+          const block = Blockly.Xml.domToBlock(callerXML, this.workspace);
+        });
+      });
+    });
+  });
+});

@@ -8,21 +8,21 @@
  * @fileoverview Base renderer.
  * @author fenichel@google.com (Rachel Fenichel)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.blockRendering.Renderer')
+goog.provide("Blockly.blockRendering.Renderer");
 
-goog.require('Blockly.blockRendering.ConstantProvider')
-goog.require('Blockly.blockRendering.MarkerSvg')
-goog.require('Blockly.blockRendering.Drawer')
-goog.require('Blockly.blockRendering.IPathObject')
-goog.require('Blockly.blockRendering.PathObject')
-goog.require('Blockly.blockRendering.RenderInfo')
-goog.require('Blockly.constants')
-goog.require('Blockly.InsertionMarkerManager')
+goog.require("Blockly.blockRendering.ConstantProvider");
+goog.require("Blockly.blockRendering.MarkerSvg");
+goog.require("Blockly.blockRendering.Drawer");
+goog.require("Blockly.blockRendering.IPathObject");
+goog.require("Blockly.blockRendering.PathObject");
+goog.require("Blockly.blockRendering.RenderInfo");
+goog.require("Blockly.constants");
+goog.require("Blockly.InsertionMarkerManager");
 
-goog.requireType('Blockly.blockRendering.Debug')
-goog.requireType('Blockly.IRegistrable')
+goog.requireType("Blockly.blockRendering.Debug");
+goog.requireType("Blockly.IRegistrable");
 
 /**
  * The base class for a block renderer.
@@ -37,22 +37,22 @@ Blockly.blockRendering.Renderer = function (name) {
    * @type {string}
    * @package
    */
-  this.name = name
+  this.name = name;
 
   /**
    * The renderer's constant provider.
    * @type {Blockly.blockRendering.ConstantProvider}
    * @private
    */
-  this.constants_ = null
+  this.constants_ = null;
 
   /**
    * Rendering constant overrides, passed in through options.
    * @type {?Object}
    * @package
    */
-  this.overrides = null
-}
+  this.overrides = null;
+};
 
 /**
  * Gets the class name that identifies this renderer.
@@ -60,8 +60,8 @@ Blockly.blockRendering.Renderer = function (name) {
  * @package
  */
 Blockly.blockRendering.Renderer.prototype.getClassName = function () {
-  return this.name + '-renderer'
-}
+  return this.name + "-renderer";
+};
 
 /**
  * Initialize the renderer.
@@ -69,16 +69,18 @@ Blockly.blockRendering.Renderer.prototype.getClassName = function () {
  * @param {Object=} opt_rendererOverrides Rendering constant overrides.
  * @package
  */
-Blockly.blockRendering.Renderer.prototype.init = function (theme,
-  opt_rendererOverrides) {
-  this.constants_ = this.makeConstants_()
+Blockly.blockRendering.Renderer.prototype.init = function (
+  theme,
+  opt_rendererOverrides
+) {
+  this.constants_ = this.makeConstants_();
   if (opt_rendererOverrides) {
-    this.overrides = opt_rendererOverrides
-    Blockly.utils.object.mixin(this.constants_, opt_rendererOverrides)
+    this.overrides = opt_rendererOverrides;
+    Blockly.utils.object.mixin(this.constants_, opt_rendererOverrides);
   }
-  this.constants_.setTheme(theme)
-  this.constants_.init()
-}
+  this.constants_.setTheme(theme);
+  this.constants_.init();
+};
 
 /**
  * Create any DOM elements that this renderer needs.
@@ -87,9 +89,12 @@ Blockly.blockRendering.Renderer.prototype.init = function (theme,
  * @package
  */
 Blockly.blockRendering.Renderer.prototype.createDom = function (svg, theme) {
-  this.constants_.createDom(svg, this.name + '-' + theme.name,
-    '.' + this.getClassName() + '.' + theme.getClassName())
-}
+  this.constants_.createDom(
+    svg,
+    this.name + "-" + theme.name,
+    "." + this.getClassName() + "." + theme.getClassName()
+  );
+};
 
 /**
  * Refresh the renderer after a theme change.
@@ -98,18 +103,18 @@ Blockly.blockRendering.Renderer.prototype.createDom = function (svg, theme) {
  * @package
  */
 Blockly.blockRendering.Renderer.prototype.refreshDom = function (svg, theme) {
-  const previousConstants = this.getConstants()
-  previousConstants.dispose()
-  this.constants_ = this.makeConstants_()
+  const previousConstants = this.getConstants();
+  previousConstants.dispose();
+  this.constants_ = this.makeConstants_();
   if (this.overrides) {
-    Blockly.utils.object.mixin(this.constants_, this.overrides)
+    Blockly.utils.object.mixin(this.constants_, this.overrides);
   }
   // Ensure the constant provider's random identifier does not change.
-  this.constants_.randomIdentifier = previousConstants.randomIdentifier
-  this.constants_.setTheme(theme)
-  this.constants_.init()
-  this.createDom(svg, theme)
-}
+  this.constants_.randomIdentifier = previousConstants.randomIdentifier;
+  this.constants_.setTheme(theme);
+  this.constants_.init();
+  this.createDom(svg, theme);
+};
 
 /**
  * Dispose of this renderer.
@@ -118,9 +123,9 @@ Blockly.blockRendering.Renderer.prototype.refreshDom = function (svg, theme) {
  */
 Blockly.blockRendering.Renderer.prototype.dispose = function () {
   if (this.constants_) {
-    this.constants_.dispose()
+    this.constants_.dispose();
   }
-}
+};
 
 /**
  * Create a new instance of the renderer's constant provider.
@@ -128,8 +133,8 @@ Blockly.blockRendering.Renderer.prototype.dispose = function () {
  * @protected
  */
 Blockly.blockRendering.Renderer.prototype.makeConstants_ = function () {
-  return new Blockly.blockRendering.ConstantProvider()
-}
+  return new Blockly.blockRendering.ConstantProvider();
+};
 
 /**
  * Create a new instance of the renderer's render info object.
@@ -138,8 +143,8 @@ Blockly.blockRendering.Renderer.prototype.makeConstants_ = function () {
  * @protected
  */
 Blockly.blockRendering.Renderer.prototype.makeRenderInfo_ = function (block) {
-  return new Blockly.blockRendering.RenderInfo(this, block)
-}
+  return new Blockly.blockRendering.RenderInfo(this, block);
+};
 
 /**
  * Create a new instance of the renderer's drawer.
@@ -150,8 +155,8 @@ Blockly.blockRendering.Renderer.prototype.makeRenderInfo_ = function (block) {
  * @protected
  */
 Blockly.blockRendering.Renderer.prototype.makeDrawer_ = function (block, info) {
-  return new Blockly.blockRendering.Drawer(block, info)
-}
+  return new Blockly.blockRendering.Drawer(block, info);
+};
 
 /**
  * Create a new instance of the renderer's debugger.
@@ -161,10 +166,10 @@ Blockly.blockRendering.Renderer.prototype.makeDrawer_ = function (block, info) {
  */
 Blockly.blockRendering.Renderer.prototype.makeDebugger_ = function () {
   if (!Blockly.blockRendering.Debug) {
-    throw Error('Missing require for Blockly.blockRendering.Debug')
+    throw Error("Missing require for Blockly.blockRendering.Debug");
   }
-  return new Blockly.blockRendering.Debug(this.getConstants())
-}
+  return new Blockly.blockRendering.Debug(this.getConstants());
+};
 
 /**
  * Create a new instance of the renderer's marker drawer.
@@ -175,9 +180,15 @@ Blockly.blockRendering.Renderer.prototype.makeDebugger_ = function () {
  * @package
  */
 Blockly.blockRendering.Renderer.prototype.makeMarkerDrawer = function (
-  workspace, marker) {
-  return new Blockly.blockRendering.MarkerSvg(workspace, this.getConstants(), marker)
-}
+  workspace,
+  marker
+) {
+  return new Blockly.blockRendering.MarkerSvg(
+    workspace,
+    this.getConstants(),
+    marker
+  );
+};
 
 /**
  * Create a new instance of a renderer path object.
@@ -187,11 +198,16 @@ Blockly.blockRendering.Renderer.prototype.makeMarkerDrawer = function (
  * @return {!Blockly.blockRendering.IPathObject} The renderer path object.
  * @package
  */
-Blockly.blockRendering.Renderer.prototype.makePathObject = function (root,
-  style) {
-  return new Blockly.blockRendering.PathObject(root, style,
-    /** @type {!Blockly.blockRendering.ConstantProvider} */ (this.constants_))
-}
+Blockly.blockRendering.Renderer.prototype.makePathObject = function (
+  root,
+  style
+) {
+  return new Blockly.blockRendering.PathObject(
+    root,
+    style,
+    /** @type {!Blockly.blockRendering.ConstantProvider} */ (this.constants_)
+  );
+};
 
 /**
  * Get the current renderer's constant provider.  We assume that when this is
@@ -202,8 +218,9 @@ Blockly.blockRendering.Renderer.prototype.makePathObject = function (root,
 Blockly.blockRendering.Renderer.prototype.getConstants = function () {
   return (
     /** @type {!Blockly.blockRendering.ConstantProvider} */
-    (this.constants_))
-}
+    (this.constants_)
+  );
+};
 
 /**
  * Determine whether or not to highlight a connection.
@@ -212,11 +229,12 @@ Blockly.blockRendering.Renderer.prototype.getConstants = function () {
  * @return {boolean} True if we should highlight the connection.
  * @package
  */
-Blockly.blockRendering.Renderer.prototype.shouldHighlightConnection =
-    function (_conn) {
-    /* eslint-disable indent */
-  return true
-} /* eslint-enable indent */
+Blockly.blockRendering.Renderer.prototype.shouldHighlightConnection = function (
+  _conn
+) {
+  /* eslint-disable indent */
+  return true;
+}; /* eslint-enable indent */
 
 /**
  * Checks if an orphaned block can connect to the "end" of the topBlock's
@@ -231,30 +249,37 @@ Blockly.blockRendering.Renderer.prototype.shouldHighlightConnection =
  * @return {boolean} Whether there is a home for the orphan or not.
  * @package
  */
-Blockly.blockRendering.Renderer.prototype.orphanCanConnectAtEnd =
-    function (topBlock, orphanBlock, localType) {
-      let orphanConnection = null
-      let lastConnection = null
-      if (localType == Blockly.OUTPUT_VALUE) { // We are replacing an output.
-        orphanConnection = orphanBlock.outputConnection
-        // TODO:  I don't think this function necessarily has the correct logic,
-        //  but for now it is being kept for behavioral backwards-compat.
-        lastConnection = Blockly.Connection
-          .lastConnectionInRow(
-            /** @type {!Blockly.Block} **/ (topBlock), orphanBlock)
-      } else { // We are replacing a previous.
-        orphanConnection = orphanBlock.previousConnection
-        // TODO: This lives on the block while lastConnectionInRow lives on
-        //  on the connection. Something is fishy.
-        lastConnection = topBlock.lastConnectionInStack()
-      }
+Blockly.blockRendering.Renderer.prototype.orphanCanConnectAtEnd = function (
+  topBlock,
+  orphanBlock,
+  localType
+) {
+  let orphanConnection = null;
+  let lastConnection = null;
+  if (localType == Blockly.OUTPUT_VALUE) {
+    // We are replacing an output.
+    orphanConnection = orphanBlock.outputConnection;
+    // TODO:  I don't think this function necessarily has the correct logic,
+    //  but for now it is being kept for behavioral backwards-compat.
+    lastConnection = Blockly.Connection.lastConnectionInRow(
+      /** @type {!Blockly.Block} **/ (topBlock),
+      orphanBlock
+    );
+  } else {
+    // We are replacing a previous.
+    orphanConnection = orphanBlock.previousConnection;
+    // TODO: This lives on the block while lastConnectionInRow lives on
+    //  on the connection. Something is fishy.
+    lastConnection = topBlock.lastConnectionInStack();
+  }
 
-      if (!lastConnection) {
-        return false
-      }
-      return orphanConnection.getConnectionChecker().canConnect(
-        lastConnection, orphanConnection, false)
-    }
+  if (!lastConnection) {
+    return false;
+  }
+  return orphanConnection
+    .getConnectionChecker()
+    .canConnect(lastConnection, orphanConnection, false);
+};
 
 /**
  * Chooses a connection preview method based on the available connection, the
@@ -267,22 +292,30 @@ Blockly.blockRendering.Renderer.prototype.orphanCanConnectAtEnd =
  *     to display.
  * @package
  */
-Blockly.blockRendering.Renderer.prototype.getConnectionPreviewMethod =
-    function (closest, local, topBlock) {
-      if (local.type == Blockly.OUTPUT_VALUE ||
-          local.type == Blockly.PREVIOUS_STATEMENT) {
-        if (!closest.isConnected() ||
-            this.orphanCanConnectAtEnd(
-              topBlock,
-              /** @type {!Blockly.BlockSvg} */ (closest.targetBlock()),
-              local.type)) {
-          return Blockly.InsertionMarkerManager.PREVIEW_TYPE.INSERTION_MARKER
-        }
-        return Blockly.InsertionMarkerManager.PREVIEW_TYPE.REPLACEMENT_FADE
-      }
-
-      return Blockly.InsertionMarkerManager.PREVIEW_TYPE.INSERTION_MARKER
+Blockly.blockRendering.Renderer.prototype.getConnectionPreviewMethod = function (
+  closest,
+  local,
+  topBlock
+) {
+  if (
+    local.type == Blockly.OUTPUT_VALUE ||
+    local.type == Blockly.PREVIOUS_STATEMENT
+  ) {
+    if (
+      !closest.isConnected() ||
+      this.orphanCanConnectAtEnd(
+        topBlock,
+        /** @type {!Blockly.BlockSvg} */ (closest.targetBlock()),
+        local.type
+      )
+    ) {
+      return Blockly.InsertionMarkerManager.PREVIEW_TYPE.INSERTION_MARKER;
     }
+    return Blockly.InsertionMarkerManager.PREVIEW_TYPE.REPLACEMENT_FADE;
+  }
+
+  return Blockly.InsertionMarkerManager.PREVIEW_TYPE.INSERTION_MARKER;
+};
 
 /**
  * Render the block.
@@ -291,9 +324,9 @@ Blockly.blockRendering.Renderer.prototype.getConnectionPreviewMethod =
  */
 Blockly.blockRendering.Renderer.prototype.render = function (block) {
   if (Blockly.blockRendering.useDebugger && !block.renderingDebugger) {
-    block.renderingDebugger = this.makeDebugger_()
+    block.renderingDebugger = this.makeDebugger_();
   }
-  const info = this.makeRenderInfo_(block)
-  info.measure()
-  this.makeDrawer_(block, info).draw()
-}
+  const info = this.makeRenderInfo_(block);
+  info.measure();
+  this.makeDrawer_(block, info).draw();
+};

@@ -10,13 +10,13 @@
  * a JavaScript framework such as Closure.
  * @author samelh@google.com (Sam El-Husseini)
  */
-'use strict'
+"use strict";
 
 /**
  * @name Blockly.utils.Size
  * @namespace
  */
-goog.provide('Blockly.utils.Size')
+goog.provide("Blockly.utils.Size");
 
 /**
  * Class for representing sizes consisting of a width and height.
@@ -30,14 +30,14 @@ Blockly.utils.Size = function (width, height) {
    * Width
    * @type {number}
    */
-  this.width = width
+  this.width = width;
 
   /**
    * Height
    * @type {number}
    */
-  this.height = height
-}
+  this.height = height;
+};
 
 /**
  * Compares sizes for equality.
@@ -48,10 +48,10 @@ Blockly.utils.Size = function (width, height) {
  */
 Blockly.utils.Size.equals = function (a, b) {
   if (a == b) {
-    return true
+    return true;
   }
   if (!a || !b) {
-    return false
+    return false;
   }
-  return a.width == b.width && a.height == b.height
-}
+  return a.width == b.width && a.height == b.height;
+};

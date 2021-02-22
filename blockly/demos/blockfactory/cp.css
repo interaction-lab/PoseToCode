@@ -20,27 +20,27 @@
   user-select: none;
 }
 
-#cp_popup>table {
+#cp_popup > table {
   border: 2px solid #808080;
   background-color: #808080;
   border-collapse: collapse;
 }
 
-#cp_popup>table>tbody>tr>td {
+#cp_popup > table > tbody > tr > td {
   border: 1px solid #808080;
   background-color: #fff;
   width: 20px;
   padding: 0;
 }
 
-#cp_popup>table>tbody>tr>td>div {
+#cp_popup > table > tbody > tr > td > div {
   border: 1px solid #808080;
 }
 
-#cp_popup>table>tbody>tr>td>div:hover {
+#cp_popup > table > tbody > tr > td > div:hover {
   border-color: #fff;
 }
 
-#cp_popup>table>tbody>tr>td>div.cp_current {
+#cp_popup > table > tbody > tr > td > div.cp_current {
   border: 1px solid #000;
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Mocha Tests for Blockly</title>
 
     <link href="https://unpkg.com/mocha@5.2.0/mocha.css" rel="stylesheet" />
@@ -28,16 +28,15 @@
     }
   </style>
   <body>
-
     <div id="mocha"></div>
-    <div id="failureCount" style="display:none" tests_failed="unset"></div>
+    <div id="failureCount" style="display: none" tests_failed="unset"></div>
     <script src="https://unpkg.com/chai/chai.js"></script>
     <script src="https://unpkg.com/mocha@5.2.0/mocha.js"></script>
     <script src="https://unpkg.com/sinon/pkg/sinon.js"></script>
     <script src="https://unpkg.com/@blockly/dev-tools/dist/index.js"></script>
     <script>
       mocha.setup({
-        ui: 'tdd'
+        ui: "tdd",
       });
     </script>
 
@@ -98,17 +97,29 @@
     <script src="zoom_controls_test.js"></script>
 
     <div id="blocklyDiv"></div>
-    <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox-simple" style="display: none">
+    <xml
+      xmlns="https://developers.google.com/blockly/xml"
+      id="toolbox-simple"
+      style="display: none"
+    >
       <block type="logic_operation"></block>
       <sep gap="20"></sep>
       <button text="insert" callbackkey="insertConnectionRows"></button>
       <label text="tooltips"></label>
     </xml>
 
-    <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox-minimal" style="display: none">
+    <xml
+      xmlns="https://developers.google.com/blockly/xml"
+      id="toolbox-minimal"
+      style="display: none"
+    >
       <block type="basic_block"></block>
     </xml>
-    <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox-incorrect" style="display: none">
+    <xml
+      xmlns="https://developers.google.com/blockly/xml"
+      id="toolbox-incorrect"
+      style="display: none"
+    >
       <block type="basic_block"></block>
       <category name="First">
         <block type="basic_block">
@@ -120,7 +131,11 @@
       </category>
     </xml>
 
-    <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox-categories" style="display: none">
+    <xml
+      xmlns="https://developers.google.com/blockly/xml"
+      id="toolbox-categories"
+      style="display: none"
+    >
       <category name="First" css-container="something">
         <block type="basic_block">
           <field name="TEXT">FirstCategory-FirstBlock</field>
@@ -136,7 +151,11 @@
       </category>
     </xml>
 
-    <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox-test" style="display: none">
+    <xml
+      xmlns="https://developers.google.com/blockly/xml"
+      id="toolbox-test"
+      style="display: none"
+    >
       <category name="First" expanded="true" categorystyle="logic_category">
         <sep gap="-1"></sep>
         <button text="insert" callbackkey="insertConnectionRows"></button>
@@ -148,24 +167,35 @@
       </category>
       <sep toolboxitemid="separator" gap="-1"></sep>
       <category name="Variables" custom="VARIABLE"></category>
-      <category name="NestedCategory" >
-        <category toolboxitemid="nestedCategory" name="NestedItemOne"></category>
+      <category name="NestedCategory">
+        <category
+          toolboxitemid="nestedCategory"
+          name="NestedItemOne"
+        ></category>
       </category>
       <category name="lastItem"></category>
     </xml>
-    <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox-connections" style="display: none">
+    <xml
+      xmlns="https://developers.google.com/blockly/xml"
+      id="toolbox-connections"
+      style="display: none"
+    >
       <block type="stack_block"></block>
       <block type="row_block"></block>
     </xml>
 
-    <xml xmlns="https://developers.google.com/blockly/xml" id="gesture-test-toolbox" style="display: none">
+    <xml
+      xmlns="https://developers.google.com/blockly/xml"
+      id="gesture-test-toolbox"
+      style="display: none"
+    >
       <block type="test_field_block"></block>
     </xml>
 
     <script>
-      mocha.run(function(failures) {
-        var failureDiv = document.getElementById('failureCount');
-        failureDiv.setAttribute('tests_failed', failures);
+      mocha.run(function (failures) {
+        var failureDiv = document.getElementById("failureCount");
+        failureDiv.setAttribute("tests_failed", failures);
       });
     </script>
   </body>

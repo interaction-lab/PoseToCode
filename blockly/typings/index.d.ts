@@ -14,9 +14,9 @@
 /// <reference path="javascript.d.ts" />
 /// <reference path="msg/en.d.ts" />
 
-import * as Blockly from './core';
-import './blocks';
-import './javascript';
-import './msg/en';
+import * as Blockly from "./core";
+import "./blocks";
+import "./javascript";
+import "./msg/en";
 
 export = Blockly;

@@ -8,18 +8,18 @@
  * @fileoverview Helper functions for generating PHP for blocks.
  * @author daarond@gmail.com (Daaron Dwyer)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.PHP')
+goog.provide("Blockly.PHP");
 
-goog.require('Blockly.Generator')
-goog.require('Blockly.utils.string')
+goog.require("Blockly.Generator");
+goog.require("Blockly.utils.string");
 
 /**
  * PHP code generator.
  * @type {!Blockly.Generator}
  */
-Blockly.PHP = new Blockly.Generator('PHP')
+Blockly.PHP = new Blockly.Generator("PHP");
 
 /**
  * List of illegal variable names.
@@ -30,69 +30,69 @@ Blockly.PHP = new Blockly.Generator('PHP')
  */
 Blockly.PHP.addReservedWords(
   // http://php.net/manual/en/reserved.keywords.php
-  '__halt_compiler,abstract,and,array,as,break,callable,case,catch,class,' +
-    'clone,const,continue,declare,default,die,do,echo,else,elseif,empty,' +
-    'enddeclare,endfor,endforeach,endif,endswitch,endwhile,eval,exit,extends,' +
-    'final,for,foreach,function,global,goto,if,implements,include,' +
-    'include_once,instanceof,insteadof,interface,isset,list,namespace,new,or,' +
-    'print,private,protected,public,require,require_once,return,static,' +
-    'switch,throw,trait,try,unset,use,var,while,xor,' +
-  // http://php.net/manual/en/reserved.constants.php
-    'PHP_VERSION,PHP_MAJOR_VERSION,PHP_MINOR_VERSION,PHP_RELEASE_VERSION,' +
-    'PHP_VERSION_ID,PHP_EXTRA_VERSION,PHP_ZTS,PHP_DEBUG,PHP_MAXPATHLEN,' +
-    'PHP_OS,PHP_SAPI,PHP_EOL,PHP_INT_MAX,PHP_INT_SIZE,DEFAULT_INCLUDE_PATH,' +
-    'PEAR_INSTALL_DIR,PEAR_EXTENSION_DIR,PHP_EXTENSION_DIR,PHP_PREFIX,' +
-    'PHP_BINDIR,PHP_BINARY,PHP_MANDIR,PHP_LIBDIR,PHP_DATADIR,PHP_SYSCONFDIR,' +
-    'PHP_LOCALSTATEDIR,PHP_CONFIG_FILE_PATH,PHP_CONFIG_FILE_SCAN_DIR,' +
-    'PHP_SHLIB_SUFFIX,E_ERROR,E_WARNING,E_PARSE,E_NOTICE,E_CORE_ERROR,' +
-    'E_CORE_WARNING,E_COMPILE_ERROR,E_COMPILE_WARNING,E_USER_ERROR,' +
-    'E_USER_WARNING,E_USER_NOTICE,E_DEPRECATED,E_USER_DEPRECATED,E_ALL,' +
-    'E_STRICT,__COMPILER_HALT_OFFSET__,TRUE,FALSE,NULL,__CLASS__,__DIR__,' +
-    '__FILE__,__FUNCTION__,__LINE__,__METHOD__,__NAMESPACE__,__TRAIT__'
-)
+  "__halt_compiler,abstract,and,array,as,break,callable,case,catch,class," +
+    "clone,const,continue,declare,default,die,do,echo,else,elseif,empty," +
+    "enddeclare,endfor,endforeach,endif,endswitch,endwhile,eval,exit,extends," +
+    "final,for,foreach,function,global,goto,if,implements,include," +
+    "include_once,instanceof,insteadof,interface,isset,list,namespace,new,or," +
+    "print,private,protected,public,require,require_once,return,static," +
+    "switch,throw,trait,try,unset,use,var,while,xor," +
+    // http://php.net/manual/en/reserved.constants.php
+    "PHP_VERSION,PHP_MAJOR_VERSION,PHP_MINOR_VERSION,PHP_RELEASE_VERSION," +
+    "PHP_VERSION_ID,PHP_EXTRA_VERSION,PHP_ZTS,PHP_DEBUG,PHP_MAXPATHLEN," +
+    "PHP_OS,PHP_SAPI,PHP_EOL,PHP_INT_MAX,PHP_INT_SIZE,DEFAULT_INCLUDE_PATH," +
+    "PEAR_INSTALL_DIR,PEAR_EXTENSION_DIR,PHP_EXTENSION_DIR,PHP_PREFIX," +
+    "PHP_BINDIR,PHP_BINARY,PHP_MANDIR,PHP_LIBDIR,PHP_DATADIR,PHP_SYSCONFDIR," +
+    "PHP_LOCALSTATEDIR,PHP_CONFIG_FILE_PATH,PHP_CONFIG_FILE_SCAN_DIR," +
+    "PHP_SHLIB_SUFFIX,E_ERROR,E_WARNING,E_PARSE,E_NOTICE,E_CORE_ERROR," +
+    "E_CORE_WARNING,E_COMPILE_ERROR,E_COMPILE_WARNING,E_USER_ERROR," +
+    "E_USER_WARNING,E_USER_NOTICE,E_DEPRECATED,E_USER_DEPRECATED,E_ALL," +
+    "E_STRICT,__COMPILER_HALT_OFFSET__,TRUE,FALSE,NULL,__CLASS__,__DIR__," +
+    "__FILE__,__FUNCTION__,__LINE__,__METHOD__,__NAMESPACE__,__TRAIT__"
+);
 
 /**
  * Order of operation ENUMs.
  * http://php.net/manual/en/language.operators.precedence.php
  */
-Blockly.PHP.ORDER_ATOMIC = 0 // 0 "" ...
-Blockly.PHP.ORDER_CLONE = 1 // clone
-Blockly.PHP.ORDER_NEW = 1 // new
-Blockly.PHP.ORDER_MEMBER = 2.1 // []
-Blockly.PHP.ORDER_FUNCTION_CALL = 2.2 // ()
-Blockly.PHP.ORDER_POWER = 3 // **
-Blockly.PHP.ORDER_INCREMENT = 4 // ++
-Blockly.PHP.ORDER_DECREMENT = 4 // --
-Blockly.PHP.ORDER_BITWISE_NOT = 4 // ~
-Blockly.PHP.ORDER_CAST = 4 // (int) (float) (string) (array) ...
-Blockly.PHP.ORDER_SUPPRESS_ERROR = 4 // @
-Blockly.PHP.ORDER_INSTANCEOF = 5 // instanceof
-Blockly.PHP.ORDER_LOGICAL_NOT = 6 // !
-Blockly.PHP.ORDER_UNARY_PLUS = 7.1 // +
-Blockly.PHP.ORDER_UNARY_NEGATION = 7.2 // -
-Blockly.PHP.ORDER_MULTIPLICATION = 8.1 // *
-Blockly.PHP.ORDER_DIVISION = 8.2 // /
-Blockly.PHP.ORDER_MODULUS = 8.3 // %
-Blockly.PHP.ORDER_ADDITION = 9.1 // +
-Blockly.PHP.ORDER_SUBTRACTION = 9.2 // -
-Blockly.PHP.ORDER_STRING_CONCAT = 9.3 // .
-Blockly.PHP.ORDER_BITWISE_SHIFT = 10 // << >>
-Blockly.PHP.ORDER_RELATIONAL = 11 // < <= > >=
-Blockly.PHP.ORDER_EQUALITY = 12 // == != === !== <> <=>
-Blockly.PHP.ORDER_REFERENCE = 13 // &
-Blockly.PHP.ORDER_BITWISE_AND = 13 // &
-Blockly.PHP.ORDER_BITWISE_XOR = 14 // ^
-Blockly.PHP.ORDER_BITWISE_OR = 15 // |
-Blockly.PHP.ORDER_LOGICAL_AND = 16 // &&
-Blockly.PHP.ORDER_LOGICAL_OR = 17 // ||
-Blockly.PHP.ORDER_IF_NULL = 18 // ??
-Blockly.PHP.ORDER_CONDITIONAL = 19 // ?:
-Blockly.PHP.ORDER_ASSIGNMENT = 20 // = += -= *= /= %= <<= >>= ...
-Blockly.PHP.ORDER_LOGICAL_AND_WEAK = 21 // and
-Blockly.PHP.ORDER_LOGICAL_XOR = 22 // xor
-Blockly.PHP.ORDER_LOGICAL_OR_WEAK = 23 // or
-Blockly.PHP.ORDER_COMMA = 24 // ,
-Blockly.PHP.ORDER_NONE = 99 // (...)
+Blockly.PHP.ORDER_ATOMIC = 0; // 0 "" ...
+Blockly.PHP.ORDER_CLONE = 1; // clone
+Blockly.PHP.ORDER_NEW = 1; // new
+Blockly.PHP.ORDER_MEMBER = 2.1; // []
+Blockly.PHP.ORDER_FUNCTION_CALL = 2.2; // ()
+Blockly.PHP.ORDER_POWER = 3; // **
+Blockly.PHP.ORDER_INCREMENT = 4; // ++
+Blockly.PHP.ORDER_DECREMENT = 4; // --
+Blockly.PHP.ORDER_BITWISE_NOT = 4; // ~
+Blockly.PHP.ORDER_CAST = 4; // (int) (float) (string) (array) ...
+Blockly.PHP.ORDER_SUPPRESS_ERROR = 4; // @
+Blockly.PHP.ORDER_INSTANCEOF = 5; // instanceof
+Blockly.PHP.ORDER_LOGICAL_NOT = 6; // !
+Blockly.PHP.ORDER_UNARY_PLUS = 7.1; // +
+Blockly.PHP.ORDER_UNARY_NEGATION = 7.2; // -
+Blockly.PHP.ORDER_MULTIPLICATION = 8.1; // *
+Blockly.PHP.ORDER_DIVISION = 8.2; // /
+Blockly.PHP.ORDER_MODULUS = 8.3; // %
+Blockly.PHP.ORDER_ADDITION = 9.1; // +
+Blockly.PHP.ORDER_SUBTRACTION = 9.2; // -
+Blockly.PHP.ORDER_STRING_CONCAT = 9.3; // .
+Blockly.PHP.ORDER_BITWISE_SHIFT = 10; // << >>
+Blockly.PHP.ORDER_RELATIONAL = 11; // < <= > >=
+Blockly.PHP.ORDER_EQUALITY = 12; // == != === !== <> <=>
+Blockly.PHP.ORDER_REFERENCE = 13; // &
+Blockly.PHP.ORDER_BITWISE_AND = 13; // &
+Blockly.PHP.ORDER_BITWISE_XOR = 14; // ^
+Blockly.PHP.ORDER_BITWISE_OR = 15; // |
+Blockly.PHP.ORDER_LOGICAL_AND = 16; // &&
+Blockly.PHP.ORDER_LOGICAL_OR = 17; // ||
+Blockly.PHP.ORDER_IF_NULL = 18; // ??
+Blockly.PHP.ORDER_CONDITIONAL = 19; // ?:
+Blockly.PHP.ORDER_ASSIGNMENT = 20; // = += -= *= /= %= <<= >>= ...
+Blockly.PHP.ORDER_LOGICAL_AND_WEAK = 21; // and
+Blockly.PHP.ORDER_LOGICAL_XOR = 22; // xor
+Blockly.PHP.ORDER_LOGICAL_OR_WEAK = 23; // or
+Blockly.PHP.ORDER_COMMA = 24; // ,
+Blockly.PHP.ORDER_NONE = 99; // (...)
 
 /**
  * List of outer-inner pairings that do NOT require parentheses.
@@ -114,8 +114,8 @@ Blockly.PHP.ORDER_OVERRIDES = [
   // a && (b && c) -> a && b && c
   [Blockly.PHP.ORDER_LOGICAL_AND, Blockly.PHP.ORDER_LOGICAL_AND],
   // a || (b || c) -> a || b || c
-  [Blockly.PHP.ORDER_LOGICAL_OR, Blockly.PHP.ORDER_LOGICAL_OR]
-]
+  [Blockly.PHP.ORDER_LOGICAL_OR, Blockly.PHP.ORDER_LOGICAL_OR],
+];
 
 /**
  * Initialise the database of variable names.
@@ -123,38 +123,48 @@ Blockly.PHP.ORDER_OVERRIDES = [
  */
 Blockly.PHP.init = function (workspace) {
   // Create a dictionary of definitions to be printed before the code.
-  Blockly.PHP.definitions_ = Object.create(null)
+  Blockly.PHP.definitions_ = Object.create(null);
   // Create a dictionary mapping desired function names in definitions_
   // to actual function names (to avoid collisions with user functions).
-  Blockly.PHP.functionNames_ = Object.create(null)
+  Blockly.PHP.functionNames_ = Object.create(null);
 
   if (!Blockly.PHP.variableDB_) {
-    Blockly.PHP.variableDB_ =
-        new Blockly.Names(Blockly.PHP.RESERVED_WORDS_, '$')
+    Blockly.PHP.variableDB_ = new Blockly.Names(
+      Blockly.PHP.RESERVED_WORDS_,
+      "$"
+    );
   } else {
-    Blockly.PHP.variableDB_.reset()
+    Blockly.PHP.variableDB_.reset();
   }
 
-  Blockly.PHP.variableDB_.setVariableMap(workspace.getVariableMap())
+  Blockly.PHP.variableDB_.setVariableMap(workspace.getVariableMap());
 
-  const defvars = []
+  const defvars = [];
   // Add developer variables (not created or named by the user).
-  const devVarList = Blockly.Variables.allDeveloperVariables(workspace)
+  const devVarList = Blockly.Variables.allDeveloperVariables(workspace);
   for (var i = 0; i < devVarList.length; i++) {
-    defvars.push(Blockly.PHP.variableDB_.getName(devVarList[i],
-      Blockly.Names.DEVELOPER_VARIABLE_TYPE) + ';')
+    defvars.push(
+      Blockly.PHP.variableDB_.getName(
+        devVarList[i],
+        Blockly.Names.DEVELOPER_VARIABLE_TYPE
+      ) + ";"
+    );
   }
 
   // Add user variables, but only ones that are being used.
-  const variables = Blockly.Variables.allUsedVarModels(workspace)
-  for (var i = 0, variable; variable = variables[i]; i++) {
-    defvars.push(Blockly.PHP.variableDB_.getName(variable.getId(),
-      Blockly.VARIABLE_CATEGORY_NAME) + ';')
+  const variables = Blockly.Variables.allUsedVarModels(workspace);
+  for (var i = 0, variable; (variable = variables[i]); i++) {
+    defvars.push(
+      Blockly.PHP.variableDB_.getName(
+        variable.getId(),
+        Blockly.VARIABLE_CATEGORY_NAME
+      ) + ";"
+    );
   }
 
   // Declare all of the variables.
-  Blockly.PHP.definitions_.variables = defvars.join('\n')
-}
+  Blockly.PHP.definitions_.variables = defvars.join("\n");
+};
 
 /**
  * Prepend the generated code with the variable definitions.
@@ -163,16 +173,16 @@ Blockly.PHP.init = function (workspace) {
  */
 Blockly.PHP.finish = function (code) {
   // Convert the definitions dictionary into a list.
-  const definitions = []
+  const definitions = [];
   for (const name in Blockly.PHP.definitions_) {
-    definitions.push(Blockly.PHP.definitions_[name])
+    definitions.push(Blockly.PHP.definitions_[name]);
   }
   // Clean up temporary data.
-  delete Blockly.PHP.definitions_
-  delete Blockly.PHP.functionNames_
-  Blockly.PHP.variableDB_.reset()
-  return definitions.join('\n\n') + '\n\n\n' + code
-}
+  delete Blockly.PHP.definitions_;
+  delete Blockly.PHP.functionNames_;
+  Blockly.PHP.variableDB_.reset();
+  return definitions.join("\n\n") + "\n\n\n" + code;
+};
 
 /**
  * Naked values are top-level blocks with outputs that aren't plugged into
@@ -181,8 +191,8 @@ Blockly.PHP.finish = function (code) {
  * @return {string} Legal line of code.
  */
 Blockly.PHP.scrubNakedValue = function (line) {
-  return line + ';\n'
-}
+  return line + ";\n";
+};
 
 /**
  * Encode a string as a properly escaped PHP string, complete with
@@ -192,11 +202,12 @@ Blockly.PHP.scrubNakedValue = function (line) {
  * @private
  */
 Blockly.PHP.quote_ = function (string) {
-  string = string.replace(/\\/g, '\\\\')
-    .replace(/\n/g, '\\\n')
-    .replace(/'/g, '\\\'')
-  return '\'' + string + '\''
-}
+  string = string
+    .replace(/\\/g, "\\\\")
+    .replace(/\n/g, "\\\n")
+    .replace(/'/g, "\\'");
+  return "'" + string + "'";
+};
 
 /**
  * Encode a string as a properly escaped multiline PHP string, complete with
@@ -206,12 +217,12 @@ Blockly.PHP.quote_ = function (string) {
  * @private
  */
 Blockly.PHP.multiline_quote_ = function (string) {
-  const lines = string.split(/\n/g).map(Blockly.PHP.quote_)
+  const lines = string.split(/\n/g).map(Blockly.PHP.quote_);
   // Join with the following, plus a newline:
   // . "\n" .
   // Newline escaping only works in double-quoted strings.
-  return lines.join(' . \"\\n\" .\n')
-}
+  return lines.join(' . "\\n" .\n');
+};
 
 /**
  * Common tasks for generating PHP from blocks.
@@ -224,34 +235,36 @@ Blockly.PHP.multiline_quote_ = function (string) {
  * @private
  */
 Blockly.PHP.scrub_ = function (block, code, opt_thisOnly) {
-  let commentCode = ''
+  let commentCode = "";
   // Only collect comments for blocks that aren't inline.
   if (!block.outputConnection || !block.outputConnection.targetConnection) {
     // Collect comment for this block.
-    let comment = block.getCommentText()
+    let comment = block.getCommentText();
     if (comment) {
-      comment = Blockly.utils.string.wrap(comment,
-        Blockly.PHP.COMMENT_WRAP - 3)
-      commentCode += Blockly.PHP.prefixLines(comment, '// ') + '\n'
+      comment = Blockly.utils.string.wrap(
+        comment,
+        Blockly.PHP.COMMENT_WRAP - 3
+      );
+      commentCode += Blockly.PHP.prefixLines(comment, "// ") + "\n";
     }
     // Collect comments for all value arguments.
     // Don't collect comments for nested statements.
     for (let i = 0; i < block.inputList.length; i++) {
       if (block.inputList[i].type == Blockly.INPUT_VALUE) {
-        const childBlock = block.inputList[i].connection.targetBlock()
+        const childBlock = block.inputList[i].connection.targetBlock();
         if (childBlock) {
-          comment = Blockly.PHP.allNestedComments(childBlock)
+          comment = Blockly.PHP.allNestedComments(childBlock);
           if (comment) {
-            commentCode += Blockly.PHP.prefixLines(comment, '// ')
+            commentCode += Blockly.PHP.prefixLines(comment, "// ");
           }
         }
       }
     }
   }
-  const nextBlock = block.nextConnection && block.nextConnection.targetBlock()
-  const nextCode = opt_thisOnly ? '' : Blockly.PHP.blockToCode(nextBlock)
-  return commentCode + code + nextCode
-}
+  const nextBlock = block.nextConnection && block.nextConnection.targetBlock();
+  const nextCode = opt_thisOnly ? "" : Blockly.PHP.blockToCode(nextBlock);
+  return commentCode + code + nextCode;
+};
 
 /**
  * Gets a property and adjusts the value while taking into account indexing.
@@ -262,56 +275,63 @@ Blockly.PHP.scrub_ = function (block, code, opt_thisOnly) {
  * @param {number=} opt_order The highest order acting on this value.
  * @return {string|number}
  */
-Blockly.PHP.getAdjusted = function (block, atId, opt_delta, opt_negate,
-  opt_order) {
-  let delta = opt_delta || 0
-  let order = opt_order || Blockly.PHP.ORDER_NONE
+Blockly.PHP.getAdjusted = function (
+  block,
+  atId,
+  opt_delta,
+  opt_negate,
+  opt_order
+) {
+  let delta = opt_delta || 0;
+  let order = opt_order || Blockly.PHP.ORDER_NONE;
   if (block.workspace.options.oneBasedIndex) {
-    delta--
+    delta--;
   }
-  const defaultAtIndex = block.workspace.options.oneBasedIndex ? '1' : '0'
+  const defaultAtIndex = block.workspace.options.oneBasedIndex ? "1" : "0";
   if (delta > 0) {
-    var at = Blockly.PHP.valueToCode(block, atId,
-      Blockly.PHP.ORDER_ADDITION) || defaultAtIndex
+    var at =
+      Blockly.PHP.valueToCode(block, atId, Blockly.PHP.ORDER_ADDITION) ||
+      defaultAtIndex;
   } else if (delta < 0) {
-    var at = Blockly.PHP.valueToCode(block, atId,
-      Blockly.PHP.ORDER_SUBTRACTION) || defaultAtIndex
+    var at =
+      Blockly.PHP.valueToCode(block, atId, Blockly.PHP.ORDER_SUBTRACTION) ||
+      defaultAtIndex;
   } else if (opt_negate) {
-    var at = Blockly.PHP.valueToCode(block, atId,
-      Blockly.PHP.ORDER_UNARY_NEGATION) || defaultAtIndex
+    var at =
+      Blockly.PHP.valueToCode(block, atId, Blockly.PHP.ORDER_UNARY_NEGATION) ||
+      defaultAtIndex;
   } else {
-    var at = Blockly.PHP.valueToCode(block, atId, order) ||
-        defaultAtIndex
+    var at = Blockly.PHP.valueToCode(block, atId, order) || defaultAtIndex;
   }
 
   if (Blockly.isNumber(at)) {
     // If the index is a naked number, adjust it right now.
-    at = Number(at) + delta
+    at = Number(at) + delta;
     if (opt_negate) {
-      at = -at
+      at = -at;
     }
   } else {
     // If the index is dynamic, adjust it in code.
     if (delta > 0) {
-      at = at + ' + ' + delta
-      var innerOrder = Blockly.PHP.ORDER_ADDITION
+      at = at + " + " + delta;
+      var innerOrder = Blockly.PHP.ORDER_ADDITION;
     } else if (delta < 0) {
-      at = at + ' - ' + -delta
-      var innerOrder = Blockly.PHP.ORDER_SUBTRACTION
+      at = at + " - " + -delta;
+      var innerOrder = Blockly.PHP.ORDER_SUBTRACTION;
     }
     if (opt_negate) {
       if (delta) {
-        at = '-(' + at + ')'
+        at = "-(" + at + ")";
       } else {
-        at = '-' + at
+        at = "-" + at;
       }
-      var innerOrder = Blockly.PHP.ORDER_UNARY_NEGATION
+      var innerOrder = Blockly.PHP.ORDER_UNARY_NEGATION;
     }
-    innerOrder = Math.floor(innerOrder)
-    order = Math.floor(order)
+    innerOrder = Math.floor(innerOrder);
+    order = Math.floor(order);
     if (innerOrder && order >= innerOrder) {
-      at = '(' + at + ')'
+      at = "(" + at + ")";
     }
   }
-  return at
-}
+  return at;
+};

@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-html, body {
+html,
+body {
   height: 100%;
   min-height: 375px;
 }
@@ -92,16 +93,19 @@ pre,
   color: #888;
 }
 
-button:disabled, .buttonStyle:disabled {
+button:disabled,
+.buttonStyle:disabled {
   opacity: 0.6;
 }
 
-button>*, .buttonStyle>* {
+button > *,
+.buttonStyle > * {
   opacity: 1;
   vertical-align: text-bottom;
 }
 
-button, .buttonStyle {
+button,
+.buttonStyle {
   border-radius: 4px;
   border: 1px solid #ddd;
   background-color: #eee;
@@ -111,11 +115,13 @@ button, .buttonStyle {
   font-size: small;
 }
 
-.buttonStyle:hover:not(:disabled), button:hover:not(:disabled) {
+.buttonStyle:hover:not(:disabled),
+button:hover:not(:disabled) {
   box-shadow: 2px 2px 5px #888;
 }
 
-.buttonStyle:hover:not(:disabled)>*, button:hover:not(:disabled)>* {
+.buttonStyle:hover:not(:disabled) > *,
+button:hover:not(:disabled) > * {
   opacity: 1;
 }
 
@@ -215,7 +221,7 @@ button, .buttonStyle {
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background-color: #ccc;
-  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .subsettings {
@@ -223,7 +229,7 @@ button, .buttonStyle {
 }
 
 #exporterHiddenWorkspace {
- display: none;
+  display: none;
 }
 
 #exportPreview {
@@ -240,7 +246,8 @@ button, .buttonStyle {
   width: 100%;
 }
 
-#genStubs_textArea, #blockDefs_textArea {
+#genStubs_textArea,
+#blockDefs_textArea {
   display: block;
   height: 80%;
   margin-right: 20px;
@@ -249,7 +256,8 @@ button, .buttonStyle {
   position: static;
 }
 
-#blockDefs_label, #genStubs_label {
+#blockDefs_label,
+#genStubs_label {
   display: block;
 }
 
@@ -276,12 +284,12 @@ button, .buttonStyle {
 
 .blockOption_check {
   float: left;
-  display:inline;
+  display: inline;
   padding: 4px;
 }
 
 .blockOption_label {
-  display:inline;
+  display: inline;
   max-width: inherit;
   word-wrap: break-word;
 }
@@ -351,7 +359,7 @@ aside {
   float: right;
 }
 
-#categoryTable>table {
+#categoryTable > table {
   border: 1px solid #ccc;
   border-bottom: none;
   width: auto;
@@ -479,14 +487,16 @@ td.taboff:hover {
   background-color: white;
   height: 100%;
   left: 0;
-  opacity: .5;
+  opacity: 0.5;
   position: absolute;
   top: 0;
   width: 100%;
-  z-index: -1;  /* Start behind workspace */
+  z-index: -1; /* Start behind workspace */
 }
 
-#grid_options, #zoom_options, #maxBlockNumber_option {
+#grid_options,
+#zoom_options,
+#maxBlockNumber_option {
   padding-left: 15px;
 }
 
@@ -509,16 +519,17 @@ td.taboff:hover {
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
   background-color: #fff;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   display: none;
   min-width: 170px;
   opacity: 1;
   position: absolute;
-  z-index: 101;  /* On top of the modal Shadow. */
+  z-index: 101; /* On top of the modal Shadow. */
 }
 
 /* Links inside the dropdown */
-.dropdown-content a, .dropdown-content label {
+.dropdown-content a,
+.dropdown-content label {
   color: black;
   display: block;
   font-size: small;
@@ -527,13 +538,14 @@ td.taboff:hover {
 }
 
 /* Change color  of dropdown links on hover. */
-.dropdown-content a:hover, .dropdown-content label:hover {
-  background-color: #EEE;
+.dropdown-content a:hover,
+.dropdown-content label:hover {
+  background-color: #eee;
 }
 
 /* Change color of dropdown links on selected. */
 .dropdown-content-selected {
-  background-color: #DDD;
+  background-color: #ddd;
 }
 
 /* Show the dropdown menu */
@@ -545,7 +557,7 @@ td.taboff:hover {
   padding: 0 1ex;
 }
 
-#dropdownDiv_editCategory>img {
+#dropdownDiv_editCategory > img {
   vertical-align: middle;
 }
 
@@ -554,16 +566,16 @@ td.taboff:hover {
 }
 
 #cp_popup {
- z-index: 999;
+  z-index: 999;
 }
 
-.shadowBlock>.blocklyPath {
-  fill-opacity: .5;
-  stroke-opacity: .5;
+.shadowBlock > .blocklyPath {
+  fill-opacity: 0.5;
+  stroke-opacity: 0.5;
 }
 
-.shadowBlock>.blocklyPathLight,
-.shadowBlock>.blocklyPathDark {
+.shadowBlock > .blocklyPathLight,
+.shadowBlock > .blocklyPathDark {
   display: none;
 }
 

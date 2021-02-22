@@ -31,9 +31,15 @@ html[dir="RTL"] .farSide {
   animation-delay: 2s;
 }
 @keyframes pulse {
-    0% { background-color: #fff }
-    50% { background-color: #f00 }
-    100% { background-color: #fff }
+  0% {
+    background-color: #fff;
+  }
+  50% {
+    background-color: #f00;
+  }
+  100% {
+    background-color: #fff;
+  }
 }
 
 #blockly {
@@ -52,7 +58,8 @@ html[dir="RTL"] .farSide {
   fill: #fff;
   stroke: #000;
 }
-#wing, #tail {
+#wing,
+#tail {
   fill: #ddd;
   stroke: #444;
 }
@@ -68,7 +75,8 @@ html[dir="RTL"] .farSide {
   fill: #8b8;
   stroke: #000;
 }
-#seatYes, #seatNo {
+#seatYes,
+#seatNo {
   font-size: 40pt;
 }
 text {

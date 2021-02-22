@@ -8,12 +8,12 @@
  * @fileoverview Object in charge of managing markers and the cursor.
  * @author aschmiedt@google.com (Abby Schmiedt)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.MarkerManager')
+goog.provide("Blockly.MarkerManager");
 
-goog.require('Blockly.Cursor')
-goog.require('Blockly.Marker')
+goog.require("Blockly.Cursor");
+goog.require("Blockly.Marker");
 
 /**
  * Class to manage the multiple markers and the cursor on a workspace.
@@ -27,29 +27,29 @@ Blockly.MarkerManager = function (workspace) {
    * @type {Blockly.Cursor}
    * @private
    */
-  this.cursor_ = null
+  this.cursor_ = null;
 
   /**
    * The cursor's svg element.
    * @type {SVGElement}
    * @private
    */
-  this.cursorSvg_ = null
+  this.cursorSvg_ = null;
 
   /**
    * The map of markers for the workspace.
    * @type {!Object<string, !Blockly.Marker>}
    * @private
    */
-  this.markers_ = {}
+  this.markers_ = {};
 
   /**
    * The workspace this marker manager is associated with.
    * @type {!Blockly.WorkspaceSvg}
    * @private
    */
-  this.workspace_ = workspace
-}
+  this.workspace_ = workspace;
+};
 
 /**
  * Register the marker by adding it to the map of markers.
@@ -58,36 +58,41 @@ Blockly.MarkerManager = function (workspace) {
  */
 Blockly.MarkerManager.prototype.registerMarker = function (id, marker) {
   if (this.markers_[id]) {
-    this.unregisterMarker(id)
+    this.unregisterMarker(id);
   }
-  marker.setDrawer(this.workspace_.getRenderer()
-    .makeMarkerDrawer(this.workspace_, marker))
-  this.setMarkerSvg(marker.getDrawer().createDom())
-  this.markers_[id] = marker
-}
+  marker.setDrawer(
+    this.workspace_.getRenderer().makeMarkerDrawer(this.workspace_, marker)
+  );
+  this.setMarkerSvg(marker.getDrawer().createDom());
+  this.markers_[id] = marker;
+};
 
 /**
  * Unregister the marker by removing it from the map of markers.
  * @param {string} id The id of the marker to unregister.
  */
 Blockly.MarkerManager.prototype.unregisterMarker = function (id) {
-  const marker = this.markers_[id]
+  const marker = this.markers_[id];
   if (marker) {
-    marker.dispose()
-    delete this.markers_[id]
+    marker.dispose();
+    delete this.markers_[id];
   } else {
-    throw Error('Marker with id ' + id + ' does not exist. Can only unregister' +
-        'markers that exist.')
+    throw Error(
+      "Marker with id " +
+        id +
+        " does not exist. Can only unregister" +
+        "markers that exist."
+    );
   }
-}
+};
 
 /**
  * Get the cursor for the workspace.
  * @return {Blockly.Cursor} The cursor for this workspace.
  */
 Blockly.MarkerManager.prototype.getCursor = function () {
-  return this.cursor_
-}
+  return this.cursor_;
+};
 
 /**
  * Get a single marker that corresponds to the given id.
@@ -96,8 +101,8 @@ Blockly.MarkerManager.prototype.getCursor = function () {
  *     if none exists.
  */
 Blockly.MarkerManager.prototype.getMarker = function (id) {
-  return this.markers_[id]
-}
+  return this.markers_[id];
+};
 
 /**
  * Sets the cursor and initializes the drawer for use with keyboard navigation.
@@ -105,16 +110,17 @@ Blockly.MarkerManager.prototype.getMarker = function (id) {
  */
 Blockly.MarkerManager.prototype.setCursor = function (cursor) {
   if (this.cursor_ && this.cursor_.getDrawer()) {
-    this.cursor_.getDrawer().dispose()
+    this.cursor_.getDrawer().dispose();
   }
-  this.cursor_ = cursor
+  this.cursor_ = cursor;
   if (this.cursor_) {
-    const drawer = this.workspace_.getRenderer()
-      .makeMarkerDrawer(this.workspace_, this.cursor_)
-    this.cursor_.setDrawer(drawer)
-    this.setCursorSvg(this.cursor_.getDrawer().createDom())
+    const drawer = this.workspace_
+      .getRenderer()
+      .makeMarkerDrawer(this.workspace_, this.cursor_);
+    this.cursor_.setDrawer(drawer);
+    this.setCursorSvg(this.cursor_.getDrawer().createDom());
   }
-}
+};
 
 /**
  * Add the cursor svg to this workspace svg group.
@@ -124,13 +130,13 @@ Blockly.MarkerManager.prototype.setCursor = function (cursor) {
  */
 Blockly.MarkerManager.prototype.setCursorSvg = function (cursorSvg) {
   if (!cursorSvg) {
-    this.cursorSvg_ = null
-    return
+    this.cursorSvg_ = null;
+    return;
   }
 
-  this.workspace_.getBlockCanvas().appendChild(cursorSvg)
-  this.cursorSvg_ = cursorSvg
-}
+  this.workspace_.getBlockCanvas().appendChild(cursorSvg);
+  this.cursorSvg_ = cursorSvg;
+};
 
 /**
  * Add the marker svg to this workspaces svg group.
@@ -140,18 +146,18 @@ Blockly.MarkerManager.prototype.setCursorSvg = function (cursorSvg) {
  */
 Blockly.MarkerManager.prototype.setMarkerSvg = function (markerSvg) {
   if (!markerSvg) {
-    this.markerSvg_ = null
-    return
+    this.markerSvg_ = null;
+    return;
   }
 
   if (this.workspace_.getBlockCanvas()) {
     if (this.cursorSvg_) {
-      this.workspace_.getBlockCanvas().insertBefore(markerSvg, this.cursorSvg_)
+      this.workspace_.getBlockCanvas().insertBefore(markerSvg, this.cursorSvg_);
     } else {
-      this.workspace_.getBlockCanvas().appendChild(markerSvg)
+      this.workspace_.getBlockCanvas().appendChild(markerSvg);
     }
   }
-}
+};
 
 /**
  * Redraw the attached cursor svg if needed.
@@ -159,9 +165,9 @@ Blockly.MarkerManager.prototype.setMarkerSvg = function (markerSvg) {
  */
 Blockly.MarkerManager.prototype.updateMarkers = function () {
   if (this.workspace_.keyboardAccessibilityMode && this.cursorSvg_) {
-    this.workspace_.getCursor().draw()
+    this.workspace_.getCursor().draw();
   }
-}
+};
 
 /**
  * Dispose of the marker manager.
@@ -170,13 +176,13 @@ Blockly.MarkerManager.prototype.updateMarkers = function () {
  * @package
  */
 Blockly.MarkerManager.prototype.dispose = function () {
-  const markerIds = Object.keys(this.markers_)
+  const markerIds = Object.keys(this.markers_);
   for (var i = 0, markerId; (markerId = markerIds[i]); i++) {
-    this.unregisterMarker(markerId)
+    this.unregisterMarker(markerId);
   }
-  this.markers_ = null
+  this.markers_ = null;
   if (this.cursor_) {
-    this.cursor_.dispose()
-    this.cursor_ = null
+    this.cursor_.dispose();
+    this.cursor_ = null;
   }
-}
+};

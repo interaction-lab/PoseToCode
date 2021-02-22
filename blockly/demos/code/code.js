@@ -8,73 +8,73 @@
  * @fileoverview JavaScript for Blockly's Code demo.
  * @author fraser@google.com (Neil Fraser)
  */
-'use strict'
+"use strict";
 
 /**
  * Create a namespace for the application.
  */
-const Code = {}
+const Code = {};
 
 /**
  * Lookup for names of supported languages.  Keys should be in ISO 639 format.
  */
 Code.LANGUAGE_NAME = {
-  ar: 'العربية',
-  'be-tarask': 'Taraškievica',
-  br: 'Brezhoneg',
-  ca: 'Català',
-  cs: 'Česky',
-  da: 'Dansk',
-  de: 'Deutsch',
-  el: 'Ελληνικά',
-  en: 'English',
-  es: 'Español',
-  et: 'Eesti',
-  fa: 'فارسی',
-  fr: 'Français',
-  he: 'עברית',
-  hrx: 'Hunsrik',
-  hu: 'Magyar',
-  ia: 'Interlingua',
-  is: 'Íslenska',
-  it: 'Italiano',
-  ja: '日本語',
-  kab: 'Kabyle',
-  ko: '한국어',
-  mk: 'Македонски',
-  ms: 'Bahasa Melayu',
-  nb: 'Norsk Bokmål',
-  nl: 'Nederlands, Vlaams',
-  oc: 'Lenga d\'òc',
-  pl: 'Polski',
-  pms: 'Piemontèis',
-  'pt-br': 'Português Brasileiro',
-  ro: 'Română',
-  ru: 'Русский',
-  sc: 'Sardu',
-  sk: 'Slovenčina',
-  sr: 'Српски',
-  sv: 'Svenska',
-  ta: 'தமிழ்',
-  th: 'ภาษาไทย',
-  tlh: 'tlhIngan Hol',
-  tr: 'Türkçe',
-  uk: 'Українська',
-  vi: 'Tiếng Việt',
-  'zh-hans': '简体中文',
-  'zh-hant': '正體中文'
-}
+  ar: "العربية",
+  "be-tarask": "Taraškievica",
+  br: "Brezhoneg",
+  ca: "Català",
+  cs: "Česky",
+  da: "Dansk",
+  de: "Deutsch",
+  el: "Ελληνικά",
+  en: "English",
+  es: "Español",
+  et: "Eesti",
+  fa: "فارسی",
+  fr: "Français",
+  he: "עברית",
+  hrx: "Hunsrik",
+  hu: "Magyar",
+  ia: "Interlingua",
+  is: "Íslenska",
+  it: "Italiano",
+  ja: "日本語",
+  kab: "Kabyle",
+  ko: "한국어",
+  mk: "Македонски",
+  ms: "Bahasa Melayu",
+  nb: "Norsk Bokmål",
+  nl: "Nederlands, Vlaams",
+  oc: "Lenga d'òc",
+  pl: "Polski",
+  pms: "Piemontèis",
+  "pt-br": "Português Brasileiro",
+  ro: "Română",
+  ru: "Русский",
+  sc: "Sardu",
+  sk: "Slovenčina",
+  sr: "Српски",
+  sv: "Svenska",
+  ta: "தமிழ்",
+  th: "ภาษาไทย",
+  tlh: "tlhIngan Hol",
+  tr: "Türkçe",
+  uk: "Українська",
+  vi: "Tiếng Việt",
+  "zh-hans": "简体中文",
+  "zh-hant": "正體中文",
+};
 
 /**
  * List of RTL languages.
  */
-Code.LANGUAGE_RTL = ['ar', 'fa', 'he', 'lki']
+Code.LANGUAGE_RTL = ["ar", "fa", "he", "lki"];
 
 /**
  * Blockly's main workspace.
  * @type {Blockly.WorkspaceSvg}
  */
-Code.workspace = null
+Code.workspace = null;
 
 /**
  * Extracts a parameter from the URL.
@@ -84,30 +84,30 @@ Code.workspace = null
  * @return {string} The parameter value or the default value if not found.
  */
 Code.getStringParamFromUrl = function (name, defaultValue) {
-  const val = location.search.match(new RegExp('[?&]' + name + '=([^&]+)'))
-  return val ? decodeURIComponent(val[1].replace(/\+/g, '%20')) : defaultValue
-}
+  const val = location.search.match(new RegExp("[?&]" + name + "=([^&]+)"));
+  return val ? decodeURIComponent(val[1].replace(/\+/g, "%20")) : defaultValue;
+};
 
 /**
  * Get the language of this user from the URL.
  * @return {string} User's language.
  */
 Code.getLang = function () {
-  let lang = Code.getStringParamFromUrl('lang', '')
+  let lang = Code.getStringParamFromUrl("lang", "");
   if (Code.LANGUAGE_NAME[lang] === undefined) {
     // Default to English.
-    lang = 'en'
+    lang = "en";
   }
-  return lang
-}
+  return lang;
+};
 
 /**
  * Is the current language (Code.LANG) an RTL language?
  * @return {boolean} True if RTL, false if LTR.
  */
 Code.isRtl = function () {
-  return Code.LANGUAGE_RTL.indexOf(Code.LANG) != -1
-}
+  return Code.LANGUAGE_RTL.indexOf(Code.LANG) != -1;
+};
 
 /**
  * Load blocks saved on App Engine Storage or in session/local storage.
@@ -115,30 +115,30 @@ Code.isRtl = function () {
  */
 Code.loadBlocks = function (defaultXml) {
   try {
-    var loadOnce = window.sessionStorage.loadOnceBlocks
+    var loadOnce = window.sessionStorage.loadOnceBlocks;
   } catch (e) {
     // Firefox sometimes throws a SecurityError when accessing sessionStorage.
     // Restarting Firefox fixes this, so it looks like a bug.
-    var loadOnce = null
+    var loadOnce = null;
   }
-  if ('BlocklyStorage' in window && window.location.hash.length > 1) {
+  if ("BlocklyStorage" in window && window.location.hash.length > 1) {
     // An href with #key trigers an AJAX call to retrieve saved blocks.
-    BlocklyStorage.retrieveXml(window.location.hash.substring(1))
+    BlocklyStorage.retrieveXml(window.location.hash.substring(1));
   } else if (loadOnce) {
     // Language switching stores the blocks during the reload.
-    delete window.sessionStorage.loadOnceBlocks
-    var xml = Blockly.Xml.textToDom(loadOnce)
-    Blockly.Xml.domToWorkspace(xml, Code.workspace)
+    delete window.sessionStorage.loadOnceBlocks;
+    var xml = Blockly.Xml.textToDom(loadOnce);
+    Blockly.Xml.domToWorkspace(xml, Code.workspace);
   } else if (defaultXml) {
     // Load the editor with default starting blocks.
-    var xml = Blockly.Xml.textToDom(defaultXml)
-    Blockly.Xml.domToWorkspace(xml, Code.workspace)
-  } else if ('BlocklyStorage' in window) {
+    var xml = Blockly.Xml.textToDom(defaultXml);
+    Blockly.Xml.domToWorkspace(xml, Code.workspace);
+  } else if ("BlocklyStorage" in window) {
     // Restore saved blocks in a separate thread so that subsequent
     // initialization is not affected from a failed load.
-    window.setTimeout(BlocklyStorage.restoreBlocks, 0)
+    window.setTimeout(BlocklyStorage.restoreBlocks, 0);
   }
-}
+};
 
 /**
  * Save the blocks and reload with a different language.
@@ -147,35 +147,40 @@ Code.changeLanguage = function () {
   // Store the blocks for the duration of the reload.
   // MSIE 11 does not support sessionStorage on file:// URLs.
   if (window.sessionStorage) {
-    const xml = Blockly.Xml.workspaceToDom(Code.workspace)
-    const text = Blockly.Xml.domToText(xml)
-    window.sessionStorage.loadOnceBlocks = text
+    const xml = Blockly.Xml.workspaceToDom(Code.workspace);
+    const text = Blockly.Xml.domToText(xml);
+    window.sessionStorage.loadOnceBlocks = text;
   }
 
-  const languageMenu = document.getElementById('languageMenu')
+  const languageMenu = document.getElementById("languageMenu");
   const newLang = encodeURIComponent(
-    languageMenu.options[languageMenu.selectedIndex].value)
-  let search = window.location.search
+    languageMenu.options[languageMenu.selectedIndex].value
+  );
+  let search = window.location.search;
   if (search.length <= 1) {
-    search = '?lang=' + newLang
+    search = "?lang=" + newLang;
   } else if (search.match(/[?&]lang=[^&]*/)) {
-    search = search.replace(/([?&]lang=)[^&]*/, '$1' + newLang)
+    search = search.replace(/([?&]lang=)[^&]*/, "$1" + newLang);
   } else {
-    search = search.replace(/\?/, '?lang=' + newLang + '&')
+    search = search.replace(/\?/, "?lang=" + newLang + "&");
   }
 
-  window.location = window.location.protocol + '//' +
-      window.location.host + window.location.pathname + search
-}
+  window.location =
+    window.location.protocol +
+    "//" +
+    window.location.host +
+    window.location.pathname +
+    search;
+};
 
 /**
  * Changes the output language by clicking the tab matching
  * the selected language in the codeMenu.
  */
 Code.changeCodingLanguage = function () {
-  const codeMenu = document.getElementById('code_menu')
-  Code.tabClick(codeMenu.options[codeMenu.selectedIndex].value)
-}
+  const codeMenu = document.getElementById("code_menu");
+  Code.tabClick(codeMenu.options[codeMenu.selectedIndex].value);
+};
 
 /**
  * Bind a function to a button's click event.
@@ -184,21 +189,24 @@ Code.changeCodingLanguage = function () {
  * @param {!Function} func Event handler to bind.
  */
 Code.bindClick = function (el, func) {
-  if (typeof el === 'string') {
-    el = document.getElementById(el)
+  if (typeof el === "string") {
+    el = document.getElementById(el);
   }
-  el.addEventListener('click', func, true)
-  el.addEventListener('touchend', func, true)
-}
+  el.addEventListener("click", func, true);
+  el.addEventListener("touchend", func, true);
+};
 
 /**
  * Load the Prettify CSS and JavaScript.
  */
 Code.importPrettify = function () {
-  const script = document.createElement('script')
-  script.setAttribute('src', 'https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js')
-  document.head.appendChild(script)
-}
+  const script = document.createElement("script");
+  script.setAttribute(
+    "src",
+    "https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"
+  );
+  document.head.appendChild(script);
+};
 
 /**
  * Compute the absolute coordinates and dimensions of an HTML element.
@@ -207,44 +215,50 @@ Code.importPrettify = function () {
  * @private
  */
 Code.getBBox_ = function (element) {
-  const height = element.offsetHeight
-  const width = element.offsetWidth
-  let x = 0
-  let y = 0
+  const height = element.offsetHeight;
+  const width = element.offsetWidth;
+  let x = 0;
+  let y = 0;
   do {
-    x += element.offsetLeft
-    y += element.offsetTop
-    element = element.offsetParent
-  } while (element)
+    x += element.offsetLeft;
+    y += element.offsetTop;
+    element = element.offsetParent;
+  } while (element);
   return {
     height: height,
     width: width,
     x: x,
-    y: y
-  }
-}
+    y: y,
+  };
+};
 
 /**
  * User's language (e.g. "en").
  * @type {string}
  */
-Code.LANG = Code.getLang()
+Code.LANG = Code.getLang();
 
 /**
  * List of tab names.
  * @private
  */
-Code.TABS_ = ['blocks', 'javascript', 'php', 'python', 'dart', 'lua', 'xml']
+Code.TABS_ = ["blocks", "javascript", "php", "python", "dart", "lua", "xml"];
 
 /**
  * List of tab names with casing, for display in the UI.
  * @private
  */
 Code.TABS_DISPLAY_ = [
-  'Blocks', 'JavaScript', 'PHP', 'Python', 'Dart', 'Lua', 'XML'
-]
+  "Blocks",
+  "JavaScript",
+  "PHP",
+  "Python",
+  "Dart",
+  "Lua",
+  "XML",
+];
 
-Code.selected = 'blocks'
+Code.selected = "blocks";
 
 /**
  * Switch the visible pane when a tab is clicked.
@@ -252,163 +266,165 @@ Code.selected = 'blocks'
  */
 Code.tabClick = function (clickedName) {
   // If the XML tab was open, save and render the content.
-  if (document.getElementById('tab_xml').classList.contains('tabon')) {
-    const xmlTextarea = document.getElementById('content_xml')
-    const xmlText = xmlTextarea.value
-    let xmlDom = null
+  if (document.getElementById("tab_xml").classList.contains("tabon")) {
+    const xmlTextarea = document.getElementById("content_xml");
+    const xmlText = xmlTextarea.value;
+    let xmlDom = null;
     try {
-      xmlDom = Blockly.Xml.textToDom(xmlText)
+      xmlDom = Blockly.Xml.textToDom(xmlText);
     } catch (e) {
-      const q =
-          window.confirm(MSG.badXml.replace('%1', e))
+      const q = window.confirm(MSG.badXml.replace("%1", e));
       if (!q) {
         // Leave the user on the XML tab.
-        return
+        return;
       }
     }
     if (xmlDom) {
-      Code.workspace.clear()
-      Blockly.Xml.domToWorkspace(xmlDom, Code.workspace)
+      Code.workspace.clear();
+      Blockly.Xml.domToWorkspace(xmlDom, Code.workspace);
     }
   }
 
-  if (document.getElementById('tab_blocks').classList.contains('tabon')) {
-    Code.workspace.setVisible(false)
+  if (document.getElementById("tab_blocks").classList.contains("tabon")) {
+    Code.workspace.setVisible(false);
   }
   // Deselect all tabs and hide all panes.
   for (var i = 0; i < Code.TABS_.length; i++) {
-    const name = Code.TABS_[i]
-    const tab = document.getElementById('tab_' + name)
-    tab.classList.add('taboff')
-    tab.classList.remove('tabon')
-    document.getElementById('content_' + name).style.visibility = 'hidden'
+    const name = Code.TABS_[i];
+    const tab = document.getElementById("tab_" + name);
+    tab.classList.add("taboff");
+    tab.classList.remove("tabon");
+    document.getElementById("content_" + name).style.visibility = "hidden";
   }
 
   // Select the active tab.
-  Code.selected = clickedName
-  const selectedTab = document.getElementById('tab_' + clickedName)
-  selectedTab.classList.remove('taboff')
-  selectedTab.classList.add('tabon')
+  Code.selected = clickedName;
+  const selectedTab = document.getElementById("tab_" + clickedName);
+  selectedTab.classList.remove("taboff");
+  selectedTab.classList.add("tabon");
   // Show the selected pane.
-  document.getElementById('content_' + clickedName).style.visibility =
-      'visible'
-  Code.renderContent()
+  document.getElementById("content_" + clickedName).style.visibility =
+    "visible";
+  Code.renderContent();
   // The code menu tab is on if the blocks tab is off.
-  const codeMenuTab = document.getElementById('tab_code')
-  if (clickedName == 'blocks') {
-    Code.workspace.setVisible(true)
-    codeMenuTab.className = 'taboff'
+  const codeMenuTab = document.getElementById("tab_code");
+  if (clickedName == "blocks") {
+    Code.workspace.setVisible(true);
+    codeMenuTab.className = "taboff";
   } else {
-    codeMenuTab.className = 'tabon'
+    codeMenuTab.className = "tabon";
   }
   // Sync the menu's value with the clicked tab value if needed.
-  const codeMenu = document.getElementById('code_menu')
+  const codeMenu = document.getElementById("code_menu");
   for (var i = 0; i < codeMenu.options.length; i++) {
     if (codeMenu.options[i].value == clickedName) {
-      codeMenu.selectedIndex = i
-      break
+      codeMenu.selectedIndex = i;
+      break;
     }
   }
-  Blockly.svgResize(Code.workspace)
-}
+  Blockly.svgResize(Code.workspace);
+};
 
 /**
  * Populate the currently selected pane with content generated from the blocks.
  */
 Code.renderContent = function () {
-  const content = document.getElementById('content_' + Code.selected)
+  const content = document.getElementById("content_" + Code.selected);
   // Initialize the pane.
-  if (content.id == 'content_xml') {
-    const xmlTextarea = document.getElementById('content_xml')
-    const xmlDom = Blockly.Xml.workspaceToDom(Code.workspace)
-    const xmlText = Blockly.Xml.domToPrettyText(xmlDom)
-    xmlTextarea.value = xmlText
-    xmlTextarea.focus()
-  } else if (content.id == 'content_javascript') {
-    Code.attemptCodeGeneration(Blockly.JavaScript)
-  } else if (content.id == 'content_python') {
-    Code.attemptCodeGeneration(Blockly.Python)
-  } else if (content.id == 'content_php') {
-    Code.attemptCodeGeneration(Blockly.PHP)
-  } else if (content.id == 'content_dart') {
-    Code.attemptCodeGeneration(Blockly.Dart)
-  } else if (content.id == 'content_lua') {
-    Code.attemptCodeGeneration(Blockly.Lua)
+  if (content.id == "content_xml") {
+    const xmlTextarea = document.getElementById("content_xml");
+    const xmlDom = Blockly.Xml.workspaceToDom(Code.workspace);
+    const xmlText = Blockly.Xml.domToPrettyText(xmlDom);
+    xmlTextarea.value = xmlText;
+    xmlTextarea.focus();
+  } else if (content.id == "content_javascript") {
+    Code.attemptCodeGeneration(Blockly.JavaScript);
+  } else if (content.id == "content_python") {
+    Code.attemptCodeGeneration(Blockly.Python);
+  } else if (content.id == "content_php") {
+    Code.attemptCodeGeneration(Blockly.PHP);
+  } else if (content.id == "content_dart") {
+    Code.attemptCodeGeneration(Blockly.Dart);
+  } else if (content.id == "content_lua") {
+    Code.attemptCodeGeneration(Blockly.Lua);
   }
-  if (typeof PR === 'object') {
-    PR.prettyPrint()
+  if (typeof PR === "object") {
+    PR.prettyPrint();
   }
-}
+};
 
 /**
  * Attempt to generate the code and display it in the UI, pretty printed.
  * @param generator {!Blockly.Generator} The generator to use.
  */
 Code.attemptCodeGeneration = function (generator) {
-  const content = document.getElementById('content_' + Code.selected)
-  content.textContent = ''
+  const content = document.getElementById("content_" + Code.selected);
+  content.textContent = "";
   if (Code.checkAllGeneratorFunctionsDefined(generator)) {
-    const code = generator.workspaceToCode(Code.workspace)
-    content.textContent = code
+    const code = generator.workspaceToCode(Code.workspace);
+    content.textContent = code;
     // Remove the 'prettyprinted' class, so that Prettify will recalculate.
-    content.className = content.className.replace('prettyprinted', '')
+    content.className = content.className.replace("prettyprinted", "");
   }
-}
+};
 
 /**
  * Check whether all blocks in use have generator functions.
  * @param generator {!Blockly.Generator} The generator to use.
  */
 Code.checkAllGeneratorFunctionsDefined = function (generator) {
-  const blocks = Code.workspace.getAllBlocks(false)
-  const missingBlockGenerators = []
+  const blocks = Code.workspace.getAllBlocks(false);
+  const missingBlockGenerators = [];
   for (let i = 0; i < blocks.length; i++) {
-    const blockType = blocks[i].type
+    const blockType = blocks[i].type;
     if (!generator[blockType]) {
       if (missingBlockGenerators.indexOf(blockType) == -1) {
-        missingBlockGenerators.push(blockType)
+        missingBlockGenerators.push(blockType);
       }
     }
   }
 
-  const valid = missingBlockGenerators.length == 0
+  const valid = missingBlockGenerators.length == 0;
   if (!valid) {
-    const msg = 'The generator code for the following blocks not specified for ' +
-        generator.name_ + ':\n - ' + missingBlockGenerators.join('\n - ')
-    Blockly.alert(msg) // Assuming synchronous. No callback.
+    const msg =
+      "The generator code for the following blocks not specified for " +
+      generator.name_ +
+      ":\n - " +
+      missingBlockGenerators.join("\n - ");
+    Blockly.alert(msg); // Assuming synchronous. No callback.
   }
-  return valid
-}
+  return valid;
+};
 
 /**
  * Initialize Blockly.  Called on page load.
  */
 Code.init = function () {
-  Code.initLanguage()
+  Code.initLanguage();
 
-  const rtl = Code.isRtl()
-  const container = document.getElementById('content_area')
+  const rtl = Code.isRtl();
+  const container = document.getElementById("content_area");
   const onresize = function (e) {
-    const bBox = Code.getBBox_(container)
+    const bBox = Code.getBBox_(container);
     for (let i = 0; i < Code.TABS_.length; i++) {
-      const el = document.getElementById('content_' + Code.TABS_[i])
-      el.style.top = bBox.y + 'px'
-      el.style.left = bBox.x + 'px'
+      const el = document.getElementById("content_" + Code.TABS_[i]);
+      el.style.top = bBox.y + "px";
+      el.style.left = bBox.x + "px";
       // Height and width need to be set, read back, then set again to
       // compensate for scrollbars.
-      el.style.height = bBox.height + 'px'
-      el.style.height = (2 * bBox.height - el.offsetHeight) + 'px'
-      el.style.width = bBox.width + 'px'
-      el.style.width = (2 * bBox.width - el.offsetWidth) + 'px'
+      el.style.height = bBox.height + "px";
+      el.style.height = 2 * bBox.height - el.offsetHeight + "px";
+      el.style.width = bBox.width + "px";
+      el.style.width = 2 * bBox.width - el.offsetWidth + "px";
     }
     // Make the 'Blocks' tab line up with the toolbox.
     if (Code.workspace && Code.workspace.getToolbox().width) {
-      document.getElementById('tab_blocks').style.minWidth =
-          (Code.workspace.getToolbox().width - 38) + 'px'
-          // Account for the 19 pixel margin and on each side.
+      document.getElementById("tab_blocks").style.minWidth =
+        Code.workspace.getToolbox().width - 38 + "px";
+      // Account for the 19 pixel margin and on each side.
     }
-  }
-  window.addEventListener('resize', onresize, false)
+  };
+  window.addEventListener("resize", onresize, false);
 
   // The toolbox XML specifies each category name using Blockly's messaging
   // format (eg. `<category name="%{BKY_CATLOGIC}">`).
@@ -419,176 +435,185 @@ Code.init = function () {
   // TODO: Clean up the message files so this is done explicitly instead of
   // through this for-loop.
   for (const messageKey in MSG) {
-    if (messageKey.indexOf('cat') == 0) {
-      Blockly.Msg[messageKey.toUpperCase()] = MSG[messageKey]
+    if (messageKey.indexOf("cat") == 0) {
+      Blockly.Msg[messageKey.toUpperCase()] = MSG[messageKey];
     }
   }
 
   // Construct the toolbox XML, replacing translated variable names.
-  let toolboxText = document.getElementById('toolbox').outerHTML
-  toolboxText = toolboxText.replace(/(^|[^%]){(\w+)}/g,
-    function (m, p1, p2) { return p1 + MSG[p2] })
-  const toolboxXml = Blockly.Xml.textToDom(toolboxText)
+  let toolboxText = document.getElementById("toolbox").outerHTML;
+  toolboxText = toolboxText.replace(/(^|[^%]){(\w+)}/g, function (m, p1, p2) {
+    return p1 + MSG[p2];
+  });
+  const toolboxXml = Blockly.Xml.textToDom(toolboxText);
 
-  Code.workspace = Blockly.inject('content_blocks',
-    {
-      grid:
-          {
-            spacing: 25,
-            length: 3,
-            colour: '#ccc',
-            snap: true
-          },
-      media: '../../media/',
-      rtl: rtl,
-      toolbox: toolboxXml,
-      zoom:
-           {
-             controls: true,
-             wheel: true
-           }
-    })
+  Code.workspace = Blockly.inject("content_blocks", {
+    grid: {
+      spacing: 25,
+      length: 3,
+      colour: "#ccc",
+      snap: true,
+    },
+    media: "../../media/",
+    rtl: rtl,
+    toolbox: toolboxXml,
+    zoom: {
+      controls: true,
+      wheel: true,
+    },
+  });
 
   // Add to reserved word list: Local variables in execution environment (runJS)
   // and the infinite loop detection function.
-  Blockly.JavaScript.addReservedWords('code,timeouts,checkTimeout')
+  Blockly.JavaScript.addReservedWords("code,timeouts,checkTimeout");
 
-  Code.loadBlocks('')
+  Code.loadBlocks("");
 
-  if ('BlocklyStorage' in window) {
+  if ("BlocklyStorage" in window) {
     // Hook a save function onto unload.
-    BlocklyStorage.backupOnUnload(Code.workspace)
+    BlocklyStorage.backupOnUnload(Code.workspace);
   }
 
-  Code.tabClick(Code.selected)
+  Code.tabClick(Code.selected);
 
-  Code.bindClick('trashButton',
-    function () { Code.discard(); Code.renderContent() })
-  Code.bindClick('runButton', Code.runJS)
+  Code.bindClick("trashButton", function () {
+    Code.discard();
+    Code.renderContent();
+  });
+  Code.bindClick("runButton", Code.runJS);
   // Disable the link button if page isn't backed by App Engine storage.
-  const linkButton = document.getElementById('linkButton')
-  if ('BlocklyStorage' in window) {
-    BlocklyStorage.HTTPREQUEST_ERROR = MSG.httpRequestError
-    BlocklyStorage.LINK_ALERT = MSG.linkAlert
-    BlocklyStorage.HASH_ERROR = MSG.hashError
-    BlocklyStorage.XML_ERROR = MSG.xmlError
-    Code.bindClick(linkButton,
-      function () { BlocklyStorage.link(Code.workspace) })
+  const linkButton = document.getElementById("linkButton");
+  if ("BlocklyStorage" in window) {
+    BlocklyStorage.HTTPREQUEST_ERROR = MSG.httpRequestError;
+    BlocklyStorage.LINK_ALERT = MSG.linkAlert;
+    BlocklyStorage.HASH_ERROR = MSG.hashError;
+    BlocklyStorage.XML_ERROR = MSG.xmlError;
+    Code.bindClick(linkButton, function () {
+      BlocklyStorage.link(Code.workspace);
+    });
   } else if (linkButton) {
-    linkButton.className = 'disabled'
+    linkButton.className = "disabled";
   }
 
   for (let i = 0; i < Code.TABS_.length; i++) {
-    const name = Code.TABS_[i]
-    Code.bindClick('tab_' + name,
-      (function (name_) { return function () { Code.tabClick(name_) } }(name)))
+    const name = Code.TABS_[i];
+    Code.bindClick(
+      "tab_" + name,
+      (function (name_) {
+        return function () {
+          Code.tabClick(name_);
+        };
+      })(name)
+    );
   }
-  Code.bindClick('tab_code', function (e) {
-    if (e.target !== document.getElementById('tab_code')) {
+  Code.bindClick("tab_code", function (e) {
+    if (e.target !== document.getElementById("tab_code")) {
       // Prevent clicks on child codeMenu from triggering a tab click.
-      return
+      return;
     }
-    Code.changeCodingLanguage()
-  })
+    Code.changeCodingLanguage();
+  });
 
-  onresize()
-  Blockly.svgResize(Code.workspace)
+  onresize();
+  Blockly.svgResize(Code.workspace);
 
   // Lazy-load the syntax-highlighting.
-  window.setTimeout(Code.importPrettify, 1)
-}
+  window.setTimeout(Code.importPrettify, 1);
+};
 
 /**
  * Initialize the page language.
  */
 Code.initLanguage = function () {
   // Set the HTML's language and direction.
-  const rtl = Code.isRtl()
-  document.dir = rtl ? 'rtl' : 'ltr'
-  document.head.parentElement.setAttribute('lang', Code.LANG)
+  const rtl = Code.isRtl();
+  document.dir = rtl ? "rtl" : "ltr";
+  document.head.parentElement.setAttribute("lang", Code.LANG);
 
   // Sort languages alphabetically.
-  const languages = []
+  const languages = [];
   for (var lang in Code.LANGUAGE_NAME) {
-    languages.push([Code.LANGUAGE_NAME[lang], lang])
+    languages.push([Code.LANGUAGE_NAME[lang], lang]);
   }
   const comp = function (a, b) {
     // Sort based on first argument ('English', 'Русский', '简体字', etc).
-    if (a[0] > b[0]) return 1
-    if (a[0] < b[0]) return -1
-    return 0
-  }
-  languages.sort(comp)
+    if (a[0] > b[0]) return 1;
+    if (a[0] < b[0]) return -1;
+    return 0;
+  };
+  languages.sort(comp);
   // Populate the language selection menu.
-  const languageMenu = document.getElementById('languageMenu')
-  languageMenu.options.length = 0
+  const languageMenu = document.getElementById("languageMenu");
+  languageMenu.options.length = 0;
   for (var i = 0; i < languages.length; i++) {
-    const tuple = languages[i]
-    var lang = tuple[tuple.length - 1]
-    const option = new Option(tuple[0], lang)
+    const tuple = languages[i];
+    var lang = tuple[tuple.length - 1];
+    const option = new Option(tuple[0], lang);
     if (lang == Code.LANG) {
-      option.selected = true
+      option.selected = true;
     }
-    languageMenu.options.add(option)
+    languageMenu.options.add(option);
   }
-  languageMenu.addEventListener('change', Code.changeLanguage, true)
+  languageMenu.addEventListener("change", Code.changeLanguage, true);
 
   // Populate the coding language selection menu.
-  const codeMenu = document.getElementById('code_menu')
-  codeMenu.options.length = 0
+  const codeMenu = document.getElementById("code_menu");
+  codeMenu.options.length = 0;
   for (var i = 1; i < Code.TABS_.length; i++) {
-    codeMenu.options.add(new Option(Code.TABS_DISPLAY_[i], Code.TABS_[i]))
+    codeMenu.options.add(new Option(Code.TABS_DISPLAY_[i], Code.TABS_[i]));
   }
-  codeMenu.addEventListener('change', Code.changeCodingLanguage)
+  codeMenu.addEventListener("change", Code.changeCodingLanguage);
 
   // Inject language strings.
-  document.title += ' ' + MSG.title
-  document.getElementById('title').textContent = MSG.title
-  document.getElementById('tab_blocks').textContent = MSG.blocks
+  document.title += " " + MSG.title;
+  document.getElementById("title").textContent = MSG.title;
+  document.getElementById("tab_blocks").textContent = MSG.blocks;
 
-  document.getElementById('linkButton').title = MSG.linkTooltip
-  document.getElementById('runButton').title = MSG.runTooltip
-  document.getElementById('trashButton').title = MSG.trashTooltip
-}
+  document.getElementById("linkButton").title = MSG.linkTooltip;
+  document.getElementById("runButton").title = MSG.runTooltip;
+  document.getElementById("trashButton").title = MSG.trashTooltip;
+};
 
 /**
  * Execute the user's code.
  * Just a quick and dirty eval.  Catch infinite loops.
  */
 Code.runJS = function () {
-  Blockly.JavaScript.INFINITE_LOOP_TRAP = 'checkTimeout();\n'
-  let timeouts = 0
+  Blockly.JavaScript.INFINITE_LOOP_TRAP = "checkTimeout();\n";
+  let timeouts = 0;
   const checkTimeout = function () {
     if (timeouts++ > 1000000) {
-      throw MSG.timeout
+      throw MSG.timeout;
     }
-  }
-  const code = Blockly.JavaScript.workspaceToCode(Code.workspace)
-  Blockly.JavaScript.INFINITE_LOOP_TRAP = null
+  };
+  const code = Blockly.JavaScript.workspaceToCode(Code.workspace);
+  Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
   try {
-    eval(code)
+    eval(code);
   } catch (e) {
-    alert(MSG.badCode.replace('%1', e))
+    alert(MSG.badCode.replace("%1", e));
   }
-}
+};
 
 /**
  * Discard all blocks from the workspace.
  */
 Code.discard = function () {
-  const count = Code.workspace.getAllBlocks(false).length
-  if (count < 2 ||
-      window.confirm(Blockly.Msg.DELETE_ALL_BLOCKS.replace('%1', count))) {
-    Code.workspace.clear()
+  const count = Code.workspace.getAllBlocks(false).length;
+  if (
+    count < 2 ||
+    window.confirm(Blockly.Msg.DELETE_ALL_BLOCKS.replace("%1", count))
+  ) {
+    Code.workspace.clear();
     if (window.location.hash) {
-      window.location.hash = ''
+      window.location.hash = "";
     }
   }
-}
+};
 
 // Load the Code demo's language strings.
-document.write('<script src="msg/' + Code.LANG + '.js"></script>\n')
+document.write('<script src="msg/' + Code.LANG + '.js"></script>\n');
 // Load Blockly's language strings.
-document.write('<script src="../../msg/js/' + Code.LANG + '.js"></script>\n')
+document.write('<script src="../../msg/js/' + Code.LANG + '.js"></script>\n');
 
-window.addEventListener('load', Code.init)
+window.addEventListener("load", Code.init);

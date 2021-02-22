@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
 module.exports = {
-  ui: 'tdd',
-  reporter: 'landing'
+  ui: "tdd",
+  reporter: "landing",
 };

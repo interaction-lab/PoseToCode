@@ -8,13 +8,13 @@
  * @fileoverview Generating Dart for dynamic variable blocks.
  * @author fenichel@google.com (Rachel Fenichel)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.Dart.variablesDynamic')
+goog.provide("Blockly.Dart.variablesDynamic");
 
-goog.require('Blockly.Dart')
-goog.require('Blockly.Dart.variables')
+goog.require("Blockly.Dart");
+goog.require("Blockly.Dart.variables");
 
 // Dart is dynamically typed.
-Blockly.Dart.variables_get_dynamic = Blockly.Dart.variables_get
-Blockly.Dart.variables_set_dynamic = Blockly.Dart.variables_set
+Blockly.Dart.variables_get_dynamic = Blockly.Dart.variables_get;
+Blockly.Dart.variables_set_dynamic = Blockly.Dart.variables_set;

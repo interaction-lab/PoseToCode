@@ -9,17 +9,17 @@
  * Used primarily for keyboard navigation.
  * @author aschmiedt@google.com (Abby Schmiedt)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.Cursor')
+goog.provide("Blockly.Cursor");
 
-goog.require('Blockly.Action')
-goog.require('Blockly.ASTNode')
-goog.require('Blockly.Marker')
-goog.require('Blockly.navigation')
-goog.require('Blockly.utils.object')
+goog.require("Blockly.Action");
+goog.require("Blockly.ASTNode");
+goog.require("Blockly.Marker");
+goog.require("Blockly.navigation");
+goog.require("Blockly.utils.object");
 
-goog.requireType('Blockly.IBlocklyActionable')
+goog.requireType("Blockly.IBlocklyActionable");
 
 /**
  * Class for a cursor.
@@ -29,14 +29,14 @@ goog.requireType('Blockly.IBlocklyActionable')
  * @implements {Blockly.IBlocklyActionable}
  */
 Blockly.Cursor = function () {
-  Blockly.Cursor.superClass_.constructor.call(this)
+  Blockly.Cursor.superClass_.constructor.call(this);
 
   /**
    * @override
    */
-  this.type = 'cursor'
-}
-Blockly.utils.object.inherits(Blockly.Cursor, Blockly.Marker)
+  this.type = "cursor";
+};
+Blockly.utils.object.inherits(Blockly.Cursor, Blockly.Marker);
 
 /**
  * Find the next connection, field, or block.
@@ -45,23 +45,26 @@ Blockly.utils.object.inherits(Blockly.Cursor, Blockly.Marker)
  * @protected
  */
 Blockly.Cursor.prototype.next = function () {
-  const curNode = this.getCurNode()
+  const curNode = this.getCurNode();
   if (!curNode) {
-    return null
+    return null;
   }
 
-  let newNode = curNode.next()
-  while (newNode && newNode.next() &&
+  let newNode = curNode.next();
+  while (
+    newNode &&
+    newNode.next() &&
     (newNode.getType() == Blockly.ASTNode.types.NEXT ||
-    newNode.getType() == Blockly.ASTNode.types.BLOCK)) {
-    newNode = newNode.next()
+      newNode.getType() == Blockly.ASTNode.types.BLOCK)
+  ) {
+    newNode = newNode.next();
   }
 
   if (newNode) {
-    this.setCurNode(newNode)
+    this.setCurNode(newNode);
   }
-  return newNode
-}
+  return newNode;
+};
 
 /**
  * Find the in connection or field.
@@ -70,23 +73,25 @@ Blockly.Cursor.prototype.next = function () {
  * @protected
  */
 Blockly.Cursor.prototype.in = function () {
-  let curNode = this.getCurNode()
+  let curNode = this.getCurNode();
   if (!curNode) {
-    return null
+    return null;
   }
   // If we are on a previous or output connection, go to the block level before
   // performing next operation.
-  if (curNode.getType() == Blockly.ASTNode.types.PREVIOUS ||
-    curNode.getType() == Blockly.ASTNode.types.OUTPUT) {
-    curNode = curNode.next()
+  if (
+    curNode.getType() == Blockly.ASTNode.types.PREVIOUS ||
+    curNode.getType() == Blockly.ASTNode.types.OUTPUT
+  ) {
+    curNode = curNode.next();
   }
-  const newNode = curNode.in()
+  const newNode = curNode.in();
 
   if (newNode) {
-    this.setCurNode(newNode)
+    this.setCurNode(newNode);
   }
-  return newNode
-}
+  return newNode;
+};
 
 /**
  * Find the previous connection, field, or block.
@@ -95,23 +100,26 @@ Blockly.Cursor.prototype.in = function () {
  * @protected
  */
 Blockly.Cursor.prototype.prev = function () {
-  const curNode = this.getCurNode()
+  const curNode = this.getCurNode();
   if (!curNode) {
-    return null
+    return null;
   }
-  let newNode = curNode.prev()
+  let newNode = curNode.prev();
 
-  while (newNode && newNode.prev() &&
+  while (
+    newNode &&
+    newNode.prev() &&
     (newNode.getType() == Blockly.ASTNode.types.NEXT ||
-    newNode.getType() == Blockly.ASTNode.types.BLOCK)) {
-    newNode = newNode.prev()
+      newNode.getType() == Blockly.ASTNode.types.BLOCK)
+  ) {
+    newNode = newNode.prev();
   }
 
   if (newNode) {
-    this.setCurNode(newNode)
+    this.setCurNode(newNode);
   }
-  return newNode
-}
+  return newNode;
+};
 
 /**
  * Find the out connection, field, or block.
@@ -120,21 +128,21 @@ Blockly.Cursor.prototype.prev = function () {
  * @protected
  */
 Blockly.Cursor.prototype.out = function () {
-  const curNode = this.getCurNode()
+  const curNode = this.getCurNode();
   if (!curNode) {
-    return null
+    return null;
   }
-  let newNode = curNode.out()
+  let newNode = curNode.out();
 
   if (newNode && newNode.getType() == Blockly.ASTNode.types.BLOCK) {
-    newNode = newNode.prev() || newNode
+    newNode = newNode.prev() || newNode;
   }
 
   if (newNode) {
-    this.setCurNode(newNode)
+    this.setCurNode(newNode);
   }
-  return newNode
-}
+  return newNode;
+};
 
 /**
  * Handles the given action.
@@ -144,26 +152,29 @@ Blockly.Cursor.prototype.out = function () {
  */
 Blockly.Cursor.prototype.onBlocklyAction = function (action) {
   // If we are on a field give it the option to handle the action
-  if (this.getCurNode() &&
-      this.getCurNode().getType() === Blockly.ASTNode.types.FIELD &&
-      (/** @type {!Blockly.Field} */ (this.getCurNode().getLocation()))
-        .onBlocklyAction(action)) {
-    return true
+  if (
+    this.getCurNode() &&
+    this.getCurNode().getType() === Blockly.ASTNode.types.FIELD &&
+    /** @type {!Blockly.Field} */ (this.getCurNode().getLocation()).onBlocklyAction(
+      action
+    )
+  ) {
+    return true;
   }
   switch (action.name) {
     case Blockly.navigation.actionNames.PREVIOUS:
-      this.prev()
-      return true
+      this.prev();
+      return true;
     case Blockly.navigation.actionNames.OUT:
-      this.out()
-      return true
+      this.out();
+      return true;
     case Blockly.navigation.actionNames.NEXT:
-      this.next()
-      return true
+      this.next();
+      return true;
     case Blockly.navigation.actionNames.IN:
-      this.in()
-      return true
+      this.in();
+      return true;
     default:
-      return false
+      return false;
   }
-}
+};

@@ -9,24 +9,24 @@
  * @author samelh@google.com (Sam El-Husseini)
  */
 
-'use strict'
+"use strict";
 
-goog.provide('Blockly.ICopyable')
+goog.provide("Blockly.ICopyable");
 
-goog.requireType('Blockly.ISelectable')
-goog.requireType('Blockly.WorkspaceSvg')
+goog.requireType("Blockly.ISelectable");
+goog.requireType("Blockly.WorkspaceSvg");
 
 /**
  * @extends {Blockly.ISelectable}
  * @interface
  */
-Blockly.ICopyable = function () {}
+Blockly.ICopyable = function () {};
 
 /**
  * Encode for copying.
  * @return {?Blockly.ICopyable.CopyData} Copy metadata.
  */
-Blockly.ICopyable.prototype.toCopyData
+Blockly.ICopyable.prototype.toCopyData;
 
 /**
  * Copy Metadata.
@@ -36,4 +36,4 @@ Blockly.ICopyable.prototype.toCopyData
  *            typeCounts:?Object
  *          }}
  */
-Blockly.ICopyable.CopyData
+Blockly.ICopyable.CopyData;

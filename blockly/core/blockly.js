@@ -8,29 +8,29 @@
  * @fileoverview Core JavaScript library for Blockly.
  * @author fraser@google.com (Neil Fraser)
  */
-'use strict'
+"use strict";
 
 /**
  * The top level namespace used to access the Blockly library.
  * @namespace Blockly
  */
-goog.provide('Blockly')
+goog.provide("Blockly");
 
-goog.require('Blockly.constants')
-goog.require('Blockly.Events')
-goog.require('Blockly.Events.Ui')
-goog.require('Blockly.inject')
-goog.require('Blockly.navigation')
-goog.require('Blockly.Procedures')
-goog.require('Blockly.Tooltip')
-goog.require('Blockly.Touch')
-goog.require('Blockly.utils')
-goog.require('Blockly.utils.colour')
-goog.require('Blockly.utils.Size')
-goog.require('Blockly.Variables')
-goog.require('Blockly.WidgetDiv')
-goog.require('Blockly.WorkspaceSvg')
-goog.require('Blockly.Xml')
+goog.require("Blockly.constants");
+goog.require("Blockly.Events");
+goog.require("Blockly.Events.Ui");
+goog.require("Blockly.inject");
+goog.require("Blockly.navigation");
+goog.require("Blockly.Procedures");
+goog.require("Blockly.Tooltip");
+goog.require("Blockly.Touch");
+goog.require("Blockly.utils");
+goog.require("Blockly.utils.colour");
+goog.require("Blockly.utils.Size");
+goog.require("Blockly.Variables");
+goog.require("Blockly.WidgetDiv");
+goog.require("Blockly.WorkspaceSvg");
+goog.require("Blockly.Xml");
 
 /**
  * Blockly core version.
@@ -40,69 +40,69 @@ goog.require('Blockly.Xml')
  * to override this constant.
  * @define {string}
  */
-Blockly.VERSION = 'uncompiled'
+Blockly.VERSION = "uncompiled";
 
 /**
  * The main workspace most recently used.
  * Set by Blockly.WorkspaceSvg.prototype.markFocused
  * @type {Blockly.Workspace}
  */
-Blockly.mainWorkspace = null
+Blockly.mainWorkspace = null;
 
 /**
  * Currently selected block.
  * @type {?Blockly.ICopyable}
  */
-Blockly.selected = null
+Blockly.selected = null;
 
 /**
  * All of the connections on blocks that are currently being dragged.
  * @type {!Array.<!Blockly.Connection>}
  * @package
  */
-Blockly.draggingConnections = []
+Blockly.draggingConnections = [];
 
 /**
  * Contents of the local clipboard.
  * @type {Element}
  * @private
  */
-Blockly.clipboardXml_ = null
+Blockly.clipboardXml_ = null;
 
 /**
  * Source of the local clipboard.
  * @type {Blockly.WorkspaceSvg}
  * @private
  */
-Blockly.clipboardSource_ = null
+Blockly.clipboardSource_ = null;
 
 /**
  * Map of types to type counts for the clipboard object and descendants.
  * @type {Object}
  * @private
  */
-Blockly.clipboardTypeCounts_ = null
+Blockly.clipboardTypeCounts_ = null;
 
 /**
  * Cached value for whether 3D is supported.
  * @type {?boolean}
  * @private
  */
-Blockly.cache3dSupported_ = null
+Blockly.cache3dSupported_ = null;
 
 /**
  * Container element to render the WidgetDiv, DropDownDiv and Tooltip.
  * @type {?Element}
  * @package
  */
-Blockly.parentContainer = null
+Blockly.parentContainer = null;
 
 /**
  * Blockly opaque event data used to unbind events when using
  * `Blockly.bindEvent_` and `Blockly.bindEventWithChecks_`.
  * @typedef {!Array.<!Array>}
  */
-Blockly.EventData
+Blockly.EventData;
 
 /**
  * Returns the dimensions of the specified SVG image.
@@ -110,9 +110,9 @@ Blockly.EventData
  * @return {!Blockly.utils.Size} Contains width and height properties.
  */
 Blockly.svgSize = function (svg) {
-  svg = /** @type {?} */ (svg)
-  return new Blockly.utils.Size(svg.cachedWidth_, svg.cachedHeight_)
-}
+  svg = /** @type {?} */ (svg);
+  return new Blockly.utils.Size(svg.cachedWidth_, svg.cachedHeight_);
+};
 
 /**
  * Size the workspace when the contents change.  This also updates
@@ -120,8 +120,8 @@ Blockly.svgSize = function (svg) {
  * @param {!Blockly.WorkspaceSvg} workspace The workspace to resize.
  */
 Blockly.resizeSvgContents = function (workspace) {
-  workspace.resizeContents()
-}
+  workspace.resizeContents();
+};
 
 /**
  * Size the SVG image to completely fill its container. Call this when the view
@@ -132,28 +132,28 @@ Blockly.resizeSvgContents = function (workspace) {
  * @param {!Blockly.WorkspaceSvg} workspace Any workspace in the SVG.
  */
 Blockly.svgResize = function (workspace) {
-  let mainWorkspace = workspace
+  let mainWorkspace = workspace;
   while (mainWorkspace.options.parentWorkspace) {
-    mainWorkspace = mainWorkspace.options.parentWorkspace
+    mainWorkspace = mainWorkspace.options.parentWorkspace;
   }
-  const svg = mainWorkspace.getParentSvg()
-  const div = svg.parentNode
+  const svg = mainWorkspace.getParentSvg();
+  const div = svg.parentNode;
   if (!div) {
     // Workspace deleted, or something.
-    return
+    return;
   }
-  const width = div.offsetWidth
-  const height = div.offsetHeight
+  const width = div.offsetWidth;
+  const height = div.offsetHeight;
   if (svg.cachedWidth_ != width) {
-    svg.setAttribute('width', width + 'px')
-    svg.cachedWidth_ = width
+    svg.setAttribute("width", width + "px");
+    svg.cachedWidth_ = width;
   }
   if (svg.cachedHeight_ != height) {
-    svg.setAttribute('height', height + 'px')
-    svg.cachedHeight_ = height
+    svg.setAttribute("height", height + "px");
+    svg.cachedHeight_ = height;
   }
-  mainWorkspace.resize()
-}
+  mainWorkspace.resize();
+};
 
 /**
  * Handle a key-down on SVG drawing surface. Does nothing if the main workspace
@@ -164,67 +164,79 @@ Blockly.svgResize = function (workspace) {
 // TODO (https://github.com/google/blockly/issues/1998) handle cases where there
 // are multiple workspaces and non-main workspaces are able to accept input.
 Blockly.onKeyDown = function (e) {
-  const mainWorkspace = Blockly.mainWorkspace
+  const mainWorkspace = Blockly.mainWorkspace;
   if (!mainWorkspace) {
-    return
+    return;
   }
 
-  if (Blockly.utils.isTargetInput(e) ||
-      (mainWorkspace.rendered && !mainWorkspace.isVisible())) {
+  if (
+    Blockly.utils.isTargetInput(e) ||
+    (mainWorkspace.rendered && !mainWorkspace.isVisible())
+  ) {
     // When focused on an HTML text input widget, don't trap any keys.
     // Ignore keypresses on rendered workspaces that have been explicitly
     // hidden.
-    return
+    return;
   }
 
   if (mainWorkspace.options.readOnly) {
     // When in read only mode handle key actions for keyboard navigation.
-    Blockly.navigation.onKeyPress(e)
-    return
+    Blockly.navigation.onKeyPress(e);
+    return;
   }
 
-  let deleteBlock = false
+  let deleteBlock = false;
   if (e.keyCode == Blockly.utils.KeyCodes.ESC) {
     // Pressing esc closes the context menu.
-    Blockly.hideChaff()
-    Blockly.navigation.onBlocklyAction(Blockly.navigation.ACTION_EXIT)
-  } else if (!Blockly.Gesture.inProgress() && Blockly.navigation.onKeyPress(e)) {
+    Blockly.hideChaff();
+    Blockly.navigation.onBlocklyAction(Blockly.navigation.ACTION_EXIT);
+  } else if (
+    !Blockly.Gesture.inProgress() &&
+    Blockly.navigation.onKeyPress(e)
+  ) {
     // If the keyboard or field handled the key press return.
-    return
-  } else if (e.keyCode == Blockly.utils.KeyCodes.BACKSPACE ||
-      e.keyCode == Blockly.utils.KeyCodes.DELETE) {
+    return;
+  } else if (
+    e.keyCode == Blockly.utils.KeyCodes.BACKSPACE ||
+    e.keyCode == Blockly.utils.KeyCodes.DELETE
+  ) {
     // Delete or backspace.
     // Stop the browser from going back to the previous page.
     // Do this first to prevent an error in the delete code from resulting in
     // data loss.
-    e.preventDefault()
+    e.preventDefault();
     // Don't delete while dragging.  Jeez.
     if (Blockly.Gesture.inProgress()) {
-      return
+      return;
     }
     if (Blockly.selected && Blockly.selected.isDeletable()) {
-      deleteBlock = true
+      deleteBlock = true;
     }
   } else if (e.altKey || e.ctrlKey || e.metaKey) {
     // Don't use meta keys during drags.
     if (Blockly.Gesture.inProgress()) {
-      return
+      return;
     }
-    if (Blockly.selected &&
-        Blockly.selected.isDeletable() && Blockly.selected.isMovable()) {
+    if (
+      Blockly.selected &&
+      Blockly.selected.isDeletable() &&
+      Blockly.selected.isMovable()
+    ) {
       // Don't allow copying immovable or undeletable blocks. The next step
       // would be to paste, which would create additional undeletable/immovable
       // blocks on the workspace.
       if (e.keyCode == Blockly.utils.KeyCodes.C) {
         // 'c' for copy.
-        Blockly.hideChaff()
-        Blockly.copy_(Blockly.selected)
-      } else if (e.keyCode == Blockly.utils.KeyCodes.X &&
-          !Blockly.selected.workspace.isFlyout) {
+        Blockly.hideChaff();
+        Blockly.copy_(Blockly.selected);
+      } else if (
+        e.keyCode == Blockly.utils.KeyCodes.X &&
+        !Blockly.selected.workspace.isFlyout
+      ) {
         // 'x' for cut, but not in a flyout.
         // Don't even copy the selected item in the flyout.
-        Blockly.copy_(Blockly.selected)
-        deleteBlock = true
+        Blockly.copy_(Blockly.selected);
+        deleteBlock = true;
       }
     }
     if (e.keyCode == Blockly.utils.KeyCodes.V) {
@@ -232,37 +244,39 @@ Blockly.onKeyDown = function (e) {
       if (Blockly.clipboardXml_) {
         // Pasting always pastes to the main workspace, even if the copy
         // started in a flyout workspace.
-        let workspace = Blockly.clipboardSource_
+        let workspace = Blockly.clipboardSource_;
         if (workspace.isFlyout) {
-          workspace = workspace.targetWorkspace
+          workspace = workspace.targetWorkspace;
         }
-        if (Blockly.clipboardTypeCounts_ &&
-            workspace.isCapacityAvailable(Blockly.clipboardTypeCounts_)) {
-          Blockly.Events.setGroup(true)
-          workspace.paste(Blockly.clipboardXml_)
-          Blockly.Events.setGroup(false)
+        if (
+          Blockly.clipboardTypeCounts_ &&
+          workspace.isCapacityAvailable(Blockly.clipboardTypeCounts_)
+        ) {
+          Blockly.Events.setGroup(true);
+          workspace.paste(Blockly.clipboardXml_);
+          Blockly.Events.setGroup(false);
         }
       }
     } else if (e.keyCode == Blockly.utils.KeyCodes.Z) {
       // 'z' for undo 'Z' is for redo.
-      Blockly.hideChaff()
-      mainWorkspace.undo(e.shiftKey)
+      Blockly.hideChaff();
+      mainWorkspace.undo(e.shiftKey);
     } else if (e.ctrlKey && e.keyCode == Blockly.utils.KeyCodes.Y) {
       // Ctrl-y is redo in Windows.  Command-y is never valid on Macs.
-      Blockly.hideChaff()
-      mainWorkspace.undo(true)
+      Blockly.hideChaff();
+      mainWorkspace.undo(true);
     }
   }
   // Common code for delete and cut.
   // Don't delete in the flyout.
   if (deleteBlock && !Blockly.selected.workspace.isFlyout) {
-    Blockly.Events.setGroup(true)
-    Blockly.hideChaff()
-    const selected = /** @type {!Blockly.BlockSvg} */ (Blockly.selected)
-    selected.dispose(/* heal */ true, true)
-    Blockly.Events.setGroup(false)
+    Blockly.Events.setGroup(true);
+    Blockly.hideChaff();
+    const selected = /** @type {!Blockly.BlockSvg} */ (Blockly.selected);
+    selected.dispose(/* heal */ true, true);
+    Blockly.Events.setGroup(false);
   }
-}
+};
 
 /**
  * Copy a block or workspace comment onto the local clipboard.
@@ -270,13 +284,13 @@ Blockly.onKeyDown = function (e) {
  * @private
  */
 Blockly.copy_ = function (toCopy) {
-  const data = toCopy.toCopyData()
+  const data = toCopy.toCopyData();
   if (data) {
-    Blockly.clipboardXml_ = data.xml
-    Blockly.clipboardSource_ = data.source
-    Blockly.clipboardTypeCounts_ = data.typeCounts
+    Blockly.clipboardXml_ = data.xml;
+    Blockly.clipboardSource_ = data.source;
+    Blockly.clipboardTypeCounts_ = data.typeCounts;
   }
-}
+};
 
 /**
  * Duplicate this block and its children, or a workspace comment.
@@ -286,17 +300,17 @@ Blockly.copy_ = function (toCopy) {
  */
 Blockly.duplicate = function (toDuplicate) {
   // Save the clipboard.
-  const clipboardXml = Blockly.clipboardXml_
-  const clipboardSource = Blockly.clipboardSource_
+  const clipboardXml = Blockly.clipboardXml_;
+  const clipboardSource = Blockly.clipboardSource_;
 
   // Create a duplicate via a copy/paste operation.
-  Blockly.copy_(toDuplicate)
-  toDuplicate.workspace.paste(Blockly.clipboardXml_)
+  Blockly.copy_(toDuplicate);
+  toDuplicate.workspace.paste(Blockly.clipboardXml_);
 
   // Restore the clipboard.
-  Blockly.clipboardXml_ = clipboardXml
-  Blockly.clipboardSource_ = clipboardSource
-}
+  Blockly.clipboardXml_ = clipboardXml;
+  Blockly.clipboardSource_ = clipboardSource;
+};
 
 /**
  * Cancel the native context menu, unless the focus is on an HTML input widget.
@@ -306,34 +320,31 @@ Blockly.duplicate = function (toDuplicate) {
 Blockly.onContextMenu_ = function (e) {
   if (!Blockly.utils.isTargetInput(e)) {
     // When focused on an HTML text input widget, don't cancel the context menu.
-    e.preventDefault()
+    e.preventDefault();
   }
-}
+};
 
 /**
  * Close tooltips, context menus, dropdown selections, etc.
  * @param {boolean=} opt_allowToolbox If true, don't close the toolbox.
  */
 Blockly.hideChaff = function (opt_allowToolbox) {
-  Blockly.Tooltip.hide()
-  Blockly.WidgetDiv.hide()
-  Blockly.DropDownDiv.hideWithoutAnimation()
+  Blockly.Tooltip.hide();
+  Blockly.WidgetDiv.hide();
+  Blockly.DropDownDiv.hideWithoutAnimation();
   if (!opt_allowToolbox) {
-    const workspace = Blockly.getMainWorkspace()
+    const workspace = Blockly.getMainWorkspace();
     // For now the trashcan flyout always autocloses because it overlays the
     // trashcan UI (no trashcan to click to close it).
-    if (workspace.trashcan &&
-      workspace.trashcan.flyout) {
-      workspace.trashcan.closeFlyout()
+    if (workspace.trashcan && workspace.trashcan.flyout) {
+      workspace.trashcan.closeFlyout();
     }
-    const toolbox = workspace.getToolbox()
-    if (toolbox &&
-        toolbox.getFlyout() &&
-        toolbox.getFlyout().autoClose) {
-      toolbox.clearSelection()
+    const toolbox = workspace.getToolbox();
+    if (toolbox && toolbox.getFlyout() && toolbox.getFlyout().autoClose) {
+      toolbox.clearSelection();
     }
   }
-}
+};
 
 /**
  * Returns the main workspace.  Returns the last used main workspace (based on
@@ -342,8 +353,8 @@ Blockly.hideChaff = function (opt_allowToolbox) {
  * @return {!Blockly.Workspace} The main workspace.
  */
 Blockly.getMainWorkspace = function () {
-  return /** @type {!Blockly.Workspace} */ (Blockly.mainWorkspace)
-}
+  return /** @type {!Blockly.Workspace} */ (Blockly.mainWorkspace);
+};
 
 /**
  * Wrapper to window.alert() that app developers may override to
@@ -352,11 +363,11 @@ Blockly.getMainWorkspace = function () {
  * @param {function()=} opt_callback The callback when the alert is dismissed.
  */
 Blockly.alert = function (message, opt_callback) {
-  alert(message)
+  alert(message);
   if (opt_callback) {
-    opt_callback()
+    opt_callback();
   }
-}
+};
 
 /**
  * Wrapper to window.confirm() that app developers may override to
@@ -365,8 +376,8 @@ Blockly.alert = function (message, opt_callback) {
  * @param {!function(boolean)} callback The callback for handling user response.
  */
 Blockly.confirm = function (message, callback) {
-  callback(confirm(message))
-}
+  callback(confirm(message));
+};
 
 /**
  * Wrapper to window.prompt() that app developers may override to provide
@@ -378,8 +389,8 @@ Blockly.confirm = function (message, callback) {
  * @param {!function(?string)} callback The callback for handling user response.
  */
 Blockly.prompt = function (message, defaultValue, callback) {
-  callback(prompt(message, defaultValue))
-}
+  callback(prompt(message, defaultValue));
+};
 
 /**
  * Helper function for defining a block from JSON.  The resulting function has
@@ -391,9 +402,9 @@ Blockly.prompt = function (message, defaultValue, callback) {
  */
 Blockly.jsonInitFactory_ = function (jsonDef) {
   return function () {
-    this.jsonInit(jsonDef)
-  }
-}
+    this.jsonInit(jsonDef);
+  };
+};
 
 /**
  * Define blocks from an array of JSON block definitions, as might be generated
@@ -402,30 +413,42 @@ Blockly.jsonInitFactory_ = function (jsonDef) {
  */
 Blockly.defineBlocksWithJsonArray = function (jsonArray) {
   for (let i = 0; i < jsonArray.length; i++) {
-    const elem = jsonArray[i]
+    const elem = jsonArray[i];
     if (!elem) {
       console.warn(
-        'Block definition #' + i + ' in JSON array is ' + elem + '. ' +
-          'Skipping.')
+        "Block definition #" +
+          i +
+          " in JSON array is " +
+          elem +
+          ". " +
+          "Skipping."
+      );
     } else {
-      const typename = elem.type
-      if (typename == null || typename === '') {
+      const typename = elem.type;
+      if (typename == null || typename === "") {
         console.warn(
-          'Block definition #' + i +
-            ' in JSON array is missing a type attribute. Skipping.')
+          "Block definition #" +
+            i +
+            " in JSON array is missing a type attribute. Skipping."
+        );
       } else {
         if (Blockly.Blocks[typename]) {
           console.warn(
-            'Block definition #' + i + ' in JSON array' +
-              ' overwrites prior definition of "' + typename + '".')
+            "Block definition #" +
+              i +
+              " in JSON array" +
+              ' overwrites prior definition of "' +
+              typename +
+              '".'
+          );
         }
         Blockly.Blocks[typename] = {
-          init: Blockly.jsonInitFactory_(elem)
-        }
+          init: Blockly.jsonInitFactory_(elem),
+        };
       }
     }
   }
-}
+};
 
 /**
  * Bind an event to a function call.  When calling the function, verifies that
@@ -444,58 +467,63 @@ Blockly.defineBlocksWithJsonArray = function (jsonArray) {
  *     provided.
  * @return {!Blockly.EventData} Opaque data that can be passed to unbindEvent_.
  */
-Blockly.bindEventWithChecks_ = function (node, name, thisObject, func,
-  opt_noCaptureIdentifier, opt_noPreventDefault) {
-  let handled = false
+Blockly.bindEventWithChecks_ = function (
+  node,
+  name,
+  thisObject,
+  func,
+  opt_noCaptureIdentifier,
+  opt_noPreventDefault
+) {
+  let handled = false;
   const wrapFunc = function (e) {
-    const captureIdentifier = !opt_noCaptureIdentifier
+    const captureIdentifier = !opt_noCaptureIdentifier;
     // Handle each touch point separately.  If the event was a mouse event, this
     // will hand back an array with one element, which we're fine handling.
-    const events = Blockly.Touch.splitEventByTouches(e)
+    const events = Blockly.Touch.splitEventByTouches(e);
     for (var i = 0, event; (event = events[i]); i++) {
       if (captureIdentifier && !Blockly.Touch.shouldHandleEvent(event)) {
-        continue
+        continue;
       }
-      Blockly.Touch.setClientFromTouch(event)
+      Blockly.Touch.setClientFromTouch(event);
       if (thisObject) {
-        func.call(thisObject, event)
+        func.call(thisObject, event);
       } else {
-        func(event)
+        func(event);
       }
-      handled = true
+      handled = true;
     }
-  }
+  };
 
-  const bindData = []
-  if (Blockly.utils.global.PointerEvent &&
-      (name in Blockly.Touch.TOUCH_MAP)) {
+  const bindData = [];
+  if (Blockly.utils.global.PointerEvent && name in Blockly.Touch.TOUCH_MAP) {
     for (var i = 0, type; (type = Blockly.Touch.TOUCH_MAP[name][i]); i++) {
-      node.addEventListener(type, wrapFunc, false)
-      bindData.push([node, type, wrapFunc])
+      node.addEventListener(type, wrapFunc, false);
+      bindData.push([node, type, wrapFunc]);
     }
   } else {
-    node.addEventListener(name, wrapFunc, false)
-    bindData.push([node, name, wrapFunc])
+    node.addEventListener(name, wrapFunc, false);
+    bindData.push([node, name, wrapFunc]);
 
     // Add equivalent touch event.
     if (name in Blockly.Touch.TOUCH_MAP) {
       const touchWrapFunc = function (e) {
-        wrapFunc(e)
+        wrapFunc(e);
         // Calling preventDefault stops the browser from scrolling/zooming the
         // page.
-        const preventDef = !opt_noPreventDefault
+        const preventDef = !opt_noPreventDefault;
         if (handled && preventDef) {
-          e.preventDefault()
+          e.preventDefault();
         }
-      }
+      };
       for (var i = 0, type; (type = Blockly.Touch.TOUCH_MAP[name][i]); i++) {
-        node.addEventListener(type, touchWrapFunc, false)
-        bindData.push([node, type, touchWrapFunc])
+        node.addEventListener(type, touchWrapFunc, false);
+        bindData.push([node, type, touchWrapFunc]);
       }
     }
   }
-  return bindData
-}
+  return bindData;
+};
 
 /**
  * Bind an event to a function call.  Handles multitouch events by using the
@@ -511,22 +539,21 @@ Blockly.bindEventWithChecks_ = function (node, name, thisObject, func,
 Blockly.bindEvent_ = function (node, name, thisObject, func) {
   const wrapFunc = function (e) {
     if (thisObject) {
-      func.call(thisObject, e)
+      func.call(thisObject, e);
     } else {
-      func(e)
+      func(e);
     }
-  }
+  };
 
-  const bindData = []
-  if (Blockly.utils.global.PointerEvent &&
-      (name in Blockly.Touch.TOUCH_MAP)) {
+  const bindData = [];
+  if (Blockly.utils.global.PointerEvent && name in Blockly.Touch.TOUCH_MAP) {
     for (var i = 0, type; (type = Blockly.Touch.TOUCH_MAP[name][i]); i++) {
-      node.addEventListener(type, wrapFunc, false)
-      bindData.push([node, type, wrapFunc])
+      node.addEventListener(type, wrapFunc, false);
+      bindData.push([node, type, wrapFunc]);
     }
   } else {
-    node.addEventListener(name, wrapFunc, false)
-    bindData.push([node, name, wrapFunc])
+    node.addEventListener(name, wrapFunc, false);
+    bindData.push([node, name, wrapFunc]);
 
     // Add equivalent touch event.
     if (name in Blockly.Touch.TOUCH_MAP) {
@@ -534,23 +561,23 @@ Blockly.bindEvent_ = function (node, name, thisObject, func) {
         // Punt on multitouch events.
         if (e.changedTouches && e.changedTouches.length == 1) {
           // Map the touch event's properties to the event.
-          const touchPoint = e.changedTouches[0]
-          e.clientX = touchPoint.clientX
-          e.clientY = touchPoint.clientY
+          const touchPoint = e.changedTouches[0];
+          e.clientX = touchPoint.clientX;
+          e.clientY = touchPoint.clientY;
         }
-        wrapFunc(e)
+        wrapFunc(e);
 
         // Stop the browser from scrolling/zooming the page.
-        e.preventDefault()
-      }
+        e.preventDefault();
+      };
       for (var i = 0, type; (type = Blockly.Touch.TOUCH_MAP[name][i]); i++) {
-        node.addEventListener(type, touchWrapFunc, false)
-        bindData.push([node, type, touchWrapFunc])
+        node.addEventListener(type, touchWrapFunc, false);
+        bindData.push([node, type, touchWrapFunc]);
       }
     }
   }
-  return bindData
-}
+  return bindData;
+};
 
 /**
  * Unbind one or more events event from a function call.
@@ -560,14 +587,14 @@ Blockly.bindEvent_ = function (node, name, thisObject, func) {
  */
 Blockly.unbindEvent_ = function (bindData) {
   while (bindData.length) {
-    const bindDatum = bindData.pop()
-    const node = bindDatum[0]
-    const name = bindDatum[1]
-    var func = bindDatum[2]
-    node.removeEventListener(name, func, false)
+    const bindDatum = bindData.pop();
+    const node = bindDatum[0];
+    const name = bindDatum[1];
+    var func = bindDatum[2];
+    node.removeEventListener(name, func, false);
   }
-  return func
-}
+  return func;
+};
 
 /**
  * Is the given string a number (includes negative and decimals).
@@ -575,8 +602,8 @@ Blockly.unbindEvent_ = function (bindData) {
  * @return {boolean} True if number, false otherwise.
  */
 Blockly.isNumber = function (str) {
-  return /^\s*-?\d+(\.\d+)?\s*$/.test(str)
-}
+  return /^\s*-?\d+(\.\d+)?\s*$/.test(str);
+};
 
 /**
  * Convert a hue (HSV model) into an RGB hex triplet.
@@ -584,9 +611,12 @@ Blockly.isNumber = function (str) {
  * @return {string} RGB code, e.g. '#5ba65b'.
  */
 Blockly.hueToHex = function (hue) {
-  return Blockly.utils.colour.hsvToHex(hue, Blockly.HSV_SATURATION,
-    Blockly.HSV_VALUE * 255)
-}
+  return Blockly.utils.colour.hsvToHex(
+    hue,
+    Blockly.HSV_SATURATION,
+    Blockly.HSV_VALUE * 255
+  );
+};
 
 /**
  * Checks old colour constants are not overwritten by the host application.
@@ -596,40 +626,88 @@ Blockly.hueToHex = function (hue) {
  */
 Blockly.checkBlockColourConstants = function () {
   Blockly.checkBlockColourConstant_(
-    'LOGIC_HUE', ['Blocks', 'logic', 'HUE'], undefined)
+    "LOGIC_HUE",
+    ["Blocks", "logic", "HUE"],
+    undefined
+  );
   Blockly.checkBlockColourConstant_(
-    'LOGIC_HUE', ['Constants', 'Logic', 'HUE'], 210)
+    "LOGIC_HUE",
+    ["Constants", "Logic", "HUE"],
+    210
+  );
   Blockly.checkBlockColourConstant_(
-    'LOOPS_HUE', ['Blocks', 'loops', 'HUE'], undefined)
+    "LOOPS_HUE",
+    ["Blocks", "loops", "HUE"],
+    undefined
+  );
   Blockly.checkBlockColourConstant_(
-    'LOOPS_HUE', ['Constants', 'Loops', 'HUE'], 120)
+    "LOOPS_HUE",
+    ["Constants", "Loops", "HUE"],
+    120
+  );
   Blockly.checkBlockColourConstant_(
-    'MATH_HUE', ['Blocks', 'math', 'HUE'], undefined)
+    "MATH_HUE",
+    ["Blocks", "math", "HUE"],
+    undefined
+  );
   Blockly.checkBlockColourConstant_(
-    'MATH_HUE', ['Constants', 'Math', 'HUE'], 230)
+    "MATH_HUE",
+    ["Constants", "Math", "HUE"],
+    230
+  );
   Blockly.checkBlockColourConstant_(
-    'TEXTS_HUE', ['Blocks', 'texts', 'HUE'], undefined)
+    "TEXTS_HUE",
+    ["Blocks", "texts", "HUE"],
+    undefined
+  );
   Blockly.checkBlockColourConstant_(
-    'TEXTS_HUE', ['Constants', 'Text', 'HUE'], 160)
+    "TEXTS_HUE",
+    ["Constants", "Text", "HUE"],
+    160
+  );
   Blockly.checkBlockColourConstant_(
-    'LISTS_HUE', ['Blocks', 'lists', 'HUE'], undefined)
+    "LISTS_HUE",
+    ["Blocks", "lists", "HUE"],
+    undefined
+  );
   Blockly.checkBlockColourConstant_(
-    'LISTS_HUE', ['Constants', 'Lists', 'HUE'], 260)
+    "LISTS_HUE",
+    ["Constants", "Lists", "HUE"],
+    260
+  );
   Blockly.checkBlockColourConstant_(
-    'COLOUR_HUE', ['Blocks', 'colour', 'HUE'], undefined)
+    "COLOUR_HUE",
+    ["Blocks", "colour", "HUE"],
+    undefined
+  );
   Blockly.checkBlockColourConstant_(
-    'COLOUR_HUE', ['Constants', 'Colour', 'HUE'], 20)
+    "COLOUR_HUE",
+    ["Constants", "Colour", "HUE"],
+    20
+  );
   Blockly.checkBlockColourConstant_(
-    'VARIABLES_HUE', ['Blocks', 'variables', 'HUE'], undefined)
+    "VARIABLES_HUE",
+    ["Blocks", "variables", "HUE"],
+    undefined
+  );
   Blockly.checkBlockColourConstant_(
-    'VARIABLES_HUE', ['Constants', 'Variables', 'HUE'], 330)
+    "VARIABLES_HUE",
+    ["Constants", "Variables", "HUE"],
+    330
+  );
   // Blockly.Blocks.variables_dynamic.HUE never existed.
   Blockly.checkBlockColourConstant_(
-    'VARIABLES_DYNAMIC_HUE', ['Constants', 'VariablesDynamic', 'HUE'], 310)
+    "VARIABLES_DYNAMIC_HUE",
+    ["Constants", "VariablesDynamic", "HUE"],
+    310
+  );
   Blockly.checkBlockColourConstant_(
-    'PROCEDURES_HUE', ['Blocks', 'procedures', 'HUE'], undefined)
+    "PROCEDURES_HUE",
+    ["Blocks", "procedures", "HUE"],
+    undefined
+  );
   // Blockly.Constants.Procedures.HUE never existed.
-}
+};
 
 /**
  * Checks for a constant in the Blockly namespace, verifying it is undefined or
@@ -641,24 +719,30 @@ Blockly.checkBlockColourConstants = function () {
  * @private
  */
 Blockly.checkBlockColourConstant_ = function (
-  msgName, blocklyNamePath, expectedValue) {
-  let namePath = 'Blockly'
-  let value = Blockly
+  msgName,
+  blocklyNamePath,
+  expectedValue
+) {
+  let namePath = "Blockly";
+  let value = Blockly;
   for (let i = 0; i < blocklyNamePath.length; ++i) {
-    namePath += '.' + blocklyNamePath[i]
+    namePath += "." + blocklyNamePath[i];
     if (value) {
-      value = value[blocklyNamePath[i]]
+      value = value[blocklyNamePath[i]];
     }
   }
 
   if (value && value !== expectedValue) {
-    const warningPattern = (expectedValue === undefined)
-      ? '%1 has been removed. Use Blockly.Msg["%2"].'
-      : '%1 is deprecated and unused. Override Blockly.Msg["%2"].'
-    const warning = warningPattern.replace('%1', namePath).replace('%2', msgName)
-    console.warn(warning)
+    const warningPattern =
+      expectedValue === undefined
+        ? '%1 has been removed. Use Blockly.Msg["%2"].'
+        : '%1 is deprecated and unused. Override Blockly.Msg["%2"].';
+    const warning = warningPattern
+      .replace("%1", namePath)
+      .replace("%2", msgName);
+    console.warn(warning);
   }
-}
+};
 
 /**
  * Set the parent container.  This is the container element that the WidgetDiv,
@@ -668,5 +752,5 @@ Blockly.checkBlockColourConstant_ = function (
  * @param {!Element} container The container element.
  */
 Blockly.setParentContainer = function (container) {
-  Blockly.parentContainer = container
-}
+  Blockly.parentContainer = container;
+};

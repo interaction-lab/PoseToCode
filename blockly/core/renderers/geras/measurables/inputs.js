@@ -9,12 +9,12 @@
  * block.
  * @author kozbial@google.com (Monica Kozbial)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.geras.InlineInput')
-goog.provide('Blockly.geras.StatementInput')
+goog.provide("Blockly.geras.InlineInput");
+goog.provide("Blockly.geras.StatementInput");
 
-goog.require('Blockly.utils.object')
+goog.require("Blockly.utils.object");
 
 /**
  * An object containing information about the space an inline input takes up
@@ -29,17 +29,22 @@ goog.require('Blockly.utils.object')
  */
 Blockly.geras.InlineInput = function (constants, input) {
   Blockly.geras.InlineInput.superClass_.constructor.call(
-    this, constants, input)
+    this,
+    constants,
+    input
+  );
 
   if (this.connectedBlock) {
     // We allow the dark path to show on the parent block so that the child
     // block looks embossed.  This takes up an extra pixel in both x and y.
-    this.width += this.constants_.DARK_PATH_OFFSET
-    this.height += this.constants_.DARK_PATH_OFFSET
+    this.width += this.constants_.DARK_PATH_OFFSET;
+    this.height += this.constants_.DARK_PATH_OFFSET;
   }
-}
-Blockly.utils.object.inherits(Blockly.geras.InlineInput,
-  Blockly.blockRendering.InlineInput)
+};
+Blockly.utils.object.inherits(
+  Blockly.geras.InlineInput,
+  Blockly.blockRendering.InlineInput
+);
 
 /**
  * An object containing information about the space a statement input takes up
@@ -54,13 +59,18 @@ Blockly.utils.object.inherits(Blockly.geras.InlineInput,
  */
 Blockly.geras.StatementInput = function (constants, input) {
   Blockly.geras.StatementInput.superClass_.constructor.call(
-    this, constants, input)
+    this,
+    constants,
+    input
+  );
 
   if (this.connectedBlock) {
     // We allow the dark path to show on the parent block so that the child
     // block looks embossed.  This takes up an extra pixel in both x and y.
-    this.height += this.constants_.DARK_PATH_OFFSET
+    this.height += this.constants_.DARK_PATH_OFFSET;
   }
-}
-Blockly.utils.object.inherits(Blockly.geras.StatementInput,
-  Blockly.blockRendering.StatementInput)
+};
+Blockly.utils.object.inherits(
+  Blockly.geras.StatementInput,
+  Blockly.blockRendering.StatementInput
+);

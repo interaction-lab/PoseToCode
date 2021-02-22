@@ -11,7 +11,7 @@
  * @author quachtina96 (Tina Quach)
  */
 
-'use strict'
+"use strict";
 
 /**
  * BlockLibraryView Class
@@ -19,17 +19,17 @@
  */
 const BlockLibraryView = function () {
   // Div element to contain the block types to choose from.
-  this.dropdown = document.getElementById('dropdownDiv_blockLib')
+  this.dropdown = document.getElementById("dropdownDiv_blockLib");
   // Map of block type to corresponding 'a' element that is the option in the
   // dropdown. Used to quickly and easily get a specific option.
-  this.optionMap = Object.create(null)
+  this.optionMap = Object.create(null);
   // Save and delete buttons.
-  this.saveButton = document.getElementById('saveToBlockLibraryButton')
-  this.deleteButton = document.getElementById('removeBlockFromLibraryButton')
+  this.saveButton = document.getElementById("saveToBlockLibraryButton");
+  this.deleteButton = document.getElementById("removeBlockFromLibraryButton");
   // Initially, user should not be able to delete a block. They must save a
   // block or select a stored block first.
-  this.deleteButton.disabled = true
-}
+  this.deleteButton.disabled = true;
+};
 
 /**
  * Creates a node of a given element type and appends to the node with given ID.
@@ -39,20 +39,20 @@ const BlockLibraryView = function () {
  */
 BlockLibraryView.prototype.addOption = function (blockType, selected) {
   // Create option.
-  const option = document.createElement('a')
-  option.id = 'dropdown_' + blockType
-  option.classList.add('blockLibOpt')
-  option.textContent = blockType
+  const option = document.createElement("a");
+  option.id = "dropdown_" + blockType;
+  option.classList.add("blockLibOpt");
+  option.textContent = blockType;
 
   // Add option to dropdown.
-  this.dropdown.appendChild(option)
-  this.optionMap[blockType] = option
+  this.dropdown.appendChild(option);
+  this.optionMap[blockType] = option;
 
   // Select the block.
   if (selected) {
-    this.setSelectedBlockType(blockType)
+    this.setSelectedBlockType(blockType);
   }
-}
+};
 
 /**
  * Sets a given block type to selected and all other blocks to deselected.
@@ -63,14 +63,14 @@ BlockLibraryView.prototype.setSelectedBlockType = function (blockTypeToSelect) {
   // Select given block type and deselect all others. Will deselect all blocks
   // if null or invalid block type selected.
   for (const blockType in this.optionMap) {
-    const option = this.optionMap[blockType]
+    const option = this.optionMap[blockType];
     if (blockType == blockTypeToSelect) {
-      this.selectOption_(option)
+      this.selectOption_(option);
     } else {
-      this.deselectOption_(option)
+      this.deselectOption_(option);
     }
   }
-}
+};
 
 /**
  * Selects a given option.
@@ -79,8 +79,8 @@ BlockLibraryView.prototype.setSelectedBlockType = function (blockTypeToSelect) {
  * @private
  */
 BlockLibraryView.prototype.selectOption_ = function (option) {
-  option.classList.add('dropdown-content-selected')
-}
+  option.classList.add("dropdown-content-selected");
+};
 
 /**
  * Deselects a given option.
@@ -89,8 +89,8 @@ BlockLibraryView.prototype.selectOption_ = function (option) {
  * @private
  */
 BlockLibraryView.prototype.deselectOption_ = function (option) {
-  option.classList.remove('dropdown-content-selected')
-}
+  option.classList.remove("dropdown-content-selected");
+};
 
 /**
  * Updates the save and delete buttons to represent how the current block will
@@ -100,79 +100,82 @@ BlockLibraryView.prototype.deselectOption_ = function (option) {
  * @param {boolean} isInLibrary Whether the block type is in the library.
  * @param {boolean} savedChanges Whether changes to block have been saved.
  */
-BlockLibraryView.prototype.updateButtons =
-    function (blockType, isInLibrary, savedChanges) {
-      if (blockType) {
-        // User is editing a block.
+BlockLibraryView.prototype.updateButtons = function (
+  blockType,
+  isInLibrary,
+  savedChanges
+) {
+  if (blockType) {
+    // User is editing a block.
 
-        if (!isInLibrary) {
-          // Block type has not been saved to library yet. Disable the delete button
-          // and allow user to save.
-          this.saveButton.textContent = 'Save "' + blockType + '"'
-          this.saveButton.disabled = false
-          this.deleteButton.disabled = true
-        } else {
-          // Block type has already been saved. Disable the save button unless the
-          // there are unsaved changes (checked below).
-          this.saveButton.textContent = 'Update "' + blockType + '"'
-          this.saveButton.disabled = true
-          this.deleteButton.disabled = false
-        }
-        this.deleteButton.textContent = 'Delete "' + blockType + '"'
-
-        // If changes to block have been made and are not saved, make button
-        // green to encourage user to save the block.
-        if (!savedChanges) {
-          let buttonFormatClass = 'button_warn'
-
-          // If block type is the default, 'block_type', make button red to alert
-          // user.
-          if (blockType == 'block_type') {
-            buttonFormatClass = 'button_alert'
-          }
-          this.saveButton.classList.add(buttonFormatClass)
-          this.saveButton.disabled = false
-        } else {
-          // No changes to save.
-          this.saveButton.classList.remove('button_alert', 'button_warn')
-          this.saveButton.disabled = true
-        }
-      }
+    if (!isInLibrary) {
+      // Block type has not been saved to library yet. Disable the delete button
+      // and allow user to save.
+      this.saveButton.textContent = 'Save "' + blockType + '"';
+      this.saveButton.disabled = false;
+      this.deleteButton.disabled = true;
+    } else {
+      // Block type has already been saved. Disable the save button unless the
+      // there are unsaved changes (checked below).
+      this.saveButton.textContent = 'Update "' + blockType + '"';
+      this.saveButton.disabled = true;
+      this.deleteButton.disabled = false;
     }
+    this.deleteButton.textContent = 'Delete "' + blockType + '"';
+
+    // If changes to block have been made and are not saved, make button
+    // green to encourage user to save the block.
+    if (!savedChanges) {
+      let buttonFormatClass = "button_warn";
+
+      // If block type is the default, 'block_type', make button red to alert
+      // user.
+      if (blockType == "block_type") {
+        buttonFormatClass = "button_alert";
+      }
+      this.saveButton.classList.add(buttonFormatClass);
+      this.saveButton.disabled = false;
+    } else {
+      // No changes to save.
+      this.saveButton.classList.remove("button_alert", "button_warn");
+      this.saveButton.disabled = true;
+    }
+  }
+};
 
 /**
  * Removes option currently selected in dropdown from dropdown menu.
  */
 BlockLibraryView.prototype.removeSelectedOption = function () {
-  const selectedOption = this.getSelectedOption()
-  this.dropdown.removeNode(selectedOption)
-}
+  const selectedOption = this.getSelectedOption();
+  this.dropdown.removeNode(selectedOption);
+};
 
 /**
  * Returns block type of selected block.
  * @return {string} Type of block selected.
  */
 BlockLibraryView.prototype.getSelectedBlockType = function () {
-  const selectedOption = this.getSelectedOption()
-  const blockType = selectedOption.textContent
-  return blockType
-}
+  const selectedOption = this.getSelectedOption();
+  const blockType = selectedOption.textContent;
+  return blockType;
+};
 
 /**
  * Returns selected option.
  * @return {!Element} HTML 'a' element that is the option for a block type.
  */
 BlockLibraryView.prototype.getSelectedOption = function () {
-  return this.dropdown.getElementsByClassName('dropdown-content-selected')[0]
-}
+  return this.dropdown.getElementsByClassName("dropdown-content-selected")[0];
+};
 
 /**
  * Removes all options from dropdown.
  */
 BlockLibraryView.prototype.clearOptions = function () {
-  const blockOpts = this.dropdown.getElementsByClassName('blockLibOpt')
-  let option
+  const blockOpts = this.dropdown.getElementsByClassName("blockLibOpt");
+  let option;
   while ((option = blockOpts[0])) {
-    option.parentNode.removeChild(option)
+    option.parentNode.removeChild(option);
   }
-}
+};

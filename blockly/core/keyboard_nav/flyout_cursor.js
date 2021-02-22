@@ -9,13 +9,13 @@
  * Used primarily for keyboard navigation.
  * @author aschmiedt@google.com (Abby Schmiedt)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.FlyoutCursor')
+goog.provide("Blockly.FlyoutCursor");
 
-goog.require('Blockly.Cursor')
-goog.require('Blockly.navigation')
-goog.require('Blockly.utils.object')
+goog.require("Blockly.Cursor");
+goog.require("Blockly.navigation");
+goog.require("Blockly.utils.object");
 
 /**
  * Class for a flyout cursor.
@@ -24,9 +24,9 @@ goog.require('Blockly.utils.object')
  * @extends {Blockly.Cursor}
  */
 Blockly.FlyoutCursor = function () {
-  Blockly.FlyoutCursor.superClass_.constructor.call(this)
-}
-Blockly.utils.object.inherits(Blockly.FlyoutCursor, Blockly.Cursor)
+  Blockly.FlyoutCursor.superClass_.constructor.call(this);
+};
+Blockly.utils.object.inherits(Blockly.FlyoutCursor, Blockly.Cursor);
 
 /**
  * Handles the given action.
@@ -38,15 +38,15 @@ Blockly.utils.object.inherits(Blockly.FlyoutCursor, Blockly.Cursor)
 Blockly.FlyoutCursor.prototype.onBlocklyAction = function (action) {
   switch (action.name) {
     case Blockly.navigation.actionNames.PREVIOUS:
-      this.prev()
-      return true
+      this.prev();
+      return true;
     case Blockly.navigation.actionNames.NEXT:
-      this.next()
-      return true
+      this.next();
+      return true;
     default:
-      return false
+      return false;
   }
-}
+};
 
 /**
  * Find the next connection, field, or block.
@@ -55,17 +55,17 @@ Blockly.FlyoutCursor.prototype.onBlocklyAction = function (action) {
  * @override
  */
 Blockly.FlyoutCursor.prototype.next = function () {
-  const curNode = this.getCurNode()
+  const curNode = this.getCurNode();
   if (!curNode) {
-    return null
+    return null;
   }
-  const newNode = curNode.next()
+  const newNode = curNode.next();
 
   if (newNode) {
-    this.setCurNode(newNode)
+    this.setCurNode(newNode);
   }
-  return newNode
-}
+  return newNode;
+};
 
 /**
  * This is a  no-op since a flyout cursor can not go in.
@@ -73,8 +73,8 @@ Blockly.FlyoutCursor.prototype.next = function () {
  * @override
  */
 Blockly.FlyoutCursor.prototype.in = function () {
-  return null
-}
+  return null;
+};
 
 /**
  * Find the previous connection, field, or block.
@@ -83,17 +83,17 @@ Blockly.FlyoutCursor.prototype.in = function () {
  * @override
  */
 Blockly.FlyoutCursor.prototype.prev = function () {
-  const curNode = this.getCurNode()
+  const curNode = this.getCurNode();
   if (!curNode) {
-    return null
+    return null;
   }
-  const newNode = curNode.prev()
+  const newNode = curNode.prev();
 
   if (newNode) {
-    this.setCurNode(newNode)
+    this.setCurNode(newNode);
   }
-  return newNode
-}
+  return newNode;
+};
 
 /**
  * This is a  no-op since a flyout cursor can not go out.
@@ -101,5 +101,5 @@ Blockly.FlyoutCursor.prototype.prev = function () {
  * @override
  */
 Blockly.FlyoutCursor.prototype.out = function () {
-  return null
-}
+  return null;
+};

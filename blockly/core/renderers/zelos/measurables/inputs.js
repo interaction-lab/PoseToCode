@@ -10,10 +10,10 @@
  * @author samelh@google.com (Sam El-Husseini)
  */
 
-goog.provide('Blockly.zelos.StatementInput')
+goog.provide("Blockly.zelos.StatementInput");
 
-goog.require('Blockly.blockRendering.StatementInput')
-goog.require('Blockly.utils.object')
+goog.require("Blockly.blockRendering.StatementInput");
+goog.require("Blockly.utils.object");
 
 /**
  * An object containing information about the space a statement input takes up
@@ -27,20 +27,25 @@ goog.require('Blockly.utils.object')
  * @extends {Blockly.blockRendering.StatementInput}
  */
 Blockly.zelos.StatementInput = function (constants, input) {
-  Blockly.zelos.StatementInput.superClass_.constructor.call(this,
-    constants, input)
+  Blockly.zelos.StatementInput.superClass_.constructor.call(
+    this,
+    constants,
+    input
+  );
 
   if (this.connectedBlock) {
     // Find the bottom-most connected block in the stack.
-    let block = this.connectedBlock
+    let block = this.connectedBlock;
     while (block.getNextBlock()) {
-      block = block.getNextBlock()
+      block = block.getNextBlock();
     }
     if (!block.nextConnection) {
-      this.height = this.connectedBlockHeight
-      this.connectedBottomNextConnection = true
+      this.height = this.connectedBlockHeight;
+      this.connectedBottomNextConnection = true;
     }
   }
-}
-Blockly.utils.object.inherits(Blockly.zelos.StatementInput,
-  Blockly.blockRendering.StatementInput)
+};
+Blockly.utils.object.inherits(
+  Blockly.zelos.StatementInput,
+  Blockly.blockRendering.StatementInput
+);

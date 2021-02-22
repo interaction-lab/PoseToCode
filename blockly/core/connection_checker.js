@@ -9,23 +9,22 @@
  * connection is safe and valid.
  * @author fenichel@google.com (Rachel Fenichel)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.ConnectionChecker')
+goog.provide("Blockly.ConnectionChecker");
 
-goog.require('Blockly.constants')
-goog.require('Blockly.registry')
+goog.require("Blockly.constants");
+goog.require("Blockly.registry");
 
-goog.requireType('Blockly.Connection')
-goog.requireType('Blockly.IConnectionChecker')
+goog.requireType("Blockly.Connection");
+goog.requireType("Blockly.IConnectionChecker");
 
 /**
  * Class for connection type checking logic.
  * @implements {Blockly.IConnectionChecker}
  * @constructor
  */
-Blockly.ConnectionChecker = function () {
-}
+Blockly.ConnectionChecker = function () {};
 
 /**
  * Check whether the current connection can connect with the target
@@ -39,11 +38,17 @@ Blockly.ConnectionChecker = function () {
  * @return {boolean} Whether the connection is legal.
  * @public
  */
-Blockly.ConnectionChecker.prototype.canConnect = function (a, b,
-  isDragging, opt_distance) {
-  return this.canConnectWithReason(a, b, isDragging, opt_distance) ==
-      Blockly.Connection.CAN_CONNECT
-}
+Blockly.ConnectionChecker.prototype.canConnect = function (
+  a,
+  b,
+  isDragging,
+  opt_distance
+) {
+  return (
+    this.canConnectWithReason(a, b, isDragging, opt_distance) ==
+    Blockly.Connection.CAN_CONNECT
+  );
+};
 
 /**
  * Checks whether the current connection can connect with the target
@@ -59,29 +64,36 @@ Blockly.ConnectionChecker.prototype.canConnect = function (a, b,
  * @public
  */
 Blockly.ConnectionChecker.prototype.canConnectWithReason = function (
-  a, b, isDragging, opt_distance) {
-  const safety = this.doSafetyChecks(a, b)
+  a,
+  b,
+  isDragging,
+  opt_distance
+) {
+  const safety = this.doSafetyChecks(a, b);
   if (safety != Blockly.Connection.CAN_CONNECT) {
-    return safety
+    return safety;
   }
 
   // If the safety checks passed, both connections are non-null.
-  const connOne = /** @type {!Blockly.Connection} **/ (a)
-  const connTwo = /** @type {!Blockly.Connection} **/ (b)
+  const connOne = /** @type {!Blockly.Connection} **/ (a);
+  const connTwo = /** @type {!Blockly.Connection} **/ (b);
   if (!this.doTypeChecks(connOne, connTwo)) {
-    return Blockly.Connection.REASON_CHECKS_FAILED
+    return Blockly.Connection.REASON_CHECKS_FAILED;
   }
 
-  if (isDragging &&
-      !this.doDragChecks(
-        /** @type {!Blockly.RenderedConnection} **/ (a),
-        /** @type {!Blockly.RenderedConnection} **/ (b),
-        opt_distance || 0)) {
-    return Blockly.Connection.REASON_DRAG_CHECKS_FAILED
+  if (
+    isDragging &&
+    !this.doDragChecks(
+      /** @type {!Blockly.RenderedConnection} **/ (a),
+      /** @type {!Blockly.RenderedConnection} **/ (b),
+      opt_distance || 0
+    )
+  ) {
+    return Blockly.Connection.REASON_DRAG_CHECKS_FAILED;
   }
 
-  return Blockly.Connection.CAN_CONNECT
-}
+  return Blockly.Connection.CAN_CONNECT;
+};
 
 /**
  * Helper method that translates a connection error code into a string.
@@ -92,32 +104,40 @@ Blockly.ConnectionChecker.prototype.canConnectWithReason = function (
  * @return {string} A developer-readable error string.
  * @public
  */
-Blockly.ConnectionChecker.prototype.getErrorMessage = function (errorCode,
-  a, b) {
+Blockly.ConnectionChecker.prototype.getErrorMessage = function (
+  errorCode,
+  a,
+  b
+) {
   switch (errorCode) {
     case Blockly.Connection.REASON_SELF_CONNECTION:
-      return 'Attempted to connect a block to itself.'
+      return "Attempted to connect a block to itself.";
     case Blockly.Connection.REASON_DIFFERENT_WORKSPACES:
       // Usually this means one block has been deleted.
-      return 'Blocks not on same workspace.'
+      return "Blocks not on same workspace.";
     case Blockly.Connection.REASON_WRONG_TYPE:
-      return 'Attempt to connect incompatible types.'
+      return "Attempt to connect incompatible types.";
     case Blockly.Connection.REASON_TARGET_NULL:
-      return 'Target connection is null.'
+      return "Target connection is null.";
     case Blockly.Connection.REASON_CHECKS_FAILED:
-      var connOne = /** @type {!Blockly.Connection} **/ (a)
-      var connTwo = /** @type {!Blockly.Connection} **/ (b)
-      var msg = 'Connection checks failed. '
-      msg += connOne + ' expected ' + connOne.getCheck() + ', found ' + connTwo.getCheck()
-      return msg
+      var connOne = /** @type {!Blockly.Connection} **/ (a);
+      var connTwo = /** @type {!Blockly.Connection} **/ (b);
+      var msg = "Connection checks failed. ";
+      msg +=
+        connOne +
+        " expected " +
+        connOne.getCheck() +
+        ", found " +
+        connTwo.getCheck();
+      return msg;
     case Blockly.Connection.REASON_SHADOW_PARENT:
-      return 'Connecting non-shadow to shadow block.'
+      return "Connecting non-shadow to shadow block.";
     case Blockly.Connection.REASON_DRAG_CHECKS_FAILED:
-      return 'Drag checks failed.'
+      return "Drag checks failed.";
     default:
-      return 'Unknown connection failure: this should never happen!'
+      return "Unknown connection failure: this should never happen!";
   }
-}
+};
 
 /**
  * Check that connecting the given connections is safe, meaning that it would
@@ -129,26 +149,26 @@ Blockly.ConnectionChecker.prototype.getErrorMessage = function (errorCode,
  */
 Blockly.ConnectionChecker.prototype.doSafetyChecks = function (a, b) {
   if (!a || !b) {
-    return Blockly.Connection.REASON_TARGET_NULL
+    return Blockly.Connection.REASON_TARGET_NULL;
   }
   if (a.isSuperior()) {
-    var blockA = a.getSourceBlock()
-    var blockB = b.getSourceBlock()
+    var blockA = a.getSourceBlock();
+    var blockB = b.getSourceBlock();
   } else {
-    var blockB = a.getSourceBlock()
-    var blockA = b.getSourceBlock()
+    var blockB = a.getSourceBlock();
+    var blockA = b.getSourceBlock();
   }
   if (blockA == blockB) {
-    return Blockly.Connection.REASON_SELF_CONNECTION
+    return Blockly.Connection.REASON_SELF_CONNECTION;
   } else if (b.type != Blockly.OPPOSITE_TYPE[a.type]) {
-    return Blockly.Connection.REASON_WRONG_TYPE
+    return Blockly.Connection.REASON_WRONG_TYPE;
   } else if (blockA.workspace !== blockB.workspace) {
-    return Blockly.Connection.REASON_DIFFERENT_WORKSPACES
+    return Blockly.Connection.REASON_DIFFERENT_WORKSPACES;
   } else if (blockA.isShadow() && !blockB.isShadow()) {
-    return Blockly.Connection.REASON_SHADOW_PARENT
+    return Blockly.Connection.REASON_SHADOW_PARENT;
   }
-  return Blockly.Connection.CAN_CONNECT
-}
+  return Blockly.Connection.CAN_CONNECT;
+};
 
 /**
  * Check whether this connection is compatible with another connection with
@@ -160,22 +180,22 @@ Blockly.ConnectionChecker.prototype.doSafetyChecks = function (a, b) {
  * @public
  */
 Blockly.ConnectionChecker.prototype.doTypeChecks = function (a, b) {
-  const checkArrayOne = a.getCheck()
-  const checkArrayTwo = b.getCheck()
+  const checkArrayOne = a.getCheck();
+  const checkArrayTwo = b.getCheck();
 
   if (!checkArrayOne || !checkArrayTwo) {
     // One or both sides are promiscuous enough that anything will fit.
-    return true
+    return true;
   }
   // Find any intersection in the check lists.
   for (let i = 0; i < checkArrayOne.length; i++) {
     if (checkArrayTwo.indexOf(checkArrayOne[i]) != -1) {
-      return true
+      return true;
     }
   }
   // No intersection.
-  return false
-}
+  return false;
+};
 
 /**
  * Check whether this connection can be made by dragging.
@@ -187,63 +207,68 @@ Blockly.ConnectionChecker.prototype.doTypeChecks = function (a, b) {
  */
 Blockly.ConnectionChecker.prototype.doDragChecks = function (a, b, distance) {
   if (a.distanceFrom(b) > distance) {
-    return false
+    return false;
   }
 
   // Don't consider insertion markers.
   if (b.getSourceBlock().isInsertionMarker()) {
-    return false
+    return false;
   }
 
   switch (b.type) {
     case Blockly.PREVIOUS_STATEMENT:
-      return this.canConnectToPrevious_(a, b)
+      return this.canConnectToPrevious_(a, b);
     case Blockly.OUTPUT_VALUE: {
       // Don't offer to connect an already connected left (male) value plug to
       // an available right (female) value plug.
-      if ((b.isConnected() &&
-          !b.targetBlock().isInsertionMarker()) ||
-          a.isConnected()) {
-        return false
+      if (
+        (b.isConnected() && !b.targetBlock().isInsertionMarker()) ||
+        a.isConnected()
+      ) {
+        return false;
       }
-      break
+      break;
     }
     case Blockly.INPUT_VALUE: {
       // Offering to connect the left (male) of a value block to an already
       // connected value pair is ok, we'll splice it in.
       // However, don't offer to splice into an immovable block.
-      if (b.isConnected() &&
-          !b.targetBlock().isMovable() &&
-          !b.targetBlock().isShadow()) {
-        return false
+      if (
+        b.isConnected() &&
+        !b.targetBlock().isMovable() &&
+        !b.targetBlock().isShadow()
+      ) {
+        return false;
       }
-      break
+      break;
     }
     case Blockly.NEXT_STATEMENT: {
       // Don't let a block with no next connection bump other blocks out of the
       // stack.  But covering up a shadow block or stack of shadow blocks is
       // fine.  Similarly, replacing a terminal statement with another terminal
       // statement is allowed.
-      if (b.isConnected() &&
-          !a.getSourceBlock().nextConnection &&
-          !b.targetBlock().isShadow() &&
-          b.targetBlock().nextConnection) {
-        return false
+      if (
+        b.isConnected() &&
+        !a.getSourceBlock().nextConnection &&
+        !b.targetBlock().isShadow() &&
+        b.targetBlock().nextConnection
+      ) {
+        return false;
       }
-      break
+      break;
     }
     default:
       // Unexpected connection type.
-      return false
+      return false;
   }
 
   // Don't let blocks try to connect to themselves or ones they nest.
   if (Blockly.draggingConnections.indexOf(b) != -1) {
-    return false
+    return false;
   }
 
-  return true
-}
+  return true;
+};
 
 /**
  * Helper function for drag checking.
@@ -258,28 +283,31 @@ Blockly.ConnectionChecker.prototype.canConnectToPrevious_ = function (a, b) {
   if (a.targetConnection) {
     // This connection is already occupied.
     // A next connection will never disconnect itself mid-drag.
-    return false
+    return false;
   }
 
   // Don't let blocks try to connect to themselves or ones they nest.
   if (Blockly.draggingConnections.indexOf(b) != -1) {
-    return false
+    return false;
   }
 
   if (!b.targetConnection) {
-    return true
+    return true;
   }
 
-  const targetBlock = b.targetBlock()
+  const targetBlock = b.targetBlock();
   // If it is connected to a real block, game over.
   if (!targetBlock.isInsertionMarker()) {
-    return false
+    return false;
   }
   // If it's connected to an insertion marker but that insertion marker
   // is the first block in a stack, it's still fine.  If that insertion
   // marker is in the middle of a stack, it won't work.
-  return !targetBlock.getPreviousBlock()
-}
+  return !targetBlock.getPreviousBlock();
+};
 
-Blockly.registry.register(Blockly.registry.Type.CONNECTION_CHECKER,
-  Blockly.registry.DEFAULT, Blockly.ConnectionChecker)
+Blockly.registry.register(
+  Blockly.registry.Type.CONNECTION_CHECKER,
+  Blockly.registry.DEFAULT,
+  Blockly.ConnectionChecker
+);

@@ -11,7 +11,7 @@
  */
 
 /* eslint-disable */
-'use strict';
+"use strict";
 
 // Include the EN Locale by default.
 Blockly.setLocale(En);

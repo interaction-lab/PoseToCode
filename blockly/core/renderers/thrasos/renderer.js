@@ -8,14 +8,14 @@
  * @fileoverview Thrasos renderer.
  * @author fenichel@google.com (Rachel Fenichel)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.thrasos.Renderer')
+goog.provide("Blockly.thrasos.Renderer");
 
-goog.require('Blockly.blockRendering')
-goog.require('Blockly.blockRendering.Renderer')
-goog.require('Blockly.thrasos.RenderInfo')
-goog.require('Blockly.utils.object')
+goog.require("Blockly.blockRendering");
+goog.require("Blockly.blockRendering.Renderer");
+goog.require("Blockly.thrasos.RenderInfo");
+goog.require("Blockly.utils.object");
 
 /**
  * The thrasos renderer.
@@ -25,10 +25,12 @@ goog.require('Blockly.utils.object')
  * @extends {Blockly.blockRendering.Renderer}
  */
 Blockly.thrasos.Renderer = function (name) {
-  Blockly.thrasos.Renderer.superClass_.constructor.call(this, name)
-}
-Blockly.utils.object.inherits(Blockly.thrasos.Renderer,
-  Blockly.blockRendering.Renderer)
+  Blockly.thrasos.Renderer.superClass_.constructor.call(this, name);
+};
+Blockly.utils.object.inherits(
+  Blockly.thrasos.Renderer,
+  Blockly.blockRendering.Renderer
+);
 
 /**
  * Create a new instance of the renderer's render info object.
@@ -38,7 +40,7 @@ Blockly.utils.object.inherits(Blockly.thrasos.Renderer,
  * @override
  */
 Blockly.thrasos.Renderer.prototype.makeRenderInfo_ = function (block) {
-  return new Blockly.thrasos.RenderInfo(this, block)
-}
+  return new Blockly.thrasos.RenderInfo(this, block);
+};
 
-Blockly.blockRendering.register('thrasos', Blockly.thrasos.Renderer)
+Blockly.blockRendering.register("thrasos", Blockly.thrasos.Renderer);

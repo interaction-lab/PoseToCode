@@ -9,17 +9,17 @@
  * checking whether a potential connection is safe and valid.
  * @author fenichel@google.com (Rachel Fenichel)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.IConnectionChecker')
+goog.provide("Blockly.IConnectionChecker");
 
-goog.requireType('Blockly.Connection')
+goog.requireType("Blockly.Connection");
 
 /**
  * Class for connection type checking logic.
  * @interface
  */
-Blockly.IConnectionChecker = function () {}
+Blockly.IConnectionChecker = function () {};
 
 /**
  * Check whether the current connection can connect with the target
@@ -33,7 +33,7 @@ Blockly.IConnectionChecker = function () {}
  * @return {boolean} Whether the connection is legal.
  * @public
  */
-Blockly.IConnectionChecker.prototype.canConnect
+Blockly.IConnectionChecker.prototype.canConnect;
 
 /**
  * Checks whether the current connection can connect with the target
@@ -48,7 +48,7 @@ Blockly.IConnectionChecker.prototype.canConnect
  *    an error code otherwise.
  * @public
  */
-Blockly.IConnectionChecker.prototype.canConnectWithReason
+Blockly.IConnectionChecker.prototype.canConnectWithReason;
 
 /**
  * Helper method that translates a connection error code into a string.
@@ -59,7 +59,7 @@ Blockly.IConnectionChecker.prototype.canConnectWithReason
  * @return {string} A developer-readable error string.
  * @public
  */
-Blockly.IConnectionChecker.prototype.getErrorMessage
+Blockly.IConnectionChecker.prototype.getErrorMessage;
 
 /**
  * Check that connecting the given connections is safe, meaning that it would
@@ -69,7 +69,7 @@ Blockly.IConnectionChecker.prototype.getErrorMessage
  * @return {number} An enum with the reason this connection is safe or unsafe.
  * @public
  */
-Blockly.IConnectionChecker.prototype.doSafetyChecks
+Blockly.IConnectionChecker.prototype.doSafetyChecks;
 
 /**
  * Check whether this connection is compatible with another connection with
@@ -80,7 +80,7 @@ Blockly.IConnectionChecker.prototype.doSafetyChecks
  * @return {boolean} True if the connections share a type.
  * @public
  */
-Blockly.IConnectionChecker.prototype.doTypeChecks
+Blockly.IConnectionChecker.prototype.doTypeChecks;
 
 /**
  * Check whether this connection can be made by dragging.
@@ -90,4 +90,4 @@ Blockly.IConnectionChecker.prototype.doTypeChecks
  * @return {boolean} True if the connection is allowed during a drag.
  * @public
  */
-Blockly.IConnectionChecker.prototype.doDragChecks
+Blockly.IConnectionChecker.prototype.doDragChecks;

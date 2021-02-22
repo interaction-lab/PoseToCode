@@ -9,14 +9,14 @@
  * This class is similar to Closure's goog.ui.Component class.
  * @author samelh@google.com (Sam El-Husseini)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.Component')
+goog.provide("Blockly.Component");
 
-goog.provide('Blockly.Component.Error')
-goog.require('Blockly.utils.dom')
-goog.require('Blockly.utils.IdGenerator')
-goog.require('Blockly.utils.style')
+goog.provide("Blockly.Component.Error");
+goog.require("Blockly.utils.dom");
+goog.require("Blockly.utils.IdGenerator");
+goog.require("Blockly.utils.style");
 
 /**
  * Default implementation of a UI component.
@@ -30,7 +30,7 @@ Blockly.Component = function () {
    * @type {boolean}
    * @protected
    */
-  this.rightToLeft_ = Blockly.Component.defaultRightToLeft
+  this.rightToLeft_ = Blockly.Component.defaultRightToLeft;
 
   /**
    * Unique ID of the component, lazily initialized in {@link
@@ -39,21 +39,21 @@ Blockly.Component = function () {
    * @type {?string}
    * @private
    */
-  this.id_ = null
+  this.id_ = null;
 
   /**
    * Whether the component is in the document.
    * @type {boolean}
    * @private
    */
-  this.inDocument_ = false
+  this.inDocument_ = false;
 
   /**
    * The DOM element for the component.
    * @type {?Element}
    * @private
    */
-  this.element_ = null
+  this.element_ = null;
 
   /**
    * Parent component to which events will be propagated.  This property is
@@ -61,7 +61,7 @@ Blockly.Component = function () {
    * @type {?Blockly.Component}
    * @private
    */
-  this.parent_ = null
+  this.parent_ = null;
 
   /**
    * Array of child components.
@@ -70,7 +70,7 @@ Blockly.Component = function () {
    * @type {?Array.<?Blockly.Component>}
    * @private
    */
-  this.children_ = []
+  this.children_ = [];
 
   /**
    * Map of child component IDs to child components.  Used for constant-time
@@ -81,22 +81,22 @@ Blockly.Component = function () {
    * @type {?Object}
    * @private
    */
-  this.childIndex_ = {}
+  this.childIndex_ = {};
 
   /**
    * Whether or not the component has been disposed.
    * @type {boolean}
    * @private
    */
-  this.disposed_ = false
-}
+  this.disposed_ = false;
+};
 
 /**
  * The default right to left value.
  * @type {boolean}
  * @package
  */
-Blockly.Component.defaultRightToLeft = false
+Blockly.Component.defaultRightToLeft = false;
 
 /**
  * Errors thrown by the component.
@@ -107,25 +107,25 @@ Blockly.Component.Error = {
    * Error when the component is already rendered and another render attempt is
    * made.
    */
-  ALREADY_RENDERED: 'Component already rendered',
+  ALREADY_RENDERED: "Component already rendered",
 
   /**
    * Error when an attempt is made to set the parent of a component in a way
    * that would result in an inconsistent object graph.
    */
-  PARENT_UNABLE_TO_BE_SET: 'Unable to set parent component',
+  PARENT_UNABLE_TO_BE_SET: "Unable to set parent component",
 
   /**
    * Error when an attempt is made to add a child component at an out-of-bounds
    * index.  We don't support sparse child arrays.
    */
-  CHILD_INDEX_OUT_OF_BOUNDS: 'Child component index out of bounds',
+  CHILD_INDEX_OUT_OF_BOUNDS: "Child component index out of bounds",
 
   /**
    * Error when calling an abstract method that should be overriden.
    */
-  ABSTRACT_METHOD: 'Unimplemented abstract method'
-}
+  ABSTRACT_METHOD: "Unimplemented abstract method",
+};
 
 /**
  * Gets the unique ID for the instance of this component.  If the instance
@@ -134,8 +134,8 @@ Blockly.Component.Error = {
  * @package
  */
 Blockly.Component.prototype.getId = function () {
-  return this.id_ || (this.id_ = Blockly.utils.IdGenerator.getNextUniqueId())
-}
+  return this.id_ || (this.id_ = Blockly.utils.IdGenerator.getNextUniqueId());
+};
 
 /**
  * Gets the component's element.
@@ -143,8 +143,8 @@ Blockly.Component.prototype.getId = function () {
  * @package
  */
 Blockly.Component.prototype.getElement = function () {
-  return this.element_
-}
+  return this.element_;
+};
 
 /**
  * Sets the component's root element to the given element.  Considered
@@ -160,8 +160,8 @@ Blockly.Component.prototype.getElement = function () {
  * @protected
  */
 Blockly.Component.prototype.setElementInternal = function (element) {
-  this.element_ = element
-}
+  this.element_ = element;
+};
 
 /**
  * Sets the parent of this component to use for event bubbling.  Throws an error
@@ -173,17 +173,22 @@ Blockly.Component.prototype.setElementInternal = function (element) {
 Blockly.Component.prototype.setParent = function (parent) {
   if (this == parent) {
     // Attempting to add a child to itself is an error.
-    throw Error(Blockly.Component.Error.PARENT_UNABLE_TO_BE_SET)
+    throw Error(Blockly.Component.Error.PARENT_UNABLE_TO_BE_SET);
   }
 
-  if (parent && this.parent_ && this.id_ && this.parent_.getChild(this.id_) &&
-      this.parent_ != parent) {
+  if (
+    parent &&
+    this.parent_ &&
+    this.id_ &&
+    this.parent_.getChild(this.id_) &&
+    this.parent_ != parent
+  ) {
     // This component is already the child of some parent.
-    throw Error(Blockly.Component.Error.PARENT_UNABLE_TO_BE_SET)
+    throw Error(Blockly.Component.Error.PARENT_UNABLE_TO_BE_SET);
   }
 
-  this.parent_ = parent
-}
+  this.parent_ = parent;
+};
 
 /**
  * Returns the component's parent, if any.
@@ -191,8 +196,8 @@ Blockly.Component.prototype.setParent = function (parent) {
  * @protected
  */
 Blockly.Component.prototype.getParent = function () {
-  return this.parent_
-}
+  return this.parent_;
+};
 
 /**
  * Determines whether the component has been added to the document.
@@ -200,16 +205,16 @@ Blockly.Component.prototype.getParent = function () {
  * @protected
  */
 Blockly.Component.prototype.isInDocument = function () {
-  return this.inDocument_
-}
+  return this.inDocument_;
+};
 
 /**
  * Creates the initial DOM representation for the component.
  * @protected
  */
 Blockly.Component.prototype.createDom = function () {
-  throw Error(Blockly.Component.Error.ABSTRACT_METHOD)
-}
+  throw Error(Blockly.Component.Error.ABSTRACT_METHOD);
+};
 
 /**
  * Renders the component.  If a parent element is supplied, the component's
@@ -228,8 +233,8 @@ Blockly.Component.prototype.createDom = function () {
  * @package
  */
 Blockly.Component.prototype.render = function (opt_parentElement) {
-  this.render_(opt_parentElement)
-}
+  this.render_(opt_parentElement);
+};
 
 /**
  * Renders the component.  If a parent element is supplied, the component's
@@ -250,19 +255,21 @@ Blockly.Component.prototype.render = function (opt_parentElement) {
  * @private
  */
 Blockly.Component.prototype.render_ = function (
-  opt_parentElement, opt_beforeNode) {
+  opt_parentElement,
+  opt_beforeNode
+) {
   if (this.inDocument_) {
-    throw Error(Blockly.Component.Error.ALREADY_RENDERED)
+    throw Error(Blockly.Component.Error.ALREADY_RENDERED);
   }
 
   if (!this.element_) {
-    this.createDom()
+    this.createDom();
   }
 
   if (opt_parentElement) {
-    opt_parentElement.insertBefore(this.element_, opt_beforeNode || null)
+    opt_parentElement.insertBefore(this.element_, opt_beforeNode || null);
   } else {
-    document.body.appendChild(this.element_)
+    document.body.appendChild(this.element_);
   }
 
   // If this component has a parent component that isn't in the document yet,
@@ -271,9 +278,9 @@ Blockly.Component.prototype.render_ = function (
   // children, including this one.  If the component doesn't have a parent
   // or if the parent is already in the document, we call enterDocument().
   if (!this.parent_ || this.parent_.isInDocument()) {
-    this.enterDocument()
+    this.enterDocument();
   }
-}
+};
 
 /**
  * Called when the component's element is known to be in the document. Anything
@@ -284,7 +291,7 @@ Blockly.Component.prototype.render_ = function (
  * @protected
  */
 Blockly.Component.prototype.enterDocument = function () {
-  this.inDocument_ = true
+  this.inDocument_ = true;
 
   // Propagate enterDocument to child components that have a DOM, if any.
   // If a child was decorated before entering the document (permitted when
@@ -292,10 +299,10 @@ Blockly.Component.prototype.enterDocument = function () {
   // will be called here.
   this.forEachChild(function (child) {
     if (!child.isInDocument() && child.getElement()) {
-      child.enterDocument()
+      child.enterDocument();
     }
-  })
-}
+  });
+};
 
 /**
  * Called by dispose to clean up the elements and listeners created by a
@@ -313,12 +320,12 @@ Blockly.Component.prototype.exitDocument = function () {
   // Propagate exitDocument to child components that have been rendered, if any.
   this.forEachChild(function (child) {
     if (child.isInDocument()) {
-      child.exitDocument()
+      child.exitDocument();
     }
-  })
+  });
 
-  this.inDocument_ = false
-}
+  this.inDocument_ = false;
+};
 
 /**
  * Disposes of the object. If the object hasn't already been disposed of, calls
@@ -329,10 +336,10 @@ Blockly.Component.prototype.dispose = function () {
   if (!this.disposed_) {
     // Set disposed_ to true first, in case during the chain of disposal this
     // gets disposed recursively.
-    this.disposed_ = true
-    this.disposeInternal()
+    this.disposed_ = true;
+    this.disposeInternal();
   }
-}
+};
 
 /**
  * Disposes of the component.  Calls `exitDocument`, which is expected to
@@ -343,22 +350,24 @@ Blockly.Component.prototype.dispose = function () {
  */
 Blockly.Component.prototype.disposeInternal = function () {
   if (this.inDocument_) {
-    this.exitDocument()
+    this.exitDocument();
   }
 
   // Disposes of the component's children, if any.
-  this.forEachChild(function (child) { child.dispose() })
+  this.forEachChild(function (child) {
+    child.dispose();
+  });
 
   // Detach the component's element from the DOM.
   if (this.element_) {
-    Blockly.utils.dom.removeNode(this.element_)
+    Blockly.utils.dom.removeNode(this.element_);
   }
 
-  this.children_ = null
-  this.childIndex_ = null
-  this.element_ = null
-  this.parent_ = null
-}
+  this.children_ = null;
+  this.childIndex_ = null;
+  this.element_ = null;
+  this.parent_ = null;
+};
 
 /**
  * Adds the specified component as the last child of this component.  See
@@ -371,8 +380,8 @@ Blockly.Component.prototype.disposeInternal = function () {
  * @package
  */
 Blockly.Component.prototype.addChild = function (child, opt_render) {
-  this.addChildAt(child, this.getChildCount(), opt_render)
-}
+  this.addChildAt(child, this.getChildCount(), opt_render);
+};
 
 /**
  * Adds the specified component as a child of this component at the given
@@ -422,36 +431,36 @@ Blockly.Component.prototype.addChildAt = function (child, index, opt_render) {
   if (child.inDocument_ && (opt_render || !this.inDocument_)) {
     // Adding a child that's already in the document is an error, except if the
     // parent is also in the document and opt_render is false (e.g. decorate()).
-    throw Error(Blockly.Component.Error.ALREADY_RENDERED)
+    throw Error(Blockly.Component.Error.ALREADY_RENDERED);
   }
 
   if (index < 0 || index > this.getChildCount()) {
     // Allowing sparse child arrays would lead to strange behavior, so we don't.
-    throw Error(Blockly.Component.Error.CHILD_INDEX_OUT_OF_BOUNDS)
+    throw Error(Blockly.Component.Error.CHILD_INDEX_OUT_OF_BOUNDS);
   }
 
   // Moving child within component, remove old reference.
-  this.childIndex_[child.getId()] = child
+  this.childIndex_[child.getId()] = child;
   if (child.getParent() == this) {
     // Remove from this.children_
-    const i = this.children_.indexOf(child)
+    const i = this.children_.indexOf(child);
     if (i > -1) {
-      this.children_.splice(i, 1)
+      this.children_.splice(i, 1);
     }
   }
 
   // Set the parent of the child to this component.  This throws an error if
   // the child is already contained by another component.
-  child.setParent(this)
-  this.children_.splice(index, 0, child)
+  child.setParent(this);
+  this.children_.splice(index, 0, child);
 
   if (child.inDocument_ && this.inDocument_ && child.getParent() == this) {
     // Changing the position of an existing child, move the DOM node (if
     // necessary).
-    const contentElement = this.getContentElement()
-    const insertBeforeElement = contentElement.childNodes[index] || null
+    const contentElement = this.getContentElement();
+    const insertBeforeElement = contentElement.childNodes[index] || null;
     if (insertBeforeElement != child.getElement()) {
-      contentElement.insertBefore(child.getElement(), insertBeforeElement)
+      contentElement.insertBefore(child.getElement(), insertBeforeElement);
     }
   } else if (opt_render) {
     // If this (parent) component doesn't have a DOM yet, call createDom now
@@ -460,25 +469,29 @@ Blockly.Component.prototype.addChildAt = function (child, index, opt_render) {
     // render the child into the document body, which is almost certainly not
     // what we want).
     if (!this.element_) {
-      this.createDom()
+      this.createDom();
     }
     // Render the child into the parent at the appropriate location.  Note that
     // getChildAt(index + 1) returns undefined if inserting at the end.
-    const sibling = this.getChildAt(index + 1)
+    const sibling = this.getChildAt(index + 1);
     // render_() calls enterDocument() if the parent is already in the document.
-    child.render_(this.getContentElement(), sibling ? sibling.element_ : null)
-  } else if (this.inDocument_ && !child.inDocument_ && child.element_ &&
-      child.element_.parentNode &&
-      // Under some circumstances, IE8 implicitly creates a Document Fragment
-      // for detached nodes, so ensure the parent is an Element as it should be.
-      child.element_.parentNode.nodeType ==
-          Blockly.utils.dom.NodeType.ELEMENT_NODE) {
+    child.render_(this.getContentElement(), sibling ? sibling.element_ : null);
+  } else if (
+    this.inDocument_ &&
+    !child.inDocument_ &&
+    child.element_ &&
+    child.element_.parentNode &&
+    // Under some circumstances, IE8 implicitly creates a Document Fragment
+    // for detached nodes, so ensure the parent is an Element as it should be.
+    child.element_.parentNode.nodeType ==
+      Blockly.utils.dom.NodeType.ELEMENT_NODE
+  ) {
     // We don't touch the DOM, but if the parent is in the document, and the
     // child element is in the document but not marked as such, then we call
     // enterDocument on the child.
-    child.enterDocument()
+    child.enterDocument();
   }
-}
+};
 
 /**
  * Returns the DOM element into which child components are to be rendered,
@@ -489,8 +502,8 @@ Blockly.Component.prototype.addChildAt = function (child, index, opt_render) {
  * @protected
  */
 Blockly.Component.prototype.getContentElement = function () {
-  return this.element_
-}
+  return this.element_;
+};
 
 /**
  * Returns true if the component has children.
@@ -498,8 +511,8 @@ Blockly.Component.prototype.getContentElement = function () {
  * @protected
  */
 Blockly.Component.prototype.hasChildren = function () {
-  return this.children_.length != 0
-}
+  return this.children_.length != 0;
+};
 
 /**
  * Returns the number of children of this component.
@@ -507,8 +520,8 @@ Blockly.Component.prototype.hasChildren = function () {
  * @protected
  */
 Blockly.Component.prototype.getChildCount = function () {
-  return this.children_.length
-}
+  return this.children_.length;
+};
 
 /**
  * Returns the child with the given ID, or null if no such child exists.
@@ -519,8 +532,9 @@ Blockly.Component.prototype.getChildCount = function () {
 Blockly.Component.prototype.getChild = function (id) {
   // Use childIndex_ for O(1) access by ID.
   return id
-  /** @type {Blockly.Component} */ ? (this.childIndex_[id]) || null : null
-}
+    ? /** @type {Blockly.Component} */ (this.childIndex_[id]) || null
+    : null;
+};
 
 /**
  * Returns the child at the given index, or null if the index is out of bounds.
@@ -530,8 +544,8 @@ Blockly.Component.prototype.getChild = function (id) {
  */
 Blockly.Component.prototype.getChildAt = function (index) {
   // Use children_ for access by index.
-  return this.children_[index] || null
-}
+  return this.children_[index] || null;
+};
 
 /**
  * Calls the given function on each of this component's children in order.  If
@@ -546,6 +560,6 @@ Blockly.Component.prototype.getChildAt = function (index) {
  */
 Blockly.Component.prototype.forEachChild = function (f, opt_obj) {
   for (let i = 0; i < this.children_.length; i++) {
-    f.call(/** @type {?} */ (opt_obj), this.children_[i], i)
+    f.call(/** @type {?} */ (opt_obj), this.children_[i], i);
   }
-}
+};

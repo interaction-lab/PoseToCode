@@ -9,6 +9,6 @@
  */
 
 /* eslint-disable */
-'use strict';
+"use strict";
 
 Blockly.Dart = BlocklyDart;

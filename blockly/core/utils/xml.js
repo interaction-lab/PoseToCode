@@ -10,18 +10,18 @@
  * a JavaScript framework such as Closure.
  * @author fraser@google.com (Neil Fraser)
  */
-'use strict'
+"use strict";
 
 /**
  * @name Blockly.utils.xml
  * @namespace
  */
-goog.provide('Blockly.utils.xml')
+goog.provide("Blockly.utils.xml");
 
 /**
  * Namespace for Blockly's XML.
  */
-Blockly.utils.xml.NAME_SPACE = 'https://developers.google.com/blockly/xml'
+Blockly.utils.xml.NAME_SPACE = "https://developers.google.com/blockly/xml";
 
 /**
  * Get the document object.  This method is overridden in the Node.js build of
@@ -30,8 +30,8 @@ Blockly.utils.xml.NAME_SPACE = 'https://developers.google.com/blockly/xml'
  * @public
  */
 Blockly.utils.xml.document = function () {
-  return document
-}
+  return document;
+};
 
 /**
  * Create DOM element for XML.
@@ -40,9 +40,10 @@ Blockly.utils.xml.document = function () {
  * @public
  */
 Blockly.utils.xml.createElement = function (tagName) {
-  return Blockly.utils.xml.document().createElementNS(
-    Blockly.utils.xml.NAME_SPACE, tagName)
-}
+  return Blockly.utils.xml
+    .document()
+    .createElementNS(Blockly.utils.xml.NAME_SPACE, tagName);
+};
 
 /**
  * Create text element for XML.
@@ -51,8 +52,8 @@ Blockly.utils.xml.createElement = function (tagName) {
  * @public
  */
 Blockly.utils.xml.createTextNode = function (text) {
-  return Blockly.utils.xml.document().createTextNode(text)
-}
+  return Blockly.utils.xml.document().createTextNode(text);
+};
 
 /**
  * Converts an XML string into a DOM tree.
@@ -62,9 +63,9 @@ Blockly.utils.xml.createTextNode = function (text) {
  * @public
  */
 Blockly.utils.xml.textToDomDocument = function (text) {
-  const oParser = new DOMParser()
-  return oParser.parseFromString(text, 'text/xml')
-}
+  const oParser = new DOMParser();
+  return oParser.parseFromString(text, "text/xml");
+};
 
 /**
  * Converts a DOM structure into plain text.
@@ -74,6 +75,6 @@ Blockly.utils.xml.textToDomDocument = function (text) {
  * @public
  */
 Blockly.utils.xml.domToText = function (dom) {
-  const oSerializer = new XMLSerializer()
-  return oSerializer.serializeToString(dom)
-}
+  const oSerializer = new XMLSerializer();
+  return oSerializer.serializeToString(dom);
+};

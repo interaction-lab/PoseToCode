@@ -8,23 +8,23 @@
  * @fileoverview Namespace for block rendering functionality.
  * @author fenichel@google.com (Rachel Fenichel)
  */
-'use strict'
+"use strict";
 
 /**
  * The top level namespace for block rendering.
  * @namespace Blockly.blockRendering
  */
-goog.provide('Blockly.blockRendering')
+goog.provide("Blockly.blockRendering");
 
-goog.require('Blockly.registry')
-goog.require('Blockly.utils.object')
+goog.require("Blockly.registry");
+goog.require("Blockly.utils.object");
 
 /**
  * Whether or not the debugger is turned on.
  * @type {boolean}
  * @package
  */
-Blockly.blockRendering.useDebugger = false
+Blockly.blockRendering.useDebugger = false;
 
 /**
  * Registers a new renderer.
@@ -34,32 +34,35 @@ Blockly.blockRendering.useDebugger = false
  * @throws {Error} if a renderer with the same name has already been registered.
  */
 Blockly.blockRendering.register = function (name, rendererClass) {
-  Blockly.registry.register(Blockly.registry.Type.RENDERER, name,
-    rendererClass)
-}
+  Blockly.registry.register(
+    Blockly.registry.Type.RENDERER,
+    name,
+    rendererClass
+  );
+};
 
 /**
  * Unregisters the renderer registered with the given name.
  * @param {string} name The name of the renderer.
  */
 Blockly.blockRendering.unregister = function (name) {
-  Blockly.registry.unregister(Blockly.registry.Type.RENDERER, name)
-}
+  Blockly.registry.unregister(Blockly.registry.Type.RENDERER, name);
+};
 /**
  * Turn on the blocks debugger.
  * @package
  */
 Blockly.blockRendering.startDebugger = function () {
-  Blockly.blockRendering.useDebugger = true
-}
+  Blockly.blockRendering.useDebugger = true;
+};
 
 /**
  * Turn off the blocks debugger.
  * @package
  */
 Blockly.blockRendering.stopDebugger = function () {
-  Blockly.blockRendering.useDebugger = false
-}
+  Blockly.blockRendering.useDebugger = false;
+};
 
 /**
  * Initialize anything needed for rendering (constants, etc).
@@ -73,8 +76,10 @@ Blockly.blockRendering.stopDebugger = function () {
 
 Blockly.blockRendering.init = function (name, theme, opt_rendererOverrides) {
   const rendererClass = Blockly.registry.getClass(
-    Blockly.registry.Type.RENDERER, name)
-  const renderer = new rendererClass(name)
-  renderer.init(theme, opt_rendererOverrides)
-  return renderer
-}
+    Blockly.registry.Type.RENDERER,
+    name
+  );
+  const renderer = new rendererClass(name);
+  renderer.init(theme, opt_rendererOverrides);
+  return renderer;
+};

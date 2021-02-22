@@ -10,18 +10,18 @@
  * @author aschmiedt@google.com (Abby Schmiedt)
  */
 
-'use strict'
+"use strict";
 
-goog.provide('Blockly.IDeleteArea')
+goog.provide("Blockly.IDeleteArea");
 
 /**
  * Interface for a component that can delete a block that is dropped on top of it.
  * @interface
  */
-Blockly.IDeleteArea = function () {}
+Blockly.IDeleteArea = function () {};
 
 /**
  * Return the deletion rectangle.
  * @return {Blockly.utils.Rect} Rectangle in which to delete.
  */
-Blockly.IDeleteArea.prototype.getClientRect
+Blockly.IDeleteArea.prototype.getClientRect;

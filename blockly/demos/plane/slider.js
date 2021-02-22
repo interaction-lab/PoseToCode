@@ -8,7 +8,7 @@
  * @fileoverview A slider control in SVG.
  * @author fraser@google.com (Neil Fraser)
  */
-'use strict'
+"use strict";
 
 /**
  * Object representing a horizontal slider widget.
@@ -21,13 +21,13 @@
  * @constructor
  */
 var Slider = function (x, y, width, svgParent, opt_changeFunc) {
-  this.KNOB_Y_ = y - 12
-  this.KNOB_MIN_X_ = x + 8
-  this.KNOB_MAX_X_ = x + width - 8
-  this.TARGET_OVERHANG_ = 20
-  this.value_ = 0.5
-  this.changeFunc_ = opt_changeFunc
-  this.animationTasks_ = []
+  this.KNOB_Y_ = y - 12;
+  this.KNOB_MIN_X_ = x + 8;
+  this.KNOB_MAX_X_ = x + width - 8;
+  this.TARGET_OVERHANG_ = 20;
+  this.value_ = 0.5;
+  this.changeFunc_ = opt_changeFunc;
+  this.animationTasks_ = [];
 
   // Draw the slider.
   /*
@@ -38,59 +38,59 @@ var Slider = function (x, y, width, svgParent, opt_changeFunc) {
       d="m 8,0 l -8,8 v 12 h 16 v -12 z" />
   <circle style="opacity: 0" r="20" cy="35" cx="75"></circle>
   */
-  const track = document.createElementNS(Slider.SVG_NS_, 'line')
-  track.setAttribute('class', 'sliderTrack')
-  track.setAttribute('x1', x)
-  track.setAttribute('y1', y)
-  track.setAttribute('x2', x + width)
-  track.setAttribute('y2', y)
-  svgParent.appendChild(track)
-  this.track_ = track
-  const rect = document.createElementNS(Slider.SVG_NS_, 'rect')
-  rect.setAttribute('style', 'opacity: 0')
-  rect.setAttribute('x', x - this.TARGET_OVERHANG_)
-  rect.setAttribute('y', y - this.TARGET_OVERHANG_)
-  rect.setAttribute('width', width + 2 * this.TARGET_OVERHANG_)
-  rect.setAttribute('height', 2 * this.TARGET_OVERHANG_)
-  rect.setAttribute('rx', this.TARGET_OVERHANG_)
-  rect.setAttribute('ry', this.TARGET_OVERHANG_)
-  svgParent.appendChild(rect)
-  this.trackTarget_ = rect
-  const knob = document.createElementNS(Slider.SVG_NS_, 'path')
-  knob.setAttribute('class', 'sliderKnob')
-  knob.setAttribute('d', 'm 0,0 l -8,8 v 12 h 16 v -12 z')
-  svgParent.appendChild(knob)
-  this.knob_ = knob
-  const circle = document.createElementNS(Slider.SVG_NS_, 'circle')
-  circle.setAttribute('style', 'opacity: 0')
-  circle.setAttribute('r', this.TARGET_OVERHANG_)
-  circle.setAttribute('cy', y)
-  svgParent.appendChild(circle)
-  this.knobTarget_ = circle
-  this.setValue(0.5)
+  const track = document.createElementNS(Slider.SVG_NS_, "line");
+  track.setAttribute("class", "sliderTrack");
+  track.setAttribute("x1", x);
+  track.setAttribute("y1", y);
+  track.setAttribute("x2", x + width);
+  track.setAttribute("y2", y);
+  svgParent.appendChild(track);
+  this.track_ = track;
+  const rect = document.createElementNS(Slider.SVG_NS_, "rect");
+  rect.setAttribute("style", "opacity: 0");
+  rect.setAttribute("x", x - this.TARGET_OVERHANG_);
+  rect.setAttribute("y", y - this.TARGET_OVERHANG_);
+  rect.setAttribute("width", width + 2 * this.TARGET_OVERHANG_);
+  rect.setAttribute("height", 2 * this.TARGET_OVERHANG_);
+  rect.setAttribute("rx", this.TARGET_OVERHANG_);
+  rect.setAttribute("ry", this.TARGET_OVERHANG_);
+  svgParent.appendChild(rect);
+  this.trackTarget_ = rect;
+  const knob = document.createElementNS(Slider.SVG_NS_, "path");
+  knob.setAttribute("class", "sliderKnob");
+  knob.setAttribute("d", "m 0,0 l -8,8 v 12 h 16 v -12 z");
+  svgParent.appendChild(knob);
+  this.knob_ = knob;
+  const circle = document.createElementNS(Slider.SVG_NS_, "circle");
+  circle.setAttribute("style", "opacity: 0");
+  circle.setAttribute("r", this.TARGET_OVERHANG_);
+  circle.setAttribute("cy", y);
+  svgParent.appendChild(circle);
+  this.knobTarget_ = circle;
+  this.setValue(0.5);
 
   // Find the root SVG object.
-  while (svgParent && svgParent.nodeName.toLowerCase() != 'svg') {
-    svgParent = svgParent.parentNode
+  while (svgParent && svgParent.nodeName.toLowerCase() != "svg") {
+    svgParent = svgParent.parentNode;
   }
-  this.SVG_ = svgParent
+  this.SVG_ = svgParent;
 
   // Bind the events to this slider.
-  Slider.bindEvent_(this.knobTarget_, 'mousedown', this, this.knobMouseDown_)
-  Slider.bindEvent_(this.knobTarget_, 'touchstart', this, this.knobMouseDown_)
-  Slider.bindEvent_(this.trackTarget_, 'mousedown', this, this.rectMouseDown_)
-  Slider.bindEvent_(this.SVG_, 'mouseup', null, Slider.knobMouseUp_)
-  Slider.bindEvent_(this.SVG_, 'touchend', null, Slider.knobMouseUp_)
-  Slider.bindEvent_(this.SVG_, 'mousemove', null, Slider.knobMouseMove_)
-  Slider.bindEvent_(this.SVG_, 'touchmove', null, Slider.knobMouseMove_)
-  Slider.bindEvent_(document, 'mouseover', null, Slider.mouseOver_)
-}
+  Slider.bindEvent_(this.knobTarget_, "mousedown", this, this.knobMouseDown_);
+  Slider.bindEvent_(this.knobTarget_, "touchstart", this, this.knobMouseDown_);
+  Slider.bindEvent_(this.trackTarget_, "mousedown", this, this.rectMouseDown_);
+  Slider.bindEvent_(this.SVG_, "mouseup", null, Slider.knobMouseUp_);
+  Slider.bindEvent_(this.SVG_, "touchend", null, Slider.knobMouseUp_);
+  Slider.bindEvent_(this.SVG_, "mousemove", null, Slider.knobMouseMove_);
+  Slider.bindEvent_(this.SVG_, "touchmove", null, Slider.knobMouseMove_);
+  Slider.bindEvent_(document, "mouseover", null, Slider.mouseOver_);
+};
 
-Slider.SVG_NS_ = 'http://www.w3.org/2000/svg'
+Slider.SVG_NS_ = "http://www.w3.org/2000/svg";
 
-Slider.activeSlider_ = null
-Slider.startMouseX_ = 0
-Slider.startKnobX_ = 0
+Slider.activeSlider_ = null;
+Slider.startMouseX_ = 0;
+Slider.startKnobX_ = 0;
 
 /**
  * Start a drag when clicking down on the knob.
@@ -98,26 +98,26 @@ Slider.startKnobX_ = 0
  * @private
  */
 Slider.prototype.knobMouseDown_ = function (e) {
-  if (e.type == 'touchstart') {
+  if (e.type == "touchstart") {
     if (e.changedTouches.length != 1) {
-      return
+      return;
     }
-    Slider.touchToMouse_(e)
+    Slider.touchToMouse_(e);
   }
-  Slider.activeSlider_ = this
-  Slider.startMouseX_ = this.mouseToSvg_(e).x
-  Slider.startKnobX_ = 0
-  const transform = this.knob_.getAttribute('transform')
+  Slider.activeSlider_ = this;
+  Slider.startMouseX_ = this.mouseToSvg_(e).x;
+  Slider.startKnobX_ = 0;
+  const transform = this.knob_.getAttribute("transform");
   if (transform) {
-    const r = transform.match(/translate\(\s*([-\d.]+)/)
+    const r = transform.match(/translate\(\s*([-\d.]+)/);
     if (r) {
-      Slider.startKnobX_ = Number(r[1])
+      Slider.startKnobX_ = Number(r[1]);
     }
   }
   // Stop browser from attempting to drag the knob or
   // from scrolling/zooming the page.
-  e.preventDefault()
-}
+  e.preventDefault();
+};
 
 /**
  * Stop a drag when clicking up anywhere.
@@ -125,8 +125,8 @@ Slider.prototype.knobMouseDown_ = function (e) {
  * @private
  */
 Slider.knobMouseUp_ = function (e) {
-  Slider.activeSlider_ = null
-}
+  Slider.activeSlider_ = null;
+};
 
 /**
  * Stop a drag when the mouse enters a node not part of the SVG.
@@ -135,17 +135,17 @@ Slider.knobMouseUp_ = function (e) {
  */
 Slider.mouseOver_ = function (e) {
   if (!Slider.activeSlider_) {
-    return
+    return;
   }
-  let node = e.target
+  let node = e.target;
   // Find the root SVG object.
   do {
     if (node == Slider.activeSlider_.SVG_) {
-      return
+      return;
     }
-  } while (node = node.parentNode)
-  Slider.knobMouseUp_(e)
-}
+  } while ((node = node.parentNode));
+  Slider.knobMouseUp_(e);
+};
 
 /**
  * Drag the knob to follow the mouse.
@@ -153,21 +153,23 @@ Slider.mouseOver_ = function (e) {
  * @private
  */
 Slider.knobMouseMove_ = function (e) {
-  const thisSlider = Slider.activeSlider_
+  const thisSlider = Slider.activeSlider_;
   if (!thisSlider) {
-    return
+    return;
   }
-  if (e.type == 'touchmove') {
+  if (e.type == "touchmove") {
     if (e.changedTouches.length != 1) {
-      return
+      return;
     }
-    Slider.touchToMouse_(e)
+    Slider.touchToMouse_(e);
   }
-  const x = thisSlider.mouseToSvg_(e).x - Slider.startMouseX_ +
-      Slider.startKnobX_
-  thisSlider.setValue((x - thisSlider.KNOB_MIN_X_) /
-      (thisSlider.KNOB_MAX_X_ - thisSlider.KNOB_MIN_X_))
-}
+  const x =
+    thisSlider.mouseToSvg_(e).x - Slider.startMouseX_ + Slider.startKnobX_;
+  thisSlider.setValue(
+    (x - thisSlider.KNOB_MIN_X_) /
+      (thisSlider.KNOB_MAX_X_ - thisSlider.KNOB_MIN_X_)
+  );
+};
 
 /**
  * Jump to a new value when the track is clicked.
@@ -175,24 +177,25 @@ Slider.knobMouseMove_ = function (e) {
  * @private
  */
 Slider.prototype.rectMouseDown_ = function (e) {
-  if (e.type == 'touchstart') {
+  if (e.type == "touchstart") {
     if (e.changedTouches.length != 1) {
-      return
+      return;
     }
-    Slider.touchToMouse_(e)
+    Slider.touchToMouse_(e);
   }
-  const x = this.mouseToSvg_(e).x
-  this.animateValue((x - this.KNOB_MIN_X_) /
-      (this.KNOB_MAX_X_ - this.KNOB_MIN_X_))
-}
+  const x = this.mouseToSvg_(e).x;
+  this.animateValue(
+    (x - this.KNOB_MIN_X_) / (this.KNOB_MAX_X_ - this.KNOB_MIN_X_)
+  );
+};
 
 /**
  * Returns the slider's value (0.0 - 1.0).
  * @return {number} Current value.
  */
 Slider.prototype.getValue = function () {
-  return this.value_
-}
+  return this.value_;
+};
 
 /**
  * Animates the slider's value (0.0 - 1.0).
@@ -201,36 +204,38 @@ Slider.prototype.getValue = function () {
 Slider.prototype.animateValue = function (value) {
   // Clear any ongoing animations.
   while (this.animationTasks_.length) {
-    clearTimeout(this.animationTasks_.pop())
+    clearTimeout(this.animationTasks_.pop());
   }
-  const duration = 200 // Milliseconds to animate for.
-  const steps = 10 // Number of steps to animate.
-  const oldValue = this.getValue()
-  const thisSlider = this
+  const duration = 200; // Milliseconds to animate for.
+  const steps = 10; // Number of steps to animate.
+  const oldValue = this.getValue();
+  const thisSlider = this;
   const stepFunc = function (i) {
     return function () {
-      const newVal = i * (value - oldValue) / (steps - 1) + oldValue
-      thisSlider.setValue(newVal)
-    }
-  }
+      const newVal = (i * (value - oldValue)) / (steps - 1) + oldValue;
+      thisSlider.setValue(newVal);
+    };
+  };
   for (let i = 0; i < steps; i++) {
-    this.animationTasks_.push(setTimeout(stepFunc(i), i * duration / steps))
+    this.animationTasks_.push(setTimeout(stepFunc(i), (i * duration) / steps));
   }
-}
+};
 
 /**
  * Sets the slider's value (0.0 - 1.0).
  * @param {number} value New value.
  */
 Slider.prototype.setValue = function (value) {
-  this.value_ = Math.min(Math.max(value, 0), 1)
-  const x = this.KNOB_MIN_X_ +
-      (this.KNOB_MAX_X_ - this.KNOB_MIN_X_) * this.value_
-  this.knob_.setAttribute('transform',
-    'translate(' + x + ',' + this.KNOB_Y_ + ')')
-  this.knobTarget_.setAttribute('cx', x)
-  this.changeFunc_ && this.changeFunc_(this.value_)
-}
+  this.value_ = Math.min(Math.max(value, 0), 1);
+  const x =
+    this.KNOB_MIN_X_ + (this.KNOB_MAX_X_ - this.KNOB_MIN_X_) * this.value_;
+  this.knob_.setAttribute(
+    "transform",
+    "translate(" + x + "," + this.KNOB_Y_ + ")"
+  );
+  this.knobTarget_.setAttribute("cx", x);
+  this.changeFunc_ && this.changeFunc_(this.value_);
+};
 
 /**
  * Convert the mouse coordinates into SVG coordinates.
@@ -239,12 +244,12 @@ Slider.prototype.setValue = function (value) {
  * @private
  */
 Slider.prototype.mouseToSvg_ = function (e) {
-  const svgPoint = this.SVG_.createSVGPoint()
-  svgPoint.x = e.clientX
-  svgPoint.y = e.clientY
-  const matrix = this.SVG_.getScreenCTM().inverse()
-  return svgPoint.matrixTransform(matrix)
-}
+  const svgPoint = this.SVG_.createSVGPoint();
+  svgPoint.x = e.clientX;
+  svgPoint.y = e.clientY;
+  const matrix = this.SVG_.getScreenCTM().inverse();
+  return svgPoint.matrixTransform(matrix);
+};
 
 /**
  * Bind an event to a function call.
@@ -256,17 +261,17 @@ Slider.prototype.mouseToSvg_ = function (e) {
  */
 Slider.bindEvent_ = function (node, name, thisObject, func) {
   const wrapFunc = function (e) {
-    func.apply(thisObject, arguments)
-  }
-  node.addEventListener(name, wrapFunc, false)
-}
+    func.apply(thisObject, arguments);
+  };
+  node.addEventListener(name, wrapFunc, false);
+};
 
 /**
  * Map the touch event's properties to be compatible with a mouse event.
  * @param {TouchEvent} e Event to modify.
  */
 Slider.touchToMouse_ = function (e) {
-  const touchPoint = e.changedTouches[0]
-  e.clientX = touchPoint.clientX
-  e.clientY = touchPoint.clientY
-}
+  const touchPoint = e.changedTouches[0];
+  e.clientX = touchPoint.clientX;
+  e.clientY = touchPoint.clientY;
+};

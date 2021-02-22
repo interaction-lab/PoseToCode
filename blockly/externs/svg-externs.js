@@ -30,1058 +30,1069 @@
 /**
  * @constructor
  */
-function SVGAnimatedNumberList () {}
+function SVGAnimatedNumberList() {}
 
 /**
  * @type {!SVGNumberList}
  */
-SVGAnimatedNumberList.prototype.baseVal
+SVGAnimatedNumberList.prototype.baseVal;
 
 /**
  * @type {!SVGNumberList}
  */
-SVGAnimatedNumberList.prototype.animVal
+SVGAnimatedNumberList.prototype.animVal;
 
 /**
  * @constructor
  */
-function SVGLengthList () {}
+function SVGLengthList() {}
 
 /**
  * @type {number}
  */
-SVGLengthList.prototype.numberOfItems
+SVGLengthList.prototype.numberOfItems;
 
 /** */
-SVGLengthList.prototype.clear = function () {}
+SVGLengthList.prototype.clear = function () {};
 
 /**
  * @param {!SVGLength} item
  * @return {!SVGLength}
  */
-SVGLengthList.prototype.initialize = function (item) {}
+SVGLengthList.prototype.initialize = function (item) {};
 
 /**
  * @param {number} index
  * @return {!SVGLength}
  */
-SVGLengthList.prototype.getItem = function (index) {}
-
-/**
- * @param {!SVGLength} item
- * @param {number} index
- * @return {!SVGLength}
- */
-SVGLengthList.prototype.insertItemBefore = function (item, index) {}
+SVGLengthList.prototype.getItem = function (index) {};
 
 /**
  * @param {!SVGLength} item
  * @param {number} index
  * @return {!SVGLength}
  */
-SVGLengthList.prototype.replaceItem = function (item, index) {}
+SVGLengthList.prototype.insertItemBefore = function (item, index) {};
+
+/**
+ * @param {!SVGLength} item
+ * @param {number} index
+ * @return {!SVGLength}
+ */
+SVGLengthList.prototype.replaceItem = function (item, index) {};
 
 /**
  * @param {number} index
  * @return {!SVGLength}
  */
-SVGLengthList.prototype.removeItem = function (index) {}
+SVGLengthList.prototype.removeItem = function (index) {};
 
 /**
  * @param {!SVGLength} item
  * @return {!SVGLength}
  */
-SVGLengthList.prototype.appendItem = function (item) {}
+SVGLengthList.prototype.appendItem = function (item) {};
 
 /**
  * @constructor
  * @implements {EventTarget}
  */
-function SVGElementInstance () {}
+function SVGElementInstance() {}
 
 /**
  * @type {!SVGElement}
  */
-SVGElementInstance.prototype.correspondingElement
+SVGElementInstance.prototype.correspondingElement;
 
 /**
  * @type {!SVGUseElement}
  */
-SVGElementInstance.prototype.correspondingUseElement
+SVGElementInstance.prototype.correspondingUseElement;
 
 /**
  * @type {!SVGElementInstance}
  */
-SVGElementInstance.prototype.parentNode
+SVGElementInstance.prototype.parentNode;
 
 /**
  * @type {!Array<!SVGElementInstance>|!SVGElementInstanceList}
  */
-SVGElementInstance.prototype.childNodes
+SVGElementInstance.prototype.childNodes;
 
 /**
  * @type {!SVGElementInstance}
  */
-SVGElementInstance.prototype.firstChild
+SVGElementInstance.prototype.firstChild;
 
 /**
  * @type {!SVGElementInstance}
  */
-SVGElementInstance.prototype.lastChild
+SVGElementInstance.prototype.lastChild;
 
 /**
  * @type {!SVGElementInstance}
  */
-SVGElementInstance.prototype.previousSibling
+SVGElementInstance.prototype.previousSibling;
 
 /**
  * @type {!SVGElementInstance}
  */
-SVGElementInstance.prototype.nextSibling
+SVGElementInstance.prototype.nextSibling;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onabort
+SVGElementInstance.prototype.onabort;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onblur
+SVGElementInstance.prototype.onblur;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onchange
+SVGElementInstance.prototype.onchange;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onclick
+SVGElementInstance.prototype.onclick;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.oncontextmenu
+SVGElementInstance.prototype.oncontextmenu;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.ondblclick
+SVGElementInstance.prototype.ondblclick;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onerror
+SVGElementInstance.prototype.onerror;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onfocus
+SVGElementInstance.prototype.onfocus;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.oninput
+SVGElementInstance.prototype.oninput;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onkeydown
+SVGElementInstance.prototype.onkeydown;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onkeypress
+SVGElementInstance.prototype.onkeypress;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onkeyup
+SVGElementInstance.prototype.onkeyup;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onload
+SVGElementInstance.prototype.onload;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onmousedown
+SVGElementInstance.prototype.onmousedown;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onmousemove
+SVGElementInstance.prototype.onmousemove;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onmouseout
+SVGElementInstance.prototype.onmouseout;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onmouseover
+SVGElementInstance.prototype.onmouseover;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onmouseup
+SVGElementInstance.prototype.onmouseup;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onmousewheel
+SVGElementInstance.prototype.onmousewheel;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onbeforecut
+SVGElementInstance.prototype.onbeforecut;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.oncut
+SVGElementInstance.prototype.oncut;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onbeforecopy
+SVGElementInstance.prototype.onbeforecopy;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.oncopy
+SVGElementInstance.prototype.oncopy;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onbeforepaste
+SVGElementInstance.prototype.onbeforepaste;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onpaste
+SVGElementInstance.prototype.onpaste;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.ondragenter
+SVGElementInstance.prototype.ondragenter;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.ondragover
+SVGElementInstance.prototype.ondragover;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.ondragleave
+SVGElementInstance.prototype.ondragleave;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.ondrop
+SVGElementInstance.prototype.ondrop;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.ondragstart
+SVGElementInstance.prototype.ondragstart;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.ondrag
+SVGElementInstance.prototype.ondrag;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.ondragend
+SVGElementInstance.prototype.ondragend;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onreset
+SVGElementInstance.prototype.onreset;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onresize
+SVGElementInstance.prototype.onresize;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onscroll
+SVGElementInstance.prototype.onscroll;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onsearch
+SVGElementInstance.prototype.onsearch;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onselect
+SVGElementInstance.prototype.onselect;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onselectstart
+SVGElementInstance.prototype.onselectstart;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onsubmit
+SVGElementInstance.prototype.onsubmit;
 
 /**
  * @type {!EventListener|function(!Event)}
  */
-SVGElementInstance.prototype.onunload
+SVGElementInstance.prototype.onunload;
 
 /**
  * @override
  */
-SVGElementInstance.prototype.addEventListener = function (type, listener, opt_useCapture) {}
+SVGElementInstance.prototype.addEventListener = function (
+  type,
+  listener,
+  opt_useCapture
+) {};
 
 /**
  * @override
  */
-SVGElementInstance.prototype.removeEventListener = function (type, listener, opt_useCapture) {}
+SVGElementInstance.prototype.removeEventListener = function (
+  type,
+  listener,
+  opt_useCapture
+) {};
 
 /**
  * @param {!Event} event
  * @return {boolean}
  * @override
  */
-SVGElementInstance.prototype.dispatchEvent = function (event) {}
+SVGElementInstance.prototype.dispatchEvent = function (event) {};
 
 /**
  * @constructor
  */
-function SVGAnimatedRect () {}
+function SVGAnimatedRect() {}
 
 /**
  * @type {!SVGRect}
  */
-SVGAnimatedRect.prototype.baseVal
+SVGAnimatedRect.prototype.baseVal;
 
 /**
  * @type {!SVGRect}
  */
-SVGAnimatedRect.prototype.animVal
+SVGAnimatedRect.prototype.animVal;
 
 /**
  * @constructor
  */
-function SVGAnimatedString () {}
+function SVGAnimatedString() {}
 
 /**
  * @type {string}
  */
-SVGAnimatedString.prototype.baseVal
+SVGAnimatedString.prototype.baseVal;
 
 /**
  * @type {string}
  */
-SVGAnimatedString.prototype.animVal
+SVGAnimatedString.prototype.animVal;
 
 /**
  * @interface
  */
-function SVGStylable () {}
+function SVGStylable() {}
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGStylable.prototype.className
+SVGStylable.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  */
-SVGStylable.prototype.getPresentationAttribute = function (opt_name) {}
+SVGStylable.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @interface
  */
-function SVGExternalResourcesRequired () {}
+function SVGExternalResourcesRequired() {}
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGExternalResourcesRequired.prototype.externalResourcesRequired
+SVGExternalResourcesRequired.prototype.externalResourcesRequired;
 
 /**
  * @constructor
  */
-function SVGPoint () {}
+function SVGPoint() {}
 
 /**
  * @type {number}
  */
-SVGPoint.prototype.x
+SVGPoint.prototype.x;
 
 /**
  * @type {number}
  */
-SVGPoint.prototype.y
+SVGPoint.prototype.y;
 
 /**
  * @param {!SVGMatrix} matrix
  * @return {!SVGPoint}
  */
-SVGPoint.prototype.matrixTransform = function (matrix) {}
+SVGPoint.prototype.matrixTransform = function (matrix) {};
 
 /**
  * @constructor
  */
-function SVGMatrix () {}
+function SVGMatrix() {}
 
 /**
  * @type {number}
  */
-SVGMatrix.prototype.a
+SVGMatrix.prototype.a;
 
 /**
  * @type {number}
  */
-SVGMatrix.prototype.b
+SVGMatrix.prototype.b;
 
 /**
  * @type {number}
  */
-SVGMatrix.prototype.c
+SVGMatrix.prototype.c;
 
 /**
  * @type {number}
  */
-SVGMatrix.prototype.d
+SVGMatrix.prototype.d;
 
 /**
  * @type {number}
  */
-SVGMatrix.prototype.e
+SVGMatrix.prototype.e;
 
 /**
  * @type {number}
  */
-SVGMatrix.prototype.f
+SVGMatrix.prototype.f;
 
 /**
  * @param {!SVGMatrix} secondMatrix
  * @return {!SVGMatrix}
  */
-SVGMatrix.prototype.multiply = function (secondMatrix) {}
+SVGMatrix.prototype.multiply = function (secondMatrix) {};
 
 /**
  * @return {!SVGMatrix}
  */
-SVGMatrix.prototype.inverse = function () {}
+SVGMatrix.prototype.inverse = function () {};
 
 /**
  * @param {number} x
  * @param {number} y
  * @return {!SVGMatrix}
  */
-SVGMatrix.prototype.translate = function (x, y) {}
+SVGMatrix.prototype.translate = function (x, y) {};
 
 /**
  * @param {number} scaleFactor
  * @return {!SVGMatrix}
  */
-SVGMatrix.prototype.scale = function (scaleFactor) {}
+SVGMatrix.prototype.scale = function (scaleFactor) {};
 
 /**
  * @param {number} scaleFactorX
  * @param {number} scaleFactorY
  * @return {!SVGMatrix}
  */
-SVGMatrix.prototype.scaleNonUniform = function (scaleFactorX, scaleFactorY) {}
+SVGMatrix.prototype.scaleNonUniform = function (scaleFactorX, scaleFactorY) {};
 
 /**
  * @param {number} angle
  * @return {!SVGMatrix}
  */
-SVGMatrix.prototype.rotate = function (angle) {}
+SVGMatrix.prototype.rotate = function (angle) {};
 
 /**
  * @param {number} x
  * @param {number} y
  * @return {!SVGMatrix}
  */
-SVGMatrix.prototype.rotateFromVector = function (x, y) {}
+SVGMatrix.prototype.rotateFromVector = function (x, y) {};
 
 /**
  * @return {!SVGMatrix}
  */
-SVGMatrix.prototype.flipX = function () {}
+SVGMatrix.prototype.flipX = function () {};
 
 /**
  * @return {!SVGMatrix}
  */
-SVGMatrix.prototype.flipY = function () {}
-
-/**
- * @param {number} angle
- * @return {!SVGMatrix}
- */
-SVGMatrix.prototype.skewX = function (angle) {}
+SVGMatrix.prototype.flipY = function () {};
 
 /**
  * @param {number} angle
  * @return {!SVGMatrix}
  */
-SVGMatrix.prototype.skewY = function (angle) {}
+SVGMatrix.prototype.skewX = function (angle) {};
+
+/**
+ * @param {number} angle
+ * @return {!SVGMatrix}
+ */
+SVGMatrix.prototype.skewY = function (angle) {};
 
 /**
  * @constructor
  */
-function SVGNumberList () {}
+function SVGNumberList() {}
 
 /**
  * @type {number}
  */
-SVGNumberList.prototype.numberOfItems
+SVGNumberList.prototype.numberOfItems;
 
 /** */
-SVGNumberList.prototype.clear = function () {}
+SVGNumberList.prototype.clear = function () {};
 
 /**
  * @param {!SVGNumber} item
  * @return {!SVGNumber}
  */
-SVGNumberList.prototype.initialize = function (item) {}
+SVGNumberList.prototype.initialize = function (item) {};
 
 /**
  * @param {number} index
  * @return {!SVGNumber}
  */
-SVGNumberList.prototype.getItem = function (index) {}
-
-/**
- * @param {!SVGNumber} item
- * @param {number} index
- * @return {!SVGNumber}
- */
-SVGNumberList.prototype.insertItemBefore = function (item, index) {}
+SVGNumberList.prototype.getItem = function (index) {};
 
 /**
  * @param {!SVGNumber} item
  * @param {number} index
  * @return {!SVGNumber}
  */
-SVGNumberList.prototype.replaceItem = function (item, index) {}
+SVGNumberList.prototype.insertItemBefore = function (item, index) {};
+
+/**
+ * @param {!SVGNumber} item
+ * @param {number} index
+ * @return {!SVGNumber}
+ */
+SVGNumberList.prototype.replaceItem = function (item, index) {};
 
 /**
  * @param {number} index
  * @return {!SVGNumber}
  */
-SVGNumberList.prototype.removeItem = function (index) {}
+SVGNumberList.prototype.removeItem = function (index) {};
 
 /**
  * @param {!SVGNumber} item
  * @return {!SVGNumber}
  */
-SVGNumberList.prototype.appendItem = function (item) {}
+SVGNumberList.prototype.appendItem = function (item) {};
 
 /**
  * @interface
  */
-function SVGLangSpace () {}
+function SVGLangSpace() {}
 
 /**
  * @type {string}
  */
-SVGLangSpace.prototype.xmllang
+SVGLangSpace.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGLangSpace.prototype.xmlspace
+SVGLangSpace.prototype.xmlspace;
 
 /**
  * @constructor
  */
-function SVGAnimatedLengthList () {}
+function SVGAnimatedLengthList() {}
 
 /**
  * @type {!SVGLengthList}
  */
-SVGAnimatedLengthList.prototype.baseVal
+SVGAnimatedLengthList.prototype.baseVal;
 
 /**
  * @type {!SVGLengthList}
  */
-SVGAnimatedLengthList.prototype.animVal
+SVGAnimatedLengthList.prototype.animVal;
 
 /**
  * @constructor
  */
-function SVGAnimatedTransformList () {}
+function SVGAnimatedTransformList() {}
 
 /**
  * @type {!SVGTransformList}
  */
-SVGAnimatedTransformList.prototype.baseVal
+SVGAnimatedTransformList.prototype.baseVal;
 
 /**
  * @type {!SVGTransformList}
  */
-SVGAnimatedTransformList.prototype.animVal
+SVGAnimatedTransformList.prototype.animVal;
 
 /**
  * @constructor
  */
-function SVGUnitTypes () {}
+function SVGUnitTypes() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGUnitTypes.SVG_UNIT_TYPE_UNKNOWN
+SVGUnitTypes.SVG_UNIT_TYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGUnitTypes.prototype.SVG_UNIT_TYPE_UNKNOWN
+SVGUnitTypes.prototype.SVG_UNIT_TYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGUnitTypes.SVG_UNIT_TYPE_USERSPACEONUSE
+SVGUnitTypes.SVG_UNIT_TYPE_USERSPACEONUSE;
 
 /**
  * @const
  * @type {number}
  */
-SVGUnitTypes.prototype.SVG_UNIT_TYPE_USERSPACEONUSE
+SVGUnitTypes.prototype.SVG_UNIT_TYPE_USERSPACEONUSE;
 
 /**
  * @const
  * @type {number}
  */
-SVGUnitTypes.SVG_UNIT_TYPE_OBJECTBOUNDINGBOX
+SVGUnitTypes.SVG_UNIT_TYPE_OBJECTBOUNDINGBOX;
 
 /**
  * @const
  * @type {number}
  */
-SVGUnitTypes.prototype.SVG_UNIT_TYPE_OBJECTBOUNDINGBOX
+SVGUnitTypes.prototype.SVG_UNIT_TYPE_OBJECTBOUNDINGBOX;
 
 /**
  * @constructor
  */
-function SVGLength () {}
+function SVGLength() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.SVG_LENGTHTYPE_UNKNOWN
+SVGLength.SVG_LENGTHTYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.prototype.SVG_LENGTHTYPE_UNKNOWN
+SVGLength.prototype.SVG_LENGTHTYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.SVG_LENGTHTYPE_NUMBER
+SVGLength.SVG_LENGTHTYPE_NUMBER;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.prototype.SVG_LENGTHTYPE_NUMBER
+SVGLength.prototype.SVG_LENGTHTYPE_NUMBER;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.SVG_LENGTHTYPE_PERCENTAGE
+SVGLength.SVG_LENGTHTYPE_PERCENTAGE;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.prototype.SVG_LENGTHTYPE_PERCENTAGE
+SVGLength.prototype.SVG_LENGTHTYPE_PERCENTAGE;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.SVG_LENGTHTYPE_EMS
+SVGLength.SVG_LENGTHTYPE_EMS;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.prototype.SVG_LENGTHTYPE_EMS
+SVGLength.prototype.SVG_LENGTHTYPE_EMS;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.SVG_LENGTHTYPE_EXS
+SVGLength.SVG_LENGTHTYPE_EXS;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.prototype.SVG_LENGTHTYPE_EXS
+SVGLength.prototype.SVG_LENGTHTYPE_EXS;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.SVG_LENGTHTYPE_PX
+SVGLength.SVG_LENGTHTYPE_PX;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.prototype.SVG_LENGTHTYPE_PX
+SVGLength.prototype.SVG_LENGTHTYPE_PX;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.SVG_LENGTHTYPE_CM
+SVGLength.SVG_LENGTHTYPE_CM;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.prototype.SVG_LENGTHTYPE_CM
+SVGLength.prototype.SVG_LENGTHTYPE_CM;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.SVG_LENGTHTYPE_MM
+SVGLength.SVG_LENGTHTYPE_MM;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.prototype.SVG_LENGTHTYPE_MM
+SVGLength.prototype.SVG_LENGTHTYPE_MM;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.SVG_LENGTHTYPE_IN
+SVGLength.SVG_LENGTHTYPE_IN;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.prototype.SVG_LENGTHTYPE_IN
+SVGLength.prototype.SVG_LENGTHTYPE_IN;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.SVG_LENGTHTYPE_PT
+SVGLength.SVG_LENGTHTYPE_PT;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.prototype.SVG_LENGTHTYPE_PT
+SVGLength.prototype.SVG_LENGTHTYPE_PT;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.SVG_LENGTHTYPE_PC
+SVGLength.SVG_LENGTHTYPE_PC;
 
 /**
  * @const
  * @type {number}
  */
-SVGLength.prototype.SVG_LENGTHTYPE_PC
+SVGLength.prototype.SVG_LENGTHTYPE_PC;
 
 /**
  * @type {number}
  */
-SVGLength.prototype.unitType
+SVGLength.prototype.unitType;
 
 /**
  * @type {number}
  */
-SVGLength.prototype.value
+SVGLength.prototype.value;
 
 /**
  * @type {number}
  */
-SVGLength.prototype.valueInSpecifiedUnits
+SVGLength.prototype.valueInSpecifiedUnits;
 
 /**
  * @type {string}
  */
-SVGLength.prototype.valueAsString
+SVGLength.prototype.valueAsString;
 
 /**
  * @param {number} unitType
  * @param {number} valueInSpecifiedUnits
  * @return {undefined}
  */
-SVGLength.prototype.newValueSpecifiedUnits = function (unitType, valueInSpecifiedUnits) {}
+SVGLength.prototype.newValueSpecifiedUnits = function (
+  unitType,
+  valueInSpecifiedUnits
+) {};
 
 /**
  * @param {number} unitType
  * @return {undefined}
  */
-SVGLength.prototype.convertToSpecifiedUnits = function (unitType) {}
+SVGLength.prototype.convertToSpecifiedUnits = function (unitType) {};
 
 /**
  * @constructor
  */
-function SVGAnimatedNumber () {}
+function SVGAnimatedNumber() {}
 
 /**
  * @type {number}
  */
-SVGAnimatedNumber.prototype.baseVal
+SVGAnimatedNumber.prototype.baseVal;
 
 /**
  * @type {number}
  */
-SVGAnimatedNumber.prototype.animVal
+SVGAnimatedNumber.prototype.animVal;
 
 /**
  * @constructor
  */
-function SVGAnimatedAngle () {}
+function SVGAnimatedAngle() {}
 
 /**
  * @type {!SVGAngle}
  */
-SVGAnimatedAngle.prototype.baseVal
+SVGAnimatedAngle.prototype.baseVal;
 
 /**
  * @type {!SVGAngle}
  */
-SVGAnimatedAngle.prototype.animVal
+SVGAnimatedAngle.prototype.animVal;
 
 /**
  * @interface
  * @extends {SVGStylable}
  */
-function SVGFilterPrimitiveStandardAttributes () {}
+function SVGFilterPrimitiveStandardAttributes() {}
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFilterPrimitiveStandardAttributes.prototype.x
+SVGFilterPrimitiveStandardAttributes.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFilterPrimitiveStandardAttributes.prototype.y
+SVGFilterPrimitiveStandardAttributes.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFilterPrimitiveStandardAttributes.prototype.width
+SVGFilterPrimitiveStandardAttributes.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFilterPrimitiveStandardAttributes.prototype.height
+SVGFilterPrimitiveStandardAttributes.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFilterPrimitiveStandardAttributes.prototype.result
+SVGFilterPrimitiveStandardAttributes.prototype.result;
 
 /**
  * @constructor
  * @extends {SVGGradientElement}
  */
-function SVGLinearGradientElement () {}
+function SVGLinearGradientElement() {}
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGLinearGradientElement.prototype.x1
+SVGLinearGradientElement.prototype.x1;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGLinearGradientElement.prototype.y1
+SVGLinearGradientElement.prototype.y1;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGLinearGradientElement.prototype.x2
+SVGLinearGradientElement.prototype.x2;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGLinearGradientElement.prototype.y2
+SVGLinearGradientElement.prototype.y2;
 
 /**
  * @constructor
  * @extends {SVGGradientElement}
  */
-function SVGRadialGradientElement () {}
+function SVGRadialGradientElement() {}
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGRadialGradientElement.prototype.cx
+SVGRadialGradientElement.prototype.cx;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGRadialGradientElement.prototype.cy
+SVGRadialGradientElement.prototype.cy;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGRadialGradientElement.prototype.r
+SVGRadialGradientElement.prototype.r;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGRadialGradientElement.prototype.fx
+SVGRadialGradientElement.prototype.fx;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGRadialGradientElement.prototype.fy
+SVGRadialGradientElement.prototype.fy;
 
 /**
  * @constructor
  */
-function SVGTransform () {}
+function SVGTransform() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGTransform.SVG_TRANSFORM_UNKNOWN
+SVGTransform.SVG_TRANSFORM_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGTransform.prototype.SVG_TRANSFORM_UNKNOWN
+SVGTransform.prototype.SVG_TRANSFORM_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGTransform.SVG_TRANSFORM_MATRIX
+SVGTransform.SVG_TRANSFORM_MATRIX;
 
 /**
  * @const
  * @type {number}
  */
-SVGTransform.prototype.SVG_TRANSFORM_MATRIX
+SVGTransform.prototype.SVG_TRANSFORM_MATRIX;
 
 /**
  * @const
  * @type {number}
  */
-SVGTransform.SVG_TRANSFORM_TRANSLATE
+SVGTransform.SVG_TRANSFORM_TRANSLATE;
 
 /**
  * @const
  * @type {number}
  */
-SVGTransform.prototype.SVG_TRANSFORM_TRANSLATE
+SVGTransform.prototype.SVG_TRANSFORM_TRANSLATE;
 
 /**
  * @const
  * @type {number}
  */
-SVGTransform.SVG_TRANSFORM_SCALE
+SVGTransform.SVG_TRANSFORM_SCALE;
 
 /**
  * @const
  * @type {number}
  */
-SVGTransform.prototype.SVG_TRANSFORM_SCALE
+SVGTransform.prototype.SVG_TRANSFORM_SCALE;
 
 /**
  * @const
  * @type {number}
  */
-SVGTransform.SVG_TRANSFORM_ROTATE
+SVGTransform.SVG_TRANSFORM_ROTATE;
 
 /**
  * @const
  * @type {number}
  */
-SVGTransform.prototype.SVG_TRANSFORM_ROTATE
+SVGTransform.prototype.SVG_TRANSFORM_ROTATE;
 
 /**
  * @const
  * @type {number}
  */
-SVGTransform.SVG_TRANSFORM_SKEWX
+SVGTransform.SVG_TRANSFORM_SKEWX;
 
 /**
  * @const
  * @type {number}
  */
-SVGTransform.prototype.SVG_TRANSFORM_SKEWX
+SVGTransform.prototype.SVG_TRANSFORM_SKEWX;
 
 /**
  * @const
  * @type {number}
  */
-SVGTransform.SVG_TRANSFORM_SKEWY
+SVGTransform.SVG_TRANSFORM_SKEWY;
 
 /**
  * @const
  * @type {number}
  */
-SVGTransform.prototype.SVG_TRANSFORM_SKEWY
+SVGTransform.prototype.SVG_TRANSFORM_SKEWY;
 
 /**
  * @type {number}
  */
-SVGTransform.prototype.type
+SVGTransform.prototype.type;
 
 /**
  * @type {!SVGMatrix}
  */
-SVGTransform.prototype.matrix
+SVGTransform.prototype.matrix;
 
 /**
  * @type {number}
  */
-SVGTransform.prototype.angle
+SVGTransform.prototype.angle;
 
 /**
  * @param {!SVGMatrix} matrix
  * @return {undefined}
  */
-SVGTransform.prototype.setMatrix = function (matrix) {}
+SVGTransform.prototype.setMatrix = function (matrix) {};
 
 /**
  * @param {number} tx
  * @param {number} ty
  * @return {undefined}
  */
-SVGTransform.prototype.setTranslate = function (tx, ty) {}
+SVGTransform.prototype.setTranslate = function (tx, ty) {};
 
 /**
  * @param {number} sx
  * @param {number} sy
  * @return {undefined}
  */
-SVGTransform.prototype.setScale = function (sx, sy) {}
+SVGTransform.prototype.setScale = function (sx, sy) {};
 
 /**
  * @param {number} angle
@@ -1089,376 +1100,376 @@ SVGTransform.prototype.setScale = function (sx, sy) {}
  * @param {number} cy
  * @return {undefined}
  */
-SVGTransform.prototype.setRotate = function (angle, cx, cy) {}
+SVGTransform.prototype.setRotate = function (angle, cx, cy) {};
 
 /**
  * @param {number} angle
  * @return {undefined}
  */
-SVGTransform.prototype.setSkewX = function (angle) {}
+SVGTransform.prototype.setSkewX = function (angle) {};
 
 /**
  * @param {number} angle
  * @return {undefined}
  */
-SVGTransform.prototype.setSkewY = function (angle) {}
+SVGTransform.prototype.setSkewY = function (angle) {};
 
 /**
  * @interface
  */
-function SVGZoomAndPan () {}
+function SVGZoomAndPan() {}
 
 /**
  * @type {number}
  */
-SVGZoomAndPan.prototype.zoomAndPan
+SVGZoomAndPan.prototype.zoomAndPan;
 
 /**
  * @constructor
  */
-function SVGPreserveAspectRatio () {}
+function SVGPreserveAspectRatio() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_UNKNOWN
+SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_UNKNOWN
+SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_NONE
+SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_NONE;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_NONE
+SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_NONE;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMIN
+SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMIN;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMINYMIN
+SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMINYMIN;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMIDYMIN
+SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMIDYMIN;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMIDYMIN
+SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMIDYMIN;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMAXYMIN
+SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMAXYMIN;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMAXYMIN
+SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMAXYMIN;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMID
+SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMID;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMINYMID
+SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMINYMID;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMIDYMID
+SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMIDYMID;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMIDYMID
+SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMIDYMID;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMAXYMID
+SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMAXYMID;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMAXYMID
+SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMAXYMID;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMAX
+SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMAX;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMINYMAX
+SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMINYMAX;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMIDYMAX
+SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMIDYMAX;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMIDYMAX
+SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMIDYMAX;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMAXYMAX
+SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMAXYMAX;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMAXYMAX
+SVGPreserveAspectRatio.prototype.SVG_PRESERVEASPECTRATIO_XMAXYMAX;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.SVG_MEETORSLICE_UNKNOWN
+SVGPreserveAspectRatio.SVG_MEETORSLICE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.prototype.SVG_MEETORSLICE_UNKNOWN
+SVGPreserveAspectRatio.prototype.SVG_MEETORSLICE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.SVG_MEETORSLICE_MEET
+SVGPreserveAspectRatio.SVG_MEETORSLICE_MEET;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.prototype.SVG_MEETORSLICE_MEET
+SVGPreserveAspectRatio.prototype.SVG_MEETORSLICE_MEET;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.SVG_MEETORSLICE_SLICE
+SVGPreserveAspectRatio.SVG_MEETORSLICE_SLICE;
 
 /**
  * @const
  * @type {number}
  */
-SVGPreserveAspectRatio.prototype.SVG_MEETORSLICE_SLICE
+SVGPreserveAspectRatio.prototype.SVG_MEETORSLICE_SLICE;
 
 /**
  * @type {number}
  */
-SVGPreserveAspectRatio.prototype.align
+SVGPreserveAspectRatio.prototype.align;
 
 /**
  * @type {number}
  */
-SVGPreserveAspectRatio.prototype.meetOrSlice
+SVGPreserveAspectRatio.prototype.meetOrSlice;
 
 /**
  * @constructor
  */
-function SVGRect () {}
+function SVGRect() {}
 
 /**
  * @type {number}
  */
-SVGRect.prototype.x
+SVGRect.prototype.x;
 
 /**
  * @type {number}
  */
-SVGRect.prototype.y
+SVGRect.prototype.y;
 
 /**
  * @type {number}
  */
-SVGRect.prototype.width
+SVGRect.prototype.width;
 
 /**
  * @type {number}
  */
-SVGRect.prototype.height
+SVGRect.prototype.height;
 
 /**
  * @constructor
  */
-function SVGException () {}
+function SVGException() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGException.SVG_WRONG_TYPE_ERR
+SVGException.SVG_WRONG_TYPE_ERR;
 
 /**
  * @const
  * @type {number}
  */
-SVGException.prototype.SVG_WRONG_TYPE_ERR
+SVGException.prototype.SVG_WRONG_TYPE_ERR;
 
 /**
  * @const
  * @type {number}
  */
-SVGException.SVG_INVALID_VALUE_ERR
+SVGException.SVG_INVALID_VALUE_ERR;
 
 /**
  * @const
  * @type {number}
  */
-SVGException.prototype.SVG_INVALID_VALUE_ERR
+SVGException.prototype.SVG_INVALID_VALUE_ERR;
 
 /**
  * @const
  * @type {number}
  */
-SVGException.SVG_MATRIX_NOT_INVERTABLE
+SVGException.SVG_MATRIX_NOT_INVERTABLE;
 
 /**
  * @const
  * @type {number}
  */
-SVGException.prototype.SVG_MATRIX_NOT_INVERTABLE
+SVGException.prototype.SVG_MATRIX_NOT_INVERTABLE;
 
 /**
  * @type {number}
  */
-SVGException.prototype.code
+SVGException.prototype.code;
 
 /**
  * @type {string}
  */
-SVGException.prototype.name
+SVGException.prototype.name;
 
 /**
  * @type {string}
  */
-SVGException.prototype.message
+SVGException.prototype.message;
 
 /**
  * @return {string}
  * @override
  */
-SVGException.prototype.toString = function () {}
+SVGException.prototype.toString = function () {};
 
 /**
  * @constructor
  * @extends {CSSValue}
  */
-function SVGColor () {}
+function SVGColor() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGColor.SVG_COLORTYPE_UNKNOWN
+SVGColor.SVG_COLORTYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGColor.prototype.SVG_COLORTYPE_UNKNOWN
+SVGColor.prototype.SVG_COLORTYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGColor.SVG_COLORTYPE_RGBCOLOR
+SVGColor.SVG_COLORTYPE_RGBCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGColor.prototype.SVG_COLORTYPE_RGBCOLOR
+SVGColor.prototype.SVG_COLORTYPE_RGBCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGColor.SVG_COLORTYPE_RGBCOLOR_ICCCOLOR
+SVGColor.SVG_COLORTYPE_RGBCOLOR_ICCCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGColor.prototype.SVG_COLORTYPE_RGBCOLOR_ICCCOLOR
+SVGColor.prototype.SVG_COLORTYPE_RGBCOLOR_ICCCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGColor.SVG_COLORTYPE_CURRENTCOLOR
+SVGColor.SVG_COLORTYPE_CURRENTCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGColor.prototype.SVG_COLORTYPE_CURRENTCOLOR
+SVGColor.prototype.SVG_COLORTYPE_CURRENTCOLOR;
 
 /**
  * @type {number}
  */
-SVGColor.prototype.colorType
+SVGColor.prototype.colorType;
 
 /**
  * @type {!RGBColor}
  */
-SVGColor.prototype.rgbColor
+SVGColor.prototype.rgbColor;
 
 /**
  * @param {string} rgbColor
  * @return {undefined}
  */
-SVGColor.prototype.setRGBColor = function (rgbColor) {}
+SVGColor.prototype.setRGBColor = function (rgbColor) {};
 
 /**
  * @param {string} rgbColor
  * @param {string} iccColor
  * @return {undefined}
  */
-SVGColor.prototype.setRGBColorICCColor = function (rgbColor, iccColor) {}
+SVGColor.prototype.setRGBColorICCColor = function (rgbColor, iccColor) {};
 
 /**
  * @param {number} colorType
@@ -1466,149 +1477,149 @@ SVGColor.prototype.setRGBColorICCColor = function (rgbColor, iccColor) {}
  * @param {string} iccColor
  * @return {undefined}
  */
-SVGColor.prototype.setColor = function (colorType, rgbColor, iccColor) {}
+SVGColor.prototype.setColor = function (colorType, rgbColor, iccColor) {};
 
 /**
  * @constructor
  * @extends {SVGColor}
  */
-function SVGPaint () {}
+function SVGPaint() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.SVG_PAINTTYPE_UNKNOWN
+SVGPaint.SVG_PAINTTYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.prototype.SVG_PAINTTYPE_UNKNOWN
+SVGPaint.prototype.SVG_PAINTTYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.SVG_PAINTTYPE_RGBCOLOR
+SVGPaint.SVG_PAINTTYPE_RGBCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.prototype.SVG_PAINTTYPE_RGBCOLOR
+SVGPaint.prototype.SVG_PAINTTYPE_RGBCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR
+SVGPaint.SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.prototype.SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR
+SVGPaint.prototype.SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.SVG_PAINTTYPE_NONE
+SVGPaint.SVG_PAINTTYPE_NONE;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.prototype.SVG_PAINTTYPE_NONE
+SVGPaint.prototype.SVG_PAINTTYPE_NONE;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.SVG_PAINTTYPE_CURRENTCOLOR
+SVGPaint.SVG_PAINTTYPE_CURRENTCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.prototype.SVG_PAINTTYPE_CURRENTCOLOR
+SVGPaint.prototype.SVG_PAINTTYPE_CURRENTCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.SVG_PAINTTYPE_URI_NONE
+SVGPaint.SVG_PAINTTYPE_URI_NONE;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.prototype.SVG_PAINTTYPE_URI_NONE
+SVGPaint.prototype.SVG_PAINTTYPE_URI_NONE;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.SVG_PAINTTYPE_URI_CURRENTCOLOR
+SVGPaint.SVG_PAINTTYPE_URI_CURRENTCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.prototype.SVG_PAINTTYPE_URI_CURRENTCOLOR
+SVGPaint.prototype.SVG_PAINTTYPE_URI_CURRENTCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.SVG_PAINTTYPE_URI_RGBCOLOR
+SVGPaint.SVG_PAINTTYPE_URI_RGBCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.prototype.SVG_PAINTTYPE_URI_RGBCOLOR
+SVGPaint.prototype.SVG_PAINTTYPE_URI_RGBCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR
+SVGPaint.SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.prototype.SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR
+SVGPaint.prototype.SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.SVG_PAINTTYPE_URI
+SVGPaint.SVG_PAINTTYPE_URI;
 
 /**
  * @const
  * @type {number}
  */
-SVGPaint.prototype.SVG_PAINTTYPE_URI
+SVGPaint.prototype.SVG_PAINTTYPE_URI;
 
 /**
  * @type {number}
  */
-SVGPaint.prototype.paintType
+SVGPaint.prototype.paintType;
 
 /**
  * @type {string}
  */
-SVGPaint.prototype.uri
+SVGPaint.prototype.uri;
 
 /**
  * @param {string} uri
  * @return {undefined}
  */
-SVGPaint.prototype.setUri = function (uri) {}
+SVGPaint.prototype.setUri = function (uri) {};
 
 /**
  * @param {number} paintType
@@ -1617,1462 +1628,1464 @@ SVGPaint.prototype.setUri = function (uri) {}
  * @param {string} iccColor
  * @return {undefined}
  */
-SVGPaint.prototype.setPaint = function (paintType, uri, rgbColor, iccColor) {}
+SVGPaint.prototype.setPaint = function (paintType, uri, rgbColor, iccColor) {};
 
 /**
  * @constructor
  */
-function SVGPointList () {}
+function SVGPointList() {}
 
 /**
  * @type {number}
  */
-SVGPointList.prototype.numberOfItems
+SVGPointList.prototype.numberOfItems;
 
 /** */
-SVGPointList.prototype.clear = function () {}
+SVGPointList.prototype.clear = function () {};
 
 /**
  * @param {!SVGPoint} item
  * @return {!SVGPoint}
  */
-SVGPointList.prototype.initialize = function (item) {}
+SVGPointList.prototype.initialize = function (item) {};
 
 /**
  * @param {number} index
  * @return {!SVGPoint}
  */
-SVGPointList.prototype.getItem = function (index) {}
-
-/**
- * @param {!SVGPoint} item
- * @param {number} index
- * @return {!SVGPoint}
- */
-SVGPointList.prototype.insertItemBefore = function (item, index) {}
+SVGPointList.prototype.getItem = function (index) {};
 
 /**
  * @param {!SVGPoint} item
  * @param {number} index
  * @return {!SVGPoint}
  */
-SVGPointList.prototype.replaceItem = function (item, index) {}
+SVGPointList.prototype.insertItemBefore = function (item, index) {};
+
+/**
+ * @param {!SVGPoint} item
+ * @param {number} index
+ * @return {!SVGPoint}
+ */
+SVGPointList.prototype.replaceItem = function (item, index) {};
 
 /**
  * @param {number} index
  * @return {!SVGPoint}
  */
-SVGPointList.prototype.removeItem = function (index) {}
+SVGPointList.prototype.removeItem = function (index) {};
 
 /**
  * @param {!SVGPoint} item
  * @return {!SVGPoint}
  */
-SVGPointList.prototype.appendItem = function (item) {}
+SVGPointList.prototype.appendItem = function (item) {};
 
 /**
  * @constructor
  */
-function SVGTransformList () {}
+function SVGTransformList() {}
 
 /**
  * @type {number}
  */
-SVGTransformList.prototype.numberOfItems
+SVGTransformList.prototype.numberOfItems;
 
 /** */
-SVGTransformList.prototype.clear = function () {}
+SVGTransformList.prototype.clear = function () {};
 
 /**
  * @param {!SVGTransform} item
  * @return {!SVGTransform}
  */
-SVGTransformList.prototype.initialize = function (item) {}
+SVGTransformList.prototype.initialize = function (item) {};
 
 /**
  * @param {number} index
  * @return {!SVGTransform}
  */
-SVGTransformList.prototype.getItem = function (index) {}
-
-/**
- * @param {!SVGTransform} item
- * @param {number} index
- * @return {!SVGTransform}
- */
-SVGTransformList.prototype.insertItemBefore = function (item, index) {}
+SVGTransformList.prototype.getItem = function (index) {};
 
 /**
  * @param {!SVGTransform} item
  * @param {number} index
  * @return {!SVGTransform}
  */
-SVGTransformList.prototype.replaceItem = function (item, index) {}
+SVGTransformList.prototype.insertItemBefore = function (item, index) {};
+
+/**
+ * @param {!SVGTransform} item
+ * @param {number} index
+ * @return {!SVGTransform}
+ */
+SVGTransformList.prototype.replaceItem = function (item, index) {};
 
 /**
  * @param {number} index
  * @return {!SVGTransform}
  */
-SVGTransformList.prototype.removeItem = function (index) {}
+SVGTransformList.prototype.removeItem = function (index) {};
 
 /**
  * @param {!SVGTransform} item
  * @return {!SVGTransform}
  */
-SVGTransformList.prototype.appendItem = function (item) {}
+SVGTransformList.prototype.appendItem = function (item) {};
 
 /**
  * @param {!SVGMatrix} matrix
  * @return {!SVGTransform}
  */
-SVGTransformList.prototype.createSVGTransformFromMatrix = function (matrix) {}
+SVGTransformList.prototype.createSVGTransformFromMatrix = function (matrix) {};
 
 /**
  * @return {!SVGTransform}
  */
-SVGTransformList.prototype.consolidate = function () {}
+SVGTransformList.prototype.consolidate = function () {};
 
 /**
  * @constructor
  * @extends {UIEvent}
  */
-function SVGZoomEvent () {}
+function SVGZoomEvent() {}
 
 /**
  * @type {!SVGRect}
  */
-SVGZoomEvent.prototype.zoomRectScreen
+SVGZoomEvent.prototype.zoomRectScreen;
 
 /**
  * @type {number}
  */
-SVGZoomEvent.prototype.previousScale
+SVGZoomEvent.prototype.previousScale;
 
 /**
  * @type {!SVGPoint}
  */
-SVGZoomEvent.prototype.previousTranslate
+SVGZoomEvent.prototype.previousTranslate;
 
 /**
  * @type {number}
  */
-SVGZoomEvent.prototype.newScale
+SVGZoomEvent.prototype.newScale;
 
 /**
  * @type {!SVGPoint}
  */
-SVGZoomEvent.prototype.newTranslate
+SVGZoomEvent.prototype.newTranslate;
 
 /**
  * @constructor
  * @extends {SVGTextContentElement}
  */
-function SVGTextPositioningElement () {}
+function SVGTextPositioningElement() {}
 
 /**
  * @type {!SVGAnimatedLengthList}
  */
-SVGTextPositioningElement.prototype.x
+SVGTextPositioningElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLengthList}
  */
-SVGTextPositioningElement.prototype.y
+SVGTextPositioningElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLengthList}
  */
-SVGTextPositioningElement.prototype.dx
+SVGTextPositioningElement.prototype.dx;
 
 /**
  * @type {!SVGAnimatedLengthList}
  */
-SVGTextPositioningElement.prototype.dy
+SVGTextPositioningElement.prototype.dy;
 
 /**
  * @type {!SVGAnimatedNumberList}
  */
-SVGTextPositioningElement.prototype.rotate
+SVGTextPositioningElement.prototype.rotate;
 
 /**
  * @constructor
  * @extends {SVGTextPositioningElement}
  */
-function SVGTSpanElement () {}
+function SVGTSpanElement() {}
 
 /**
  * @constructor
  */
-function SVGStringList () {}
+function SVGStringList() {}
 
 /**
  * @type {number}
  */
-SVGStringList.prototype.numberOfItems
+SVGStringList.prototype.numberOfItems;
 
 /** */
-SVGStringList.prototype.clear = function () {}
+SVGStringList.prototype.clear = function () {};
 
 /**
  * @param {string} item
  * @return {string}
  */
-SVGStringList.prototype.initialize = function (item) {}
+SVGStringList.prototype.initialize = function (item) {};
 
 /**
  * @param {number} index
  * @return {string}
  */
-SVGStringList.prototype.getItem = function (index) {}
-
-/**
- * @param {string} item
- * @param {number} index
- * @return {string}
- */
-SVGStringList.prototype.insertItemBefore = function (item, index) {}
+SVGStringList.prototype.getItem = function (index) {};
 
 /**
  * @param {string} item
  * @param {number} index
  * @return {string}
  */
-SVGStringList.prototype.replaceItem = function (item, index) {}
+SVGStringList.prototype.insertItemBefore = function (item, index) {};
+
+/**
+ * @param {string} item
+ * @param {number} index
+ * @return {string}
+ */
+SVGStringList.prototype.replaceItem = function (item, index) {};
 
 /**
  * @param {number} index
  * @return {string}
  */
-SVGStringList.prototype.removeItem = function (index) {}
+SVGStringList.prototype.removeItem = function (index) {};
 
 /**
  * @param {string} item
  * @return {string}
  */
-SVGStringList.prototype.appendItem = function (item) {}
+SVGStringList.prototype.appendItem = function (item) {};
 
 /**
  * @interface
  */
-function SVGURIReference () {}
+function SVGURIReference() {}
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGURIReference.prototype.href
+SVGURIReference.prototype.href;
 
 /**
  * @constructor
  * @extends {SVGTextPositioningElement}
  * @implements {SVGURIReference}
  */
-function SVGTRefElement () {}
+function SVGTRefElement() {}
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGTRefElement.prototype.href
+SVGTRefElement.prototype.href;
 
 /**
  * @constructor
  * @extends {SVGTextContentElement}
  * @implements {SVGURIReference}
  */
-function SVGTextPathElement () {}
+function SVGTextPathElement() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGTextPathElement.TEXTPATH_METHODTYPE_UNKNOWN
+SVGTextPathElement.TEXTPATH_METHODTYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGTextPathElement.prototype.TEXTPATH_METHODTYPE_UNKNOWN
+SVGTextPathElement.prototype.TEXTPATH_METHODTYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGTextPathElement.TEXTPATH_METHODTYPE_ALIGN
+SVGTextPathElement.TEXTPATH_METHODTYPE_ALIGN;
 
 /**
  * @const
  * @type {number}
  */
-SVGTextPathElement.prototype.TEXTPATH_METHODTYPE_ALIGN
+SVGTextPathElement.prototype.TEXTPATH_METHODTYPE_ALIGN;
 
 /**
  * @const
  * @type {number}
  */
-SVGTextPathElement.TEXTPATH_METHODTYPE_STRETCH
+SVGTextPathElement.TEXTPATH_METHODTYPE_STRETCH;
 
 /**
  * @const
  * @type {number}
  */
-SVGTextPathElement.prototype.TEXTPATH_METHODTYPE_STRETCH
+SVGTextPathElement.prototype.TEXTPATH_METHODTYPE_STRETCH;
 
 /**
  * @const
  * @type {number}
  */
-SVGTextPathElement.TEXTPATH_SPACINGTYPE_UNKNOWN
+SVGTextPathElement.TEXTPATH_SPACINGTYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGTextPathElement.prototype.TEXTPATH_SPACINGTYPE_UNKNOWN
+SVGTextPathElement.prototype.TEXTPATH_SPACINGTYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGTextPathElement.TEXTPATH_SPACINGTYPE_AUTO
+SVGTextPathElement.TEXTPATH_SPACINGTYPE_AUTO;
 
 /**
  * @const
  * @type {number}
  */
-SVGTextPathElement.prototype.TEXTPATH_SPACINGTYPE_AUTO
+SVGTextPathElement.prototype.TEXTPATH_SPACINGTYPE_AUTO;
 
 /**
  * @const
  * @type {number}
  */
-SVGTextPathElement.TEXTPATH_SPACINGTYPE_EXACT
+SVGTextPathElement.TEXTPATH_SPACINGTYPE_EXACT;
 
 /**
  * @const
  * @type {number}
  */
-SVGTextPathElement.prototype.TEXTPATH_SPACINGTYPE_EXACT
+SVGTextPathElement.prototype.TEXTPATH_SPACINGTYPE_EXACT;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGTextPathElement.prototype.startOffset
+SVGTextPathElement.prototype.startOffset;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGTextPathElement.prototype.method
+SVGTextPathElement.prototype.method;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGTextPathElement.prototype.spacing
+SVGTextPathElement.prototype.spacing;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGTextPathElement.prototype.href
+SVGTextPathElement.prototype.href;
 
 /**
  * @constructor
  * @extends {SVGTextPositioningElement}
  * @implements {SVGURIReference}
  */
-function SVGAltGlyphElement () {}
+function SVGAltGlyphElement() {}
 
 /**
  * @type {string}
  */
-SVGAltGlyphElement.prototype.glyphRef
+SVGAltGlyphElement.prototype.glyphRef;
 
 /**
  * @type {string}
  */
-SVGAltGlyphElement.prototype.format
+SVGAltGlyphElement.prototype.format;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGAltGlyphElement.prototype.href
+SVGAltGlyphElement.prototype.href;
 
 /**
  * @constructor
  * @extends {SVGComponentTransferFunctionElement}
  */
-function SVGFEFuncGElement () {}
+function SVGFEFuncGElement() {}
 
 /**
  * @constructor
  * @extends {SVGComponentTransferFunctionElement}
  */
-function SVGFEFuncAElement () {}
+function SVGFEFuncAElement() {}
 
 /**
  * @constructor
  * @extends {SVGComponentTransferFunctionElement}
  */
-function SVGFEFuncRElement () {}
+function SVGFEFuncRElement() {}
 
 /**
  * @constructor
  */
-function SVGNumber () {}
+function SVGNumber() {}
 
 /**
  * @type {number}
  */
-SVGNumber.prototype.value
+SVGNumber.prototype.value;
 
 /**
  * @interface
  */
-function SVGTests () {}
+function SVGTests() {}
 
 /**
  * @type {!SVGStringList}
  */
-SVGTests.prototype.requiredFeatures
+SVGTests.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGTests.prototype.requiredExtensions
+SVGTests.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGTests.prototype.systemLanguage
+SVGTests.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  */
-SVGTests.prototype.hasExtension = function (opt_extension) {}
+SVGTests.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @constructor
  */
-function SVGPathSeg () {}
+function SVGPathSeg() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_UNKNOWN
+SVGPathSeg.PATHSEG_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_UNKNOWN
+SVGPathSeg.prototype.PATHSEG_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_CLOSEPATH
+SVGPathSeg.PATHSEG_CLOSEPATH;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_CLOSEPATH
+SVGPathSeg.prototype.PATHSEG_CLOSEPATH;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_MOVETO_ABS
+SVGPathSeg.PATHSEG_MOVETO_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_MOVETO_ABS
+SVGPathSeg.prototype.PATHSEG_MOVETO_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_MOVETO_REL
+SVGPathSeg.PATHSEG_MOVETO_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_MOVETO_REL
+SVGPathSeg.prototype.PATHSEG_MOVETO_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_LINETO_ABS
+SVGPathSeg.PATHSEG_LINETO_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_LINETO_ABS
+SVGPathSeg.prototype.PATHSEG_LINETO_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_LINETO_REL
+SVGPathSeg.PATHSEG_LINETO_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_LINETO_REL
+SVGPathSeg.prototype.PATHSEG_LINETO_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_CURVETO_CUBIC_ABS
+SVGPathSeg.PATHSEG_CURVETO_CUBIC_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_CURVETO_CUBIC_ABS
+SVGPathSeg.prototype.PATHSEG_CURVETO_CUBIC_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_CURVETO_CUBIC_REL
+SVGPathSeg.PATHSEG_CURVETO_CUBIC_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_CURVETO_CUBIC_REL
+SVGPathSeg.prototype.PATHSEG_CURVETO_CUBIC_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_ABS
+SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_CURVETO_QUADRATIC_ABS
+SVGPathSeg.prototype.PATHSEG_CURVETO_QUADRATIC_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_REL
+SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_CURVETO_QUADRATIC_REL
+SVGPathSeg.prototype.PATHSEG_CURVETO_QUADRATIC_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_ARC_ABS
+SVGPathSeg.PATHSEG_ARC_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_ARC_ABS
+SVGPathSeg.prototype.PATHSEG_ARC_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_ARC_REL
+SVGPathSeg.PATHSEG_ARC_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_ARC_REL
+SVGPathSeg.prototype.PATHSEG_ARC_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_ABS
+SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_LINETO_HORIZONTAL_ABS
+SVGPathSeg.prototype.PATHSEG_LINETO_HORIZONTAL_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_REL
+SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_LINETO_HORIZONTAL_REL
+SVGPathSeg.prototype.PATHSEG_LINETO_HORIZONTAL_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_LINETO_VERTICAL_ABS
+SVGPathSeg.PATHSEG_LINETO_VERTICAL_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_LINETO_VERTICAL_ABS
+SVGPathSeg.prototype.PATHSEG_LINETO_VERTICAL_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_LINETO_VERTICAL_REL
+SVGPathSeg.PATHSEG_LINETO_VERTICAL_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_LINETO_VERTICAL_REL
+SVGPathSeg.prototype.PATHSEG_LINETO_VERTICAL_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_ABS
+SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_CURVETO_CUBIC_SMOOTH_ABS
+SVGPathSeg.prototype.PATHSEG_CURVETO_CUBIC_SMOOTH_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_REL
+SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_CURVETO_CUBIC_SMOOTH_REL
+SVGPathSeg.prototype.PATHSEG_CURVETO_CUBIC_SMOOTH_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS
+SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS
+SVGPathSeg.prototype.PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL
+SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL;
 
 /**
  * @const
  * @type {number}
  */
-SVGPathSeg.prototype.PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL
+SVGPathSeg.prototype.PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL;
 
 /**
  * @type {number}
  */
-SVGPathSeg.prototype.pathSegType
+SVGPathSeg.prototype.pathSegType;
 
 /**
  * @type {string}
  */
-SVGPathSeg.prototype.pathSegTypeAsLetter
+SVGPathSeg.prototype.pathSegTypeAsLetter;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegCurvetoQuadraticSmoothAbs () {}
+function SVGPathSegCurvetoQuadraticSmoothAbs() {}
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoQuadraticSmoothAbs.prototype.x
+SVGPathSegCurvetoQuadraticSmoothAbs.prototype.x;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoQuadraticSmoothAbs.prototype.y
+SVGPathSegCurvetoQuadraticSmoothAbs.prototype.y;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegArcRel () {}
+function SVGPathSegArcRel() {}
 
 /**
  * @type {number}
  */
-SVGPathSegArcRel.prototype.x
+SVGPathSegArcRel.prototype.x;
 
 /**
  * @type {number}
  */
-SVGPathSegArcRel.prototype.y
+SVGPathSegArcRel.prototype.y;
 
 /**
  * @type {number}
  */
-SVGPathSegArcRel.prototype.r1
+SVGPathSegArcRel.prototype.r1;
 
 /**
  * @type {number}
  */
-SVGPathSegArcRel.prototype.r2
+SVGPathSegArcRel.prototype.r2;
 
 /**
  * @type {number}
  */
-SVGPathSegArcRel.prototype.angle
+SVGPathSegArcRel.prototype.angle;
 
 /**
  * @type {boolean}
  */
-SVGPathSegArcRel.prototype.largeArcFlag
+SVGPathSegArcRel.prototype.largeArcFlag;
 
 /**
  * @type {boolean}
  */
-SVGPathSegArcRel.prototype.sweepFlag
+SVGPathSegArcRel.prototype.sweepFlag;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegCurvetoQuadraticAbs () {}
+function SVGPathSegCurvetoQuadraticAbs() {}
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoQuadraticAbs.prototype.x
+SVGPathSegCurvetoQuadraticAbs.prototype.x;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoQuadraticAbs.prototype.y
+SVGPathSegCurvetoQuadraticAbs.prototype.y;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoQuadraticAbs.prototype.x1
+SVGPathSegCurvetoQuadraticAbs.prototype.x1;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoQuadraticAbs.prototype.y1
+SVGPathSegCurvetoQuadraticAbs.prototype.y1;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegLinetoHorizontalRel () {}
+function SVGPathSegLinetoHorizontalRel() {}
 
 /**
  * @type {number}
  */
-SVGPathSegLinetoHorizontalRel.prototype.x
+SVGPathSegLinetoHorizontalRel.prototype.x;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegLinetoRel () {}
+function SVGPathSegLinetoRel() {}
 
 /**
  * @type {number}
  */
-SVGPathSegLinetoRel.prototype.x
+SVGPathSegLinetoRel.prototype.x;
 
 /**
  * @type {number}
  */
-SVGPathSegLinetoRel.prototype.y
+SVGPathSegLinetoRel.prototype.y;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegCurvetoCubicRel () {}
+function SVGPathSegCurvetoCubicRel() {}
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicRel.prototype.x
+SVGPathSegCurvetoCubicRel.prototype.x;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicRel.prototype.y
+SVGPathSegCurvetoCubicRel.prototype.y;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicRel.prototype.x1
+SVGPathSegCurvetoCubicRel.prototype.x1;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicRel.prototype.y1
+SVGPathSegCurvetoCubicRel.prototype.y1;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicRel.prototype.x2
+SVGPathSegCurvetoCubicRel.prototype.x2;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicRel.prototype.y2
+SVGPathSegCurvetoCubicRel.prototype.y2;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegMovetoAbs () {}
+function SVGPathSegMovetoAbs() {}
 
 /**
  * @type {number}
  */
-SVGPathSegMovetoAbs.prototype.x
+SVGPathSegMovetoAbs.prototype.x;
 
 /**
  * @type {number}
  */
-SVGPathSegMovetoAbs.prototype.y
+SVGPathSegMovetoAbs.prototype.y;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegCurvetoQuadraticSmoothRel () {}
+function SVGPathSegCurvetoQuadraticSmoothRel() {}
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoQuadraticSmoothRel.prototype.x
+SVGPathSegCurvetoQuadraticSmoothRel.prototype.x;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoQuadraticSmoothRel.prototype.y
+SVGPathSegCurvetoQuadraticSmoothRel.prototype.y;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegLinetoVerticalRel () {}
+function SVGPathSegLinetoVerticalRel() {}
 
 /**
  * @type {number}
  */
-SVGPathSegLinetoVerticalRel.prototype.y
+SVGPathSegLinetoVerticalRel.prototype.y;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegLinetoAbs () {}
+function SVGPathSegLinetoAbs() {}
 
 /**
  * @type {number}
  */
-SVGPathSegLinetoAbs.prototype.x
+SVGPathSegLinetoAbs.prototype.x;
 
 /**
  * @type {number}
  */
-SVGPathSegLinetoAbs.prototype.y
+SVGPathSegLinetoAbs.prototype.y;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegCurvetoCubicSmoothRel () {}
+function SVGPathSegCurvetoCubicSmoothRel() {}
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicSmoothRel.prototype.x
+SVGPathSegCurvetoCubicSmoothRel.prototype.x;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicSmoothRel.prototype.y
+SVGPathSegCurvetoCubicSmoothRel.prototype.y;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicSmoothRel.prototype.x2
+SVGPathSegCurvetoCubicSmoothRel.prototype.x2;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicSmoothRel.prototype.y2
+SVGPathSegCurvetoCubicSmoothRel.prototype.y2;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegLinetoHorizontalAbs () {}
+function SVGPathSegLinetoHorizontalAbs() {}
 
 /**
  * @type {number}
  */
-SVGPathSegLinetoHorizontalAbs.prototype.x
+SVGPathSegLinetoHorizontalAbs.prototype.x;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegCurvetoQuadraticRel () {}
+function SVGPathSegCurvetoQuadraticRel() {}
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoQuadraticRel.prototype.x
+SVGPathSegCurvetoQuadraticRel.prototype.x;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoQuadraticRel.prototype.y
+SVGPathSegCurvetoQuadraticRel.prototype.y;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoQuadraticRel.prototype.x1
+SVGPathSegCurvetoQuadraticRel.prototype.x1;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoQuadraticRel.prototype.y1
+SVGPathSegCurvetoQuadraticRel.prototype.y1;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegCurvetoCubicSmoothAbs () {}
+function SVGPathSegCurvetoCubicSmoothAbs() {}
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicSmoothAbs.prototype.x
+SVGPathSegCurvetoCubicSmoothAbs.prototype.x;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicSmoothAbs.prototype.y
+SVGPathSegCurvetoCubicSmoothAbs.prototype.y;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicSmoothAbs.prototype.x2
+SVGPathSegCurvetoCubicSmoothAbs.prototype.x2;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicSmoothAbs.prototype.y2
+SVGPathSegCurvetoCubicSmoothAbs.prototype.y2;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegCurvetoCubicAbs () {}
+function SVGPathSegCurvetoCubicAbs() {}
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicAbs.prototype.x
+SVGPathSegCurvetoCubicAbs.prototype.x;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicAbs.prototype.y
+SVGPathSegCurvetoCubicAbs.prototype.y;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicAbs.prototype.x1
+SVGPathSegCurvetoCubicAbs.prototype.x1;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicAbs.prototype.y1
+SVGPathSegCurvetoCubicAbs.prototype.y1;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicAbs.prototype.x2
+SVGPathSegCurvetoCubicAbs.prototype.x2;
 
 /**
  * @type {number}
  */
-SVGPathSegCurvetoCubicAbs.prototype.y2
+SVGPathSegCurvetoCubicAbs.prototype.y2;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegClosePath () {}
+function SVGPathSegClosePath() {}
 
 /**
  * @interface
  */
-function SVGFitToViewBox () {}
+function SVGFitToViewBox() {}
 
 /**
  * @type {!SVGAnimatedRect}
  */
-SVGFitToViewBox.prototype.viewBox
+SVGFitToViewBox.prototype.viewBox;
 
 /**
  * @type {!SVGAnimatedPreserveAspectRatio}
  */
-SVGFitToViewBox.prototype.preserveAspectRatio
+SVGFitToViewBox.prototype.preserveAspectRatio;
 
 /**
  * @constructor
  * @implements {SVGZoomAndPan}
  * @implements {SVGFitToViewBox}
  */
-function SVGViewSpec () {}
+function SVGViewSpec() {}
 
 /**
  * @type {!SVGTransformList}
  */
-SVGViewSpec.prototype.transform
+SVGViewSpec.prototype.transform;
 
 /**
  * @type {!SVGElement}
  */
-SVGViewSpec.prototype.viewTarget
+SVGViewSpec.prototype.viewTarget;
 
 /**
  * @type {string}
  */
-SVGViewSpec.prototype.viewBoxString
+SVGViewSpec.prototype.viewBoxString;
 
 /**
  * @type {string}
  */
-SVGViewSpec.prototype.preserveAspectRatioString
+SVGViewSpec.prototype.preserveAspectRatioString;
 
 /**
  * @type {string}
  */
-SVGViewSpec.prototype.transformString
+SVGViewSpec.prototype.transformString;
 
 /**
  * @type {string}
  */
-SVGViewSpec.prototype.viewTargetString
+SVGViewSpec.prototype.viewTargetString;
 
 /**
  * @const
  * @type {number}
  */
-SVGViewSpec.SVG_ZOOMANDPAN_UNKNOWN
+SVGViewSpec.SVG_ZOOMANDPAN_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGViewSpec.prototype.SVG_ZOOMANDPAN_UNKNOWN
+SVGViewSpec.prototype.SVG_ZOOMANDPAN_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGViewSpec.SVG_ZOOMANDPAN_DISABLE
+SVGViewSpec.SVG_ZOOMANDPAN_DISABLE;
 
 /**
  * @const
  * @type {number}
  */
-SVGViewSpec.prototype.SVG_ZOOMANDPAN_DISABLE
+SVGViewSpec.prototype.SVG_ZOOMANDPAN_DISABLE;
 
 /**
  * @const
  * @type {number}
  */
-SVGViewSpec.SVG_ZOOMANDPAN_MAGNIFY
+SVGViewSpec.SVG_ZOOMANDPAN_MAGNIFY;
 
 /**
  * @const
  * @type {number}
  */
-SVGViewSpec.prototype.SVG_ZOOMANDPAN_MAGNIFY
+SVGViewSpec.prototype.SVG_ZOOMANDPAN_MAGNIFY;
 
 /**
  * @type {number}
  */
-SVGViewSpec.prototype.zoomAndPan
+SVGViewSpec.prototype.zoomAndPan;
 
 /**
  * @type {!SVGAnimatedRect}
  */
-SVGViewSpec.prototype.viewBox
+SVGViewSpec.prototype.viewBox;
 
 /**
  * @type {!SVGAnimatedPreserveAspectRatio}
  */
-SVGViewSpec.prototype.preserveAspectRatio
+SVGViewSpec.prototype.preserveAspectRatio;
 
 /**
  * @constructor
  */
-function SVGRenderingIntent () {}
+function SVGRenderingIntent() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGRenderingIntent.RENDERING_INTENT_UNKNOWN
+SVGRenderingIntent.RENDERING_INTENT_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGRenderingIntent.prototype.RENDERING_INTENT_UNKNOWN
+SVGRenderingIntent.prototype.RENDERING_INTENT_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGRenderingIntent.RENDERING_INTENT_AUTO
+SVGRenderingIntent.RENDERING_INTENT_AUTO;
 
 /**
  * @const
  * @type {number}
  */
-SVGRenderingIntent.prototype.RENDERING_INTENT_AUTO
+SVGRenderingIntent.prototype.RENDERING_INTENT_AUTO;
 
 /**
  * @const
  * @type {number}
  */
-SVGRenderingIntent.RENDERING_INTENT_PERCEPTUAL
+SVGRenderingIntent.RENDERING_INTENT_PERCEPTUAL;
 
 /**
  * @const
  * @type {number}
  */
-SVGRenderingIntent.prototype.RENDERING_INTENT_PERCEPTUAL
+SVGRenderingIntent.prototype.RENDERING_INTENT_PERCEPTUAL;
 
 /**
  * @const
  * @type {number}
  */
-SVGRenderingIntent.RENDERING_INTENT_RELATIVE_COLORIMETRIC
+SVGRenderingIntent.RENDERING_INTENT_RELATIVE_COLORIMETRIC;
 
 /**
  * @const
  * @type {number}
  */
-SVGRenderingIntent.prototype.RENDERING_INTENT_RELATIVE_COLORIMETRIC
+SVGRenderingIntent.prototype.RENDERING_INTENT_RELATIVE_COLORIMETRIC;
 
 /**
  * @const
  * @type {number}
  */
-SVGRenderingIntent.RENDERING_INTENT_SATURATION
+SVGRenderingIntent.RENDERING_INTENT_SATURATION;
 
 /**
  * @const
  * @type {number}
  */
-SVGRenderingIntent.prototype.RENDERING_INTENT_SATURATION
+SVGRenderingIntent.prototype.RENDERING_INTENT_SATURATION;
 
 /**
  * @const
  * @type {number}
  */
-SVGRenderingIntent.RENDERING_INTENT_ABSOLUTE_COLORIMETRIC
+SVGRenderingIntent.RENDERING_INTENT_ABSOLUTE_COLORIMETRIC;
 
 /**
  * @const
  * @type {number}
  */
-SVGRenderingIntent.prototype.RENDERING_INTENT_ABSOLUTE_COLORIMETRIC
+SVGRenderingIntent.prototype.RENDERING_INTENT_ABSOLUTE_COLORIMETRIC;
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegLinetoVerticalAbs () {}
+function SVGPathSegLinetoVerticalAbs() {}
 
 /**
  * @type {number}
  */
-SVGPathSegLinetoVerticalAbs.prototype.y
+SVGPathSegLinetoVerticalAbs.prototype.y;
 
 /**
  * @constructor
  */
-function SVGPathSegList () {}
+function SVGPathSegList() {}
 
 /**
  * @type {number}
  */
-SVGPathSegList.prototype.numberOfItems
+SVGPathSegList.prototype.numberOfItems;
 
 /** */
-SVGPathSegList.prototype.clear = function () {}
+SVGPathSegList.prototype.clear = function () {};
 
 /**
  * @param {!SVGPathSeg} newItem
  * @return {!SVGPathSeg}
  */
-SVGPathSegList.prototype.initialize = function (newItem) {}
+SVGPathSegList.prototype.initialize = function (newItem) {};
 
 /**
  * @param {number} index
  * @return {!SVGPathSeg}
  */
-SVGPathSegList.prototype.getItem = function (index) {}
-
-/**
- * @param {!SVGPathSeg} newItem
- * @param {number} index
- * @return {!SVGPathSeg}
- */
-SVGPathSegList.prototype.insertItemBefore = function (newItem, index) {}
+SVGPathSegList.prototype.getItem = function (index) {};
 
 /**
  * @param {!SVGPathSeg} newItem
  * @param {number} index
  * @return {!SVGPathSeg}
  */
-SVGPathSegList.prototype.replaceItem = function (newItem, index) {}
+SVGPathSegList.prototype.insertItemBefore = function (newItem, index) {};
+
+/**
+ * @param {!SVGPathSeg} newItem
+ * @param {number} index
+ * @return {!SVGPathSeg}
+ */
+SVGPathSegList.prototype.replaceItem = function (newItem, index) {};
 
 /**
  * @param {number} index
  * @return {!SVGPathSeg}
  */
-SVGPathSegList.prototype.removeItem = function (index) {}
+SVGPathSegList.prototype.removeItem = function (index) {};
 
 /**
  * @param {!SVGPathSeg} newItem
  * @return {!SVGPathSeg}
  */
-SVGPathSegList.prototype.appendItem = function (newItem) {}
+SVGPathSegList.prototype.appendItem = function (newItem) {};
 
 /**
  * @constructor
  * @extends {Document}
  */
-function SVGDocument () {}
+function SVGDocument() {}
 
 /**
  * @type {!SVGSVGElement}
  */
-SVGDocument.prototype.rootElement
+SVGDocument.prototype.rootElement;
 
 /**
  * @param {string=} opt_eventType
  * @return {!Event}
  * @override
  */
-SVGDocument.prototype.createEvent = function (opt_eventType) {}
+SVGDocument.prototype.createEvent = function (opt_eventType) {};
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGAltGlyphItemElement () {}
+function SVGAltGlyphItemElement() {}
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGFontFaceFormatElement () {}
+function SVGFontFaceFormatElement() {}
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFECompositeElement () {}
+function SVGFECompositeElement() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGFECompositeElement.SVG_FECOMPOSITE_OPERATOR_UNKNOWN
+SVGFECompositeElement.SVG_FECOMPOSITE_OPERATOR_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFECompositeElement.prototype.SVG_FECOMPOSITE_OPERATOR_UNKNOWN
+SVGFECompositeElement.prototype.SVG_FECOMPOSITE_OPERATOR_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFECompositeElement.SVG_FECOMPOSITE_OPERATOR_OVER
+SVGFECompositeElement.SVG_FECOMPOSITE_OPERATOR_OVER;
 
 /**
  * @const
  * @type {number}
  */
-SVGFECompositeElement.prototype.SVG_FECOMPOSITE_OPERATOR_OVER
+SVGFECompositeElement.prototype.SVG_FECOMPOSITE_OPERATOR_OVER;
 
 /**
  * @const
  * @type {number}
  */
-SVGFECompositeElement.SVG_FECOMPOSITE_OPERATOR_IN
+SVGFECompositeElement.SVG_FECOMPOSITE_OPERATOR_IN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFECompositeElement.prototype.SVG_FECOMPOSITE_OPERATOR_IN
+SVGFECompositeElement.prototype.SVG_FECOMPOSITE_OPERATOR_IN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFECompositeElement.SVG_FECOMPOSITE_OPERATOR_OUT
+SVGFECompositeElement.SVG_FECOMPOSITE_OPERATOR_OUT;
 
 /**
  * @const
  * @type {number}
  */
-SVGFECompositeElement.prototype.SVG_FECOMPOSITE_OPERATOR_OUT
+SVGFECompositeElement.prototype.SVG_FECOMPOSITE_OPERATOR_OUT;
 
 /**
  * @const
  * @type {number}
  */
-SVGFECompositeElement.SVG_FECOMPOSITE_OPERATOR_ATOP
+SVGFECompositeElement.SVG_FECOMPOSITE_OPERATOR_ATOP;
 
 /**
  * @const
  * @type {number}
  */
-SVGFECompositeElement.prototype.SVG_FECOMPOSITE_OPERATOR_ATOP
+SVGFECompositeElement.prototype.SVG_FECOMPOSITE_OPERATOR_ATOP;
 
 /**
  * @const
  * @type {number}
  */
-SVGFECompositeElement.SVG_FECOMPOSITE_OPERATOR_XOR
+SVGFECompositeElement.SVG_FECOMPOSITE_OPERATOR_XOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGFECompositeElement.prototype.SVG_FECOMPOSITE_OPERATOR_XOR
+SVGFECompositeElement.prototype.SVG_FECOMPOSITE_OPERATOR_XOR;
 
 /**
  * @const
  * @type {number}
  */
-SVGFECompositeElement.SVG_FECOMPOSITE_OPERATOR_ARITHMETIC
+SVGFECompositeElement.SVG_FECOMPOSITE_OPERATOR_ARITHMETIC;
 
 /**
  * @const
  * @type {number}
  */
-SVGFECompositeElement.prototype.SVG_FECOMPOSITE_OPERATOR_ARITHMETIC
+SVGFECompositeElement.prototype.SVG_FECOMPOSITE_OPERATOR_ARITHMETIC;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFECompositeElement.prototype.in1
+SVGFECompositeElement.prototype.in1;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFECompositeElement.prototype.in2
+SVGFECompositeElement.prototype.in2;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGFECompositeElement.prototype.operator
+SVGFECompositeElement.prototype.operator;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFECompositeElement.prototype.k1
+SVGFECompositeElement.prototype.k1;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFECompositeElement.prototype.k2
+SVGFECompositeElement.prototype.k2;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFECompositeElement.prototype.k3
+SVGFECompositeElement.prototype.k3;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFECompositeElement.prototype.k4
+SVGFECompositeElement.prototype.k4;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFECompositeElement.prototype.x
+SVGFECompositeElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFECompositeElement.prototype.y
+SVGFECompositeElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFECompositeElement.prototype.width
+SVGFECompositeElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFECompositeElement.prototype.height
+SVGFECompositeElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFECompositeElement.prototype.result
+SVGFECompositeElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFECompositeElement.prototype.className
+SVGFECompositeElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFECompositeElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFECompositeElement.prototype.getPresentationAttribute = function (
+  opt_name
+) {};
 
 /**
  * @constructor
@@ -3080,29 +3093,29 @@ SVGFECompositeElement.prototype.getPresentationAttribute = function (opt_name) {
  * @implements {SVGLangSpace}
  * @implements {SVGStylable}
  */
-function SVGDescElement () {}
+function SVGDescElement() {}
 
 /**
  * @type {string}
  */
-SVGDescElement.prototype.xmllang
+SVGDescElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGDescElement.prototype.xmlspace
+SVGDescElement.prototype.xmlspace;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGDescElement.prototype.className
+SVGDescElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGDescElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGDescElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
@@ -3113,300 +3126,304 @@ SVGDescElement.prototype.getPresentationAttribute = function (opt_name) {}
  * @implements {SVGStylable}
  * @implements {SVGTransformable}
  */
-function SVGEllipseElement () {}
+function SVGEllipseElement() {}
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGEllipseElement.prototype.cx
+SVGEllipseElement.prototype.cx;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGEllipseElement.prototype.cy
+SVGEllipseElement.prototype.cy;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGEllipseElement.prototype.rx
+SVGEllipseElement.prototype.rx;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGEllipseElement.prototype.ry
+SVGEllipseElement.prototype.ry;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGEllipseElement.prototype.externalResourcesRequired
+SVGEllipseElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedTransformList}
  */
-SVGEllipseElement.prototype.transform
+SVGEllipseElement.prototype.transform;
 
 /**
  * @type {string}
  */
-SVGEllipseElement.prototype.xmllang
+SVGEllipseElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGEllipseElement.prototype.xmlspace
+SVGEllipseElement.prototype.xmlspace;
 
 /**
  * @type {!SVGElement}
  */
-SVGEllipseElement.prototype.nearestViewportElement
+SVGEllipseElement.prototype.nearestViewportElement;
 
 /**
  * @type {!SVGElement}
  * @override
  */
-SVGEllipseElement.prototype.farthestViewportElement
+SVGEllipseElement.prototype.farthestViewportElement;
 
 /**
  * @return {!SVGRect}
  * @override
  */
-SVGEllipseElement.prototype.getBBox = function () {}
+SVGEllipseElement.prototype.getBBox = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGEllipseElement.prototype.getCTM = function () {}
+SVGEllipseElement.prototype.getCTM = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGEllipseElement.prototype.getScreenCTM = function () {}
+SVGEllipseElement.prototype.getScreenCTM = function () {};
 
 /**
  * @param {!SVGElement=} opt_element
  * @return {!SVGMatrix}
  * @override
  */
-SVGEllipseElement.prototype.getTransformToElement = function (opt_element) {}
+SVGEllipseElement.prototype.getTransformToElement = function (opt_element) {};
 
 /**
  * @type {!SVGStringList}
  */
-SVGEllipseElement.prototype.requiredFeatures
+SVGEllipseElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGEllipseElement.prototype.requiredExtensions
+SVGEllipseElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGEllipseElement.prototype.systemLanguage
+SVGEllipseElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGEllipseElement.prototype.hasExtension = function (opt_extension) {}
+SVGEllipseElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGEllipseElement.prototype.className
+SVGEllipseElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGEllipseElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGEllipseElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFESpecularLightingElement () {}
+function SVGFESpecularLightingElement() {}
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFESpecularLightingElement.prototype.in1
+SVGFESpecularLightingElement.prototype.in1;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFESpecularLightingElement.prototype.surfaceScale
+SVGFESpecularLightingElement.prototype.surfaceScale;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFESpecularLightingElement.prototype.specularConstant
+SVGFESpecularLightingElement.prototype.specularConstant;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFESpecularLightingElement.prototype.specularExponent
+SVGFESpecularLightingElement.prototype.specularExponent;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFESpecularLightingElement.prototype.x
+SVGFESpecularLightingElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFESpecularLightingElement.prototype.y
+SVGFESpecularLightingElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFESpecularLightingElement.prototype.width
+SVGFESpecularLightingElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFESpecularLightingElement.prototype.height
+SVGFESpecularLightingElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFESpecularLightingElement.prototype.result
+SVGFESpecularLightingElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFESpecularLightingElement.prototype.className
+SVGFESpecularLightingElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFESpecularLightingElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFESpecularLightingElement.prototype.getPresentationAttribute = function (
+  opt_name
+) {};
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFEColorMatrixElement () {}
+function SVGFEColorMatrixElement() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGFEColorMatrixElement.SVG_FECOLORMATRIX_TYPE_UNKNOWN
+SVGFEColorMatrixElement.SVG_FECOLORMATRIX_TYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEColorMatrixElement.prototype.SVG_FECOLORMATRIX_TYPE_UNKNOWN
+SVGFEColorMatrixElement.prototype.SVG_FECOLORMATRIX_TYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEColorMatrixElement.SVG_FECOLORMATRIX_TYPE_MATRIX
+SVGFEColorMatrixElement.SVG_FECOLORMATRIX_TYPE_MATRIX;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEColorMatrixElement.prototype.SVG_FECOLORMATRIX_TYPE_MATRIX
+SVGFEColorMatrixElement.prototype.SVG_FECOLORMATRIX_TYPE_MATRIX;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEColorMatrixElement.SVG_FECOLORMATRIX_TYPE_SATURATE
+SVGFEColorMatrixElement.SVG_FECOLORMATRIX_TYPE_SATURATE;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEColorMatrixElement.prototype.SVG_FECOLORMATRIX_TYPE_SATURATE
+SVGFEColorMatrixElement.prototype.SVG_FECOLORMATRIX_TYPE_SATURATE;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEColorMatrixElement.SVG_FECOLORMATRIX_TYPE_HUEROTATE
+SVGFEColorMatrixElement.SVG_FECOLORMATRIX_TYPE_HUEROTATE;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEColorMatrixElement.prototype.SVG_FECOLORMATRIX_TYPE_HUEROTATE
+SVGFEColorMatrixElement.prototype.SVG_FECOLORMATRIX_TYPE_HUEROTATE;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEColorMatrixElement.SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA
+SVGFEColorMatrixElement.SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEColorMatrixElement.prototype.SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA
+SVGFEColorMatrixElement.prototype.SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEColorMatrixElement.prototype.in1
+SVGFEColorMatrixElement.prototype.in1;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGFEColorMatrixElement.prototype.type
+SVGFEColorMatrixElement.prototype.type;
 
 /**
  * @type {!SVGAnimatedNumberList}
  */
-SVGFEColorMatrixElement.prototype.values
+SVGFEColorMatrixElement.prototype.values;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEColorMatrixElement.prototype.x
+SVGFEColorMatrixElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEColorMatrixElement.prototype.y
+SVGFEColorMatrixElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEColorMatrixElement.prototype.width
+SVGFEColorMatrixElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEColorMatrixElement.prototype.height
+SVGFEColorMatrixElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEColorMatrixElement.prototype.result
+SVGFEColorMatrixElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEColorMatrixElement.prototype.className
+SVGFEColorMatrixElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFEColorMatrixElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFEColorMatrixElement.prototype.getPresentationAttribute = function (
+  opt_name
+) {};
 
 /**
  * @constructor
@@ -3416,347 +3433,349 @@ SVGFEColorMatrixElement.prototype.getPresentationAttribute = function (opt_name)
  * @implements {SVGStylable}
  * @implements {SVGFitToViewBox}
  */
-function SVGSymbolElement () {}
+function SVGSymbolElement() {}
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGSymbolElement.prototype.externalResourcesRequired
+SVGSymbolElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedRect}
  */
-SVGSymbolElement.prototype.viewBox
+SVGSymbolElement.prototype.viewBox;
 
 /**
  * @type {!SVGAnimatedPreserveAspectRatio}
  */
-SVGSymbolElement.prototype.preserveAspectRatio
+SVGSymbolElement.prototype.preserveAspectRatio;
 
 /**
  * @type {string}
  */
-SVGSymbolElement.prototype.xmllang
+SVGSymbolElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGSymbolElement.prototype.xmlspace
+SVGSymbolElement.prototype.xmlspace;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGSymbolElement.prototype.className
+SVGSymbolElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGSymbolElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGSymbolElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFEConvolveMatrixElement () {}
+function SVGFEConvolveMatrixElement() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGFEConvolveMatrixElement.SVG_EDGEMODE_UNKNOWN
+SVGFEConvolveMatrixElement.SVG_EDGEMODE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEConvolveMatrixElement.prototype.SVG_EDGEMODE_UNKNOWN
+SVGFEConvolveMatrixElement.prototype.SVG_EDGEMODE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEConvolveMatrixElement.SVG_EDGEMODE_DUPLICATE
+SVGFEConvolveMatrixElement.SVG_EDGEMODE_DUPLICATE;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEConvolveMatrixElement.prototype.SVG_EDGEMODE_DUPLICATE
+SVGFEConvolveMatrixElement.prototype.SVG_EDGEMODE_DUPLICATE;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEConvolveMatrixElement.SVG_EDGEMODE_WRAP
+SVGFEConvolveMatrixElement.SVG_EDGEMODE_WRAP;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEConvolveMatrixElement.prototype.SVG_EDGEMODE_WRAP
+SVGFEConvolveMatrixElement.prototype.SVG_EDGEMODE_WRAP;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEConvolveMatrixElement.SVG_EDGEMODE_NONE
+SVGFEConvolveMatrixElement.SVG_EDGEMODE_NONE;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEConvolveMatrixElement.prototype.SVG_EDGEMODE_NONE
+SVGFEConvolveMatrixElement.prototype.SVG_EDGEMODE_NONE;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEConvolveMatrixElement.prototype.in1
+SVGFEConvolveMatrixElement.prototype.in1;
 
 /**
  * @type {!SVGAnimatedInteger}
  */
-SVGFEConvolveMatrixElement.prototype.orderX
+SVGFEConvolveMatrixElement.prototype.orderX;
 
 /**
  * @type {!SVGAnimatedInteger}
  */
-SVGFEConvolveMatrixElement.prototype.orderY
+SVGFEConvolveMatrixElement.prototype.orderY;
 
 /**
  * @type {!SVGAnimatedNumberList}
  */
-SVGFEConvolveMatrixElement.prototype.kernelMatrix
+SVGFEConvolveMatrixElement.prototype.kernelMatrix;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEConvolveMatrixElement.prototype.divisor
+SVGFEConvolveMatrixElement.prototype.divisor;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEConvolveMatrixElement.prototype.bias
+SVGFEConvolveMatrixElement.prototype.bias;
 
 /**
  * @type {!SVGAnimatedInteger}
  */
-SVGFEConvolveMatrixElement.prototype.targetX
+SVGFEConvolveMatrixElement.prototype.targetX;
 
 /**
  * @type {!SVGAnimatedInteger}
  */
-SVGFEConvolveMatrixElement.prototype.targetY
+SVGFEConvolveMatrixElement.prototype.targetY;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGFEConvolveMatrixElement.prototype.edgeMode
+SVGFEConvolveMatrixElement.prototype.edgeMode;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEConvolveMatrixElement.prototype.kernelUnitLengthX
+SVGFEConvolveMatrixElement.prototype.kernelUnitLengthX;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEConvolveMatrixElement.prototype.kernelUnitLengthY
+SVGFEConvolveMatrixElement.prototype.kernelUnitLengthY;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGFEConvolveMatrixElement.prototype.preserveAlpha
+SVGFEConvolveMatrixElement.prototype.preserveAlpha;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEConvolveMatrixElement.prototype.x
+SVGFEConvolveMatrixElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEConvolveMatrixElement.prototype.y
+SVGFEConvolveMatrixElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEConvolveMatrixElement.prototype.width
+SVGFEConvolveMatrixElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEConvolveMatrixElement.prototype.height
+SVGFEConvolveMatrixElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEConvolveMatrixElement.prototype.result
+SVGFEConvolveMatrixElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEConvolveMatrixElement.prototype.className
+SVGFEConvolveMatrixElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFEConvolveMatrixElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFEConvolveMatrixElement.prototype.getPresentationAttribute = function (
+  opt_name
+) {};
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFEFloodElement () {}
+function SVGFEFloodElement() {}
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEFloodElement.prototype.x
+SVGFEFloodElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEFloodElement.prototype.y
+SVGFEFloodElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEFloodElement.prototype.width
+SVGFEFloodElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEFloodElement.prototype.height
+SVGFEFloodElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEFloodElement.prototype.result
+SVGFEFloodElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEFloodElement.prototype.className
+SVGFEFloodElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFEFloodElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFEFloodElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGStylable}
  */
-function SVGStopElement () {}
+function SVGStopElement() {}
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGStopElement.prototype.offset
+SVGStopElement.prototype.offset;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGStopElement.prototype.className
+SVGStopElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGStopElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGStopElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGGlyphElement () {}
+function SVGGlyphElement() {}
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGHKernElement () {}
+function SVGHKernElement() {}
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGVKernElement () {}
+function SVGVKernElement() {}
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGFontElement () {}
+function SVGFontElement() {}
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFEOffsetElement () {}
+function SVGFEOffsetElement() {}
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEOffsetElement.prototype.in1
+SVGFEOffsetElement.prototype.in1;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEOffsetElement.prototype.dx
+SVGFEOffsetElement.prototype.dx;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEOffsetElement.prototype.dy
+SVGFEOffsetElement.prototype.dy;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEOffsetElement.prototype.x
+SVGFEOffsetElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEOffsetElement.prototype.y
+SVGFEOffsetElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEOffsetElement.prototype.width
+SVGFEOffsetElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEOffsetElement.prototype.height
+SVGFEOffsetElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEOffsetElement.prototype.result
+SVGFEOffsetElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEOffsetElement.prototype.className
+SVGFEOffsetElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFEOffsetElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFEOffsetElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
@@ -3766,277 +3785,291 @@ SVGFEOffsetElement.prototype.getPresentationAttribute = function (opt_name) {}
  * @implements {SVGExternalResourcesRequired}
  * @implements {SVGStylable}
  */
-function SVGFilterElement () {}
+function SVGFilterElement() {}
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGFilterElement.prototype.filterUnits
+SVGFilterElement.prototype.filterUnits;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGFilterElement.prototype.primitiveUnits
+SVGFilterElement.prototype.primitiveUnits;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFilterElement.prototype.x
+SVGFilterElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFilterElement.prototype.y
+SVGFilterElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFilterElement.prototype.width
+SVGFilterElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFilterElement.prototype.height
+SVGFilterElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedInteger}
  */
-SVGFilterElement.prototype.filterResX
+SVGFilterElement.prototype.filterResX;
 
 /**
  * @type {!SVGAnimatedInteger}
  */
-SVGFilterElement.prototype.filterResY
+SVGFilterElement.prototype.filterResY;
 
 /**
  * @param {number=} opt_filterResX
  * @param {number=} opt_filterResY
  * @return {undefined}
  */
-SVGFilterElement.prototype.setFilterRes = function (opt_filterResX, opt_filterResY) {}
+SVGFilterElement.prototype.setFilterRes = function (
+  opt_filterResX,
+  opt_filterResY
+) {};
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGFilterElement.prototype.externalResourcesRequired
+SVGFilterElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFilterElement.prototype.href
+SVGFilterElement.prototype.href;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFilterElement.prototype.className
+SVGFilterElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFilterElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFilterElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @type {string}
  */
-SVGFilterElement.prototype.xmllang
+SVGFilterElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGFilterElement.prototype.xmlspace
+SVGFilterElement.prototype.xmlspace;
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFEGaussianBlurElement () {}
+function SVGFEGaussianBlurElement() {}
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEGaussianBlurElement.prototype.in1
+SVGFEGaussianBlurElement.prototype.in1;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEGaussianBlurElement.prototype.stdDeviationX
+SVGFEGaussianBlurElement.prototype.stdDeviationX;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEGaussianBlurElement.prototype.stdDeviationY
+SVGFEGaussianBlurElement.prototype.stdDeviationY;
 
 /**
  * @param {number=} opt_stdDeviationX
  * @param {number=} opt_stdDeviationY
  * @return {undefined}
  */
-SVGFEGaussianBlurElement.prototype.setStdDeviation = function (opt_stdDeviationX, opt_stdDeviationY) {}
+SVGFEGaussianBlurElement.prototype.setStdDeviation = function (
+  opt_stdDeviationX,
+  opt_stdDeviationY
+) {};
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEGaussianBlurElement.prototype.x
+SVGFEGaussianBlurElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEGaussianBlurElement.prototype.y
+SVGFEGaussianBlurElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEGaussianBlurElement.prototype.width
+SVGFEGaussianBlurElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEGaussianBlurElement.prototype.height
+SVGFEGaussianBlurElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEGaussianBlurElement.prototype.result
+SVGFEGaussianBlurElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEGaussianBlurElement.prototype.className
+SVGFEGaussianBlurElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFEGaussianBlurElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFEGaussianBlurElement.prototype.getPresentationAttribute = function (
+  opt_name
+) {};
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGAltGlyphDefElement () {}
+function SVGAltGlyphDefElement() {}
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGComponentTransferFunctionElement () {}
+function SVGComponentTransferFunctionElement() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGComponentTransferFunctionElement.SVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN
+SVGComponentTransferFunctionElement.SVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGComponentTransferFunctionElement.prototype.SVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN
+SVGComponentTransferFunctionElement.prototype
+  .SVG_FECOMPONENTTRANSFER_TYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGComponentTransferFunctionElement.SVG_FECOMPONENTTRANSFER_TYPE_IDENTITY
+SVGComponentTransferFunctionElement.SVG_FECOMPONENTTRANSFER_TYPE_IDENTITY;
 
 /**
  * @const
  * @type {number}
  */
-SVGComponentTransferFunctionElement.prototype.SVG_FECOMPONENTTRANSFER_TYPE_IDENTITY
+SVGComponentTransferFunctionElement.prototype
+  .SVG_FECOMPONENTTRANSFER_TYPE_IDENTITY;
 
 /**
  * @const
  * @type {number}
  */
-SVGComponentTransferFunctionElement.SVG_FECOMPONENTTRANSFER_TYPE_TABLE
+SVGComponentTransferFunctionElement.SVG_FECOMPONENTTRANSFER_TYPE_TABLE;
 
 /**
  * @const
  * @type {number}
  */
-SVGComponentTransferFunctionElement.prototype.SVG_FECOMPONENTTRANSFER_TYPE_TABLE
+SVGComponentTransferFunctionElement.prototype
+  .SVG_FECOMPONENTTRANSFER_TYPE_TABLE;
 
 /**
  * @const
  * @type {number}
  */
-SVGComponentTransferFunctionElement.SVG_FECOMPONENTTRANSFER_TYPE_DISCRETE
+SVGComponentTransferFunctionElement.SVG_FECOMPONENTTRANSFER_TYPE_DISCRETE;
 
 /**
  * @const
  * @type {number}
  */
-SVGComponentTransferFunctionElement.prototype.SVG_FECOMPONENTTRANSFER_TYPE_DISCRETE
+SVGComponentTransferFunctionElement.prototype
+  .SVG_FECOMPONENTTRANSFER_TYPE_DISCRETE;
 
 /**
  * @const
  * @type {number}
  */
-SVGComponentTransferFunctionElement.SVG_FECOMPONENTTRANSFER_TYPE_LINEAR
+SVGComponentTransferFunctionElement.SVG_FECOMPONENTTRANSFER_TYPE_LINEAR;
 
 /**
  * @const
  * @type {number}
  */
-SVGComponentTransferFunctionElement.prototype.SVG_FECOMPONENTTRANSFER_TYPE_LINEAR
+SVGComponentTransferFunctionElement.prototype
+  .SVG_FECOMPONENTTRANSFER_TYPE_LINEAR;
 
 /**
  * @const
  * @type {number}
  */
-SVGComponentTransferFunctionElement.SVG_FECOMPONENTTRANSFER_TYPE_GAMMA
+SVGComponentTransferFunctionElement.SVG_FECOMPONENTTRANSFER_TYPE_GAMMA;
 
 /**
  * @const
  * @type {number}
  */
-SVGComponentTransferFunctionElement.prototype.SVG_FECOMPONENTTRANSFER_TYPE_GAMMA
+SVGComponentTransferFunctionElement.prototype
+  .SVG_FECOMPONENTTRANSFER_TYPE_GAMMA;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGComponentTransferFunctionElement.prototype.type
+SVGComponentTransferFunctionElement.prototype.type;
 
 /**
  * @type {!SVGAnimatedNumberList}
  */
-SVGComponentTransferFunctionElement.prototype.tableValues
+SVGComponentTransferFunctionElement.prototype.tableValues;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGComponentTransferFunctionElement.prototype.slope
+SVGComponentTransferFunctionElement.prototype.slope;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGComponentTransferFunctionElement.prototype.intercept
+SVGComponentTransferFunctionElement.prototype.intercept;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGComponentTransferFunctionElement.prototype.amplitude
+SVGComponentTransferFunctionElement.prototype.amplitude;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGComponentTransferFunctionElement.prototype.exponent
+SVGComponentTransferFunctionElement.prototype.exponent;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGComponentTransferFunctionElement.prototype.offset
+SVGComponentTransferFunctionElement.prototype.offset;
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGMetadataElement () {}
+function SVGMetadataElement() {}
 
 /**
  * @constructor
@@ -4044,29 +4077,29 @@ function SVGMetadataElement () {}
  * @implements {SVGLangSpace}
  * @implements {SVGStylable}
  */
-function SVGTitleElement () {}
+function SVGTitleElement() {}
 
 /**
  * @type {string}
  */
-SVGTitleElement.prototype.xmllang
+SVGTitleElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGTitleElement.prototype.xmlspace
+SVGTitleElement.prototype.xmlspace;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGTitleElement.prototype.className
+SVGTitleElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGTitleElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGTitleElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
@@ -4075,49 +4108,49 @@ SVGTitleElement.prototype.getPresentationAttribute = function (opt_name) {}
  * @implements {SVGTests}
  * @implements {SVGExternalResourcesRequired}
  */
-function SVGCursorElement () {}
+function SVGCursorElement() {}
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGCursorElement.prototype.x
+SVGCursorElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGCursorElement.prototype.y
+SVGCursorElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGCursorElement.prototype.externalResourcesRequired
+SVGCursorElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGCursorElement.prototype.href
+SVGCursorElement.prototype.href;
 
 /**
  * @type {!SVGStringList}
  */
-SVGCursorElement.prototype.requiredFeatures
+SVGCursorElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGCursorElement.prototype.requiredExtensions
+SVGCursorElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGCursorElement.prototype.systemLanguage
+SVGCursorElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGCursorElement.prototype.hasExtension = function (opt_extension) {}
+SVGCursorElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @constructor
@@ -4126,92 +4159,92 @@ SVGCursorElement.prototype.hasExtension = function (opt_extension) {}
  * @implements {SVGExternalResourcesRequired}
  * @implements {SVGStylable}
  */
-function SVGGradientElement () {}
+function SVGGradientElement() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGGradientElement.SVG_SPREADMETHOD_UNKNOWN
+SVGGradientElement.SVG_SPREADMETHOD_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGGradientElement.prototype.SVG_SPREADMETHOD_UNKNOWN
+SVGGradientElement.prototype.SVG_SPREADMETHOD_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGGradientElement.SVG_SPREADMETHOD_PAD
+SVGGradientElement.SVG_SPREADMETHOD_PAD;
 
 /**
  * @const
  * @type {number}
  */
-SVGGradientElement.prototype.SVG_SPREADMETHOD_PAD
+SVGGradientElement.prototype.SVG_SPREADMETHOD_PAD;
 
 /**
  * @const
  * @type {number}
  */
-SVGGradientElement.SVG_SPREADMETHOD_REFLECT
+SVGGradientElement.SVG_SPREADMETHOD_REFLECT;
 
 /**
  * @const
  * @type {number}
  */
-SVGGradientElement.prototype.SVG_SPREADMETHOD_REFLECT
+SVGGradientElement.prototype.SVG_SPREADMETHOD_REFLECT;
 
 /**
  * @const
  * @type {number}
  */
-SVGGradientElement.SVG_SPREADMETHOD_REPEAT
+SVGGradientElement.SVG_SPREADMETHOD_REPEAT;
 
 /**
  * @const
  * @type {number}
  */
-SVGGradientElement.prototype.SVG_SPREADMETHOD_REPEAT
+SVGGradientElement.prototype.SVG_SPREADMETHOD_REPEAT;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGGradientElement.prototype.gradientUnits
+SVGGradientElement.prototype.gradientUnits;
 
 /**
  * @type {!SVGAnimatedTransformList}
  */
-SVGGradientElement.prototype.gradientTransform
+SVGGradientElement.prototype.gradientTransform;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGGradientElement.prototype.spreadMethod
+SVGGradientElement.prototype.spreadMethod;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGGradientElement.prototype.externalResourcesRequired
+SVGGradientElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGGradientElement.prototype.href
+SVGGradientElement.prototype.href;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGGradientElement.prototype.className
+SVGGradientElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGGradientElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGGradientElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
@@ -4221,160 +4254,160 @@ SVGGradientElement.prototype.getPresentationAttribute = function (opt_name) {}
  * @implements {SVGStylable}
  * @implements {SVGFitToViewBox}
  */
-function SVGMarkerElement () {}
+function SVGMarkerElement() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGMarkerElement.SVG_MARKERUNITS_UNKNOWN
+SVGMarkerElement.SVG_MARKERUNITS_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGMarkerElement.prototype.SVG_MARKERUNITS_UNKNOWN
+SVGMarkerElement.prototype.SVG_MARKERUNITS_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGMarkerElement.SVG_MARKERUNITS_USERSPACEONUSE
+SVGMarkerElement.SVG_MARKERUNITS_USERSPACEONUSE;
 
 /**
  * @const
  * @type {number}
  */
-SVGMarkerElement.prototype.SVG_MARKERUNITS_USERSPACEONUSE
+SVGMarkerElement.prototype.SVG_MARKERUNITS_USERSPACEONUSE;
 
 /**
  * @const
  * @type {number}
  */
-SVGMarkerElement.SVG_MARKERUNITS_STROKEWIDTH
+SVGMarkerElement.SVG_MARKERUNITS_STROKEWIDTH;
 
 /**
  * @const
  * @type {number}
  */
-SVGMarkerElement.prototype.SVG_MARKERUNITS_STROKEWIDTH
+SVGMarkerElement.prototype.SVG_MARKERUNITS_STROKEWIDTH;
 
 /**
  * @const
  * @type {number}
  */
-SVGMarkerElement.SVG_MARKER_ORIENT_UNKNOWN
+SVGMarkerElement.SVG_MARKER_ORIENT_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGMarkerElement.prototype.SVG_MARKER_ORIENT_UNKNOWN
+SVGMarkerElement.prototype.SVG_MARKER_ORIENT_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGMarkerElement.SVG_MARKER_ORIENT_AUTO
+SVGMarkerElement.SVG_MARKER_ORIENT_AUTO;
 
 /**
  * @const
  * @type {number}
  */
-SVGMarkerElement.prototype.SVG_MARKER_ORIENT_AUTO
+SVGMarkerElement.prototype.SVG_MARKER_ORIENT_AUTO;
 
 /**
  * @const
  * @type {number}
  */
-SVGMarkerElement.SVG_MARKER_ORIENT_ANGLE
+SVGMarkerElement.SVG_MARKER_ORIENT_ANGLE;
 
 /**
  * @const
  * @type {number}
  */
-SVGMarkerElement.prototype.SVG_MARKER_ORIENT_ANGLE
+SVGMarkerElement.prototype.SVG_MARKER_ORIENT_ANGLE;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGMarkerElement.prototype.refX
+SVGMarkerElement.prototype.refX;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGMarkerElement.prototype.refY
+SVGMarkerElement.prototype.refY;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGMarkerElement.prototype.markerUnits
+SVGMarkerElement.prototype.markerUnits;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGMarkerElement.prototype.markerWidth
+SVGMarkerElement.prototype.markerWidth;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGMarkerElement.prototype.markerHeight
+SVGMarkerElement.prototype.markerHeight;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGMarkerElement.prototype.orientType
+SVGMarkerElement.prototype.orientType;
 
 /**
  * @type {!SVGAnimatedAngle}
  */
-SVGMarkerElement.prototype.orientAngle
+SVGMarkerElement.prototype.orientAngle;
 
 /** */
-SVGMarkerElement.prototype.setOrientToAuto = function () {}
+SVGMarkerElement.prototype.setOrientToAuto = function () {};
 
 /**
  * @param {!SVGAngle=} opt_angle
  * @return {undefined}
  */
-SVGMarkerElement.prototype.setOrientToAngle = function (opt_angle) {}
+SVGMarkerElement.prototype.setOrientToAngle = function (opt_angle) {};
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGMarkerElement.prototype.externalResourcesRequired
+SVGMarkerElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedRect}
  */
-SVGMarkerElement.prototype.viewBox
+SVGMarkerElement.prototype.viewBox;
 
 /**
  * @type {!SVGAnimatedPreserveAspectRatio}
  */
-SVGMarkerElement.prototype.preserveAspectRatio
+SVGMarkerElement.prototype.preserveAspectRatio;
 
 /**
  * @type {string}
  */
-SVGMarkerElement.prototype.xmllang
+SVGMarkerElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGMarkerElement.prototype.xmlspace
+SVGMarkerElement.prototype.xmlspace;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGMarkerElement.prototype.className
+SVGMarkerElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGMarkerElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGMarkerElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
@@ -4384,86 +4417,86 @@ SVGMarkerElement.prototype.getPresentationAttribute = function (opt_name) {}
  * @implements {SVGExternalResourcesRequired}
  * @implements {SVGStylable}
  */
-function SVGMaskElement () {}
+function SVGMaskElement() {}
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGMaskElement.prototype.maskUnits
+SVGMaskElement.prototype.maskUnits;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGMaskElement.prototype.maskContentUnits
+SVGMaskElement.prototype.maskContentUnits;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGMaskElement.prototype.x
+SVGMaskElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGMaskElement.prototype.y
+SVGMaskElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGMaskElement.prototype.width
+SVGMaskElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGMaskElement.prototype.height
+SVGMaskElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGMaskElement.prototype.externalResourcesRequired
+SVGMaskElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGStringList}
  */
-SVGMaskElement.prototype.requiredFeatures
+SVGMaskElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGMaskElement.prototype.requiredExtensions
+SVGMaskElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGMaskElement.prototype.systemLanguage
+SVGMaskElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGMaskElement.prototype.hasExtension = function (opt_extension) {}
+SVGMaskElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGMaskElement.prototype.className
+SVGMaskElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGMaskElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGMaskElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @type {string}
  */
-SVGMaskElement.prototype.xmllang
+SVGMaskElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGMaskElement.prototype.xmlspace
+SVGMaskElement.prototype.xmlspace;
 
 /**
  * @constructor
@@ -4472,68 +4505,68 @@ SVGMaskElement.prototype.xmlspace
  * @implements {SVGFitToViewBox}
  * @implements {SVGZoomAndPan}
  */
-function SVGViewElement () {}
+function SVGViewElement() {}
 
 /**
  * @type {!SVGStringList}
  */
-SVGViewElement.prototype.viewTarget
+SVGViewElement.prototype.viewTarget;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGViewElement.prototype.externalResourcesRequired
+SVGViewElement.prototype.externalResourcesRequired;
 
 /**
  * @const
  * @type {number}
  */
-SVGViewElement.SVG_ZOOMANDPAN_UNKNOWN
+SVGViewElement.SVG_ZOOMANDPAN_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGViewElement.prototype.SVG_ZOOMANDPAN_UNKNOWN
+SVGViewElement.prototype.SVG_ZOOMANDPAN_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGViewElement.SVG_ZOOMANDPAN_DISABLE
+SVGViewElement.SVG_ZOOMANDPAN_DISABLE;
 
 /**
  * @const
  * @type {number}
  */
-SVGViewElement.prototype.SVG_ZOOMANDPAN_DISABLE
+SVGViewElement.prototype.SVG_ZOOMANDPAN_DISABLE;
 
 /**
  * @const
  * @type {number}
  */
-SVGViewElement.SVG_ZOOMANDPAN_MAGNIFY
+SVGViewElement.SVG_ZOOMANDPAN_MAGNIFY;
 
 /**
  * @const
  * @type {number}
  */
-SVGViewElement.prototype.SVG_ZOOMANDPAN_MAGNIFY
+SVGViewElement.prototype.SVG_ZOOMANDPAN_MAGNIFY;
 
 /**
  * @type {number}
  */
-SVGViewElement.prototype.zoomAndPan
+SVGViewElement.prototype.zoomAndPan;
 
 /**
  * @type {!SVGAnimatedRect}
  */
-SVGViewElement.prototype.viewBox
+SVGViewElement.prototype.viewBox;
 
 /**
  * @type {!SVGAnimatedPreserveAspectRatio}
  */
-SVGViewElement.prototype.preserveAspectRatio
+SVGViewElement.prototype.preserveAspectRatio;
 
 /**
  * @constructor
@@ -4541,23 +4574,23 @@ SVGViewElement.prototype.preserveAspectRatio
  * @implements {SVGURIReference}
  * @implements {SVGExternalResourcesRequired}
  */
-function SVGMPathElement () {}
+function SVGMPathElement() {}
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGMPathElement.prototype.externalResourcesRequired
+SVGMPathElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGMPathElement.prototype.href
+SVGMPathElement.prototype.href;
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGFontFaceSrcElement () {}
+function SVGFontFaceSrcElement() {}
 
 /**
  * @constructor
@@ -4567,267 +4600,274 @@ function SVGFontFaceSrcElement () {}
  * @implements {SVGExternalResourcesRequired}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFEImageElement () {}
+function SVGFEImageElement() {}
 
 /**
  * @type {!SVGAnimatedPreserveAspectRatio}
  */
-SVGFEImageElement.prototype.preserveAspectRatio
+SVGFEImageElement.prototype.preserveAspectRatio;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEImageElement.prototype.x
+SVGFEImageElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEImageElement.prototype.y
+SVGFEImageElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEImageElement.prototype.width
+SVGFEImageElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEImageElement.prototype.height
+SVGFEImageElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEImageElement.prototype.result
+SVGFEImageElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGFEImageElement.prototype.externalResourcesRequired
+SVGFEImageElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEImageElement.prototype.href
+SVGFEImageElement.prototype.href;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEImageElement.prototype.className
+SVGFEImageElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFEImageElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFEImageElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @type {string}
  */
-SVGFEImageElement.prototype.xmllang
+SVGFEImageElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGFEImageElement.prototype.xmlspace
+SVGFEImageElement.prototype.xmlspace;
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGFEDistantLightElement () {}
+function SVGFEDistantLightElement() {}
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEDistantLightElement.prototype.azimuth
+SVGFEDistantLightElement.prototype.azimuth;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEDistantLightElement.prototype.elevation
+SVGFEDistantLightElement.prototype.elevation;
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGFontFaceUriElement () {}
+function SVGFontFaceUriElement() {}
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFEDiffuseLightingElement () {}
+function SVGFEDiffuseLightingElement() {}
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEDiffuseLightingElement.prototype.in1
+SVGFEDiffuseLightingElement.prototype.in1;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEDiffuseLightingElement.prototype.surfaceScale
+SVGFEDiffuseLightingElement.prototype.surfaceScale;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEDiffuseLightingElement.prototype.diffuseConstant
+SVGFEDiffuseLightingElement.prototype.diffuseConstant;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEDiffuseLightingElement.prototype.kernelUnitLengthX
+SVGFEDiffuseLightingElement.prototype.kernelUnitLengthX;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEDiffuseLightingElement.prototype.kernelUnitLengthY
+SVGFEDiffuseLightingElement.prototype.kernelUnitLengthY;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEDiffuseLightingElement.prototype.x
+SVGFEDiffuseLightingElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEDiffuseLightingElement.prototype.y
+SVGFEDiffuseLightingElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEDiffuseLightingElement.prototype.width
+SVGFEDiffuseLightingElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEDiffuseLightingElement.prototype.height
+SVGFEDiffuseLightingElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEDiffuseLightingElement.prototype.result
+SVGFEDiffuseLightingElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEDiffuseLightingElement.prototype.className
+SVGFEDiffuseLightingElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFEDiffuseLightingElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFEDiffuseLightingElement.prototype.getPresentationAttribute = function (
+  opt_name
+) {};
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFEMorphologyElement () {}
+function SVGFEMorphologyElement() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGFEMorphologyElement.SVG_MORPHOLOGY_OPERATOR_UNKNOWN
+SVGFEMorphologyElement.SVG_MORPHOLOGY_OPERATOR_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEMorphologyElement.prototype.SVG_MORPHOLOGY_OPERATOR_UNKNOWN
+SVGFEMorphologyElement.prototype.SVG_MORPHOLOGY_OPERATOR_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEMorphologyElement.SVG_MORPHOLOGY_OPERATOR_ERODE
+SVGFEMorphologyElement.SVG_MORPHOLOGY_OPERATOR_ERODE;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEMorphologyElement.prototype.SVG_MORPHOLOGY_OPERATOR_ERODE
+SVGFEMorphologyElement.prototype.SVG_MORPHOLOGY_OPERATOR_ERODE;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEMorphologyElement.SVG_MORPHOLOGY_OPERATOR_DILATE
+SVGFEMorphologyElement.SVG_MORPHOLOGY_OPERATOR_DILATE;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEMorphologyElement.prototype.SVG_MORPHOLOGY_OPERATOR_DILATE
+SVGFEMorphologyElement.prototype.SVG_MORPHOLOGY_OPERATOR_DILATE;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEMorphologyElement.prototype.in1
+SVGFEMorphologyElement.prototype.in1;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGFEMorphologyElement.prototype.operator
+SVGFEMorphologyElement.prototype.operator;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEMorphologyElement.prototype.radiusX
+SVGFEMorphologyElement.prototype.radiusX;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEMorphologyElement.prototype.radiusY
+SVGFEMorphologyElement.prototype.radiusY;
 
 /**
  * @param {number=} opt_radiusX
  * @param {number=} opt_radiusY
  * @return {undefined}
  */
-SVGFEMorphologyElement.prototype.setRadius = function (opt_radiusX, opt_radiusY) {}
+SVGFEMorphologyElement.prototype.setRadius = function (
+  opt_radiusX,
+  opt_radiusY
+) {};
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEMorphologyElement.prototype.x
+SVGFEMorphologyElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEMorphologyElement.prototype.y
+SVGFEMorphologyElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEMorphologyElement.prototype.width
+SVGFEMorphologyElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEMorphologyElement.prototype.height
+SVGFEMorphologyElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEMorphologyElement.prototype.result
+SVGFEMorphologyElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEMorphologyElement.prototype.className
+SVGFEMorphologyElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFEMorphologyElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFEMorphologyElement.prototype.getPresentationAttribute = function (
+  opt_name
+) {};
 
 /**
  * @constructor
@@ -4835,54 +4875,54 @@ SVGFEMorphologyElement.prototype.getPresentationAttribute = function (opt_name) 
  * @implements {SVGURIReference}
  * @implements {SVGStylable}
  */
-function SVGGlyphRefElement () {}
+function SVGGlyphRefElement() {}
 
 /**
  * @type {string}
  */
-SVGGlyphRefElement.prototype.glyphRef
+SVGGlyphRefElement.prototype.glyphRef;
 
 /**
  * @type {string}
  */
-SVGGlyphRefElement.prototype.format
+SVGGlyphRefElement.prototype.format;
 
 /**
  * @type {number}
  */
-SVGGlyphRefElement.prototype.x
+SVGGlyphRefElement.prototype.x;
 
 /**
  * @type {number}
  */
-SVGGlyphRefElement.prototype.y
+SVGGlyphRefElement.prototype.y;
 
 /**
  * @type {number}
  */
-SVGGlyphRefElement.prototype.dx
+SVGGlyphRefElement.prototype.dx;
 
 /**
  * @type {number}
  */
-SVGGlyphRefElement.prototype.dy
+SVGGlyphRefElement.prototype.dy;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGGlyphRefElement.prototype.href
+SVGGlyphRefElement.prototype.href;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGGlyphRefElement.prototype.className
+SVGGlyphRefElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGGlyphRefElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGGlyphRefElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
@@ -4892,491 +4932,506 @@ SVGGlyphRefElement.prototype.getPresentationAttribute = function (opt_name) {}
  * @implements {SVGExternalResourcesRequired}
  * @implements {SVGStylable}
  */
-function SVGTextContentElement () {}
+function SVGTextContentElement() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGTextContentElement.LENGTHADJUST_UNKNOWN
+SVGTextContentElement.LENGTHADJUST_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGTextContentElement.prototype.LENGTHADJUST_UNKNOWN
+SVGTextContentElement.prototype.LENGTHADJUST_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGTextContentElement.LENGTHADJUST_SPACING
+SVGTextContentElement.LENGTHADJUST_SPACING;
 
 /**
  * @const
  * @type {number}
  */
-SVGTextContentElement.prototype.LENGTHADJUST_SPACING
+SVGTextContentElement.prototype.LENGTHADJUST_SPACING;
 
 /**
  * @const
  * @type {number}
  */
-SVGTextContentElement.LENGTHADJUST_SPACINGANDGLYPHS
+SVGTextContentElement.LENGTHADJUST_SPACINGANDGLYPHS;
 
 /**
  * @const
  * @type {number}
  */
-SVGTextContentElement.prototype.LENGTHADJUST_SPACINGANDGLYPHS
+SVGTextContentElement.prototype.LENGTHADJUST_SPACINGANDGLYPHS;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGTextContentElement.prototype.textLength
+SVGTextContentElement.prototype.textLength;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGTextContentElement.prototype.lengthAdjust
+SVGTextContentElement.prototype.lengthAdjust;
 
 /**
  * @return {number}
  */
-SVGTextContentElement.prototype.getNumberOfChars = function () {}
+SVGTextContentElement.prototype.getNumberOfChars = function () {};
 
 /**
  * @return {number}
  */
-SVGTextContentElement.prototype.getComputedTextLength = function () {}
+SVGTextContentElement.prototype.getComputedTextLength = function () {};
 
 /**
  * @param {number=} opt_offset
  * @param {number=} opt_length
  * @return {number}
  */
-SVGTextContentElement.prototype.getSubStringLength = function (opt_offset, opt_length) {}
+SVGTextContentElement.prototype.getSubStringLength = function (
+  opt_offset,
+  opt_length
+) {};
 
 /**
  * @param {number=} opt_offset
  * @return {!SVGPoint}
  */
-SVGTextContentElement.prototype.getStartPositionOfChar = function (opt_offset) {}
+SVGTextContentElement.prototype.getStartPositionOfChar = function (
+  opt_offset
+) {};
 
 /**
  * @param {number=} opt_offset
  * @return {!SVGPoint}
  */
-SVGTextContentElement.prototype.getEndPositionOfChar = function (opt_offset) {}
+SVGTextContentElement.prototype.getEndPositionOfChar = function (opt_offset) {};
 
 /**
  * @param {number=} opt_offset
  * @return {!SVGRect}
  */
-SVGTextContentElement.prototype.getExtentOfChar = function (opt_offset) {}
+SVGTextContentElement.prototype.getExtentOfChar = function (opt_offset) {};
 
 /**
  * @param {number=} opt_offset
  * @return {number}
  */
-SVGTextContentElement.prototype.getRotationOfChar = function (opt_offset) {}
+SVGTextContentElement.prototype.getRotationOfChar = function (opt_offset) {};
 
 /**
  * @param {!SVGPoint=} opt_point
  * @return {number}
  */
-SVGTextContentElement.prototype.getCharNumAtPosition = function (opt_point) {}
+SVGTextContentElement.prototype.getCharNumAtPosition = function (opt_point) {};
 
 /**
  * @param {number=} opt_offset
  * @param {number=} opt_length
  * @return {undefined}
  */
-SVGTextContentElement.prototype.selectSubString = function (opt_offset, opt_length) {}
+SVGTextContentElement.prototype.selectSubString = function (
+  opt_offset,
+  opt_length
+) {};
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGTextContentElement.prototype.externalResourcesRequired
+SVGTextContentElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGStringList}
  */
-SVGTextContentElement.prototype.requiredFeatures
+SVGTextContentElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGTextContentElement.prototype.requiredExtensions
+SVGTextContentElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGTextContentElement.prototype.systemLanguage
+SVGTextContentElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGTextContentElement.prototype.hasExtension = function (opt_extension) {}
+SVGTextContentElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGTextContentElement.prototype.className
+SVGTextContentElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGTextContentElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGTextContentElement.prototype.getPresentationAttribute = function (
+  opt_name
+) {};
 
 /**
  * @type {string}
  */
-SVGTextContentElement.prototype.xmllang
+SVGTextContentElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGTextContentElement.prototype.xmlspace
+SVGTextContentElement.prototype.xmlspace;
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGFESpotLightElement () {}
+function SVGFESpotLightElement() {}
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFESpotLightElement.prototype.x
+SVGFESpotLightElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFESpotLightElement.prototype.y
+SVGFESpotLightElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFESpotLightElement.prototype.z
+SVGFESpotLightElement.prototype.z;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFESpotLightElement.prototype.pointsAtX
+SVGFESpotLightElement.prototype.pointsAtX;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFESpotLightElement.prototype.pointsAtY
+SVGFESpotLightElement.prototype.pointsAtY;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFESpotLightElement.prototype.pointsAtZ
+SVGFESpotLightElement.prototype.pointsAtZ;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFESpotLightElement.prototype.specularExponent
+SVGFESpotLightElement.prototype.specularExponent;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFESpotLightElement.prototype.limitingConeAngle
+SVGFESpotLightElement.prototype.limitingConeAngle;
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGFontFaceNameElement () {}
+function SVGFontFaceNameElement() {}
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGFEPointLightElement () {}
+function SVGFEPointLightElement() {}
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEPointLightElement.prototype.x
+SVGFEPointLightElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEPointLightElement.prototype.y
+SVGFEPointLightElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEPointLightElement.prototype.z
+SVGFEPointLightElement.prototype.z;
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFEDropShadowElement () {}
+function SVGFEDropShadowElement() {}
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEDropShadowElement.prototype.in1
+SVGFEDropShadowElement.prototype.in1;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEDropShadowElement.prototype.dx
+SVGFEDropShadowElement.prototype.dx;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEDropShadowElement.prototype.dy
+SVGFEDropShadowElement.prototype.dy;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEDropShadowElement.prototype.stdDeviationX
+SVGFEDropShadowElement.prototype.stdDeviationX;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEDropShadowElement.prototype.stdDeviationY
+SVGFEDropShadowElement.prototype.stdDeviationY;
 
 /**
  * @param {number=} opt_stdDeviationX
  * @param {number=} opt_stdDeviationY
  * @return {undefined}
  */
-SVGFEDropShadowElement.prototype.setStdDeviation = function (opt_stdDeviationX, opt_stdDeviationY) {}
+SVGFEDropShadowElement.prototype.setStdDeviation = function (
+  opt_stdDeviationX,
+  opt_stdDeviationY
+) {};
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEDropShadowElement.prototype.x
+SVGFEDropShadowElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEDropShadowElement.prototype.y
+SVGFEDropShadowElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEDropShadowElement.prototype.width
+SVGFEDropShadowElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEDropShadowElement.prototype.height
+SVGFEDropShadowElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEDropShadowElement.prototype.result
+SVGFEDropShadowElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEDropShadowElement.prototype.className
+SVGFEDropShadowElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFEDropShadowElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFEDropShadowElement.prototype.getPresentationAttribute = function (
+  opt_name
+) {};
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFETileElement () {}
+function SVGFETileElement() {}
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFETileElement.prototype.in1
+SVGFETileElement.prototype.in1;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFETileElement.prototype.x
+SVGFETileElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFETileElement.prototype.y
+SVGFETileElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFETileElement.prototype.width
+SVGFETileElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFETileElement.prototype.height
+SVGFETileElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFETileElement.prototype.result
+SVGFETileElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFETileElement.prototype.className
+SVGFETileElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFETileElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFETileElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGMissingGlyphElement () {}
+function SVGMissingGlyphElement() {}
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFEBlendElement () {}
+function SVGFEBlendElement() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGFEBlendElement.SVG_FEBLEND_MODE_UNKNOWN
+SVGFEBlendElement.SVG_FEBLEND_MODE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEBlendElement.prototype.SVG_FEBLEND_MODE_UNKNOWN
+SVGFEBlendElement.prototype.SVG_FEBLEND_MODE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEBlendElement.SVG_FEBLEND_MODE_NORMAL
+SVGFEBlendElement.SVG_FEBLEND_MODE_NORMAL;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEBlendElement.prototype.SVG_FEBLEND_MODE_NORMAL
+SVGFEBlendElement.prototype.SVG_FEBLEND_MODE_NORMAL;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEBlendElement.SVG_FEBLEND_MODE_MULTIPLY
+SVGFEBlendElement.SVG_FEBLEND_MODE_MULTIPLY;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEBlendElement.prototype.SVG_FEBLEND_MODE_MULTIPLY
+SVGFEBlendElement.prototype.SVG_FEBLEND_MODE_MULTIPLY;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEBlendElement.SVG_FEBLEND_MODE_SCREEN
+SVGFEBlendElement.SVG_FEBLEND_MODE_SCREEN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEBlendElement.prototype.SVG_FEBLEND_MODE_SCREEN
+SVGFEBlendElement.prototype.SVG_FEBLEND_MODE_SCREEN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEBlendElement.SVG_FEBLEND_MODE_DARKEN
+SVGFEBlendElement.SVG_FEBLEND_MODE_DARKEN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEBlendElement.prototype.SVG_FEBLEND_MODE_DARKEN
+SVGFEBlendElement.prototype.SVG_FEBLEND_MODE_DARKEN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEBlendElement.SVG_FEBLEND_MODE_LIGHTEN
+SVGFEBlendElement.SVG_FEBLEND_MODE_LIGHTEN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEBlendElement.prototype.SVG_FEBLEND_MODE_LIGHTEN
+SVGFEBlendElement.prototype.SVG_FEBLEND_MODE_LIGHTEN;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEBlendElement.prototype.in1
+SVGFEBlendElement.prototype.in1;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEBlendElement.prototype.in2
+SVGFEBlendElement.prototype.in2;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGFEBlendElement.prototype.mode
+SVGFEBlendElement.prototype.mode;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEBlendElement.prototype.x
+SVGFEBlendElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEBlendElement.prototype.y
+SVGFEBlendElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEBlendElement.prototype.width
+SVGFEBlendElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEBlendElement.prototype.height
+SVGFEBlendElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEBlendElement.prototype.result
+SVGFEBlendElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEBlendElement.prototype.className
+SVGFEBlendElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFEBlendElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFEBlendElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
@@ -5388,175 +5443,175 @@ SVGFEBlendElement.prototype.getPresentationAttribute = function (opt_name) {}
  * @implements {SVGStylable}
  * @implements {SVGFitToViewBox}
  */
-function SVGPatternElement () {}
+function SVGPatternElement() {}
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGPatternElement.prototype.patternUnits
+SVGPatternElement.prototype.patternUnits;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGPatternElement.prototype.patternContentUnits
+SVGPatternElement.prototype.patternContentUnits;
 
 /**
  * @type {!SVGAnimatedTransformList}
  */
-SVGPatternElement.prototype.patternTransform
+SVGPatternElement.prototype.patternTransform;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGPatternElement.prototype.x
+SVGPatternElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGPatternElement.prototype.y
+SVGPatternElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGPatternElement.prototype.width
+SVGPatternElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGPatternElement.prototype.height
+SVGPatternElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGPatternElement.prototype.externalResourcesRequired
+SVGPatternElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedRect}
  */
-SVGPatternElement.prototype.viewBox
+SVGPatternElement.prototype.viewBox;
 
 /**
  * @type {!SVGAnimatedPreserveAspectRatio}
  */
-SVGPatternElement.prototype.preserveAspectRatio
+SVGPatternElement.prototype.preserveAspectRatio;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGPatternElement.prototype.href
+SVGPatternElement.prototype.href;
 
 /**
  * @type {string}
  */
-SVGPatternElement.prototype.xmllang
+SVGPatternElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGPatternElement.prototype.xmlspace
+SVGPatternElement.prototype.xmlspace;
 
 /**
  * @type {!SVGStringList}
  */
-SVGPatternElement.prototype.requiredFeatures
+SVGPatternElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGPatternElement.prototype.requiredExtensions
+SVGPatternElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGPatternElement.prototype.systemLanguage
+SVGPatternElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGPatternElement.prototype.hasExtension = function (opt_extension) {}
+SVGPatternElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGPatternElement.prototype.className
+SVGPatternElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGPatternElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGPatternElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGFEMergeNodeElement () {}
+function SVGFEMergeNodeElement() {}
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEMergeNodeElement.prototype.in1
+SVGFEMergeNodeElement.prototype.in1;
 
 /**
  * @constructor
  * @extends {SVGComponentTransferFunctionElement}
  */
-function SVGFEFuncBElement () {}
+function SVGFEFuncBElement() {}
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegMovetoRel () {}
+function SVGPathSegMovetoRel() {}
 
 /**
  * @type {number}
  */
-SVGPathSegMovetoRel.prototype.x
+SVGPathSegMovetoRel.prototype.x;
 
 /**
  * @type {number}
  */
-SVGPathSegMovetoRel.prototype.y
+SVGPathSegMovetoRel.prototype.y;
 
 /**
  * @interface
  */
-function SVGLocatable () {}
+function SVGLocatable() {}
 
 /**
  * @type {!SVGElement}
  */
-SVGLocatable.prototype.nearestViewportElement
+SVGLocatable.prototype.nearestViewportElement;
 
 /**
  * @type {!SVGElement}
  */
-SVGLocatable.prototype.farthestViewportElement
+SVGLocatable.prototype.farthestViewportElement;
 
 /**
  * @return {!SVGRect}
  */
-SVGLocatable.prototype.getBBox = function () {}
+SVGLocatable.prototype.getBBox = function () {};
 
 /**
  * @return {!SVGMatrix}
  */
-SVGLocatable.prototype.getCTM = function () {}
+SVGLocatable.prototype.getCTM = function () {};
 
 /**
  * @return {!SVGMatrix}
  */
-SVGLocatable.prototype.getScreenCTM = function () {}
+SVGLocatable.prototype.getScreenCTM = function () {};
 
 /**
  * @param {!SVGElement=} opt_element
  * @return {!SVGMatrix}
  */
-SVGLocatable.prototype.getTransformToElement = function (opt_element) {}
+SVGLocatable.prototype.getTransformToElement = function (opt_element) {};
 
 /**
  * @constructor
@@ -5569,342 +5624,348 @@ SVGLocatable.prototype.getTransformToElement = function (opt_element) {}
  * @implements {SVGFitToViewBox}
  * @implements {SVGZoomAndPan}
  */
-function SVGSVGElement () {}
+function SVGSVGElement() {}
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGSVGElement.prototype.x
+SVGSVGElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGSVGElement.prototype.y
+SVGSVGElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGSVGElement.prototype.width
+SVGSVGElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGSVGElement.prototype.height
+SVGSVGElement.prototype.height;
 
 /**
  * @type {string}
  */
-SVGSVGElement.prototype.contentScriptType
+SVGSVGElement.prototype.contentScriptType;
 
 /**
  * @type {string}
  */
-SVGSVGElement.prototype.contentStyleType
+SVGSVGElement.prototype.contentStyleType;
 
 /**
  * @type {!SVGRect}
  */
-SVGSVGElement.prototype.viewport
+SVGSVGElement.prototype.viewport;
 
 /**
  * @type {number}
  */
-SVGSVGElement.prototype.pixelUnitToMillimeterX
+SVGSVGElement.prototype.pixelUnitToMillimeterX;
 
 /**
  * @type {number}
  */
-SVGSVGElement.prototype.pixelUnitToMillimeterY
+SVGSVGElement.prototype.pixelUnitToMillimeterY;
 
 /**
  * @type {number}
  */
-SVGSVGElement.prototype.screenPixelToMillimeterX
+SVGSVGElement.prototype.screenPixelToMillimeterX;
 
 /**
  * @type {number}
  */
-SVGSVGElement.prototype.screenPixelToMillimeterY
+SVGSVGElement.prototype.screenPixelToMillimeterY;
 
 /**
  * @type {boolean}
  */
-SVGSVGElement.prototype.useCurrentView
+SVGSVGElement.prototype.useCurrentView;
 
 /**
  * @type {number}
  */
-SVGSVGElement.prototype.currentScale
+SVGSVGElement.prototype.currentScale;
 
 /**
  * @type {!SVGPoint}
  */
-SVGSVGElement.prototype.currentTranslate
+SVGSVGElement.prototype.currentTranslate;
 
 /**
  * @param {number=} opt_maxWaitMilliseconds
  * @return {number}
  */
-SVGSVGElement.prototype.suspendRedraw = function (opt_maxWaitMilliseconds) {}
+SVGSVGElement.prototype.suspendRedraw = function (opt_maxWaitMilliseconds) {};
 
 /**
  * @param {number=} opt_suspendHandleId
  * @return {undefined}
  */
-SVGSVGElement.prototype.unsuspendRedraw = function (opt_suspendHandleId) {}
+SVGSVGElement.prototype.unsuspendRedraw = function (opt_suspendHandleId) {};
 
 /** */
-SVGSVGElement.prototype.unsuspendRedrawAll = function () {}
+SVGSVGElement.prototype.unsuspendRedrawAll = function () {};
 
 /** */
-SVGSVGElement.prototype.forceRedraw = function () {}
+SVGSVGElement.prototype.forceRedraw = function () {};
 
 /** */
-SVGSVGElement.prototype.pauseAnimations = function () {}
+SVGSVGElement.prototype.pauseAnimations = function () {};
 
 /** */
-SVGSVGElement.prototype.unpauseAnimations = function () {}
+SVGSVGElement.prototype.unpauseAnimations = function () {};
 
 /**
  * @return {boolean}
  */
-SVGSVGElement.prototype.animationsPaused = function () {}
+SVGSVGElement.prototype.animationsPaused = function () {};
 
 /**
  * @return {number}
  */
-SVGSVGElement.prototype.getCurrentTime = function () {}
+SVGSVGElement.prototype.getCurrentTime = function () {};
 
 /**
  * @param {number=} opt_seconds
  * @return {undefined}
  */
-SVGSVGElement.prototype.setCurrentTime = function (opt_seconds) {}
+SVGSVGElement.prototype.setCurrentTime = function (opt_seconds) {};
 
 /**
  * @param {!SVGRect=} opt_rect
  * @param {!SVGElement=} opt_referenceElement
  * @return {!NodeList<?>}
  */
-SVGSVGElement.prototype.getIntersectionList = function (opt_rect, opt_referenceElement) {}
+SVGSVGElement.prototype.getIntersectionList = function (
+  opt_rect,
+  opt_referenceElement
+) {};
 
 /**
  * @param {!SVGRect=} opt_rect
  * @param {!SVGElement=} opt_referenceElement
  * @return {!NodeList<?>}
  */
-SVGSVGElement.prototype.getEnclosureList = function (opt_rect, opt_referenceElement) {}
+SVGSVGElement.prototype.getEnclosureList = function (
+  opt_rect,
+  opt_referenceElement
+) {};
 
 /**
  * @param {!SVGElement=} opt_element
  * @param {!SVGRect=} opt_rect
  * @return {boolean}
  */
-SVGSVGElement.prototype.checkIntersection = function (opt_element, opt_rect) {}
+SVGSVGElement.prototype.checkIntersection = function (opt_element, opt_rect) {};
 
 /**
  * @param {!SVGElement=} opt_element
  * @param {!SVGRect=} opt_rect
  * @return {boolean}
  */
-SVGSVGElement.prototype.checkEnclosure = function (opt_element, opt_rect) {}
+SVGSVGElement.prototype.checkEnclosure = function (opt_element, opt_rect) {};
 
 /** */
-SVGSVGElement.prototype.deselectAll = function () {}
+SVGSVGElement.prototype.deselectAll = function () {};
 
 /**
  * @return {!SVGNumber}
  */
-SVGSVGElement.prototype.createSVGNumber = function () {}
+SVGSVGElement.prototype.createSVGNumber = function () {};
 
 /**
  * @return {!SVGLength}
  */
-SVGSVGElement.prototype.createSVGLength = function () {}
+SVGSVGElement.prototype.createSVGLength = function () {};
 
 /**
  * @return {!SVGAngle}
  */
-SVGSVGElement.prototype.createSVGAngle = function () {}
+SVGSVGElement.prototype.createSVGAngle = function () {};
 
 /**
  * @return {!SVGPoint}
  */
-SVGSVGElement.prototype.createSVGPoint = function () {}
+SVGSVGElement.prototype.createSVGPoint = function () {};
 
 /**
  * @return {!SVGMatrix}
  */
-SVGSVGElement.prototype.createSVGMatrix = function () {}
+SVGSVGElement.prototype.createSVGMatrix = function () {};
 
 /**
  * @return {!SVGRect}
  */
-SVGSVGElement.prototype.createSVGRect = function () {}
+SVGSVGElement.prototype.createSVGRect = function () {};
 
 /**
  * @return {!SVGTransform}
  */
-SVGSVGElement.prototype.createSVGTransform = function () {}
+SVGSVGElement.prototype.createSVGTransform = function () {};
 
 /**
  * @param {!SVGMatrix=} opt_matrix
  * @return {!SVGTransform}
  */
-SVGSVGElement.prototype.createSVGTransformFromMatrix = function (opt_matrix) {}
+SVGSVGElement.prototype.createSVGTransformFromMatrix = function (opt_matrix) {};
 
 /**
  * @param {string=} opt_elementId
  * @return {Element}
  * @see https://developer.mozilla.org/en/docs/Web/API/SVGSVGElement
  */
-SVGSVGElement.prototype.getElementById = function (opt_elementId) {}
+SVGSVGElement.prototype.getElementById = function (opt_elementId) {};
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGSVGElement.prototype.externalResourcesRequired
+SVGSVGElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedRect}
  */
-SVGSVGElement.prototype.viewBox
+SVGSVGElement.prototype.viewBox;
 
 /**
  * @type {!SVGAnimatedPreserveAspectRatio}
  */
-SVGSVGElement.prototype.preserveAspectRatio
+SVGSVGElement.prototype.preserveAspectRatio;
 
 /**
  * @type {string}
  */
-SVGSVGElement.prototype.xmllang
+SVGSVGElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGSVGElement.prototype.xmlspace
+SVGSVGElement.prototype.xmlspace;
 
 /**
  * @const
  * @type {number}
  */
-SVGSVGElement.SVG_ZOOMANDPAN_UNKNOWN
+SVGSVGElement.SVG_ZOOMANDPAN_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGSVGElement.prototype.SVG_ZOOMANDPAN_UNKNOWN
+SVGSVGElement.prototype.SVG_ZOOMANDPAN_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGSVGElement.SVG_ZOOMANDPAN_DISABLE
+SVGSVGElement.SVG_ZOOMANDPAN_DISABLE;
 
 /**
  * @const
  * @type {number}
  */
-SVGSVGElement.prototype.SVG_ZOOMANDPAN_DISABLE
+SVGSVGElement.prototype.SVG_ZOOMANDPAN_DISABLE;
 
 /**
  * @const
  * @type {number}
  */
-SVGSVGElement.SVG_ZOOMANDPAN_MAGNIFY
+SVGSVGElement.SVG_ZOOMANDPAN_MAGNIFY;
 
 /**
  * @const
  * @type {number}
  */
-SVGSVGElement.prototype.SVG_ZOOMANDPAN_MAGNIFY
+SVGSVGElement.prototype.SVG_ZOOMANDPAN_MAGNIFY;
 
 /**
  * @type {number}
  */
-SVGSVGElement.prototype.zoomAndPan
+SVGSVGElement.prototype.zoomAndPan;
 
 /**
  * @type {!SVGElement}
  */
-SVGSVGElement.prototype.nearestViewportElement
+SVGSVGElement.prototype.nearestViewportElement;
 
 /**
  * @type {!SVGElement}
  */
-SVGSVGElement.prototype.farthestViewportElement
+SVGSVGElement.prototype.farthestViewportElement;
 
 /**
  * @return {!SVGRect}
  * @override
  */
-SVGSVGElement.prototype.getBBox = function () {}
+SVGSVGElement.prototype.getBBox = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGSVGElement.prototype.getCTM = function () {}
+SVGSVGElement.prototype.getCTM = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGSVGElement.prototype.getScreenCTM = function () {}
+SVGSVGElement.prototype.getScreenCTM = function () {};
 
 /**
  * @param {!SVGElement=} opt_element
  * @return {!SVGMatrix}
  * @override
  */
-SVGSVGElement.prototype.getTransformToElement = function (opt_element) {}
+SVGSVGElement.prototype.getTransformToElement = function (opt_element) {};
 
 /**
  * @type {!SVGStringList}
  */
-SVGSVGElement.prototype.requiredFeatures
+SVGSVGElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGSVGElement.prototype.requiredExtensions
+SVGSVGElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGSVGElement.prototype.systemLanguage
+SVGSVGElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGSVGElement.prototype.hasExtension = function (opt_extension) {}
+SVGSVGElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGSVGElement.prototype.className
+SVGSVGElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGSVGElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGSVGElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @interface
  * @extends {SVGLocatable}
  */
-function SVGTransformable () {}
+function SVGTransformable() {}
 
 /**
  * @type {!SVGAnimatedTransformList}
  */
-SVGTransformable.prototype.transform
+SVGTransformable.prototype.transform;
 
 /**
  * @constructor
@@ -5915,96 +5976,96 @@ SVGTransformable.prototype.transform
  * @implements {SVGStylable}
  * @implements {SVGTransformable}
  */
-function SVGDefsElement () {}
+function SVGDefsElement() {}
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGDefsElement.prototype.externalResourcesRequired
+SVGDefsElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedTransformList}
  */
-SVGDefsElement.prototype.transform
+SVGDefsElement.prototype.transform;
 
 /**
  * @type {string}
  */
-SVGDefsElement.prototype.xmllang
+SVGDefsElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGDefsElement.prototype.xmlspace
+SVGDefsElement.prototype.xmlspace;
 
 /**
  * @type {!SVGElement}
  */
-SVGDefsElement.prototype.nearestViewportElement
+SVGDefsElement.prototype.nearestViewportElement;
 
 /**
  * @type {!SVGElement}
  */
-SVGDefsElement.prototype.farthestViewportElement
+SVGDefsElement.prototype.farthestViewportElement;
 
 /**
  * @return {!SVGRect}
  * @override
  */
-SVGDefsElement.prototype.getBBox = function () {}
+SVGDefsElement.prototype.getBBox = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGDefsElement.prototype.getCTM = function () {}
+SVGDefsElement.prototype.getCTM = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGDefsElement.prototype.getScreenCTM = function () {}
+SVGDefsElement.prototype.getScreenCTM = function () {};
 
 /**
  * @param {!SVGElement=} opt_element
  * @return {!SVGMatrix}
  * @override
  */
-SVGDefsElement.prototype.getTransformToElement = function (opt_element) {}
+SVGDefsElement.prototype.getTransformToElement = function (opt_element) {};
 
 /**
  * @type {!SVGStringList}
  */
-SVGDefsElement.prototype.requiredFeatures
+SVGDefsElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGDefsElement.prototype.requiredExtensions
+SVGDefsElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGDefsElement.prototype.systemLanguage
+SVGDefsElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGDefsElement.prototype.hasExtension = function (opt_extension) {}
+SVGDefsElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGDefsElement.prototype.className
+SVGDefsElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGDefsElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGDefsElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
@@ -6015,106 +6076,106 @@ SVGDefsElement.prototype.getPresentationAttribute = function (opt_name) {}
  * @implements {SVGStylable}
  * @implements {SVGTransformable}
  */
-function SVGPolygonElement () {}
+function SVGPolygonElement() {}
 
 /**
  * @type {!SVGPointList}
  */
-SVGPolygonElement.prototype.points
+SVGPolygonElement.prototype.points;
 
 /**
  * @type {!SVGPointList}
  */
-SVGPolygonElement.prototype.animatedPoints
+SVGPolygonElement.prototype.animatedPoints;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGPolygonElement.prototype.externalResourcesRequired
+SVGPolygonElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedTransformList}
  */
-SVGPolygonElement.prototype.transform
+SVGPolygonElement.prototype.transform;
 
 /**
  * @type {string}
  */
-SVGPolygonElement.prototype.xmllang
+SVGPolygonElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGPolygonElement.prototype.xmlspace
+SVGPolygonElement.prototype.xmlspace;
 
 /**
  * @type {!SVGElement}
  */
-SVGPolygonElement.prototype.nearestViewportElement
+SVGPolygonElement.prototype.nearestViewportElement;
 
 /**
  * @type {!SVGElement}
  */
-SVGPolygonElement.prototype.farthestViewportElement
+SVGPolygonElement.prototype.farthestViewportElement;
 
 /**
  * @return {!SVGRect}
  * @override
  */
-SVGPolygonElement.prototype.getBBox = function () {}
+SVGPolygonElement.prototype.getBBox = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGPolygonElement.prototype.getCTM = function () {}
+SVGPolygonElement.prototype.getCTM = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGPolygonElement.prototype.getScreenCTM = function () {}
+SVGPolygonElement.prototype.getScreenCTM = function () {};
 
 /**
  * @param {!SVGElement=} opt_element
  * @return {!SVGMatrix}
  * @override
  */
-SVGPolygonElement.prototype.getTransformToElement = function (opt_element) {}
+SVGPolygonElement.prototype.getTransformToElement = function (opt_element) {};
 
 /**
  * @type {!SVGStringList}
  */
-SVGPolygonElement.prototype.requiredFeatures
+SVGPolygonElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGPolygonElement.prototype.requiredExtensions
+SVGPolygonElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGPolygonElement.prototype.systemLanguage
+SVGPolygonElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGPolygonElement.prototype.hasExtension = function (opt_extension) {}
+SVGPolygonElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGPolygonElement.prototype.className
+SVGPolygonElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGPolygonElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGPolygonElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
@@ -6125,82 +6186,82 @@ SVGPolygonElement.prototype.getPresentationAttribute = function (opt_name) {}
  * @implements {SVGStylable}
  * @implements {SVGTransformable}
  */
-function SVGPathElement () {}
+function SVGPathElement() {}
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGPathElement.prototype.pathLength
+SVGPathElement.prototype.pathLength;
 
 /**
  * @type {!SVGPathSegList}
  */
-SVGPathElement.prototype.pathSegList
+SVGPathElement.prototype.pathSegList;
 
 /**
  * @type {!SVGPathSegList}
  */
-SVGPathElement.prototype.normalizedPathSegList
+SVGPathElement.prototype.normalizedPathSegList;
 
 /**
  * @type {!SVGPathSegList}
  */
-SVGPathElement.prototype.animatedPathSegList
+SVGPathElement.prototype.animatedPathSegList;
 
 /**
  * @type {!SVGPathSegList}
  */
-SVGPathElement.prototype.animatedNormalizedPathSegList
+SVGPathElement.prototype.animatedNormalizedPathSegList;
 
 /**
  * @return {number}
  */
-SVGPathElement.prototype.getTotalLength = function () {}
+SVGPathElement.prototype.getTotalLength = function () {};
 
 /**
  * @param {number=} opt_distance
  * @return {!SVGPoint}
  */
-SVGPathElement.prototype.getPointAtLength = function (opt_distance) {}
+SVGPathElement.prototype.getPointAtLength = function (opt_distance) {};
 
 /**
  * @param {number=} opt_distance
  * @return {number}
  */
-SVGPathElement.prototype.getPathSegAtLength = function (opt_distance) {}
+SVGPathElement.prototype.getPathSegAtLength = function (opt_distance) {};
 
 /**
  * @return {!SVGPathSegClosePath}
  */
-SVGPathElement.prototype.createSVGPathSegClosePath = function () {}
+SVGPathElement.prototype.createSVGPathSegClosePath = function () {};
 
 /**
  * @param {number=} opt_x
  * @param {number=} opt_y
  * @return {!SVGPathSegMovetoAbs}
  */
-SVGPathElement.prototype.createSVGPathSegMovetoAbs = function (opt_x, opt_y) {}
+SVGPathElement.prototype.createSVGPathSegMovetoAbs = function (opt_x, opt_y) {};
 
 /**
  * @param {number=} opt_x
  * @param {number=} opt_y
  * @return {!SVGPathSegMovetoRel}
  */
-SVGPathElement.prototype.createSVGPathSegMovetoRel = function (opt_x, opt_y) {}
+SVGPathElement.prototype.createSVGPathSegMovetoRel = function (opt_x, opt_y) {};
 
 /**
  * @param {number=} opt_x
  * @param {number=} opt_y
  * @return {!SVGPathSegLinetoAbs}
  */
-SVGPathElement.prototype.createSVGPathSegLinetoAbs = function (opt_x, opt_y) {}
+SVGPathElement.prototype.createSVGPathSegLinetoAbs = function (opt_x, opt_y) {};
 
 /**
  * @param {number=} opt_x
  * @param {number=} opt_y
  * @return {!SVGPathSegLinetoRel}
  */
-SVGPathElement.prototype.createSVGPathSegLinetoRel = function (opt_x, opt_y) {}
+SVGPathElement.prototype.createSVGPathSegLinetoRel = function (opt_x, opt_y) {};
 
 /**
  * @param {number=} opt_x
@@ -6211,7 +6272,14 @@ SVGPathElement.prototype.createSVGPathSegLinetoRel = function (opt_x, opt_y) {}
  * @param {number=} opt_y2
  * @return {!SVGPathSegCurvetoCubicAbs}
  */
-SVGPathElement.prototype.createSVGPathSegCurvetoCubicAbs = function (opt_x, opt_y, opt_x1, opt_y1, opt_x2, opt_y2) {}
+SVGPathElement.prototype.createSVGPathSegCurvetoCubicAbs = function (
+  opt_x,
+  opt_y,
+  opt_x1,
+  opt_y1,
+  opt_x2,
+  opt_y2
+) {};
 
 /**
  * @param {number=} opt_x
@@ -6222,7 +6290,14 @@ SVGPathElement.prototype.createSVGPathSegCurvetoCubicAbs = function (opt_x, opt_
  * @param {number=} opt_y2
  * @return {!SVGPathSegCurvetoCubicRel}
  */
-SVGPathElement.prototype.createSVGPathSegCurvetoCubicRel = function (opt_x, opt_y, opt_x1, opt_y1, opt_x2, opt_y2) {}
+SVGPathElement.prototype.createSVGPathSegCurvetoCubicRel = function (
+  opt_x,
+  opt_y,
+  opt_x1,
+  opt_y1,
+  opt_x2,
+  opt_y2
+) {};
 
 /**
  * @param {number=} opt_x
@@ -6231,7 +6306,12 @@ SVGPathElement.prototype.createSVGPathSegCurvetoCubicRel = function (opt_x, opt_
  * @param {number=} opt_y1
  * @return {!SVGPathSegCurvetoQuadraticAbs}
  */
-SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticAbs = function (opt_x, opt_y, opt_x1, opt_y1) {}
+SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticAbs = function (
+  opt_x,
+  opt_y,
+  opt_x1,
+  opt_y1
+) {};
 
 /**
  * @param {number=} opt_x
@@ -6240,7 +6320,12 @@ SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticAbs = function (opt_x, 
  * @param {number=} opt_y1
  * @return {!SVGPathSegCurvetoQuadraticRel}
  */
-SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticRel = function (opt_x, opt_y, opt_x1, opt_y1) {}
+SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticRel = function (
+  opt_x,
+  opt_y,
+  opt_x1,
+  opt_y1
+) {};
 
 /**
  * @param {number=} opt_x
@@ -6252,7 +6337,15 @@ SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticRel = function (opt_x, 
  * @param {boolean=} opt_sweepFlag
  * @return {!SVGPathSegArcAbs}
  */
-SVGPathElement.prototype.createSVGPathSegArcAbs = function (opt_x, opt_y, opt_r1, opt_r2, opt_angle, opt_largeArcFlag, opt_sweepFlag) {}
+SVGPathElement.prototype.createSVGPathSegArcAbs = function (
+  opt_x,
+  opt_y,
+  opt_r1,
+  opt_r2,
+  opt_angle,
+  opt_largeArcFlag,
+  opt_sweepFlag
+) {};
 
 /**
  * @param {number=} opt_x
@@ -6264,31 +6357,47 @@ SVGPathElement.prototype.createSVGPathSegArcAbs = function (opt_x, opt_y, opt_r1
  * @param {boolean=} opt_sweepFlag
  * @return {!SVGPathSegArcRel}
  */
-SVGPathElement.prototype.createSVGPathSegArcRel = function (opt_x, opt_y, opt_r1, opt_r2, opt_angle, opt_largeArcFlag, opt_sweepFlag) {}
+SVGPathElement.prototype.createSVGPathSegArcRel = function (
+  opt_x,
+  opt_y,
+  opt_r1,
+  opt_r2,
+  opt_angle,
+  opt_largeArcFlag,
+  opt_sweepFlag
+) {};
 
 /**
  * @param {number=} opt_x
  * @return {!SVGPathSegLinetoHorizontalAbs}
  */
-SVGPathElement.prototype.createSVGPathSegLinetoHorizontalAbs = function (opt_x) {}
+SVGPathElement.prototype.createSVGPathSegLinetoHorizontalAbs = function (
+  opt_x
+) {};
 
 /**
  * @param {number=} opt_x
  * @return {!SVGPathSegLinetoHorizontalRel}
  */
-SVGPathElement.prototype.createSVGPathSegLinetoHorizontalRel = function (opt_x) {}
+SVGPathElement.prototype.createSVGPathSegLinetoHorizontalRel = function (
+  opt_x
+) {};
 
 /**
  * @param {number=} opt_y
  * @return {!SVGPathSegLinetoVerticalAbs}
  */
-SVGPathElement.prototype.createSVGPathSegLinetoVerticalAbs = function (opt_y) {}
+SVGPathElement.prototype.createSVGPathSegLinetoVerticalAbs = function (
+  opt_y
+) {};
 
 /**
  * @param {number=} opt_y
  * @return {!SVGPathSegLinetoVerticalRel}
  */
-SVGPathElement.prototype.createSVGPathSegLinetoVerticalRel = function (opt_y) {}
+SVGPathElement.prototype.createSVGPathSegLinetoVerticalRel = function (
+  opt_y
+) {};
 
 /**
  * @param {number=} opt_x
@@ -6297,7 +6406,12 @@ SVGPathElement.prototype.createSVGPathSegLinetoVerticalRel = function (opt_y) {}
  * @param {number=} opt_y2
  * @return {!SVGPathSegCurvetoCubicSmoothAbs}
  */
-SVGPathElement.prototype.createSVGPathSegCurvetoCubicSmoothAbs = function (opt_x, opt_y, opt_x2, opt_y2) {}
+SVGPathElement.prototype.createSVGPathSegCurvetoCubicSmoothAbs = function (
+  opt_x,
+  opt_y,
+  opt_x2,
+  opt_y2
+) {};
 
 /**
  * @param {number=} opt_x
@@ -6306,110 +6420,121 @@ SVGPathElement.prototype.createSVGPathSegCurvetoCubicSmoothAbs = function (opt_x
  * @param {number=} opt_y2
  * @return {!SVGPathSegCurvetoCubicSmoothRel}
  */
-SVGPathElement.prototype.createSVGPathSegCurvetoCubicSmoothRel = function (opt_x, opt_y, opt_x2, opt_y2) {}
+SVGPathElement.prototype.createSVGPathSegCurvetoCubicSmoothRel = function (
+  opt_x,
+  opt_y,
+  opt_x2,
+  opt_y2
+) {};
 
 /**
  * @param {number=} opt_x
  * @param {number=} opt_y
  * @return {!SVGPathSegCurvetoQuadraticSmoothAbs}
  */
-SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticSmoothAbs = function (opt_x, opt_y) {}
+SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticSmoothAbs = function (
+  opt_x,
+  opt_y
+) {};
 
 /**
  * @param {number=} opt_x
  * @param {number=} opt_y
  * @return {!SVGPathSegCurvetoQuadraticSmoothRel}
  */
-SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticSmoothRel = function (opt_x, opt_y) {}
+SVGPathElement.prototype.createSVGPathSegCurvetoQuadraticSmoothRel = function (
+  opt_x,
+  opt_y
+) {};
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGPathElement.prototype.externalResourcesRequired
+SVGPathElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedTransformList}
  */
-SVGPathElement.prototype.transform
+SVGPathElement.prototype.transform;
 
 /**
  * @type {string}
  */
-SVGPathElement.prototype.xmllang
+SVGPathElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGPathElement.prototype.xmlspace
+SVGPathElement.prototype.xmlspace;
 
 /**
  * @type {!SVGElement}
  */
-SVGPathElement.prototype.nearestViewportElement
+SVGPathElement.prototype.nearestViewportElement;
 
 /**
  * @type {!SVGElement}
  */
-SVGPathElement.prototype.farthestViewportElement
+SVGPathElement.prototype.farthestViewportElement;
 
 /**
  * @return {!SVGRect}
  * @override
  */
-SVGPathElement.prototype.getBBox = function () {}
+SVGPathElement.prototype.getBBox = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGPathElement.prototype.getCTM = function () {}
+SVGPathElement.prototype.getCTM = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGPathElement.prototype.getScreenCTM = function () {}
+SVGPathElement.prototype.getScreenCTM = function () {};
 
 /**
  * @param {!SVGElement=} opt_element
  * @return {!SVGMatrix}
  * @override
  */
-SVGPathElement.prototype.getTransformToElement = function (opt_element) {}
+SVGPathElement.prototype.getTransformToElement = function (opt_element) {};
 
 /**
  * @type {!SVGStringList}
  */
-SVGPathElement.prototype.requiredFeatures
+SVGPathElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGPathElement.prototype.requiredExtensions
+SVGPathElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGPathElement.prototype.systemLanguage
+SVGPathElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGPathElement.prototype.hasExtension = function (opt_extension) {}
+SVGPathElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGPathElement.prototype.className
+SVGPathElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGPathElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGPathElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
@@ -6420,557 +6545,111 @@ SVGPathElement.prototype.getPresentationAttribute = function (opt_name) {}
  * @implements {SVGStylable}
  * @implements {SVGTransformable}
  */
-function SVGCircleElement () {}
+function SVGCircleElement() {}
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGCircleElement.prototype.cx
+SVGCircleElement.prototype.cx;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGCircleElement.prototype.cy
+SVGCircleElement.prototype.cy;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGCircleElement.prototype.r
+SVGCircleElement.prototype.r;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGCircleElement.prototype.externalResourcesRequired
+SVGCircleElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedTransformList}
  */
-SVGCircleElement.prototype.transform
+SVGCircleElement.prototype.transform;
 
 /**
  * @type {string}
  */
-SVGCircleElement.prototype.xmllang
+SVGCircleElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGCircleElement.prototype.xmlspace
+SVGCircleElement.prototype.xmlspace;
 
 /**
  * @type {!SVGElement}
  */
-SVGCircleElement.prototype.nearestViewportElement
+SVGCircleElement.prototype.nearestViewportElement;
 
 /**
  * @type {!SVGElement}
  */
-SVGCircleElement.prototype.farthestViewportElement
+SVGCircleElement.prototype.farthestViewportElement;
 
 /**
  * @return {!SVGRect}
  * @override
  */
-SVGCircleElement.prototype.getBBox = function () {}
+SVGCircleElement.prototype.getBBox = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGCircleElement.prototype.getCTM = function () {}
+SVGCircleElement.prototype.getCTM = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGCircleElement.prototype.getScreenCTM = function () {}
+SVGCircleElement.prototype.getScreenCTM = function () {};
 
 /**
  * @param {!SVGElement=} opt_element
  * @return {!SVGMatrix}
  * @override
  */
-SVGCircleElement.prototype.getTransformToElement = function (opt_element) {}
+SVGCircleElement.prototype.getTransformToElement = function (opt_element) {};
 
 /**
  * @type {!SVGStringList}
  */
-SVGCircleElement.prototype.requiredFeatures
+SVGCircleElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGCircleElement.prototype.requiredExtensions
+SVGCircleElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGCircleElement.prototype.systemLanguage
+SVGCircleElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGCircleElement.prototype.hasExtension = function (opt_extension) {}
+SVGCircleElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGCircleElement.prototype.className
+SVGCircleElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGCircleElement.prototype.getPresentationAttribute = function (opt_name) {}
-
-/**
- * @constructor
- * @extends {SVGElement}
- * @implements {SVGURIReference}
- * @implements {SVGTests}
- * @implements {SVGLangSpace}
- * @implements {SVGExternalResourcesRequired}
- * @implements {SVGStylable}
- * @implements {SVGTransformable}
- */
-function SVGUseElement () {}
-
-/**
- * @type {!SVGAnimatedLength}
- */
-SVGUseElement.prototype.x
-
-/**
- * @type {!SVGAnimatedLength}
- */
-SVGUseElement.prototype.y
-
-/**
- * @type {!SVGAnimatedLength}
- */
-SVGUseElement.prototype.width
-
-/**
- * @type {!SVGAnimatedLength}
- */
-SVGUseElement.prototype.height
-
-/**
- * @type {!SVGElementInstance}
- */
-SVGUseElement.prototype.instanceRoot
-
-/**
- * @type {!SVGElementInstance}
- */
-SVGUseElement.prototype.animatedInstanceRoot
-
-/**
- * @type {!SVGAnimatedBoolean}
- */
-SVGUseElement.prototype.externalResourcesRequired
-
-/**
- * @type {!SVGElement}
- */
-SVGUseElement.prototype.nearestViewportElement
-
-/**
- * @type {!SVGElement}
- */
-SVGUseElement.prototype.farthestViewportElement
-
-/**
- * @return {!SVGRect}
- * @override
- */
-SVGUseElement.prototype.getBBox = function () {}
-
-/**
- * @return {!SVGMatrix}
- * @override
- */
-SVGUseElement.prototype.getCTM = function () {}
-
-/**
- * @return {!SVGMatrix}
- * @override
- */
-SVGUseElement.prototype.getScreenCTM = function () {}
-
-/**
- * @param {!SVGElement=} opt_element
- * @return {!SVGMatrix}
- * @override
- */
-SVGUseElement.prototype.getTransformToElement = function (opt_element) {}
-
-/**
- * @type {!SVGAnimatedTransformList}
- */
-SVGUseElement.prototype.transform
-
-/**
- * @type {!SVGAnimatedString}
- */
-SVGUseElement.prototype.href
-
-/**
- * @type {string}
- */
-SVGUseElement.prototype.xmllang
-
-/**
- * @type {string}
- */
-SVGUseElement.prototype.xmlspace
-
-/**
- * @type {!SVGStringList}
- */
-SVGUseElement.prototype.requiredFeatures
-
-/**
- * @type {!SVGStringList}
- */
-SVGUseElement.prototype.requiredExtensions
-
-/**
- * @type {!SVGStringList}
- */
-SVGUseElement.prototype.systemLanguage
-
-/**
- * @param {string=} opt_extension
- * @return {boolean}
- * @override
- */
-SVGUseElement.prototype.hasExtension = function (opt_extension) {}
-
-/**
- * @type {!SVGAnimatedString}
- */
-SVGUseElement.prototype.className
-
-/**
- * @param {string=} opt_name
- * @return {!CSSValue}
- * @override
- */
-SVGUseElement.prototype.getPresentationAttribute = function (opt_name) {}
-
-/**
- * @constructor
- * @extends {SVGElement}
- * @implements {SVGTests}
- * @implements {SVGLangSpace}
- * @implements {SVGExternalResourcesRequired}
- * @implements {SVGStylable}
- * @implements {SVGTransformable}
- */
-function SVGPolylineElement () {}
-
-/**
- * @type {!SVGPointList}
- */
-SVGPolylineElement.prototype.points
-
-/**
- * @type {!SVGPointList}
- */
-SVGPolylineElement.prototype.animatedPoints
-
-/**
- * @type {!SVGAnimatedBoolean}
- */
-SVGPolylineElement.prototype.externalResourcesRequired
-
-/**
- * @type {!SVGAnimatedTransformList}
- */
-SVGPolylineElement.prototype.transform
-
-/**
- * @type {string}
- */
-SVGPolylineElement.prototype.xmllang
-
-/**
- * @type {string}
- */
-SVGPolylineElement.prototype.xmlspace
-
-/**
- * @type {!SVGElement}
- */
-SVGPolylineElement.prototype.nearestViewportElement
-
-/**
- * @type {!SVGElement}
- */
-SVGPolylineElement.prototype.farthestViewportElement
-
-/**
- * @return {!SVGRect}
- * @override
- */
-SVGPolylineElement.prototype.getBBox = function () {}
-
-/**
- * @return {!SVGMatrix}
- * @override
- */
-SVGPolylineElement.prototype.getCTM = function () {}
-
-/**
- * @return {!SVGMatrix}
- * @override
- */
-SVGPolylineElement.prototype.getScreenCTM = function () {}
-
-/**
- * @param {!SVGElement=} opt_element
- * @return {!SVGMatrix}
- * @override
- */
-SVGPolylineElement.prototype.getTransformToElement = function (opt_element) {}
-
-/**
- * @type {!SVGStringList}
- */
-SVGPolylineElement.prototype.requiredFeatures
-
-/**
- * @type {!SVGStringList}
- */
-SVGPolylineElement.prototype.requiredExtensions
-
-/**
- * @type {!SVGStringList}
- */
-SVGPolylineElement.prototype.systemLanguage
-
-/**
- * @param {string=} opt_extension
- * @return {boolean}
- * @override
- */
-SVGPolylineElement.prototype.hasExtension = function (opt_extension) {}
-
-/**
- * @type {!SVGAnimatedString}
- */
-SVGPolylineElement.prototype.className
-
-/**
- * @param {string=} opt_name
- * @return {!CSSValue}
- * @override
- */
-SVGPolylineElement.prototype.getPresentationAttribute = function (opt_name) {}
-
-/**
- * @constructor
- * @extends {SVGElement}
- * @implements {SVGTests}
- * @implements {SVGLangSpace}
- * @implements {SVGExternalResourcesRequired}
- * @implements {SVGStylable}
- * @implements {SVGTransformable}
- */
-function SVGGElement () {}
-
-/**
- * @type {!SVGAnimatedBoolean}
- */
-SVGGElement.prototype.externalResourcesRequired
-
-/**
- * @type {!SVGAnimatedTransformList}
- */
-SVGGElement.prototype.transform
-
-/**
- * @type {string}
- */
-SVGGElement.prototype.xmllang
-
-/**
- * @type {string}
- */
-SVGGElement.prototype.xmlspace
-
-/**
- * @type {!SVGElement}
- */
-SVGGElement.prototype.nearestViewportElement
-
-/**
- * @type {!SVGElement}
- */
-SVGGElement.prototype.farthestViewportElement
-
-/**
- * @return {!SVGRect}
- * @override
- */
-SVGGElement.prototype.getBBox = function () {}
-
-/**
- * @return {!SVGMatrix}
- * @override
- */
-SVGGElement.prototype.getCTM = function () {}
-
-/**
- * @return {!SVGMatrix}
- * @override
- */
-SVGGElement.prototype.getScreenCTM = function () {}
-
-/**
- * @param {!SVGElement=} opt_element
- * @return {!SVGMatrix}
- * @override
- */
-SVGGElement.prototype.getTransformToElement = function (opt_element) {}
-
-/**
- * @type {!SVGStringList}
- */
-SVGGElement.prototype.requiredFeatures
-
-/**
- * @type {!SVGStringList}
- */
-SVGGElement.prototype.requiredExtensions
-
-/**
- * @type {!SVGStringList}
- */
-SVGGElement.prototype.systemLanguage
-
-/**
- * @param {string=} opt_extension
- * @return {boolean}
- * @override
- */
-SVGGElement.prototype.hasExtension = function (opt_extension) {}
-
-/**
- * @type {!SVGAnimatedString}
- */
-SVGGElement.prototype.className
-
-/**
- * @param {string=} opt_name
- * @return {!CSSValue}
- * @override
- */
-SVGGElement.prototype.getPresentationAttribute = function (opt_name) {}
-
-/**
- * @constructor
- * @extends {SVGElement}
- * @implements {SVGTests}
- * @implements {SVGLangSpace}
- * @implements {SVGExternalResourcesRequired}
- * @implements {SVGStylable}
- * @implements {SVGTransformable}
- */
-function SVGSwitchElement () {}
-
-/**
- * @type {!SVGAnimatedBoolean}
- */
-SVGSwitchElement.prototype.externalResourcesRequired
-
-/**
- * @type {!SVGAnimatedTransformList}
- */
-SVGSwitchElement.prototype.transform
-
-/**
- * @type {string}
- */
-SVGSwitchElement.prototype.xmllang
-
-/**
- * @type {string}
- */
-SVGSwitchElement.prototype.xmlspace
-
-/**
- * @type {!SVGElement}
- */
-SVGSwitchElement.prototype.nearestViewportElement
-
-/**
- * @type {!SVGElement}
- */
-SVGSwitchElement.prototype.farthestViewportElement
-
-/**
- * @return {!SVGRect}
- * @override
- */
-SVGSwitchElement.prototype.getBBox = function () {}
-
-/**
- * @return {!SVGMatrix}
- * @override
- */
-SVGSwitchElement.prototype.getCTM = function () {}
-
-/**
- * @return {!SVGMatrix}
- * @override
- */
-SVGSwitchElement.prototype.getScreenCTM = function () {}
-
-/**
- * @param {!SVGElement=} opt_element
- * @return {!SVGMatrix}
- * @override
- */
-SVGSwitchElement.prototype.getTransformToElement = function (opt_element) {}
-
-/**
- * @type {!SVGStringList}
- */
-SVGSwitchElement.prototype.requiredFeatures
-
-/**
- * @type {!SVGStringList}
- */
-SVGSwitchElement.prototype.requiredExtensions
-
-/**
- * @type {!SVGStringList}
- */
-SVGSwitchElement.prototype.systemLanguage
-
-/**
- * @param {string=} opt_extension
- * @return {boolean}
- * @override
- */
-SVGSwitchElement.prototype.hasExtension = function (opt_extension) {}
-
-/**
- * @type {!SVGAnimatedString}
- */
-SVGSwitchElement.prototype.className
-
-/**
- * @param {string=} opt_name
- * @return {!CSSValue}
- * @override
- */
-SVGSwitchElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGCircleElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
@@ -6982,126 +6661,572 @@ SVGSwitchElement.prototype.getPresentationAttribute = function (opt_name) {}
  * @implements {SVGStylable}
  * @implements {SVGTransformable}
  */
-function SVGImageElement () {}
+function SVGUseElement() {}
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGImageElement.prototype.x
+SVGUseElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGImageElement.prototype.y
+SVGUseElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGImageElement.prototype.width
+SVGUseElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGImageElement.prototype.height
+SVGUseElement.prototype.height;
+
+/**
+ * @type {!SVGElementInstance}
+ */
+SVGUseElement.prototype.instanceRoot;
+
+/**
+ * @type {!SVGElementInstance}
+ */
+SVGUseElement.prototype.animatedInstanceRoot;
+
+/**
+ * @type {!SVGAnimatedBoolean}
+ */
+SVGUseElement.prototype.externalResourcesRequired;
+
+/**
+ * @type {!SVGElement}
+ */
+SVGUseElement.prototype.nearestViewportElement;
+
+/**
+ * @type {!SVGElement}
+ */
+SVGUseElement.prototype.farthestViewportElement;
+
+/**
+ * @return {!SVGRect}
+ * @override
+ */
+SVGUseElement.prototype.getBBox = function () {};
+
+/**
+ * @return {!SVGMatrix}
+ * @override
+ */
+SVGUseElement.prototype.getCTM = function () {};
+
+/**
+ * @return {!SVGMatrix}
+ * @override
+ */
+SVGUseElement.prototype.getScreenCTM = function () {};
+
+/**
+ * @param {!SVGElement=} opt_element
+ * @return {!SVGMatrix}
+ * @override
+ */
+SVGUseElement.prototype.getTransformToElement = function (opt_element) {};
+
+/**
+ * @type {!SVGAnimatedTransformList}
+ */
+SVGUseElement.prototype.transform;
+
+/**
+ * @type {!SVGAnimatedString}
+ */
+SVGUseElement.prototype.href;
+
+/**
+ * @type {string}
+ */
+SVGUseElement.prototype.xmllang;
+
+/**
+ * @type {string}
+ */
+SVGUseElement.prototype.xmlspace;
+
+/**
+ * @type {!SVGStringList}
+ */
+SVGUseElement.prototype.requiredFeatures;
+
+/**
+ * @type {!SVGStringList}
+ */
+SVGUseElement.prototype.requiredExtensions;
+
+/**
+ * @type {!SVGStringList}
+ */
+SVGUseElement.prototype.systemLanguage;
+
+/**
+ * @param {string=} opt_extension
+ * @return {boolean}
+ * @override
+ */
+SVGUseElement.prototype.hasExtension = function (opt_extension) {};
+
+/**
+ * @type {!SVGAnimatedString}
+ */
+SVGUseElement.prototype.className;
+
+/**
+ * @param {string=} opt_name
+ * @return {!CSSValue}
+ * @override
+ */
+SVGUseElement.prototype.getPresentationAttribute = function (opt_name) {};
+
+/**
+ * @constructor
+ * @extends {SVGElement}
+ * @implements {SVGTests}
+ * @implements {SVGLangSpace}
+ * @implements {SVGExternalResourcesRequired}
+ * @implements {SVGStylable}
+ * @implements {SVGTransformable}
+ */
+function SVGPolylineElement() {}
+
+/**
+ * @type {!SVGPointList}
+ */
+SVGPolylineElement.prototype.points;
+
+/**
+ * @type {!SVGPointList}
+ */
+SVGPolylineElement.prototype.animatedPoints;
+
+/**
+ * @type {!SVGAnimatedBoolean}
+ */
+SVGPolylineElement.prototype.externalResourcesRequired;
+
+/**
+ * @type {!SVGAnimatedTransformList}
+ */
+SVGPolylineElement.prototype.transform;
+
+/**
+ * @type {string}
+ */
+SVGPolylineElement.prototype.xmllang;
+
+/**
+ * @type {string}
+ */
+SVGPolylineElement.prototype.xmlspace;
+
+/**
+ * @type {!SVGElement}
+ */
+SVGPolylineElement.prototype.nearestViewportElement;
+
+/**
+ * @type {!SVGElement}
+ */
+SVGPolylineElement.prototype.farthestViewportElement;
+
+/**
+ * @return {!SVGRect}
+ * @override
+ */
+SVGPolylineElement.prototype.getBBox = function () {};
+
+/**
+ * @return {!SVGMatrix}
+ * @override
+ */
+SVGPolylineElement.prototype.getCTM = function () {};
+
+/**
+ * @return {!SVGMatrix}
+ * @override
+ */
+SVGPolylineElement.prototype.getScreenCTM = function () {};
+
+/**
+ * @param {!SVGElement=} opt_element
+ * @return {!SVGMatrix}
+ * @override
+ */
+SVGPolylineElement.prototype.getTransformToElement = function (opt_element) {};
+
+/**
+ * @type {!SVGStringList}
+ */
+SVGPolylineElement.prototype.requiredFeatures;
+
+/**
+ * @type {!SVGStringList}
+ */
+SVGPolylineElement.prototype.requiredExtensions;
+
+/**
+ * @type {!SVGStringList}
+ */
+SVGPolylineElement.prototype.systemLanguage;
+
+/**
+ * @param {string=} opt_extension
+ * @return {boolean}
+ * @override
+ */
+SVGPolylineElement.prototype.hasExtension = function (opt_extension) {};
+
+/**
+ * @type {!SVGAnimatedString}
+ */
+SVGPolylineElement.prototype.className;
+
+/**
+ * @param {string=} opt_name
+ * @return {!CSSValue}
+ * @override
+ */
+SVGPolylineElement.prototype.getPresentationAttribute = function (opt_name) {};
+
+/**
+ * @constructor
+ * @extends {SVGElement}
+ * @implements {SVGTests}
+ * @implements {SVGLangSpace}
+ * @implements {SVGExternalResourcesRequired}
+ * @implements {SVGStylable}
+ * @implements {SVGTransformable}
+ */
+function SVGGElement() {}
+
+/**
+ * @type {!SVGAnimatedBoolean}
+ */
+SVGGElement.prototype.externalResourcesRequired;
+
+/**
+ * @type {!SVGAnimatedTransformList}
+ */
+SVGGElement.prototype.transform;
+
+/**
+ * @type {string}
+ */
+SVGGElement.prototype.xmllang;
+
+/**
+ * @type {string}
+ */
+SVGGElement.prototype.xmlspace;
+
+/**
+ * @type {!SVGElement}
+ */
+SVGGElement.prototype.nearestViewportElement;
+
+/**
+ * @type {!SVGElement}
+ */
+SVGGElement.prototype.farthestViewportElement;
+
+/**
+ * @return {!SVGRect}
+ * @override
+ */
+SVGGElement.prototype.getBBox = function () {};
+
+/**
+ * @return {!SVGMatrix}
+ * @override
+ */
+SVGGElement.prototype.getCTM = function () {};
+
+/**
+ * @return {!SVGMatrix}
+ * @override
+ */
+SVGGElement.prototype.getScreenCTM = function () {};
+
+/**
+ * @param {!SVGElement=} opt_element
+ * @return {!SVGMatrix}
+ * @override
+ */
+SVGGElement.prototype.getTransformToElement = function (opt_element) {};
+
+/**
+ * @type {!SVGStringList}
+ */
+SVGGElement.prototype.requiredFeatures;
+
+/**
+ * @type {!SVGStringList}
+ */
+SVGGElement.prototype.requiredExtensions;
+
+/**
+ * @type {!SVGStringList}
+ */
+SVGGElement.prototype.systemLanguage;
+
+/**
+ * @param {string=} opt_extension
+ * @return {boolean}
+ * @override
+ */
+SVGGElement.prototype.hasExtension = function (opt_extension) {};
+
+/**
+ * @type {!SVGAnimatedString}
+ */
+SVGGElement.prototype.className;
+
+/**
+ * @param {string=} opt_name
+ * @return {!CSSValue}
+ * @override
+ */
+SVGGElement.prototype.getPresentationAttribute = function (opt_name) {};
+
+/**
+ * @constructor
+ * @extends {SVGElement}
+ * @implements {SVGTests}
+ * @implements {SVGLangSpace}
+ * @implements {SVGExternalResourcesRequired}
+ * @implements {SVGStylable}
+ * @implements {SVGTransformable}
+ */
+function SVGSwitchElement() {}
+
+/**
+ * @type {!SVGAnimatedBoolean}
+ */
+SVGSwitchElement.prototype.externalResourcesRequired;
+
+/**
+ * @type {!SVGAnimatedTransformList}
+ */
+SVGSwitchElement.prototype.transform;
+
+/**
+ * @type {string}
+ */
+SVGSwitchElement.prototype.xmllang;
+
+/**
+ * @type {string}
+ */
+SVGSwitchElement.prototype.xmlspace;
+
+/**
+ * @type {!SVGElement}
+ */
+SVGSwitchElement.prototype.nearestViewportElement;
+
+/**
+ * @type {!SVGElement}
+ */
+SVGSwitchElement.prototype.farthestViewportElement;
+
+/**
+ * @return {!SVGRect}
+ * @override
+ */
+SVGSwitchElement.prototype.getBBox = function () {};
+
+/**
+ * @return {!SVGMatrix}
+ * @override
+ */
+SVGSwitchElement.prototype.getCTM = function () {};
+
+/**
+ * @return {!SVGMatrix}
+ * @override
+ */
+SVGSwitchElement.prototype.getScreenCTM = function () {};
+
+/**
+ * @param {!SVGElement=} opt_element
+ * @return {!SVGMatrix}
+ * @override
+ */
+SVGSwitchElement.prototype.getTransformToElement = function (opt_element) {};
+
+/**
+ * @type {!SVGStringList}
+ */
+SVGSwitchElement.prototype.requiredFeatures;
+
+/**
+ * @type {!SVGStringList}
+ */
+SVGSwitchElement.prototype.requiredExtensions;
+
+/**
+ * @type {!SVGStringList}
+ */
+SVGSwitchElement.prototype.systemLanguage;
+
+/**
+ * @param {string=} opt_extension
+ * @return {boolean}
+ * @override
+ */
+SVGSwitchElement.prototype.hasExtension = function (opt_extension) {};
+
+/**
+ * @type {!SVGAnimatedString}
+ */
+SVGSwitchElement.prototype.className;
+
+/**
+ * @param {string=} opt_name
+ * @return {!CSSValue}
+ * @override
+ */
+SVGSwitchElement.prototype.getPresentationAttribute = function (opt_name) {};
+
+/**
+ * @constructor
+ * @extends {SVGElement}
+ * @implements {SVGURIReference}
+ * @implements {SVGTests}
+ * @implements {SVGLangSpace}
+ * @implements {SVGExternalResourcesRequired}
+ * @implements {SVGStylable}
+ * @implements {SVGTransformable}
+ */
+function SVGImageElement() {}
+
+/**
+ * @type {!SVGAnimatedLength}
+ */
+SVGImageElement.prototype.x;
+
+/**
+ * @type {!SVGAnimatedLength}
+ */
+SVGImageElement.prototype.y;
+
+/**
+ * @type {!SVGAnimatedLength}
+ */
+SVGImageElement.prototype.width;
+
+/**
+ * @type {!SVGAnimatedLength}
+ */
+SVGImageElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedPreserveAspectRatio}
  */
-SVGImageElement.prototype.preserveAspectRatio
+SVGImageElement.prototype.preserveAspectRatio;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGImageElement.prototype.externalResourcesRequired
+SVGImageElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGElement}
  */
-SVGImageElement.prototype.nearestViewportElement
+SVGImageElement.prototype.nearestViewportElement;
 
 /**
  * @type {!SVGElement}
  */
-SVGImageElement.prototype.farthestViewportElement
+SVGImageElement.prototype.farthestViewportElement;
 
 /**
  * @return {!SVGRect}
  * @override
  */
-SVGImageElement.prototype.getBBox = function () {}
+SVGImageElement.prototype.getBBox = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGImageElement.prototype.getCTM = function () {}
+SVGImageElement.prototype.getCTM = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGImageElement.prototype.getScreenCTM = function () {}
+SVGImageElement.prototype.getScreenCTM = function () {};
 
 /**
  * @param {!SVGElement=} opt_element
  * @return {!SVGMatrix}
  * @override
  */
-SVGImageElement.prototype.getTransformToElement = function (opt_element) {}
+SVGImageElement.prototype.getTransformToElement = function (opt_element) {};
 
 /**
  * @type {!SVGAnimatedTransformList}
  */
-SVGImageElement.prototype.transform
+SVGImageElement.prototype.transform;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGImageElement.prototype.href
+SVGImageElement.prototype.href;
 
 /**
  * @type {string}
  */
-SVGImageElement.prototype.xmllang
+SVGImageElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGImageElement.prototype.xmlspace
+SVGImageElement.prototype.xmlspace;
 
 /**
  * @type {!SVGStringList}
  */
-SVGImageElement.prototype.requiredFeatures
+SVGImageElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGImageElement.prototype.requiredExtensions
+SVGImageElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGImageElement.prototype.systemLanguage
+SVGImageElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGImageElement.prototype.hasExtension = function (opt_extension) {}
+SVGImageElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGImageElement.prototype.className
+SVGImageElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGImageElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGImageElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
@@ -7112,126 +7237,126 @@ SVGImageElement.prototype.getPresentationAttribute = function (opt_name) {}
  * @implements {SVGStylable}
  * @implements {SVGTransformable}
  */
-function SVGRectElement () {}
+function SVGRectElement() {}
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGRectElement.prototype.x
+SVGRectElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGRectElement.prototype.y
+SVGRectElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGRectElement.prototype.width
+SVGRectElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGRectElement.prototype.height
+SVGRectElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGRectElement.prototype.rx
+SVGRectElement.prototype.rx;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGRectElement.prototype.ry
+SVGRectElement.prototype.ry;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGRectElement.prototype.externalResourcesRequired
+SVGRectElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedTransformList}
  */
-SVGRectElement.prototype.transform
+SVGRectElement.prototype.transform;
 
 /**
  * @type {string}
  */
-SVGRectElement.prototype.xmllang
+SVGRectElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGRectElement.prototype.xmlspace
+SVGRectElement.prototype.xmlspace;
 
 /**
  * @type {!SVGElement}
  */
-SVGRectElement.prototype.nearestViewportElement
+SVGRectElement.prototype.nearestViewportElement;
 
 /**
  * @type {!SVGElement}
  */
-SVGRectElement.prototype.farthestViewportElement
+SVGRectElement.prototype.farthestViewportElement;
 
 /**
  * @return {!SVGRect}
  * @override
  */
-SVGRectElement.prototype.getBBox = function () {}
+SVGRectElement.prototype.getBBox = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGRectElement.prototype.getCTM = function () {}
+SVGRectElement.prototype.getCTM = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGRectElement.prototype.getScreenCTM = function () {}
+SVGRectElement.prototype.getScreenCTM = function () {};
 
 /**
  * @param {!SVGElement=} opt_element
  * @return {!SVGMatrix}
  * @override
  */
-SVGRectElement.prototype.getTransformToElement = function (opt_element) {}
+SVGRectElement.prototype.getTransformToElement = function (opt_element) {};
 
 /**
  * @type {!SVGStringList}
  */
-SVGRectElement.prototype.requiredFeatures
+SVGRectElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGRectElement.prototype.requiredExtensions
+SVGRectElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGRectElement.prototype.systemLanguage
+SVGRectElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGRectElement.prototype.hasExtension = function (opt_extension) {}
+SVGRectElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGRectElement.prototype.className
+SVGRectElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGRectElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGRectElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
@@ -7243,402 +7368,404 @@ SVGRectElement.prototype.getPresentationAttribute = function (opt_name) {}
  * @implements {SVGStylable}
  * @implements {SVGTransformable}
  */
-function SVGAElement () {}
+function SVGAElement() {}
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGAElement.prototype.target
+SVGAElement.prototype.target;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGAElement.prototype.externalResourcesRequired
+SVGAElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGElement}
  */
-SVGAElement.prototype.nearestViewportElement
+SVGAElement.prototype.nearestViewportElement;
 
 /**
  * @type {!SVGElement}
  */
-SVGAElement.prototype.farthestViewportElement
+SVGAElement.prototype.farthestViewportElement;
 
 /**
  * @return {!SVGRect}
  * @override
  */
-SVGAElement.prototype.getBBox = function () {}
+SVGAElement.prototype.getBBox = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGAElement.prototype.getCTM = function () {}
+SVGAElement.prototype.getCTM = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGAElement.prototype.getScreenCTM = function () {}
+SVGAElement.prototype.getScreenCTM = function () {};
 
 /**
  * @param {!SVGElement=} opt_element
  * @return {!SVGMatrix}
  * @override
  */
-SVGAElement.prototype.getTransformToElement = function (opt_element) {}
+SVGAElement.prototype.getTransformToElement = function (opt_element) {};
 
 /**
  * @type {!SVGAnimatedTransformList}
  */
-SVGAElement.prototype.transform
+SVGAElement.prototype.transform;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGAElement.prototype.href
+SVGAElement.prototype.href;
 
 /**
  * @type {string}
  */
-SVGAElement.prototype.xmllang
+SVGAElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGAElement.prototype.xmlspace
+SVGAElement.prototype.xmlspace;
 
 /**
  * @type {!SVGStringList}
  */
-SVGAElement.prototype.requiredFeatures
+SVGAElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGAElement.prototype.requiredExtensions
+SVGAElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGAElement.prototype.systemLanguage
+SVGAElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGAElement.prototype.hasExtension = function (opt_extension) {}
+SVGAElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGAElement.prototype.className
+SVGAElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGAElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGAElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
  */
-function SVGAnimatedPreserveAspectRatio () {}
+function SVGAnimatedPreserveAspectRatio() {}
 
 /**
  * @type {!SVGPreserveAspectRatio}
  */
-SVGAnimatedPreserveAspectRatio.prototype.baseVal
+SVGAnimatedPreserveAspectRatio.prototype.baseVal;
 
 /**
  * @type {!SVGPreserveAspectRatio}
  */
-SVGAnimatedPreserveAspectRatio.prototype.animVal
+SVGAnimatedPreserveAspectRatio.prototype.animVal;
 
 /**
  * @constructor
  */
-function SVGElementInstanceList () {}
+function SVGElementInstanceList() {}
 
 /**
  * @type {number}
  */
-SVGElementInstanceList.prototype.length
+SVGElementInstanceList.prototype.length;
 
 /**
  * @param {number=} opt_index
  * @return {!SVGElementInstance}
  */
-SVGElementInstanceList.prototype.item = function (opt_index) {}
+SVGElementInstanceList.prototype.item = function (opt_index) {};
 
 /**
  * @constructor
  * @extends {Element}
  */
-function SVGElement () {}
+function SVGElement() {}
 
 /**
  * @type {string}
  */
-SVGElement.prototype.id
+SVGElement.prototype.id;
 
 /**
  * @type {string}
  */
-SVGElement.prototype.xmlbase
+SVGElement.prototype.xmlbase;
 
 /**
  * @type {!SVGSVGElement}
  */
-SVGElement.prototype.ownerSVGElement
+SVGElement.prototype.ownerSVGElement;
 
 /**
  * @type {!SVGElement}
  */
-SVGElement.prototype.viewportElement
+SVGElement.prototype.viewportElement;
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFETurbulenceElement () {}
+function SVGFETurbulenceElement() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGFETurbulenceElement.SVG_TURBULENCE_TYPE_UNKNOWN
+SVGFETurbulenceElement.SVG_TURBULENCE_TYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFETurbulenceElement.prototype.SVG_TURBULENCE_TYPE_UNKNOWN
+SVGFETurbulenceElement.prototype.SVG_TURBULENCE_TYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFETurbulenceElement.SVG_TURBULENCE_TYPE_FRACTALNOISE
+SVGFETurbulenceElement.SVG_TURBULENCE_TYPE_FRACTALNOISE;
 
 /**
  * @const
  * @type {number}
  */
-SVGFETurbulenceElement.prototype.SVG_TURBULENCE_TYPE_FRACTALNOISE
+SVGFETurbulenceElement.prototype.SVG_TURBULENCE_TYPE_FRACTALNOISE;
 
 /**
  * @const
  * @type {number}
  */
-SVGFETurbulenceElement.SVG_TURBULENCE_TYPE_TURBULENCE
+SVGFETurbulenceElement.SVG_TURBULENCE_TYPE_TURBULENCE;
 
 /**
  * @const
  * @type {number}
  */
-SVGFETurbulenceElement.prototype.SVG_TURBULENCE_TYPE_TURBULENCE
+SVGFETurbulenceElement.prototype.SVG_TURBULENCE_TYPE_TURBULENCE;
 
 /**
  * @const
  * @type {number}
  */
-SVGFETurbulenceElement.SVG_STITCHTYPE_UNKNOWN
+SVGFETurbulenceElement.SVG_STITCHTYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFETurbulenceElement.prototype.SVG_STITCHTYPE_UNKNOWN
+SVGFETurbulenceElement.prototype.SVG_STITCHTYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFETurbulenceElement.SVG_STITCHTYPE_STITCH
+SVGFETurbulenceElement.SVG_STITCHTYPE_STITCH;
 
 /**
  * @const
  * @type {number}
  */
-SVGFETurbulenceElement.prototype.SVG_STITCHTYPE_STITCH
+SVGFETurbulenceElement.prototype.SVG_STITCHTYPE_STITCH;
 
 /**
  * @const
  * @type {number}
  */
-SVGFETurbulenceElement.SVG_STITCHTYPE_NOSTITCH
+SVGFETurbulenceElement.SVG_STITCHTYPE_NOSTITCH;
 
 /**
  * @const
  * @type {number}
  */
-SVGFETurbulenceElement.prototype.SVG_STITCHTYPE_NOSTITCH
+SVGFETurbulenceElement.prototype.SVG_STITCHTYPE_NOSTITCH;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFETurbulenceElement.prototype.baseFrequencyX
+SVGFETurbulenceElement.prototype.baseFrequencyX;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFETurbulenceElement.prototype.baseFrequencyY
+SVGFETurbulenceElement.prototype.baseFrequencyY;
 
 /**
  * @type {!SVGAnimatedInteger}
  */
-SVGFETurbulenceElement.prototype.numOctaves
+SVGFETurbulenceElement.prototype.numOctaves;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFETurbulenceElement.prototype.seed
+SVGFETurbulenceElement.prototype.seed;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGFETurbulenceElement.prototype.stitchTiles
+SVGFETurbulenceElement.prototype.stitchTiles;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGFETurbulenceElement.prototype.type
+SVGFETurbulenceElement.prototype.type;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFETurbulenceElement.prototype.x
+SVGFETurbulenceElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFETurbulenceElement.prototype.y
+SVGFETurbulenceElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFETurbulenceElement.prototype.width
+SVGFETurbulenceElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFETurbulenceElement.prototype.height
+SVGFETurbulenceElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFETurbulenceElement.prototype.result
+SVGFETurbulenceElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFETurbulenceElement.prototype.className
+SVGFETurbulenceElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFETurbulenceElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFETurbulenceElement.prototype.getPresentationAttribute = function (
+  opt_name
+) {};
 
 /**
  * @constructor
  * @extends {SVGPathSeg}
  */
-function SVGPathSegArcAbs () {}
+function SVGPathSegArcAbs() {}
 
 /**
  * @type {number}
  */
-SVGPathSegArcAbs.prototype.x
+SVGPathSegArcAbs.prototype.x;
 
 /**
  * @type {number}
  */
-SVGPathSegArcAbs.prototype.y
+SVGPathSegArcAbs.prototype.y;
 
 /**
  * @type {number}
  */
-SVGPathSegArcAbs.prototype.r1
+SVGPathSegArcAbs.prototype.r1;
 
 /**
  * @type {number}
  */
-SVGPathSegArcAbs.prototype.r2
+SVGPathSegArcAbs.prototype.r2;
 
 /**
  * @type {number}
  */
-SVGPathSegArcAbs.prototype.angle
+SVGPathSegArcAbs.prototype.angle;
 
 /**
  * @type {boolean}
  */
-SVGPathSegArcAbs.prototype.largeArcFlag
+SVGPathSegArcAbs.prototype.largeArcFlag;
 
 /**
  * @type {boolean}
  */
-SVGPathSegArcAbs.prototype.sweepFlag
+SVGPathSegArcAbs.prototype.sweepFlag;
 
 /**
  * @constructor
  */
-function SVGAnimatedBoolean () {}
+function SVGAnimatedBoolean() {}
 
 /**
  * @type {boolean}
  */
-SVGAnimatedBoolean.prototype.baseVal
+SVGAnimatedBoolean.prototype.baseVal;
 
 /**
  * @type {boolean}
  */
-SVGAnimatedBoolean.prototype.animVal
+SVGAnimatedBoolean.prototype.animVal;
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGLangSpace}
  */
-function SVGStyleElement () {}
+function SVGStyleElement() {}
 
 /**
  * @type {boolean}
  */
-SVGStyleElement.prototype.disabled
+SVGStyleElement.prototype.disabled;
 
 /**
  * @type {string}
  */
-SVGStyleElement.prototype.type
+SVGStyleElement.prototype.type;
 
 /**
  * @type {string}
  */
-SVGStyleElement.prototype.media
+SVGStyleElement.prototype.media;
 
 /**
  * @type {string}
  */
-SVGStyleElement.prototype.title
+SVGStyleElement.prototype.title;
 
 /**
  * @type {string}
  */
-SVGStyleElement.prototype.xmllang
+SVGStyleElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGStyleElement.prototype.xmlspace
+SVGStyleElement.prototype.xmlspace;
 
 /**
  * @constructor
@@ -7649,128 +7776,128 @@ SVGStyleElement.prototype.xmlspace
  * @implements {SVGStylable}
  * @implements {SVGTransformable}
  */
-function SVGClipPathElement () {}
+function SVGClipPathElement() {}
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGClipPathElement.prototype.clipPathUnits
+SVGClipPathElement.prototype.clipPathUnits;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGClipPathElement.prototype.externalResourcesRequired
+SVGClipPathElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedTransformList}
  */
-SVGClipPathElement.prototype.transform
+SVGClipPathElement.prototype.transform;
 
 /**
  * @type {string}
  */
-SVGClipPathElement.prototype.xmllang
+SVGClipPathElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGClipPathElement.prototype.xmlspace
+SVGClipPathElement.prototype.xmlspace;
 
 /**
  * @type {!SVGElement}
  */
-SVGClipPathElement.prototype.nearestViewportElement
+SVGClipPathElement.prototype.nearestViewportElement;
 
 /**
  * @type {!SVGElement}
  */
-SVGClipPathElement.prototype.farthestViewportElement
+SVGClipPathElement.prototype.farthestViewportElement;
 
 /**
  * @return {!SVGRect}
  * @override
  */
-SVGClipPathElement.prototype.getBBox = function () {}
+SVGClipPathElement.prototype.getBBox = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGClipPathElement.prototype.getCTM = function () {}
+SVGClipPathElement.prototype.getCTM = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGClipPathElement.prototype.getScreenCTM = function () {}
+SVGClipPathElement.prototype.getScreenCTM = function () {};
 
 /**
  * @param {!SVGElement=} opt_element
  * @return {!SVGMatrix}
  * @override
  */
-SVGClipPathElement.prototype.getTransformToElement = function (opt_element) {}
+SVGClipPathElement.prototype.getTransformToElement = function (opt_element) {};
 
 /**
  * @type {!SVGStringList}
  */
-SVGClipPathElement.prototype.requiredFeatures
+SVGClipPathElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGClipPathElement.prototype.requiredExtensions
+SVGClipPathElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGClipPathElement.prototype.systemLanguage
+SVGClipPathElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGClipPathElement.prototype.hasExtension = function (opt_extension) {}
+SVGClipPathElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGClipPathElement.prototype.className
+SVGClipPathElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGClipPathElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGClipPathElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @interface
  */
-function ElementTimeControl () {}
+function ElementTimeControl() {}
 
 /**
  * @return {undefined}
  */
-ElementTimeControl.prototype.beginElement = function () {}
-
-/**
- * @param {number=} opt_offset
- * @return {undefined}
- */
-ElementTimeControl.prototype.beginElementAt = function (opt_offset) {}
-
-/**
- * @return {undefined}
- */
-ElementTimeControl.prototype.endElement = function () {}
+ElementTimeControl.prototype.beginElement = function () {};
 
 /**
  * @param {number=} opt_offset
  * @return {undefined}
  */
-ElementTimeControl.prototype.endElementAt = function (opt_offset) {}
+ElementTimeControl.prototype.beginElementAt = function (opt_offset) {};
+
+/**
+ * @return {undefined}
+ */
+ElementTimeControl.prototype.endElement = function () {};
+
+/**
+ * @param {number=} opt_offset
+ * @return {undefined}
+ */
+ElementTimeControl.prototype.endElementAt = function (opt_offset) {};
 
 /**
  * @constructor
@@ -7779,261 +7906,264 @@ ElementTimeControl.prototype.endElementAt = function (opt_offset) {}
  * @implements {SVGExternalResourcesRequired}
  * @implements {ElementTimeControl}
  */
-function SVGAnimationElement () {}
+function SVGAnimationElement() {}
 
 /**
  * @type {!SVGElement}
  */
-SVGAnimationElement.prototype.targetElement
+SVGAnimationElement.prototype.targetElement;
 
 /**
  * @return {number}
  */
-SVGAnimationElement.prototype.getStartTime = function () {}
+SVGAnimationElement.prototype.getStartTime = function () {};
 
 /**
  * @return {number}
  */
-SVGAnimationElement.prototype.getCurrentTime = function () {}
+SVGAnimationElement.prototype.getCurrentTime = function () {};
 
 /**
  * @return {number}
  */
-SVGAnimationElement.prototype.getSimpleDuration = function () {}
+SVGAnimationElement.prototype.getSimpleDuration = function () {};
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGAnimationElement.prototype.externalResourcesRequired
+SVGAnimationElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGStringList}
  */
-SVGAnimationElement.prototype.requiredFeatures
+SVGAnimationElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGAnimationElement.prototype.requiredExtensions
+SVGAnimationElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGAnimationElement.prototype.systemLanguage
+SVGAnimationElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGAnimationElement.prototype.hasExtension = function (opt_extension) {}
+SVGAnimationElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @override
  * @return {undefined}
  */
-SVGAnimationElement.prototype.beginElement = function () {}
+SVGAnimationElement.prototype.beginElement = function () {};
 
 /**
  * @param {number=} opt_offset
  * @override
  * @return {undefined}
  */
-SVGAnimationElement.prototype.beginElementAt = function (opt_offset) {}
+SVGAnimationElement.prototype.beginElementAt = function (opt_offset) {};
 
 /**
  * @override
  * @return {undefined}
  */
-SVGAnimationElement.prototype.endElement = function () {}
+SVGAnimationElement.prototype.endElement = function () {};
 
 /**
  * @param {number=} opt_offset
  * @override
  * @return {undefined}
  */
-SVGAnimationElement.prototype.endElementAt = function (opt_offset) {}
+SVGAnimationElement.prototype.endElementAt = function (opt_offset) {};
 
 /**
  * @constructor
  * @extends {SVGAnimationElement}
  */
-function SVGAnimateMotionElement () {}
+function SVGAnimateMotionElement() {}
 
 /**
  * @constructor
  * @extends {SVGAnimationElement}
  */
-function SVGAnimateElement () {}
+function SVGAnimateElement() {}
 
 /**
  * @constructor
  * @extends {SVGAnimationElement}
  */
-function SVGAnimateColorElement () {}
+function SVGAnimateColorElement() {}
 
 /**
  * @constructor
  * @extends {SVGAnimationElement}
  */
-function SVGAnimateTransformElement () {}
+function SVGAnimateTransformElement() {}
 
 /**
  * @constructor
  * @extends {SVGAnimationElement}
  */
-function SVGSetElement () {}
+function SVGSetElement() {}
 
 /**
  * @constructor
  */
-function SVGAngle () {}
+function SVGAngle() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGAngle.SVG_ANGLETYPE_UNKNOWN
+SVGAngle.SVG_ANGLETYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGAngle.prototype.SVG_ANGLETYPE_UNKNOWN
+SVGAngle.prototype.SVG_ANGLETYPE_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGAngle.SVG_ANGLETYPE_UNSPECIFIED
+SVGAngle.SVG_ANGLETYPE_UNSPECIFIED;
 
 /**
  * @const
  * @type {number}
  */
-SVGAngle.prototype.SVG_ANGLETYPE_UNSPECIFIED
+SVGAngle.prototype.SVG_ANGLETYPE_UNSPECIFIED;
 
 /**
  * @const
  * @type {number}
  */
-SVGAngle.SVG_ANGLETYPE_DEG
+SVGAngle.SVG_ANGLETYPE_DEG;
 
 /**
  * @const
  * @type {number}
  */
-SVGAngle.prototype.SVG_ANGLETYPE_DEG
+SVGAngle.prototype.SVG_ANGLETYPE_DEG;
 
 /**
  * @const
  * @type {number}
  */
-SVGAngle.SVG_ANGLETYPE_RAD
+SVGAngle.SVG_ANGLETYPE_RAD;
 
 /**
  * @const
  * @type {number}
  */
-SVGAngle.prototype.SVG_ANGLETYPE_RAD
+SVGAngle.prototype.SVG_ANGLETYPE_RAD;
 
 /**
  * @const
  * @type {number}
  */
-SVGAngle.SVG_ANGLETYPE_GRAD
+SVGAngle.SVG_ANGLETYPE_GRAD;
 
 /**
  * @const
  * @type {number}
  */
-SVGAngle.prototype.SVG_ANGLETYPE_GRAD
+SVGAngle.prototype.SVG_ANGLETYPE_GRAD;
 
 /**
  * @type {number}
  */
-SVGAngle.prototype.unitType
+SVGAngle.prototype.unitType;
 
 /**
  * @type {number}
  */
-SVGAngle.prototype.value
+SVGAngle.prototype.value;
 
 /**
  * @type {number}
  */
-SVGAngle.prototype.valueInSpecifiedUnits
+SVGAngle.prototype.valueInSpecifiedUnits;
 
 /**
  * @type {string}
  */
-SVGAngle.prototype.valueAsString
+SVGAngle.prototype.valueAsString;
 
 /**
  * @param {number} unitType
  * @param {number} valueInSpecifiedUnits
  * @return {undefined}
  */
-SVGAngle.prototype.newValueSpecifiedUnits = function (unitType, valueInSpecifiedUnits) {}
+SVGAngle.prototype.newValueSpecifiedUnits = function (
+  unitType,
+  valueInSpecifiedUnits
+) {};
 
 /**
  * @param {number} unitType
  * @return {undefined}
  */
-SVGAngle.prototype.convertToSpecifiedUnits = function (unitType) {}
+SVGAngle.prototype.convertToSpecifiedUnits = function (unitType) {};
 
 /**
  * @constructor
  * @extends {SVGTextPositioningElement}
  * @implements {SVGTransformable}
  */
-function SVGTextElement () {}
+function SVGTextElement() {}
 
 /**
  * @type {!SVGAnimatedTransformList}
  */
-SVGTextElement.prototype.transform
+SVGTextElement.prototype.transform;
 
 /**
  * @type {!SVGElement}
  */
-SVGTextElement.prototype.nearestViewportElement
+SVGTextElement.prototype.nearestViewportElement;
 
 /**
  * @type {!SVGElement}
  */
-SVGTextElement.prototype.farthestViewportElement
+SVGTextElement.prototype.farthestViewportElement;
 
 /**
  * @return {!SVGRect}
  * @override
  */
-SVGTextElement.prototype.getBBox = function () {}
+SVGTextElement.prototype.getBBox = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGTextElement.prototype.getCTM = function () {}
+SVGTextElement.prototype.getCTM = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGTextElement.prototype.getScreenCTM = function () {}
+SVGTextElement.prototype.getScreenCTM = function () {};
 
 /**
  * @param {!SVGElement=} opt_element
  * @return {!SVGMatrix}
  * @override
  */
-SVGTextElement.prototype.getTransformToElement = function (opt_element) {}
+SVGTextElement.prototype.getTransformToElement = function (opt_element) {};
 
 /**
  * @constructor
  * @extends {SVGElement}
  */
-function SVGFontFaceElement () {}
+function SVGFontFaceElement() {}
 
 /**
  * @constructor
@@ -8044,353 +8174,357 @@ function SVGFontFaceElement () {}
  * @implements {SVGStylable}
  * @implements {SVGTransformable}
  */
-function SVGLineElement () {}
+function SVGLineElement() {}
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGLineElement.prototype.x1
+SVGLineElement.prototype.x1;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGLineElement.prototype.y1
+SVGLineElement.prototype.y1;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGLineElement.prototype.x2
+SVGLineElement.prototype.x2;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGLineElement.prototype.y2
+SVGLineElement.prototype.y2;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGLineElement.prototype.externalResourcesRequired
+SVGLineElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedTransformList}
  */
-SVGLineElement.prototype.transform
+SVGLineElement.prototype.transform;
 
 /**
  * @type {string}
  */
-SVGLineElement.prototype.xmllang
+SVGLineElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGLineElement.prototype.xmlspace
+SVGLineElement.prototype.xmlspace;
 
 /**
  * @type {!SVGElement}
  */
-SVGLineElement.prototype.nearestViewportElement
+SVGLineElement.prototype.nearestViewportElement;
 
 /**
  * @type {!SVGElement}
  */
-SVGLineElement.prototype.farthestViewportElement
+SVGLineElement.prototype.farthestViewportElement;
 
 /**
  * @return {!SVGRect}
  * @override
  */
-SVGLineElement.prototype.getBBox = function () {}
+SVGLineElement.prototype.getBBox = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGLineElement.prototype.getCTM = function () {}
+SVGLineElement.prototype.getCTM = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGLineElement.prototype.getScreenCTM = function () {}
+SVGLineElement.prototype.getScreenCTM = function () {};
 
 /**
  * @param {!SVGElement=} opt_element
  * @return {!SVGMatrix}
  * @override
  */
-SVGLineElement.prototype.getTransformToElement = function (opt_element) {}
+SVGLineElement.prototype.getTransformToElement = function (opt_element) {};
 
 /**
  * @type {!SVGStringList}
  */
-SVGLineElement.prototype.requiredFeatures
+SVGLineElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGLineElement.prototype.requiredExtensions
+SVGLineElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGLineElement.prototype.systemLanguage
+SVGLineElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGLineElement.prototype.hasExtension = function (opt_extension) {}
+SVGLineElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGLineElement.prototype.className
+SVGLineElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGLineElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGLineElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFEComponentTransferElement () {}
+function SVGFEComponentTransferElement() {}
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEComponentTransferElement.prototype.in1
+SVGFEComponentTransferElement.prototype.in1;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEComponentTransferElement.prototype.x
+SVGFEComponentTransferElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEComponentTransferElement.prototype.y
+SVGFEComponentTransferElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEComponentTransferElement.prototype.width
+SVGFEComponentTransferElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEComponentTransferElement.prototype.height
+SVGFEComponentTransferElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEComponentTransferElement.prototype.result
+SVGFEComponentTransferElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEComponentTransferElement.prototype.className
+SVGFEComponentTransferElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFEComponentTransferElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFEComponentTransferElement.prototype.getPresentationAttribute = function (
+  opt_name
+) {};
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFEDisplacementMapElement () {}
+function SVGFEDisplacementMapElement() {}
 
 /**
  * @const
  * @type {number}
  */
-SVGFEDisplacementMapElement.SVG_CHANNEL_UNKNOWN
+SVGFEDisplacementMapElement.SVG_CHANNEL_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEDisplacementMapElement.prototype.SVG_CHANNEL_UNKNOWN
+SVGFEDisplacementMapElement.prototype.SVG_CHANNEL_UNKNOWN;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEDisplacementMapElement.SVG_CHANNEL_R
+SVGFEDisplacementMapElement.SVG_CHANNEL_R;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEDisplacementMapElement.prototype.SVG_CHANNEL_R
+SVGFEDisplacementMapElement.prototype.SVG_CHANNEL_R;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEDisplacementMapElement.SVG_CHANNEL_G
+SVGFEDisplacementMapElement.SVG_CHANNEL_G;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEDisplacementMapElement.prototype.SVG_CHANNEL_G
+SVGFEDisplacementMapElement.prototype.SVG_CHANNEL_G;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEDisplacementMapElement.SVG_CHANNEL_B
+SVGFEDisplacementMapElement.SVG_CHANNEL_B;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEDisplacementMapElement.prototype.SVG_CHANNEL_B
+SVGFEDisplacementMapElement.prototype.SVG_CHANNEL_B;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEDisplacementMapElement.SVG_CHANNEL_A
+SVGFEDisplacementMapElement.SVG_CHANNEL_A;
 
 /**
  * @const
  * @type {number}
  */
-SVGFEDisplacementMapElement.prototype.SVG_CHANNEL_A
+SVGFEDisplacementMapElement.prototype.SVG_CHANNEL_A;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEDisplacementMapElement.prototype.in1
+SVGFEDisplacementMapElement.prototype.in1;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEDisplacementMapElement.prototype.in2
+SVGFEDisplacementMapElement.prototype.in2;
 
 /**
  * @type {!SVGAnimatedNumber}
  */
-SVGFEDisplacementMapElement.prototype.scale
+SVGFEDisplacementMapElement.prototype.scale;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGFEDisplacementMapElement.prototype.xChannelSelector
+SVGFEDisplacementMapElement.prototype.xChannelSelector;
 
 /**
  * @type {!SVGAnimatedEnumeration}
  */
-SVGFEDisplacementMapElement.prototype.yChannelSelector
+SVGFEDisplacementMapElement.prototype.yChannelSelector;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEDisplacementMapElement.prototype.x
+SVGFEDisplacementMapElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEDisplacementMapElement.prototype.y
+SVGFEDisplacementMapElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEDisplacementMapElement.prototype.width
+SVGFEDisplacementMapElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEDisplacementMapElement.prototype.height
+SVGFEDisplacementMapElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEDisplacementMapElement.prototype.result
+SVGFEDisplacementMapElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEDisplacementMapElement.prototype.className
+SVGFEDisplacementMapElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFEDisplacementMapElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFEDisplacementMapElement.prototype.getPresentationAttribute = function (
+  opt_name
+) {};
 
 /**
  * @constructor
  */
-function SVGAnimatedEnumeration () {}
+function SVGAnimatedEnumeration() {}
 
 /**
  * @type {number}
  */
-SVGAnimatedEnumeration.prototype.baseVal
+SVGAnimatedEnumeration.prototype.baseVal;
 
 /**
  * @type {number}
  */
-SVGAnimatedEnumeration.prototype.animVal
+SVGAnimatedEnumeration.prototype.animVal;
 
 /**
  * @constructor
  * @extends {SVGElement}
  * @implements {SVGFilterPrimitiveStandardAttributes}
  */
-function SVGFEMergeElement () {}
+function SVGFEMergeElement() {}
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEMergeElement.prototype.x
+SVGFEMergeElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEMergeElement.prototype.y
+SVGFEMergeElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEMergeElement.prototype.width
+SVGFEMergeElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGFEMergeElement.prototype.height
+SVGFEMergeElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEMergeElement.prototype.result
+SVGFEMergeElement.prototype.result;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGFEMergeElement.prototype.className
+SVGFEMergeElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGFEMergeElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGFEMergeElement.prototype.getPresentationAttribute = function (opt_name) {};
 
 /**
  * @constructor
@@ -8401,131 +8535,135 @@ SVGFEMergeElement.prototype.getPresentationAttribute = function (opt_name) {}
  * @implements {SVGStylable}
  * @implements {SVGTransformable}
  */
-function SVGForeignObjectElement () {}
+function SVGForeignObjectElement() {}
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGForeignObjectElement.prototype.x
+SVGForeignObjectElement.prototype.x;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGForeignObjectElement.prototype.y
+SVGForeignObjectElement.prototype.y;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGForeignObjectElement.prototype.width
+SVGForeignObjectElement.prototype.width;
 
 /**
  * @type {!SVGAnimatedLength}
  */
-SVGForeignObjectElement.prototype.height
+SVGForeignObjectElement.prototype.height;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGForeignObjectElement.prototype.externalResourcesRequired
+SVGForeignObjectElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedTransformList}
  */
-SVGForeignObjectElement.prototype.transform
+SVGForeignObjectElement.prototype.transform;
 
 /**
  * @type {string}
  */
-SVGForeignObjectElement.prototype.xmllang
+SVGForeignObjectElement.prototype.xmllang;
 
 /**
  * @type {string}
  */
-SVGForeignObjectElement.prototype.xmlspace
+SVGForeignObjectElement.prototype.xmlspace;
 
 /**
  * @type {!SVGElement}
  */
-SVGForeignObjectElement.prototype.nearestViewportElement
+SVGForeignObjectElement.prototype.nearestViewportElement;
 
 /**
  * @type {!SVGElement}
  */
-SVGForeignObjectElement.prototype.farthestViewportElement
+SVGForeignObjectElement.prototype.farthestViewportElement;
 
 /**
  * @return {!SVGRect}
  * @override
  */
-SVGForeignObjectElement.prototype.getBBox = function () {}
+SVGForeignObjectElement.prototype.getBBox = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGForeignObjectElement.prototype.getCTM = function () {}
+SVGForeignObjectElement.prototype.getCTM = function () {};
 
 /**
  * @return {!SVGMatrix}
  * @override
  */
-SVGForeignObjectElement.prototype.getScreenCTM = function () {}
+SVGForeignObjectElement.prototype.getScreenCTM = function () {};
 
 /**
  * @param {!SVGElement=} opt_element
  * @return {!SVGMatrix}
  * @override
  */
-SVGForeignObjectElement.prototype.getTransformToElement = function (opt_element) {}
+SVGForeignObjectElement.prototype.getTransformToElement = function (
+  opt_element
+) {};
 
 /**
  * @type {!SVGStringList}
  */
-SVGForeignObjectElement.prototype.requiredFeatures
+SVGForeignObjectElement.prototype.requiredFeatures;
 
 /**
  * @type {!SVGStringList}
  */
-SVGForeignObjectElement.prototype.requiredExtensions
+SVGForeignObjectElement.prototype.requiredExtensions;
 
 /**
  * @type {!SVGStringList}
  */
-SVGForeignObjectElement.prototype.systemLanguage
+SVGForeignObjectElement.prototype.systemLanguage;
 
 /**
  * @param {string=} opt_extension
  * @return {boolean}
  * @override
  */
-SVGForeignObjectElement.prototype.hasExtension = function (opt_extension) {}
+SVGForeignObjectElement.prototype.hasExtension = function (opt_extension) {};
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGForeignObjectElement.prototype.className
+SVGForeignObjectElement.prototype.className;
 
 /**
  * @param {string=} opt_name
  * @return {!CSSValue}
  * @override
  */
-SVGForeignObjectElement.prototype.getPresentationAttribute = function (opt_name) {}
+SVGForeignObjectElement.prototype.getPresentationAttribute = function (
+  opt_name
+) {};
 
 /**
  * @constructor
  */
-function SVGAnimatedLength () {}
+function SVGAnimatedLength() {}
 
 /**
  * @type {!SVGLength}
  */
-SVGAnimatedLength.prototype.baseVal
+SVGAnimatedLength.prototype.baseVal;
 
 /**
  * @type {!SVGLength}
  */
-SVGAnimatedLength.prototype.animVal
+SVGAnimatedLength.prototype.animVal;
 
 /**
  * @constructor
@@ -8533,34 +8671,34 @@ SVGAnimatedLength.prototype.animVal
  * @implements {SVGURIReference}
  * @implements {SVGExternalResourcesRequired}
  */
-function SVGScriptElement () {}
+function SVGScriptElement() {}
 
 /**
  * @type {string}
  */
-SVGScriptElement.prototype.type
+SVGScriptElement.prototype.type;
 
 /**
  * @type {!SVGAnimatedBoolean}
  */
-SVGScriptElement.prototype.externalResourcesRequired
+SVGScriptElement.prototype.externalResourcesRequired;
 
 /**
  * @type {!SVGAnimatedString}
  */
-SVGScriptElement.prototype.href
+SVGScriptElement.prototype.href;
 
 /**
  * @constructor
  */
-function SVGAnimatedInteger () {}
+function SVGAnimatedInteger() {}
 
 /**
  * @type {number}
  */
-SVGAnimatedInteger.prototype.baseVal
+SVGAnimatedInteger.prototype.baseVal;
 
 /**
  * @type {number}
  */
-SVGAnimatedInteger.prototype.animVal
+SVGAnimatedInteger.prototype.animVal;

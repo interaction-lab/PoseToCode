@@ -10,13 +10,13 @@
  * a JavaScript framework such as Closure.
  * @author fraser@google.com (Neil Fraser)
  */
-'use strict'
+"use strict";
 
 /**
  * @name Blockly.utils.math
  * @namespace
  */
-goog.provide('Blockly.utils.math')
+goog.provide("Blockly.utils.math");
 
 /**
  * Converts degrees to radians.
@@ -25,8 +25,8 @@ goog.provide('Blockly.utils.math')
  * @return {number} Angle in radians.
  */
 Blockly.utils.math.toRadians = function (angleDegrees) {
-  return angleDegrees * Math.PI / 180
-}
+  return (angleDegrees * Math.PI) / 180;
+};
 
 /**
  * Converts radians to degrees.
@@ -35,8 +35,8 @@ Blockly.utils.math.toRadians = function (angleDegrees) {
  * @return {number} Angle in degrees.
  */
 Blockly.utils.math.toDegrees = function (angleRadians) {
-  return angleRadians * 180 / Math.PI
-}
+  return (angleRadians * 180) / Math.PI;
+};
 
 /**
  * Clamp the provided number between the lower bound and the upper bound.
@@ -47,9 +47,9 @@ Blockly.utils.math.toDegrees = function (angleRadians) {
  */
 Blockly.utils.math.clamp = function (lowerBound, number, upperBound) {
   if (upperBound < lowerBound) {
-    const temp = upperBound
-    upperBound = lowerBound
-    lowerBound = temp
+    const temp = upperBound;
+    upperBound = lowerBound;
+    lowerBound = temp;
   }
-  return Math.max(lowerBound, Math.min(number, upperBound))
-}
+  return Math.max(lowerBound, Math.min(number, upperBound));
+};

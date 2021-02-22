@@ -8,70 +8,75 @@
  * @fileoverview Touch handling for Blockly.
  * @author fenichel@google.com (Rachel Fenichel)
  */
-'use strict'
+"use strict";
 
 /**
  * @name Blockly.Touch
  * @namespace
  */
-goog.provide('Blockly.Touch')
+goog.provide("Blockly.Touch");
 
-goog.require('Blockly.constants')
-goog.require('Blockly.utils')
-goog.require('Blockly.utils.global')
-goog.require('Blockly.utils.string')
+goog.require("Blockly.constants");
+goog.require("Blockly.utils");
+goog.require("Blockly.utils.global");
+goog.require("Blockly.utils.string");
 
 /**
-  * Whether touch is enabled in the browser.
-  * Copied from Closure's goog.events.BrowserFeature.TOUCH_ENABLED
-  */
+ * Whether touch is enabled in the browser.
+ * Copied from Closure's goog.events.BrowserFeature.TOUCH_ENABLED
+ */
 Blockly.Touch.TOUCH_ENABLED =
-    ('ontouchstart' in Blockly.utils.global ||
-     !!(Blockly.utils.global.document && document.documentElement &&
-        'ontouchstart' in document.documentElement) ||
-     // IE10 uses non-standard touch events, so it has a different check.
-     !!(Blockly.utils.global.navigator &&
-        (Blockly.utils.global.navigator.maxTouchPoints ||
-         Blockly.utils.global.navigator.msMaxTouchPoints)))
+  "ontouchstart" in Blockly.utils.global ||
+  !!(
+    Blockly.utils.global.document &&
+    document.documentElement &&
+    "ontouchstart" in document.documentElement
+  ) ||
+  // IE10 uses non-standard touch events, so it has a different check.
+  !!(
+    Blockly.utils.global.navigator &&
+    (Blockly.utils.global.navigator.maxTouchPoints ||
+      Blockly.utils.global.navigator.msMaxTouchPoints)
+  );
 
 /**
  * Which touch events are we currently paying attention to?
  * @type {?string}
  * @private
  */
-Blockly.Touch.touchIdentifier_ = null
+Blockly.Touch.touchIdentifier_ = null;
 
 /**
  * The TOUCH_MAP lookup dictionary specifies additional touch events to fire,
  * in conjunction with mouse events.
  * @type {Object}
  */
-Blockly.Touch.TOUCH_MAP = {}
+Blockly.Touch.TOUCH_MAP = {};
 if (Blockly.utils.global.PointerEvent) {
   Blockly.Touch.TOUCH_MAP = {
-    mousedown: ['pointerdown'],
-    mouseenter: ['pointerenter'],
-    mouseleave: ['pointerleave'],
-    mousemove: ['pointermove'],
-    mouseout: ['pointerout'],
-    mouseover: ['pointerover'],
-    mouseup: ['pointerup', 'pointercancel'],
-    touchend: ['pointerup'],
-    touchcancel: ['pointercancel']
-  }
+    mousedown: ["pointerdown"],
+    mouseenter: ["pointerenter"],
+    mouseleave: ["pointerleave"],
+    mousemove: ["pointermove"],
+    mouseout: ["pointerout"],
+    mouseover: ["pointerover"],
+    mouseup: ["pointerup", "pointercancel"],
+    touchend: ["pointerup"],
+    touchcancel: ["pointercancel"],
+  };
 } else if (Blockly.Touch.TOUCH_ENABLED) {
   Blockly.Touch.TOUCH_MAP = {
-    mousedown: ['touchstart'],
-    mousemove: ['touchmove'],
-    mouseup: ['touchend', 'touchcancel']
-  }
+    mousedown: ["touchstart"],
+    mousemove: ["touchmove"],
+    mouseup: ["touchend", "touchcancel"],
+  };
 }
 
 /**
  * PID of queued long-press task.
  * @private
  */
-Blockly.longPid_ = 0
+Blockly.longPid_ = 0;
 
 /**
  * Context menus on touch devices are activated using a long-press.
@@ -84,27 +89,27 @@ Blockly.longPid_ = 0
  * @package
  */
 Blockly.longStart = function (e, gesture) {
-  Blockly.longStop_()
+  Blockly.longStop_();
   // Punt on multitouch events.
   if (e.changedTouches && e.changedTouches.length != 1) {
-    return
+    return;
   }
   Blockly.longPid_ = setTimeout(function () {
     // Additional check to distinguish between touch events and pointer events
     if (e.changedTouches) {
       // TouchEvent
-      e.button = 2 // Simulate a right button click.
+      e.button = 2; // Simulate a right button click.
       // e was a touch event.  It needs to pretend to be a mouse event.
-      e.clientX = e.changedTouches[0].clientX
-      e.clientY = e.changedTouches[0].clientY
+      e.clientX = e.changedTouches[0].clientX;
+      e.clientY = e.changedTouches[0].clientY;
     }
 
     // Let the gesture route the right-click correctly.
     if (gesture) {
-      gesture.handleRightClick(e)
+      gesture.handleRightClick(e);
     }
-  }, Blockly.LONGPRESS)
-}
+  }, Blockly.LONGPRESS);
+};
 
 /**
  * Nope, that's not a long-press.  Either touchend or touchcancel was fired,
@@ -113,10 +118,10 @@ Blockly.longStart = function (e, gesture) {
  */
 Blockly.longStop_ = function () {
   if (Blockly.longPid_) {
-    clearTimeout(Blockly.longPid_)
-    Blockly.longPid_ = 0
+    clearTimeout(Blockly.longPid_);
+    Blockly.longPid_ = 0;
   }
-}
+};
 
 /**
  * Clear the touch identifier that tracks which touch stream to pay attention
@@ -124,8 +129,8 @@ Blockly.longStop_ = function () {
  * captured.
  */
 Blockly.Touch.clearTouchIdentifier = function () {
-  Blockly.Touch.touchIdentifier_ = null
-}
+  Blockly.Touch.touchIdentifier_ = null;
+};
 
 /**
  * Decide whether Blockly should handle or ignore this event.
@@ -136,9 +141,11 @@ Blockly.Touch.clearTouchIdentifier = function () {
  *     registered handler; false if it should be blocked.
  */
 Blockly.Touch.shouldHandleEvent = function (e) {
-  return !Blockly.Touch.isMouseOrTouchEvent(e) ||
-      Blockly.Touch.checkTouchIdentifier(e)
-}
+  return (
+    !Blockly.Touch.isMouseOrTouchEvent(e) ||
+    Blockly.Touch.checkTouchIdentifier(e)
+  );
+};
 
 /**
  * Get the touch identifier from the given event.  If it was a mouse event, the
@@ -150,12 +157,13 @@ Blockly.Touch.shouldHandleEvent = function (e) {
 Blockly.Touch.getTouchIdentifierFromEvent = function (e) {
   return e.pointerId != undefined
     ? e.pointerId
-    : (e.changedTouches && e.changedTouches[0] &&
+    : e.changedTouches &&
+      e.changedTouches[0] &&
       e.changedTouches[0].identifier !== undefined &&
-      e.changedTouches[0].identifier !== null)
-        ? e.changedTouches[0].identifier
-        : 'mouse'
-}
+      e.changedTouches[0].identifier !== null
+    ? e.changedTouches[0].identifier
+    : "mouse";
+};
 
 /**
  * Check whether the touch identifier on the event matches the current saved
@@ -170,28 +178,33 @@ Blockly.Touch.getTouchIdentifierFromEvent = function (e) {
  *     saved identifier.
  */
 Blockly.Touch.checkTouchIdentifier = function (e) {
-  const identifier = Blockly.Touch.getTouchIdentifierFromEvent(e)
+  const identifier = Blockly.Touch.getTouchIdentifierFromEvent(e);
 
   // if (Blockly.touchIdentifier_ )is insufficient because Android touch
   // identifiers may be zero.
-  if (Blockly.Touch.touchIdentifier_ !== undefined &&
-      Blockly.Touch.touchIdentifier_ !== null) {
+  if (
+    Blockly.Touch.touchIdentifier_ !== undefined &&
+    Blockly.Touch.touchIdentifier_ !== null
+  ) {
     // We're already tracking some touch/mouse event.  Is this from the same
     // source?
-    return Blockly.Touch.touchIdentifier_ == identifier
+    return Blockly.Touch.touchIdentifier_ == identifier;
   }
-  if (e.type == 'mousedown' || e.type == 'touchstart' ||
-      e.type == 'pointerdown') {
+  if (
+    e.type == "mousedown" ||
+    e.type == "touchstart" ||
+    e.type == "pointerdown"
+  ) {
     // No identifier set yet, and this is the start of a drag.  Set it and
     // return.
-    Blockly.Touch.touchIdentifier_ = identifier
-    return true
+    Blockly.Touch.touchIdentifier_ = identifier;
+    return true;
   }
   // There was no identifier yet, but this wasn't a start event so we're going
   // to ignore it.  This probably means that another drag finished while this
   // pointer was down.
-  return false
-}
+  return false;
+};
 
 /**
  * Set an event's clientX and clientY from its first changed touch.  Use this to
@@ -199,13 +212,13 @@ Blockly.Touch.checkTouchIdentifier = function (e) {
  * @param {!Event} e A touch event.
  */
 Blockly.Touch.setClientFromTouch = function (e) {
-  if (Blockly.utils.string.startsWith(e.type, 'touch')) {
+  if (Blockly.utils.string.startsWith(e.type, "touch")) {
     // Map the touch event's properties to the event.
-    const touchPoint = e.changedTouches[0]
-    e.clientX = touchPoint.clientX
-    e.clientY = touchPoint.clientY
+    const touchPoint = e.changedTouches[0];
+    e.clientX = touchPoint.clientX;
+    e.clientY = touchPoint.clientY;
   }
-}
+};
 
 /**
  * Check whether a given event is a mouse or touch event.
@@ -213,10 +226,12 @@ Blockly.Touch.setClientFromTouch = function (e) {
  * @return {boolean} True if it is a mouse or touch event; false otherwise.
  */
 Blockly.Touch.isMouseOrTouchEvent = function (e) {
-  return Blockly.utils.string.startsWith(e.type, 'touch') ||
-      Blockly.utils.string.startsWith(e.type, 'mouse') ||
-      Blockly.utils.string.startsWith(e.type, 'pointer')
-}
+  return (
+    Blockly.utils.string.startsWith(e.type, "touch") ||
+    Blockly.utils.string.startsWith(e.type, "mouse") ||
+    Blockly.utils.string.startsWith(e.type, "pointer")
+  );
+};
 
 /**
  * Check whether a given event is a touch event or a pointer event.
@@ -224,9 +239,11 @@ Blockly.Touch.isMouseOrTouchEvent = function (e) {
  * @return {boolean} True if it is a touch event; false otherwise.
  */
 Blockly.Touch.isTouchEvent = function (e) {
-  return Blockly.utils.string.startsWith(e.type, 'touch') ||
-      Blockly.utils.string.startsWith(e.type, 'pointer')
-}
+  return (
+    Blockly.utils.string.startsWith(e.type, "touch") ||
+    Blockly.utils.string.startsWith(e.type, "pointer")
+  );
+};
 
 /**
  * Split an event into an array of events, one per changed touch or mouse
@@ -237,20 +254,24 @@ Blockly.Touch.isTouchEvent = function (e) {
  *     event will have exactly one changed touch.
  */
 Blockly.Touch.splitEventByTouches = function (e) {
-  const events = []
+  const events = [];
   if (e.changedTouches) {
     for (let i = 0; i < e.changedTouches.length; i++) {
       const newEvent = {
         type: e.type,
         changedTouches: [e.changedTouches[i]],
         target: e.target,
-        stopPropagation: function () { e.stopPropagation() },
-        preventDefault: function () { e.preventDefault() }
-      }
-      events[i] = newEvent
+        stopPropagation: function () {
+          e.stopPropagation();
+        },
+        preventDefault: function () {
+          e.preventDefault();
+        },
+      };
+      events[i] = newEvent;
     }
   } else {
-    events.push(e)
+    events.push(e);
   }
-  return events
-}
+  return events;
+};

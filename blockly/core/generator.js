@@ -9,12 +9,12 @@
  * Blockly code.
  * @author fraser@google.com (Neil Fraser)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.Generator')
+goog.provide("Blockly.Generator");
 
-goog.require('Blockly.constants')
-goog.require('Blockly.Block')
+goog.require("Blockly.constants");
+goog.require("Blockly.Block");
 
 /**
  * Class for a code generator that translates the blocks into a language.
@@ -22,15 +22,17 @@ goog.require('Blockly.Block')
  * @constructor
  */
 Blockly.Generator = function (name) {
-  this.name_ = name
-  this.FUNCTION_NAME_PLACEHOLDER_REGEXP_ =
-      new RegExp(this.FUNCTION_NAME_PLACEHOLDER_, 'g')
-}
+  this.name_ = name;
+  this.FUNCTION_NAME_PLACEHOLDER_REGEXP_ = new RegExp(
+    this.FUNCTION_NAME_PLACEHOLDER_,
+    "g"
+  );
+};
 
 /**
  * Category to separate generated function names from variables and procedures.
  */
-Blockly.Generator.NAME_TYPE = 'generated_function'
+Blockly.Generator.NAME_TYPE = "generated_function";
 
 /**
  * Arbitrary code to inject into locations that risk causing infinite loops.
@@ -38,7 +40,7 @@ Blockly.Generator.NAME_TYPE = 'generated_function'
  * E.g. '  checkTimeout(%1);\n'
  * @type {?string}
  */
-Blockly.Generator.prototype.INFINITE_LOOP_TRAP = null
+Blockly.Generator.prototype.INFINITE_LOOP_TRAP = null;
 
 /**
  * Arbitrary code to inject before every statement.
@@ -46,7 +48,7 @@ Blockly.Generator.prototype.INFINITE_LOOP_TRAP = null
  * E.g. 'highlight(%1);\n'
  * @type {?string}
  */
-Blockly.Generator.prototype.STATEMENT_PREFIX = null
+Blockly.Generator.prototype.STATEMENT_PREFIX = null;
 
 /**
  * Arbitrary code to inject after every statement.
@@ -54,27 +56,27 @@ Blockly.Generator.prototype.STATEMENT_PREFIX = null
  * E.g. 'highlight(%1);\n'
  * @type {?string}
  */
-Blockly.Generator.prototype.STATEMENT_SUFFIX = null
+Blockly.Generator.prototype.STATEMENT_SUFFIX = null;
 
 /**
  * The method of indenting.  Defaults to two spaces, but language generators
  * may override this to increase indent or change to tabs.
  * @type {string}
  */
-Blockly.Generator.prototype.INDENT = '  '
+Blockly.Generator.prototype.INDENT = "  ";
 
 /**
  * Maximum length for a comment before wrapping.  Does not account for
  * indenting level.
  * @type {number}
  */
-Blockly.Generator.prototype.COMMENT_WRAP = 60
+Blockly.Generator.prototype.COMMENT_WRAP = 60;
 
 /**
  * List of outer-inner pairings that do NOT require parentheses.
  * @type {!Array.<!Array.<number>>}
  */
-Blockly.Generator.prototype.ORDER_OVERRIDES = []
+Blockly.Generator.prototype.ORDER_OVERRIDES = [];
 
 /**
  * Generate code for all blocks in the workspace to the specified language.
@@ -84,42 +86,42 @@ Blockly.Generator.prototype.ORDER_OVERRIDES = []
 Blockly.Generator.prototype.workspaceToCode = function (workspace) {
   if (!workspace) {
     // Backwards compatibility from before there could be multiple workspaces.
-    console.warn('No workspace specified in workspaceToCode call.  Guessing.')
-    workspace = Blockly.getMainWorkspace()
+    console.warn("No workspace specified in workspaceToCode call.  Guessing.");
+    workspace = Blockly.getMainWorkspace();
   }
-  let code = []
-  this.init(workspace)
-  const blocks = workspace.getTopBlocks(true)
+  let code = [];
+  this.init(workspace);
+  const blocks = workspace.getTopBlocks(true);
   for (var i = 0, block; (block = blocks[i]); i++) {
-    let line = this.blockToCode(block)
+    let line = this.blockToCode(block);
     if (Array.isArray(line)) {
       // Value blocks return tuples of code and operator order.
       // Top-level blocks don't care about operator order.
-      line = line[0]
+      line = line[0];
     }
     if (line) {
       if (block.outputConnection) {
         // This block is a naked value.  Ask the language's code generator if
         // it wants to append a semicolon, or something.
-        line = this.scrubNakedValue(line)
+        line = this.scrubNakedValue(line);
         if (this.STATEMENT_PREFIX && !block.suppressPrefixSuffix) {
-          line = this.injectId(this.STATEMENT_PREFIX, block) + line
+          line = this.injectId(this.STATEMENT_PREFIX, block) + line;
         }
         if (this.STATEMENT_SUFFIX && !block.suppressPrefixSuffix) {
-          line = line + this.injectId(this.STATEMENT_SUFFIX, block)
+          line = line + this.injectId(this.STATEMENT_SUFFIX, block);
         }
       }
-      code.push(line)
+      code.push(line);
     }
   }
-  code = code.join('\n') // Blank line between each section.
-  code = this.finish(code)
+  code = code.join("\n"); // Blank line between each section.
+  code = this.finish(code);
   // Final scrubbing of whitespace.
-  code = code.replace(/^\s+\n/, '')
-  code = code.replace(/\n\s+$/, '\n')
-  code = code.replace(/[ \t]+\n/g, '\n')
-  return code
-}
+  code = code.replace(/^\s+\n/, "");
+  code = code.replace(/\n\s+$/, "\n");
+  code = code.replace(/[ \t]+\n/g, "\n");
+  return code;
+};
 
 // The following are some helpful functions which can be used by multiple
 // languages.
@@ -132,8 +134,8 @@ Blockly.Generator.prototype.workspaceToCode = function (workspace) {
  * @return {string} The prefixed lines of code.
  */
 Blockly.Generator.prototype.prefixLines = function (text, prefix) {
-  return prefix + text.replace(/(?!\n$)\n/g, '\n' + prefix)
-}
+  return prefix + text.replace(/(?!\n$)\n/g, "\n" + prefix);
+};
 
 /**
  * Recursively spider a tree of blocks, returning all their comments.
@@ -141,20 +143,20 @@ Blockly.Generator.prototype.prefixLines = function (text, prefix) {
  * @return {string} Concatenated list of comments.
  */
 Blockly.Generator.prototype.allNestedComments = function (block) {
-  const comments = []
-  const blocks = block.getDescendants(true)
+  const comments = [];
+  const blocks = block.getDescendants(true);
   for (let i = 0; i < blocks.length; i++) {
-    const comment = blocks[i].getCommentText()
+    const comment = blocks[i].getCommentText();
     if (comment) {
-      comments.push(comment)
+      comments.push(comment);
     }
   }
   // Append an empty string to create a trailing line break when joined.
   if (comments.length) {
-    comments.push('')
+    comments.push("");
   }
-  return comments.join('\n')
-}
+  return comments.join("\n");
+};
 
 /**
  * Generate code for the specified block (and attached blocks).
@@ -166,48 +168,54 @@ Blockly.Generator.prototype.allNestedComments = function (block) {
  */
 Blockly.Generator.prototype.blockToCode = function (block, opt_thisOnly) {
   if (!block) {
-    return ''
+    return "";
   }
   if (!block.isEnabled()) {
     // Skip past this block if it is disabled.
-    return opt_thisOnly ? '' : this.blockToCode(block.getNextBlock())
+    return opt_thisOnly ? "" : this.blockToCode(block.getNextBlock());
   }
   if (block.isInsertionMarker()) {
     // Skip past insertion markers.
-    return opt_thisOnly ? '' : this.blockToCode(block.getChildren(false)[0])
+    return opt_thisOnly ? "" : this.blockToCode(block.getChildren(false)[0]);
   }
 
-  const func = this[block.type]
-  if (typeof func !== 'function') {
-    throw Error('Language "' + this.name_ + '" does not know how to generate ' +
-        ' code for block type "' + block.type + '".')
+  const func = this[block.type];
+  if (typeof func !== "function") {
+    throw Error(
+      'Language "' +
+        this.name_ +
+        '" does not know how to generate ' +
+        ' code for block type "' +
+        block.type +
+        '".'
+    );
   }
   // First argument to func.call is the value of 'this' in the generator.
   // Prior to 24 September 2013 'this' was the only way to access the block.
   // The current preferred method of accessing the block is through the second
   // argument to func.call, which becomes the first parameter to the generator.
-  let code = func.call(block, block)
+  let code = func.call(block, block);
   if (Array.isArray(code)) {
     // Value blocks return tuples of code and operator order.
     if (!block.outputConnection) {
-      throw TypeError('Expecting string from statement block: ' + block.type)
+      throw TypeError("Expecting string from statement block: " + block.type);
     }
-    return [this.scrub_(block, code[0], opt_thisOnly), code[1]]
-  } else if (typeof code === 'string') {
+    return [this.scrub_(block, code[0], opt_thisOnly), code[1]];
+  } else if (typeof code === "string") {
     if (this.STATEMENT_PREFIX && !block.suppressPrefixSuffix) {
-      code = this.injectId(this.STATEMENT_PREFIX, block) + code
+      code = this.injectId(this.STATEMENT_PREFIX, block) + code;
     }
     if (this.STATEMENT_SUFFIX && !block.suppressPrefixSuffix) {
-      code = code + this.injectId(this.STATEMENT_SUFFIX, block)
+      code = code + this.injectId(this.STATEMENT_SUFFIX, block);
     }
-    return this.scrub_(block, code, opt_thisOnly)
+    return this.scrub_(block, code, opt_thisOnly);
   } else if (code === null) {
     // Block has handled code generation itself.
-    return ''
+    return "";
   } else {
-    throw SyntaxError('Invalid code generated: ' + code)
+    throw SyntaxError("Invalid code generated: " + code);
   }
-}
+};
 
 /**
  * Generate code representing the specified value input.
@@ -220,39 +228,42 @@ Blockly.Generator.prototype.blockToCode = function (block, opt_thisOnly) {
  */
 Blockly.Generator.prototype.valueToCode = function (block, name, outerOrder) {
   if (isNaN(outerOrder)) {
-    throw TypeError('Expecting valid order from block: ' + block.type)
+    throw TypeError("Expecting valid order from block: " + block.type);
   }
-  const targetBlock = block.getInputTargetBlock(name)
+  const targetBlock = block.getInputTargetBlock(name);
   if (!targetBlock) {
-    return ''
+    return "";
   }
-  const tuple = this.blockToCode(targetBlock)
-  if (tuple === '') {
+  const tuple = this.blockToCode(targetBlock);
+  if (tuple === "") {
     // Disabled block.
-    return ''
+    return "";
   }
   // Value blocks must return code and order of operations info.
   // Statement blocks must only return code.
   if (!Array.isArray(tuple)) {
-    throw TypeError('Expecting tuple from value block: ' + targetBlock.type)
+    throw TypeError("Expecting tuple from value block: " + targetBlock.type);
   }
-  let code = tuple[0]
-  const innerOrder = tuple[1]
+  let code = tuple[0];
+  const innerOrder = tuple[1];
   if (isNaN(innerOrder)) {
-    throw TypeError('Expecting valid order from value block: ' +
-        targetBlock.type)
+    throw TypeError(
+      "Expecting valid order from value block: " + targetBlock.type
+    );
   }
   if (!code) {
-    return ''
+    return "";
   }
 
   // Add parentheses if needed.
-  let parensNeeded = false
-  const outerOrderClass = Math.floor(outerOrder)
-  const innerOrderClass = Math.floor(innerOrder)
+  let parensNeeded = false;
+  const outerOrderClass = Math.floor(outerOrder);
+  const innerOrderClass = Math.floor(innerOrder);
   if (outerOrderClass <= innerOrderClass) {
-    if (outerOrderClass == innerOrderClass &&
-        (outerOrderClass == 0 || outerOrderClass == 99)) {
+    if (
+      outerOrderClass == innerOrderClass &&
+      (outerOrderClass == 0 || outerOrderClass == 99)
+    ) {
       // Don't generate parens around NONE-NONE and ATOMIC-ATOMIC pairs.
       // 0 is the atomic order, 99 is the none order.  No parentheses needed.
       // In all known languages multiple such code blocks are not order
@@ -261,13 +272,15 @@ Blockly.Generator.prototype.valueToCode = function (block, name, outerOrder) {
       // The operators outside this code are stronger than the operators
       // inside this code.  To prevent the code from being pulled apart,
       // wrap the code in parentheses.
-      parensNeeded = true
+      parensNeeded = true;
       // Check for special exceptions.
       for (let i = 0; i < this.ORDER_OVERRIDES.length; i++) {
-        if (this.ORDER_OVERRIDES[i][0] == outerOrder &&
-            this.ORDER_OVERRIDES[i][1] == innerOrder) {
-          parensNeeded = false
-          break
+        if (
+          this.ORDER_OVERRIDES[i][0] == outerOrder &&
+          this.ORDER_OVERRIDES[i][1] == innerOrder
+        ) {
+          parensNeeded = false;
+          break;
         }
       }
     }
@@ -275,10 +288,10 @@ Blockly.Generator.prototype.valueToCode = function (block, name, outerOrder) {
   if (parensNeeded) {
     // Technically, this should be handled on a language-by-language basis.
     // However all known (sane) languages use parentheses for grouping.
-    code = '(' + code + ')'
+    code = "(" + code + ")";
   }
-  return code
-}
+  return code;
+};
 
 /**
  * Generate a code string representing the blocks attached to the named
@@ -290,19 +303,21 @@ Blockly.Generator.prototype.valueToCode = function (block, name, outerOrder) {
  * @return {string} Generated code or '' if no blocks are connected.
  */
 Blockly.Generator.prototype.statementToCode = function (block, name) {
-  const targetBlock = block.getInputTargetBlock(name)
-  let code = this.blockToCode(targetBlock)
+  const targetBlock = block.getInputTargetBlock(name);
+  let code = this.blockToCode(targetBlock);
   // Value blocks must return code and order of operations info.
   // Statement blocks must only return code.
-  if (typeof code !== 'string') {
-    throw TypeError('Expecting code from statement block: ' +
-        (targetBlock && targetBlock.type))
+  if (typeof code !== "string") {
+    throw TypeError(
+      "Expecting code from statement block: " +
+        (targetBlock && targetBlock.type)
+    );
   }
   if (code) {
-    code = this.prefixLines(/** @type {string} */ (code), this.INDENT)
+    code = this.prefixLines(/** @type {string} */ (code), this.INDENT);
   }
-  return code
-}
+  return code;
+};
 
 /**
  * Add an infinite loop trap to the contents of a loop.
@@ -315,19 +330,29 @@ Blockly.Generator.prototype.statementToCode = function (block, name) {
  */
 Blockly.Generator.prototype.addLoopTrap = function (branch, block) {
   if (this.INFINITE_LOOP_TRAP) {
-    branch = this.prefixLines(this.injectId(this.INFINITE_LOOP_TRAP, block),
-      this.INDENT) + branch
+    branch =
+      this.prefixLines(
+        this.injectId(this.INFINITE_LOOP_TRAP, block),
+        this.INDENT
+      ) + branch;
   }
   if (this.STATEMENT_SUFFIX && !block.suppressPrefixSuffix) {
-    branch = this.prefixLines(this.injectId(this.STATEMENT_SUFFIX, block),
-      this.INDENT) + branch
+    branch =
+      this.prefixLines(
+        this.injectId(this.STATEMENT_SUFFIX, block),
+        this.INDENT
+      ) + branch;
   }
   if (this.STATEMENT_PREFIX && !block.suppressPrefixSuffix) {
-    branch = branch + this.prefixLines(this.injectId(this.STATEMENT_PREFIX,
-      block), this.INDENT)
+    branch =
+      branch +
+      this.prefixLines(
+        this.injectId(this.STATEMENT_PREFIX, block),
+        this.INDENT
+      );
   }
-  return branch
-}
+  return branch;
+};
 
 /**
  * Inject a block ID into a message to replace '%1'.
@@ -337,16 +362,16 @@ Blockly.Generator.prototype.addLoopTrap = function (branch, block) {
  * @return {string} Code snippet with ID.
  */
 Blockly.Generator.prototype.injectId = function (msg, block) {
-  const id = block.id.replace(/\$/g, '$$$$') // Issue 251.
-  return msg.replace(/%1/g, '\'' + id + '\'')
-}
+  const id = block.id.replace(/\$/g, "$$$$"); // Issue 251.
+  return msg.replace(/%1/g, "'" + id + "'");
+};
 
 /**
  * Comma-separated list of reserved words.
  * @type {string}
  * @protected
  */
-Blockly.Generator.prototype.RESERVED_WORDS_ = ''
+Blockly.Generator.prototype.RESERVED_WORDS_ = "";
 
 /**
  * Add one or more words to the list of reserved words for this language.
@@ -354,8 +379,8 @@ Blockly.Generator.prototype.RESERVED_WORDS_ = ''
  *     No spaces.  Duplicates are ok.
  */
 Blockly.Generator.prototype.addReservedWords = function (words) {
-  this.RESERVED_WORDS_ += words + ','
-}
+  this.RESERVED_WORDS_ += words + ",";
+};
 
 /**
  * This is used as a placeholder in functions defined using
@@ -365,14 +390,14 @@ Blockly.Generator.prototype.addReservedWords = function (words) {
  * @type {string}
  * @protected
  */
-Blockly.Generator.prototype.FUNCTION_NAME_PLACEHOLDER_ = '{leCUI8hutHZI4480Dc}'
+Blockly.Generator.prototype.FUNCTION_NAME_PLACEHOLDER_ = "{leCUI8hutHZI4480Dc}";
 
 /**
  * A dictionary of definitions to be printed before the code.
  * @type {Object}
  * @protected
  */
-Blockly.Generator.prototype.definitions_
+Blockly.Generator.prototype.definitions_;
 
 /**
  * A dictionary mapping desired function names in definitions_ to actual
@@ -380,14 +405,14 @@ Blockly.Generator.prototype.definitions_
  * @type {Object}
  * @protected
  */
-Blockly.Generator.prototype.functionNames_
+Blockly.Generator.prototype.functionNames_;
 
 /**
  * A database of variable names.
  * @type {Blockly.Names}
  * @protected
  */
-Blockly.Generator.prototype.variableDB_
+Blockly.Generator.prototype.variableDB_;
 
 /**
  * Define a function to be included in the generated code.
@@ -408,25 +433,28 @@ Blockly.Generator.prototype.variableDB_
  */
 Blockly.Generator.prototype.provideFunction_ = function (desiredName, code) {
   if (!this.definitions_[desiredName]) {
-    const functionName = this.variableDB_.getDistinctName(desiredName,
-      Blockly.PROCEDURE_CATEGORY_NAME)
-    this.functionNames_[desiredName] = functionName
-    let codeText = code.join('\n').replace(
-      this.FUNCTION_NAME_PLACEHOLDER_REGEXP_, functionName)
+    const functionName = this.variableDB_.getDistinctName(
+      desiredName,
+      Blockly.PROCEDURE_CATEGORY_NAME
+    );
+    this.functionNames_[desiredName] = functionName;
+    let codeText = code
+      .join("\n")
+      .replace(this.FUNCTION_NAME_PLACEHOLDER_REGEXP_, functionName);
     // Change all '  ' indents into the desired indent.
     // To avoid an infinite loop of replacements, change all indents to '\0'
     // character first, then replace them all with the indent.
     // We are assuming that no provided functions contain a literal null char.
-    let oldCodeText
+    let oldCodeText;
     while (oldCodeText != codeText) {
-      oldCodeText = codeText
-      codeText = codeText.replace(/^(( {2})*) {2}/gm, '$1\0')
+      oldCodeText = codeText;
+      codeText = codeText.replace(/^(( {2})*) {2}/gm, "$1\0");
     }
-    codeText = codeText.replace(/\0/g, this.INDENT)
-    this.definitions_[desiredName] = codeText
+    codeText = codeText.replace(/\0/g, this.INDENT);
+    this.definitions_[desiredName] = codeText;
   }
-  return this.functionNames_[desiredName]
-}
+  return this.functionNames_[desiredName];
+};
 
 /**
  * Hook for code to run before code generation starts.
@@ -436,7 +464,7 @@ Blockly.Generator.prototype.provideFunction_ = function (desiredName, code) {
  */
 Blockly.Generator.prototype.init = function (_workspace) {
   // Optionally override
-}
+};
 
 /**
  * Common tasks for generating code from blocks.  This is called from
@@ -453,8 +481,8 @@ Blockly.Generator.prototype.init = function (_workspace) {
  */
 Blockly.Generator.prototype.scrub_ = function (_block, code, _opt_thisOnly) {
   // Optionally override
-  return code
-}
+  return code;
+};
 
 /**
  * Hook for code to run at end of code generation.
@@ -465,8 +493,8 @@ Blockly.Generator.prototype.scrub_ = function (_block, code, _opt_thisOnly) {
  */
 Blockly.Generator.prototype.finish = function (code) {
   // Optionally override
-  return code
-}
+  return code;
+};
 
 /**
  * Naked values are top-level blocks with outputs that aren't plugged into
@@ -478,5 +506,5 @@ Blockly.Generator.prototype.finish = function (code) {
  */
 Blockly.Generator.prototype.scrubNakedValue = function (line) {
   // Optionally override
-  return line
-}
+  return line;
+};

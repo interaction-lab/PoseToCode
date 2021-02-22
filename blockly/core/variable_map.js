@@ -8,16 +8,16 @@
  * @fileoverview Object representing a map of variables and their types.
  * @author marisaleung@google.com (Marisa Leung)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.VariableMap')
+goog.provide("Blockly.VariableMap");
 
-goog.require('Blockly.Events')
-goog.require('Blockly.Events.VarDelete')
-goog.require('Blockly.Events.VarRename')
-goog.require('Blockly.Msg')
-goog.require('Blockly.utils')
-goog.require('Blockly.utils.object')
+goog.require("Blockly.Events");
+goog.require("Blockly.Events.VarDelete");
+goog.require("Blockly.Events.VarRename");
+goog.require("Blockly.Msg");
+goog.require("Blockly.utils");
+goog.require("Blockly.utils.object");
 
 /**
  * Class for a variable map.  This contains a dictionary data structure with
@@ -34,21 +34,21 @@ Blockly.VariableMap = function (workspace) {
    * @type {!Object.<string, !Array.<Blockly.VariableModel>>}
    * @private
    */
-  this.variableMap_ = Object.create(null)
+  this.variableMap_ = Object.create(null);
 
   /**
    * The workspace this map belongs to.
    * @type {!Blockly.Workspace}
    */
-  this.workspace = workspace
-}
+  this.workspace = workspace;
+};
 
 /**
  * Clear the variable map.
  */
 Blockly.VariableMap.prototype.clear = function () {
-  this.variableMap_ = Object.create(null)
-}
+  this.variableMap_ = Object.create(null);
+};
 
 /* Begin functions for renaming variables. */
 
@@ -59,21 +59,21 @@ Blockly.VariableMap.prototype.clear = function () {
  * @package
  */
 Blockly.VariableMap.prototype.renameVariable = function (variable, newName) {
-  const type = variable.type
-  const conflictVar = this.getVariable(newName, type)
-  const blocks = this.workspace.getAllBlocks(false)
-  Blockly.Events.setGroup(true)
+  const type = variable.type;
+  const conflictVar = this.getVariable(newName, type);
+  const blocks = this.workspace.getAllBlocks(false);
+  Blockly.Events.setGroup(true);
   try {
     // The IDs may match if the rename is a simple case change (name1 -> Name1).
     if (!conflictVar || conflictVar.getId() == variable.getId()) {
-      this.renameVariableAndUses_(variable, newName, blocks)
+      this.renameVariableAndUses_(variable, newName, blocks);
     } else {
-      this.renameVariableWithConflict_(variable, newName, conflictVar, blocks)
+      this.renameVariableWithConflict_(variable, newName, conflictVar, blocks);
     }
   } finally {
-    Blockly.Events.setGroup(false)
+    Blockly.Events.setGroup(false);
   }
-}
+};
 
 /**
  * Rename a variable by updating its name in the variable map. Identify the
@@ -82,13 +82,13 @@ Blockly.VariableMap.prototype.renameVariable = function (variable, newName) {
  * @param {string} newName New variable name.
  */
 Blockly.VariableMap.prototype.renameVariableById = function (id, newName) {
-  const variable = this.getVariableById(id)
+  const variable = this.getVariableById(id);
   if (!variable) {
-    throw Error('Tried to rename a variable that didn\'t exist. ID: ' + id)
+    throw Error("Tried to rename a variable that didn't exist. ID: " + id);
   }
 
-  this.renameVariable(variable, newName)
-}
+  this.renameVariable(variable, newName);
+};
 
 /**
  * Update the name of the given variable and refresh all references to it.
@@ -99,14 +99,17 @@ Blockly.VariableMap.prototype.renameVariableById = function (id, newName) {
  *     workspace.
  * @private
  */
-Blockly.VariableMap.prototype.renameVariableAndUses_ = function (variable,
-  newName, blocks) {
-  Blockly.Events.fire(new Blockly.Events.VarRename(variable, newName))
-  variable.name = newName
+Blockly.VariableMap.prototype.renameVariableAndUses_ = function (
+  variable,
+  newName,
+  blocks
+) {
+  Blockly.Events.fire(new Blockly.Events.VarRename(variable, newName));
+  variable.name = newName;
   for (let i = 0; i < blocks.length; i++) {
-    blocks[i].updateVarName(variable)
+    blocks[i].updateVarName(variable);
   }
-}
+};
 
 /**
  * Update the name of the given variable to the same name as an existing
@@ -121,29 +124,33 @@ Blockly.VariableMap.prototype.renameVariableAndUses_ = function (variable,
  *     workspace.
  * @private
  */
-Blockly.VariableMap.prototype.renameVariableWithConflict_ = function (variable,
-  newName, conflictVar, blocks) {
-  const type = variable.type
-  const oldCase = conflictVar.name
+Blockly.VariableMap.prototype.renameVariableWithConflict_ = function (
+  variable,
+  newName,
+  conflictVar,
+  blocks
+) {
+  const type = variable.type;
+  const oldCase = conflictVar.name;
 
   if (newName != oldCase) {
     // Simple rename to change the case and update references.
-    this.renameVariableAndUses_(conflictVar, newName, blocks)
+    this.renameVariableAndUses_(conflictVar, newName, blocks);
   }
 
   // These blocks now refer to a different variable.
   // These will fire change events.
   for (let i = 0; i < blocks.length; i++) {
-    blocks[i].renameVarById(variable.getId(), conflictVar.getId())
+    blocks[i].renameVarById(variable.getId(), conflictVar.getId());
   }
 
   // Finally delete the original variable, which is now unreferenced.
-  Blockly.Events.fire(new Blockly.Events.VarDelete(variable))
+  Blockly.Events.fire(new Blockly.Events.VarDelete(variable));
   // And remove it from the list.
-  const variableList = this.getVariablesOfType(type)
-  const variableIndex = variableList.indexOf(variable)
-  this.variableMap_[type].splice(variableIndex, 1)
-}
+  const variableList = this.getVariablesOfType(type);
+  const variableIndex = variableList.indexOf(variable);
+  this.variableMap_[type].splice(variableIndex, 1);
+};
 
 /* End functions for renaming variables. */
 
@@ -158,35 +165,45 @@ Blockly.VariableMap.prototype.renameVariableWithConflict_ = function (variable,
  *     a UUID.
  * @return {!Blockly.VariableModel} The newly created variable.
  */
-Blockly.VariableMap.prototype.createVariable = function (name,
-  opt_type, opt_id) {
-  let variable = this.getVariable(name, opt_type)
+Blockly.VariableMap.prototype.createVariable = function (
+  name,
+  opt_type,
+  opt_id
+) {
+  let variable = this.getVariable(name, opt_type);
   if (variable) {
     if (opt_id && variable.getId() != opt_id) {
-      throw Error('Variable "' + name + '" is already in use and its id is "' +
-          variable.getId() + '" which conflicts with the passed in ' +
-          'id, "' + opt_id + '".')
+      throw Error(
+        'Variable "' +
+          name +
+          '" is already in use and its id is "' +
+          variable.getId() +
+          '" which conflicts with the passed in ' +
+          'id, "' +
+          opt_id +
+          '".'
+      );
     }
     // The variable already exists and has the same ID.
-    return variable
+    return variable;
   }
   if (opt_id && this.getVariableById(opt_id)) {
-    throw Error('Variable id, "' + opt_id + '", is already in use.')
+    throw Error('Variable id, "' + opt_id + '", is already in use.');
   }
-  const id = opt_id || Blockly.utils.genUid()
-  const type = opt_type || ''
-  variable = new Blockly.VariableModel(this.workspace, name, type, id)
+  const id = opt_id || Blockly.utils.genUid();
+  const type = opt_type || "";
+  variable = new Blockly.VariableModel(this.workspace, name, type, id);
 
-  const variables = this.variableMap_[type] || []
-  variables.push(variable)
+  const variables = this.variableMap_[type] || [];
+  variables.push(variable);
   // Delete the list of variables of this type, and re-add it so that
   // the most recent addition is at the end.
   // This is used so the toolbox's set block is set to the most recent variable.
-  delete this.variableMap_[type]
-  this.variableMap_[type] = variables
+  delete this.variableMap_[type];
+  this.variableMap_[type] = variables;
 
-  return variable
-}
+  return variable;
+};
 
 /* Begin functions for variable deletion. */
 
@@ -195,15 +212,15 @@ Blockly.VariableMap.prototype.createVariable = function (name,
  * @param {!Blockly.VariableModel} variable Variable to delete.
  */
 Blockly.VariableMap.prototype.deleteVariable = function (variable) {
-  const variableList = this.variableMap_[variable.type]
+  const variableList = this.variableMap_[variable.type];
   for (var i = 0, tempVar; (tempVar = variableList[i]); i++) {
     if (tempVar.getId() == variable.getId()) {
-      variableList.splice(i, 1)
-      Blockly.Events.fire(new Blockly.Events.VarDelete(variable))
-      return
+      variableList.splice(i, 1);
+      Blockly.Events.fire(new Blockly.Events.VarDelete(variable));
+      return;
     }
   }
-}
+};
 
 /**
  * Delete a variables by the passed in ID and all of its uses from this
@@ -211,43 +228,46 @@ Blockly.VariableMap.prototype.deleteVariable = function (variable) {
  * @param {string} id ID of variable to delete.
  */
 Blockly.VariableMap.prototype.deleteVariableById = function (id) {
-  const variable = this.getVariableById(id)
+  const variable = this.getVariableById(id);
   if (variable) {
     // Check whether this variable is a function parameter before deleting.
-    const variableName = variable.name
-    const uses = this.getVariableUsesById(id)
+    const variableName = variable.name;
+    const uses = this.getVariableUsesById(id);
     for (var i = 0, block; (block = uses[i]); i++) {
-      if (block.type == 'procedures_defnoreturn' ||
-        block.type == 'procedures_defreturn') {
-        const procedureName = block.getFieldValue('NAME')
-        const deleteText = Blockly.Msg.CANNOT_DELETE_VARIABLE_PROCEDURE
-          .replace('%1', variableName)
-          .replace('%2', procedureName)
-        Blockly.alert(deleteText)
-        return
+      if (
+        block.type == "procedures_defnoreturn" ||
+        block.type == "procedures_defreturn"
+      ) {
+        const procedureName = block.getFieldValue("NAME");
+        const deleteText = Blockly.Msg.CANNOT_DELETE_VARIABLE_PROCEDURE.replace(
+          "%1",
+          variableName
+        ).replace("%2", procedureName);
+        Blockly.alert(deleteText);
+        return;
       }
     }
 
-    const map = this
+    const map = this;
     if (uses.length > 1) {
       // Confirm before deleting multiple blocks.
-      const confirmText = Blockly.Msg.DELETE_VARIABLE_CONFIRMATION
-        .replace('%1', String(uses.length))
-        .replace('%2', variableName)
-      Blockly.confirm(confirmText,
-        function (ok) {
-          if (ok && variable) {
-            map.deleteVariableInternal(variable, uses)
-          }
-        })
+      const confirmText = Blockly.Msg.DELETE_VARIABLE_CONFIRMATION.replace(
+        "%1",
+        String(uses.length)
+      ).replace("%2", variableName);
+      Blockly.confirm(confirmText, function (ok) {
+        if (ok && variable) {
+          map.deleteVariableInternal(variable, uses);
+        }
+      });
     } else {
       // No confirmation necessary for a single block.
-      map.deleteVariableInternal(variable, uses)
+      map.deleteVariableInternal(variable, uses);
     }
   } else {
-    console.warn("Can't delete non-existent variable: " + id)
+    console.warn("Can't delete non-existent variable: " + id);
   }
-}
+};
 
 /**
  * Deletes a variable and all of its uses from this workspace without asking the
@@ -256,23 +276,25 @@ Blockly.VariableMap.prototype.deleteVariableById = function (id) {
  * @param {!Array.<!Blockly.Block>} uses An array of uses of the variable.
  * @package
  */
-Blockly.VariableMap.prototype.deleteVariableInternal = function (variable,
-  uses) {
-  const existingGroup = Blockly.Events.getGroup()
+Blockly.VariableMap.prototype.deleteVariableInternal = function (
+  variable,
+  uses
+) {
+  const existingGroup = Blockly.Events.getGroup();
   if (!existingGroup) {
-    Blockly.Events.setGroup(true)
+    Blockly.Events.setGroup(true);
   }
   try {
     for (let i = 0; i < uses.length; i++) {
-      uses[i].dispose(true)
+      uses[i].dispose(true);
     }
-    this.deleteVariable(variable)
+    this.deleteVariable(variable);
   } finally {
     if (!existingGroup) {
-      Blockly.Events.setGroup(false)
+      Blockly.Events.setGroup(false);
     }
   }
-}
+};
 
 /* End functions for variable deletion. */
 
@@ -286,17 +308,17 @@ Blockly.VariableMap.prototype.deleteVariableInternal = function (variable,
  *     it was not found.
  */
 Blockly.VariableMap.prototype.getVariable = function (name, opt_type) {
-  const type = opt_type || ''
-  const list = this.variableMap_[type]
+  const type = opt_type || "";
+  const list = this.variableMap_[type];
   if (list) {
     for (var j = 0, variable; (variable = list[j]); j++) {
       if (Blockly.Names.equals(variable.name, name)) {
-        return variable
+        return variable;
       }
     }
   }
-  return null
-}
+  return null;
+};
 
 /**
  * Find the variable by the given ID and return it. Return null if it is not
@@ -305,17 +327,17 @@ Blockly.VariableMap.prototype.getVariable = function (name, opt_type) {
  * @return {Blockly.VariableModel} The variable with the given ID.
  */
 Blockly.VariableMap.prototype.getVariableById = function (id) {
-  const keys = Object.keys(this.variableMap_)
+  const keys = Object.keys(this.variableMap_);
   for (let i = 0; i < keys.length; i++) {
-    const key = keys[i]
+    const key = keys[i];
     for (var j = 0, variable; (variable = this.variableMap_[key][j]); j++) {
       if (variable.getId() == id) {
-        return variable
+        return variable;
       }
     }
   }
-  return null
-}
+  return null;
+};
 
 /**
  * Get a list containing all of the variables of a specified type. If type is
@@ -325,13 +347,13 @@ Blockly.VariableMap.prototype.getVariableById = function (id) {
  *     passed in type. An empty array if none are found.
  */
 Blockly.VariableMap.prototype.getVariablesOfType = function (type) {
-  type = type || ''
-  const variable_list = this.variableMap_[type]
+  type = type || "";
+  const variable_list = this.variableMap_[type];
   if (variable_list) {
-    return variable_list.slice()
+    return variable_list.slice();
   }
-  return []
-}
+  return [];
+};
 
 /**
  * Return all variable and potential variable types.  This list always contains
@@ -343,51 +365,53 @@ Blockly.VariableMap.prototype.getVariablesOfType = function (type) {
  * @package
  */
 Blockly.VariableMap.prototype.getVariableTypes = function (ws) {
-  const variableMap = {}
-  Blockly.utils.object.mixin(variableMap, this.variableMap_)
+  const variableMap = {};
+  Blockly.utils.object.mixin(variableMap, this.variableMap_);
   if (ws && ws.getPotentialVariableMap()) {
-    Blockly.utils.object.mixin(variableMap,
-      ws.getPotentialVariableMap().variableMap_)
+    Blockly.utils.object.mixin(
+      variableMap,
+      ws.getPotentialVariableMap().variableMap_
+    );
   }
-  const types = Object.keys(variableMap)
-  let hasEmpty = false
+  const types = Object.keys(variableMap);
+  let hasEmpty = false;
   for (let i = 0; i < types.length; i++) {
-    if (types[i] == '') {
-      hasEmpty = true
+    if (types[i] == "") {
+      hasEmpty = true;
     }
   }
   if (!hasEmpty) {
-    types.push('')
+    types.push("");
   }
-  return types
-}
+  return types;
+};
 
 /**
  * Return all variables of all types.
  * @return {!Array.<!Blockly.VariableModel>} List of variable models.
  */
 Blockly.VariableMap.prototype.getAllVariables = function () {
-  let all_variables = []
+  let all_variables = [];
   for (const key in this.variableMap_) {
-    all_variables = all_variables.concat(this.variableMap_[key])
+    all_variables = all_variables.concat(this.variableMap_[key]);
   }
-  return all_variables
-}
+  return all_variables;
+};
 
 /**
  * Returns all of the variable names of all types.
  * @return {!Array.<string>} All of the variable names of all types.
  */
 Blockly.VariableMap.prototype.getAllVariableNames = function () {
-  const allNames = []
+  const allNames = [];
   for (const key in this.variableMap_) {
-    const variables = this.variableMap_[key]
+    const variables = this.variableMap_[key];
     for (var i = 0, variable; (variable = variables[i]); i++) {
-      allNames.push(variable.name)
+      allNames.push(variable.name);
     }
   }
-  return allNames
-}
+  return allNames;
+};
 
 /**
  * Find all the uses of a named variable.
@@ -395,18 +419,18 @@ Blockly.VariableMap.prototype.getAllVariableNames = function () {
  * @return {!Array.<!Blockly.Block>} Array of block usages.
  */
 Blockly.VariableMap.prototype.getVariableUsesById = function (id) {
-  const uses = []
-  const blocks = this.workspace.getAllBlocks(false)
+  const uses = [];
+  const blocks = this.workspace.getAllBlocks(false);
   // Iterate through every block and check the name.
   for (let i = 0; i < blocks.length; i++) {
-    const blockVariables = blocks[i].getVarModels()
+    const blockVariables = blocks[i].getVarModels();
     if (blockVariables) {
       for (let j = 0; j < blockVariables.length; j++) {
         if (blockVariables[j].getId() == id) {
-          uses.push(blocks[i])
+          uses.push(blocks[i]);
         }
       }
     }
   }
-  return uses
-}
+  return uses;
+};

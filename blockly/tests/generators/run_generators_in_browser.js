@@ -7,10 +7,10 @@
 /**
  * @fileoverview Node.js script to run generator tests in Firefox, via webdriver.
  */
-const webdriverio = require('webdriverio')
-const fs = require('fs')
+const webdriverio = require("webdriverio");
+const fs = require("fs");
 
-module.exports = runGeneratorsInBrowser
+module.exports = runGeneratorsInBrowser;
 
 /**
  * Run the generator for a given language and save the results to a file.
@@ -20,15 +20,15 @@ module.exports = runGeneratorsInBrowser
  * @param {Function} codegenFn The function to run for code generation for this
  *     language.
  */
-async function runLangGeneratorInBrowser (browser, filename, codegenFn) {
-  await browser.execute(codegenFn)
-  const elem = await browser.$('#importExport')
-  const result = await elem.getValue()
+async function runLangGeneratorInBrowser(browser, filename, codegenFn) {
+  await browser.execute(codegenFn);
+  const elem = await browser.$("#importExport");
+  const result = await elem.getValue();
   fs.writeFile(filename, result, function (err) {
     if (err) {
-      return console.log(err)
+      return console.log(err);
     }
-  })
+  });
 }
 
 /**
@@ -37,68 +37,65 @@ async function runLangGeneratorInBrowser (browser, filename, codegenFn) {
  * to the console and outputs files for later validation.
  * @return the Thenable managing the processing of the browser tests.
  */
-async function runGeneratorsInBrowser () {
+async function runGeneratorsInBrowser() {
   const options = {
     capabilities: {
-      browserName: 'firefox'
+      browserName: "firefox",
     },
-    path: '/wd/hub'
-  }
+    path: "/wd/hub",
+  };
   // Run in headless mode on Travis.
   if (process.env.TRAVIS_CI) {
-    options.capabilities['moz:firefoxOptions'] = {
-      args: ['-headless']
-    }
+    options.capabilities["moz:firefoxOptions"] = {
+      args: ["-headless"],
+    };
   }
 
-  const url = 'file://' + __dirname + '/index.html'
-  const prefix = 'tests/generators/tmp/generated'
+  const url = "file://" + __dirname + "/index.html";
+  const prefix = "tests/generators/tmp/generated";
 
-  console.log('Starting webdriverio...')
-  const browser = await webdriverio.remote(options)
-  console.log('Initialized.\nLoading url: ' + url)
-  await browser.url(url)
+  console.log("Starting webdriverio...");
+  const browser = await webdriverio.remote(options);
+  console.log("Initialized.\nLoading url: " + url);
+  await browser.url(url);
 
   await browser.execute(function () {
-    checkAll()
-    loadSelected()
-  })
+    checkAll();
+    loadSelected();
+  });
 
-  await runLangGeneratorInBrowser(browser, prefix + '.js',
-    function () {
-      toJavaScript()
-    })
-  await runLangGeneratorInBrowser(browser, prefix + '.py',
-    function () {
-      toPython()
-    })
-  await runLangGeneratorInBrowser(browser, prefix + '.dart',
-    function () {
-      toDart()
-    })
-  await runLangGeneratorInBrowser(browser, prefix + '.lua',
-    function () {
-      toLua()
-    })
-  await runLangGeneratorInBrowser(browser, prefix + '.php',
-    function () {
-      toPhp()
-    })
+  await runLangGeneratorInBrowser(browser, prefix + ".js", function () {
+    toJavaScript();
+  });
+  await runLangGeneratorInBrowser(browser, prefix + ".py", function () {
+    toPython();
+  });
+  await runLangGeneratorInBrowser(browser, prefix + ".dart", function () {
+    toDart();
+  });
+  await runLangGeneratorInBrowser(browser, prefix + ".lua", function () {
+    toLua();
+  });
+  await runLangGeneratorInBrowser(browser, prefix + ".php", function () {
+    toPhp();
+  });
 
-  await browser.deleteSession()
+  await browser.deleteSession();
 }
 
 if (require.main === module) {
-  runGeneratorsInBrowser().catch(e => {
-    console.error(e)
-    process.exit(1)
-  }).then(function (result) {
-    if (result) {
-      console.log('Generator tests failed')
-      process.exit(1)
-    } else {
-      console.log('Generator tests passed')
-      process.exit(0)
-    }
-  })
+  runGeneratorsInBrowser()
+    .catch((e) => {
+      console.error(e);
+      process.exit(1);
+    })
+    .then(function (result) {
+      if (result) {
+        console.log("Generator tests failed");
+        process.exit(1);
+      } else {
+        console.log("Generator tests passed");
+        process.exit(0);
+      }
+    });
 }

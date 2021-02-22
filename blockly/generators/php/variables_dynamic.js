@@ -8,13 +8,13 @@
  * @fileoverview Generating PHP for dynamic variable blocks.
  * @author fenichel@google.com (Rachel Fenichel)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.PHP.variablesDynamic')
+goog.provide("Blockly.PHP.variablesDynamic");
 
-goog.require('Blockly.PHP')
-goog.require('Blockly.PHP.variables')
+goog.require("Blockly.PHP");
+goog.require("Blockly.PHP.variables");
 
 // PHP is dynamically typed.
-Blockly.PHP.variables_get_dynamic = Blockly.PHP.variables_get
-Blockly.PHP.variables_set_dynamic = Blockly.PHP.variables_set
+Blockly.PHP.variables_get_dynamic = Blockly.PHP.variables_get;
+Blockly.PHP.variables_set_dynamic = Blockly.PHP.variables_set;

@@ -12,7 +12,7 @@
  * through the elements in a line.
  * @author aschmiedt@google.com (Abby Schmiedt)
  */
-'use strict'
+"use strict";
 
 /**
  * Class for a line cursor.
@@ -22,9 +22,9 @@
  * @extends {Blockly.BasicCursor}
  */
 Blockly.LineCursor = function () {
-  Blockly.LineCursor.superClass_.constructor.call(this)
-}
-Blockly.utils.object.inherits(Blockly.LineCursor, Blockly.BasicCursor)
+  Blockly.LineCursor.superClass_.constructor.call(this);
+};
+Blockly.utils.object.inherits(Blockly.LineCursor, Blockly.BasicCursor);
 
 /**
  * Find the next node in the pre order traversal.
@@ -33,23 +33,26 @@ Blockly.utils.object.inherits(Blockly.LineCursor, Blockly.BasicCursor)
  * @override
  */
 Blockly.LineCursor.prototype.next = function () {
-  const curNode = this.getCurNode()
+  const curNode = this.getCurNode();
   if (!curNode) {
-    return null
+    return null;
   }
-  let newNode = this.getNextNode_(curNode, this.validLineNode_)
+  let newNode = this.getNextNode_(curNode, this.validLineNode_);
 
   // Skip the input or next value if there is a connected block.
-  if (newNode && (newNode.getType() == Blockly.ASTNode.types.INPUT ||
+  if (
+    newNode &&
+    (newNode.getType() == Blockly.ASTNode.types.INPUT ||
       newNode.getType() == Blockly.ASTNode.types.NEXT) &&
-      newNode.getLocation().targetBlock()) {
-    newNode = this.getNextNode_(newNode, this.validLineNode_)
+    newNode.getLocation().targetBlock()
+  ) {
+    newNode = this.getNextNode_(newNode, this.validLineNode_);
   }
   if (newNode) {
-    this.setCurNode(newNode)
+    this.setCurNode(newNode);
   }
-  return newNode
-}
+  return newNode;
+};
 
 /**
  * For a basic cursor we only have the ability to go next and previous, so
@@ -59,17 +62,17 @@ Blockly.LineCursor.prototype.next = function () {
  * @override
  */
 Blockly.LineCursor.prototype.in = function () {
-  const curNode = this.getCurNode()
+  const curNode = this.getCurNode();
   if (!curNode) {
-    return null
+    return null;
   }
-  const newNode = this.getNextNode_(curNode, this.validInLineNode_)
+  const newNode = this.getNextNode_(curNode, this.validInLineNode_);
 
   if (newNode) {
-    this.setCurNode(newNode)
+    this.setCurNode(newNode);
   }
-  return newNode
-}
+  return newNode;
+};
 
 /**
  * Find the previous node in the pre order traversal.
@@ -78,23 +81,26 @@ Blockly.LineCursor.prototype.in = function () {
  * @override
  */
 Blockly.LineCursor.prototype.prev = function () {
-  const curNode = this.getCurNode()
+  const curNode = this.getCurNode();
   if (!curNode) {
-    return null
+    return null;
   }
-  let newNode = this.getPreviousNode_(curNode, this.validLineNode_)
+  let newNode = this.getPreviousNode_(curNode, this.validLineNode_);
 
-  if (newNode && (newNode.getType() == Blockly.ASTNode.types.INPUT ||
-    newNode.getType() == Blockly.ASTNode.types.NEXT) &&
-    newNode.getLocation().targetBlock()) {
-    newNode = this.getPreviousNode_(newNode, this.validLineNode_)
+  if (
+    newNode &&
+    (newNode.getType() == Blockly.ASTNode.types.INPUT ||
+      newNode.getType() == Blockly.ASTNode.types.NEXT) &&
+    newNode.getLocation().targetBlock()
+  ) {
+    newNode = this.getPreviousNode_(newNode, this.validLineNode_);
   }
 
   if (newNode) {
-    this.setCurNode(newNode)
+    this.setCurNode(newNode);
   }
-  return newNode
-}
+  return newNode;
+};
 
 /**
  * For a basic cursor we only have the ability to go next and previous, so
@@ -104,17 +110,17 @@ Blockly.LineCursor.prototype.prev = function () {
  * @override
  */
 Blockly.LineCursor.prototype.out = function () {
-  const curNode = this.getCurNode()
+  const curNode = this.getCurNode();
   if (!curNode) {
-    return null
+    return null;
   }
-  const newNode = this.getPreviousNode_(curNode, this.validInLineNode_)
+  const newNode = this.getPreviousNode_(curNode, this.validInLineNode_);
 
   if (newNode) {
-    this.setCurNode(newNode)
+    this.setCurNode(newNode);
   }
-  return newNode
-}
+  return newNode;
+};
 
 /**
  * Meant to traverse by lines of code. This is blocks, statement inputs and
@@ -125,23 +131,25 @@ Blockly.LineCursor.prototype.out = function () {
  */
 Blockly.LineCursor.prototype.validLineNode_ = function (node) {
   if (!node) {
-    return false
+    return false;
   }
-  let isValid = false
-  const location = node.getLocation()
-  const type = node && node.getType()
+  let isValid = false;
+  const location = node.getLocation();
+  const type = node && node.getType();
   if (type == Blockly.ASTNode.types.BLOCK) {
     if (location.outputConnection === null) {
-      isValid = true
+      isValid = true;
     }
-  } else if (type == Blockly.ASTNode.types.INPUT &&
-      location.type == Blockly.NEXT_STATEMENT) {
-    isValid = true
+  } else if (
+    type == Blockly.ASTNode.types.INPUT &&
+    location.type == Blockly.NEXT_STATEMENT
+  ) {
+    isValid = true;
   } else if (type == Blockly.ASTNode.types.NEXT) {
-    isValid = true
+    isValid = true;
   }
-  return isValid
-}
+  return isValid;
+};
 
 /**
  * Meant to traverse within a block. These are fields and input values.
@@ -151,16 +159,18 @@ Blockly.LineCursor.prototype.validLineNode_ = function (node) {
  */
 Blockly.LineCursor.prototype.validInLineNode_ = function (node) {
   if (!node) {
-    return false
+    return false;
   }
-  let isValid = false
-  const location = node.getLocation()
-  const type = node && node.getType()
+  let isValid = false;
+  const location = node.getLocation();
+  const type = node && node.getType();
   if (type == Blockly.ASTNode.types.FIELD) {
-    isValid = true
-  } else if (type == Blockly.ASTNode.types.INPUT &&
-      location.type == Blockly.INPUT_VALUE) {
-    isValid = true
+    isValid = true;
+  } else if (
+    type == Blockly.ASTNode.types.INPUT &&
+    location.type == Blockly.INPUT_VALUE
+  ) {
+    isValid = true;
   }
-  return isValid
-}
+  return isValid;
+};

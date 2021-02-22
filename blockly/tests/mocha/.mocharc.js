@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
 module.exports = {
-  ui: 'tdd',
-  file: '../blockly_uncompressed.js',
-  reporter: 'landing'
+  ui: "tdd",
+  file: "../blockly_uncompressed.js",
+  reporter: "landing",
 };

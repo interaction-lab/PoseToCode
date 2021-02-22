@@ -12,4 +12,4 @@
 /**
  * @type {!Object}
  */
-const goog = {}
+const goog = {};

@@ -7,9 +7,9 @@
 /**
  * @fileoverview Node.js script to run Mocha tests in Chrome, via webdriver.
  */
-const webdriverio = require('webdriverio')
+const webdriverio = require("webdriverio");
 
-module.exports = runMochaTestsInBrowser
+module.exports = runMochaTestsInBrowser;
 
 /**
  * Runs the Mocha tests in this directory in Chrome. It uses webdriverio to
@@ -17,60 +17,65 @@ module.exports = runMochaTestsInBrowser
  * to the console.
  * @return 0 on success, 1 on failure.
  */
-async function runMochaTestsInBrowser () {
+async function runMochaTestsInBrowser() {
   const options = {
     capabilities: {
-      browserName: 'chrome'
+      browserName: "chrome",
     },
-    path: '/wd/hub'
-  }
+    path: "/wd/hub",
+  };
   // Run in headless mode on Travis.
   if (process.env.TRAVIS_CI) {
-    options.capabilities['goog:chromeOptions'] = {
-      args: ['--headless', '--no-sandbox', '--disable-dev-shm-usage']
+    options.capabilities["goog:chromeOptions"] = {
+      args: ["--headless", "--no-sandbox", "--disable-dev-shm-usage"],
+    };
+  }
+
+  const url = "file://" + __dirname + "/index.html";
+  console.log("Starting webdriverio...");
+  const browser = await webdriverio.remote(options);
+  console.log("Initialized.\nLoading url: " + url);
+  await browser.url(url);
+
+  await browser.waitUntil(
+    async () => {
+      const elem = await browser.$("#failureCount");
+      const text = await elem.getAttribute("tests_failed");
+      return text != "unset";
+    },
+    {
+      timeout: 50000,
     }
-  }
+  );
 
-  const url = 'file://' + __dirname + '/index.html'
-  console.log('Starting webdriverio...')
-  const browser = await webdriverio.remote(options)
-  console.log('Initialized.\nLoading url: ' + url)
-  await browser.url(url)
+  const elem = await browser.$("#failureCount");
+  const numOfFailure = await elem.getAttribute("tests_failed");
 
-  await browser.waitUntil(async () => {
-    const elem = await browser.$('#failureCount')
-    const text = await elem.getAttribute('tests_failed')
-    return text != 'unset'
-  }, {
-    timeout: 50000
-  })
-
-  const elem = await browser.$('#failureCount')
-  const numOfFailure = await elem.getAttribute('tests_failed')
-
-  console.log('============Blockly Mocha Test Summary=================')
-  console.log(numOfFailure)
-  console.log(numOfFailure + ' tests failed')
-  console.log('============Blockly Mocha Test Summary=================')
+  console.log("============Blockly Mocha Test Summary=================");
+  console.log(numOfFailure);
+  console.log(numOfFailure + " tests failed");
+  console.log("============Blockly Mocha Test Summary=================");
   if (parseInt(numOfFailure) !== 0) {
-    await browser.deleteSession()
-    return 1
+    await browser.deleteSession();
+    return 1;
   }
-  await browser.deleteSession()
-  return 0
+  await browser.deleteSession();
+  return 0;
 }
 
 if (require.main === module) {
-  runMochaTestsInBrowser().catch(e => {
-    console.error(e)
-    process.exit(1)
-  }).then(function (result) {
-    if (result) {
-      console.log('Mocha tests failed')
-      process.exit(1)
-    } else {
-      console.log('Mocha tests passed')
-      process.exit(0)
-    }
-  })
+  runMochaTestsInBrowser()
+    .catch((e) => {
+      console.error(e);
+      process.exit(1);
+    })
+    .then(function (result) {
+      if (result) {
+        console.log("Mocha tests failed");
+        process.exit(1);
+      } else {
+        console.log("Mocha tests passed");
+        process.exit(0);
+      }
+    });
 }

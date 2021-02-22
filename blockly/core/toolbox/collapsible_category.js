@@ -8,22 +8,22 @@
  * @fileoverview A toolbox category used to organize blocks in the toolbox.
  * @author aschmiedt@google.com (Abby Schmiedt)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.CollapsibleToolboxCategory')
+goog.provide("Blockly.CollapsibleToolboxCategory");
 
-goog.require('Blockly.registry')
-goog.require('Blockly.ToolboxCategory')
-goog.require('Blockly.ToolboxSeparator')
-goog.require('Blockly.utils.aria')
-goog.require('Blockly.utils.dom')
-goog.require('Blockly.utils.object')
-goog.require('Blockly.utils.toolbox')
-goog.require('Blockly.ToolboxItem')
+goog.require("Blockly.registry");
+goog.require("Blockly.ToolboxCategory");
+goog.require("Blockly.ToolboxSeparator");
+goog.require("Blockly.utils.aria");
+goog.require("Blockly.utils.dom");
+goog.require("Blockly.utils.object");
+goog.require("Blockly.utils.toolbox");
+goog.require("Blockly.ToolboxItem");
 
-goog.requireType('Blockly.ICollapsibleToolboxItem')
-goog.requireType('Blockly.IToolbox')
-goog.requireType('Blockly.IToolboxItem')
+goog.requireType("Blockly.ICollapsibleToolboxItem");
+goog.requireType("Blockly.IToolbox");
+goog.requireType("Blockly.IToolboxItem");
 
 /**
  * Class for a category in a toolbox that can be collapsed.
@@ -36,33 +36,44 @@ goog.requireType('Blockly.IToolboxItem')
  * @extends {Blockly.ToolboxCategory}
  * @implements {Blockly.ICollapsibleToolboxItem}
  */
-Blockly.CollapsibleToolboxCategory = function (categoryDef, toolbox, opt_parent) {
+Blockly.CollapsibleToolboxCategory = function (
+  categoryDef,
+  toolbox,
+  opt_parent
+) {
   /**
    * Container for any child categories.
    * @type {?Element}
    * @protected
    */
-  this.subcategoriesDiv_ = null
+  this.subcategoriesDiv_ = null;
 
   /**
    * Whether or not the category should display its subcategories.
    * @type {boolean}
    * @protected
    */
-  this.expanded_ = false
+  this.expanded_ = false;
 
   /**
    * The child toolbox items for this category.
    * @type {!Array<!Blockly.ToolboxItem>}
    * @protected
    */
-  this.toolboxItems_ = []
+  this.toolboxItems_ = [];
 
   Blockly.CollapsibleToolboxCategory.superClass_.constructor.call(
-    this, categoryDef, toolbox, opt_parent)
-}
+    this,
+    categoryDef,
+    toolbox,
+    opt_parent
+  );
+};
 
-Blockly.utils.object.inherits(Blockly.CollapsibleToolboxCategory, Blockly.ToolboxCategory)
+Blockly.utils.object.inherits(
+  Blockly.CollapsibleToolboxCategory,
+  Blockly.ToolboxCategory
+);
 
 /**
  * All the css class names that are used to create a collapsible
@@ -79,49 +90,59 @@ Blockly.utils.object.inherits(Blockly.CollapsibleToolboxCategory, Blockly.Toolbo
  *            contents:?string
  *          }}
  */
-Blockly.CollapsibleToolboxCategory.CssConfig
+Blockly.CollapsibleToolboxCategory.CssConfig;
 
 /**
  * Name used for registering a collapsible toolbox category.
  * @const {string}
  */
-Blockly.CollapsibleToolboxCategory.registrationName = 'collapsibleCategory'
+Blockly.CollapsibleToolboxCategory.registrationName = "collapsibleCategory";
 
 /**
  * @override
  */
 Blockly.CollapsibleToolboxCategory.prototype.makeDefaultCssConfig_ = function () {
-  const cssConfig = Blockly.CollapsibleToolboxCategory.superClass_.makeDefaultCssConfig_.call(this)
-  cssConfig.contents = 'blocklyToolboxContents'
-  return cssConfig
-}
+  const cssConfig = Blockly.CollapsibleToolboxCategory.superClass_.makeDefaultCssConfig_.call(
+    this
+  );
+  cssConfig.contents = "blocklyToolboxContents";
+  return cssConfig;
+};
 
 /**
  * @override
  */
-Blockly.CollapsibleToolboxCategory.prototype.parseContents_ = function (categoryDef) {
-  const contents = categoryDef.contents
-  let prevIsFlyoutItem = true
+Blockly.CollapsibleToolboxCategory.prototype.parseContents_ = function (
+  categoryDef
+) {
+  const contents = categoryDef.contents;
+  let prevIsFlyoutItem = true;
 
   if (categoryDef.custom) {
-    this.flyoutItems_ = categoryDef.custom
+    this.flyoutItems_ = categoryDef.custom;
   } else if (contents) {
     for (var i = 0, itemDef; (itemDef = contents[i]); i++) {
       // Separators can exist as either a flyout item or a toolbox item so
       // decide where it goes based on the type of the previous item.
-      if (!Blockly.registry.hasItem(Blockly.registry.Type.TOOLBOX_ITEM, itemDef.kind) ||
-          (itemDef.kind.toLowerCase() == Blockly.ToolboxSeparator.registrationName &&
-          prevIsFlyoutItem)) {
-        const flyoutItem = /** @type {Blockly.utils.toolbox.FlyoutItemInfo} */ (itemDef)
-        this.flyoutItems_.push(flyoutItem)
-        prevIsFlyoutItem = true
+      if (
+        !Blockly.registry.hasItem(
+          Blockly.registry.Type.TOOLBOX_ITEM,
+          itemDef.kind
+        ) ||
+        (itemDef.kind.toLowerCase() ==
+          Blockly.ToolboxSeparator.registrationName &&
+          prevIsFlyoutItem)
+      ) {
+        const flyoutItem = /** @type {Blockly.utils.toolbox.FlyoutItemInfo} */ (itemDef);
+        this.flyoutItems_.push(flyoutItem);
+        prevIsFlyoutItem = true;
       } else {
-        this.createToolboxItem_(itemDef)
-        prevIsFlyoutItem = false
+        this.createToolboxItem_(itemDef);
+        prevIsFlyoutItem = false;
       }
     }
   }
-}
+};
 
 /**
  * Creates a toolbox item and adds it to the list of toolbox items.
@@ -129,60 +150,69 @@ Blockly.CollapsibleToolboxCategory.prototype.parseContents_ = function (category
  *     to create a toolbox item.
  * @private
  */
-Blockly.CollapsibleToolboxCategory.prototype.createToolboxItem_ = function (itemDef) {
-  let registryName = itemDef.kind
-  const categoryDef = /** @type {!Blockly.utils.toolbox.CategoryInfo} */ (itemDef)
+Blockly.CollapsibleToolboxCategory.prototype.createToolboxItem_ = function (
+  itemDef
+) {
+  let registryName = itemDef.kind;
+  const categoryDef = /** @type {!Blockly.utils.toolbox.CategoryInfo} */ (itemDef);
 
   // Categories that are collapsible are created using a class registered under
   // a diffferent name.
-  if (registryName.toUpperCase() == 'CATEGORY' &&
-      Blockly.utils.toolbox.isCategoryCollapsible(categoryDef)) {
-    registryName = Blockly.CollapsibleToolboxCategory.registrationName
+  if (
+    registryName.toUpperCase() == "CATEGORY" &&
+    Blockly.utils.toolbox.isCategoryCollapsible(categoryDef)
+  ) {
+    registryName = Blockly.CollapsibleToolboxCategory.registrationName;
   }
   const ToolboxItemClass = Blockly.registry.getClass(
-    Blockly.registry.Type.TOOLBOX_ITEM, registryName)
-  const toolboxItem = new ToolboxItemClass(itemDef, this.parentToolbox_, this)
-  this.toolboxItems_.push(toolboxItem)
-}
+    Blockly.registry.Type.TOOLBOX_ITEM,
+    registryName
+  );
+  const toolboxItem = new ToolboxItemClass(itemDef, this.parentToolbox_, this);
+  this.toolboxItems_.push(toolboxItem);
+};
 
 /**
  * @override
  */
 Blockly.CollapsibleToolboxCategory.prototype.init = function () {
-  Blockly.CollapsibleToolboxCategory.superClass_.init.call(this)
+  Blockly.CollapsibleToolboxCategory.superClass_.init.call(this);
 
-  this.setExpanded(this.toolboxItemDef_.expanded == 'true' ||
-      this.toolboxItemDef_.expanded)
-}
+  this.setExpanded(
+    this.toolboxItemDef_.expanded == "true" || this.toolboxItemDef_.expanded
+  );
+};
 
 /**
  * @override
  */
 Blockly.CollapsibleToolboxCategory.prototype.createDom_ = function () {
-  Blockly.CollapsibleToolboxCategory.superClass_.createDom_.call(this)
+  Blockly.CollapsibleToolboxCategory.superClass_.createDom_.call(this);
 
-  const subCategories = this.getChildToolboxItems()
-  this.subcategoriesDiv_ = this.createSubCategoriesDom_(subCategories)
-  Blockly.utils.aria.setRole(this.subcategoriesDiv_,
-    Blockly.utils.aria.Role.GROUP)
-  this.htmlDiv_.appendChild(this.subcategoriesDiv_)
+  const subCategories = this.getChildToolboxItems();
+  this.subcategoriesDiv_ = this.createSubCategoriesDom_(subCategories);
+  Blockly.utils.aria.setRole(
+    this.subcategoriesDiv_,
+    Blockly.utils.aria.Role.GROUP
+  );
+  this.htmlDiv_.appendChild(this.subcategoriesDiv_);
 
-  return this.htmlDiv_
-}
+  return this.htmlDiv_;
+};
 
 /**
  * @override
  */
 Blockly.CollapsibleToolboxCategory.prototype.createIconDom_ = function () {
-  const toolboxIcon = document.createElement('span')
+  const toolboxIcon = document.createElement("span");
   if (!this.parentToolbox_.isHorizontal()) {
-    Blockly.utils.dom.addClass(toolboxIcon, this.cssConfig_.icon)
-    toolboxIcon.style.visibility = 'visible'
+    Blockly.utils.dom.addClass(toolboxIcon, this.cssConfig_.icon);
+    toolboxIcon.style.visibility = "visible";
   }
 
-  toolboxIcon.style.display = 'inline-block'
-  return toolboxIcon
-}
+  toolboxIcon.style.display = "inline-block";
+  return toolboxIcon;
+};
 
 /**
  * Create the dom for all subcategories.
@@ -190,56 +220,65 @@ Blockly.CollapsibleToolboxCategory.prototype.createIconDom_ = function () {
  * @return {!Element} The div holding all the subcategories.
  * @protected
  */
-Blockly.CollapsibleToolboxCategory.prototype.createSubCategoriesDom_ = function (subcategories) {
-  const contentsContainer = document.createElement('div')
-  Blockly.utils.dom.addClass(contentsContainer, this.cssConfig_.contents)
+Blockly.CollapsibleToolboxCategory.prototype.createSubCategoriesDom_ = function (
+  subcategories
+) {
+  const contentsContainer = document.createElement("div");
+  Blockly.utils.dom.addClass(contentsContainer, this.cssConfig_.contents);
 
   for (let i = 0; i < subcategories.length; i++) {
-    const newCategory = subcategories[i]
-    newCategory.init()
-    const newCategoryDiv = newCategory.getDiv()
-    contentsContainer.appendChild(newCategoryDiv)
+    const newCategory = subcategories[i];
+    newCategory.init();
+    const newCategoryDiv = newCategory.getDiv();
+    contentsContainer.appendChild(newCategoryDiv);
   }
-  return contentsContainer
-}
+  return contentsContainer;
+};
 
 /**
  * Opens or closes the current category.
  * @param {boolean} isExpanded True to expand the category, false to close.
  * @public
  */
-Blockly.CollapsibleToolboxCategory.prototype.setExpanded = function (isExpanded) {
+Blockly.CollapsibleToolboxCategory.prototype.setExpanded = function (
+  isExpanded
+) {
   if (this.expanded_ == isExpanded) {
-    return
+    return;
   }
-  this.expanded_ = isExpanded
+  this.expanded_ = isExpanded;
   if (isExpanded) {
-    this.subcategoriesDiv_.style.display = 'block'
-    this.openIcon_(this.iconDom_)
+    this.subcategoriesDiv_.style.display = "block";
+    this.openIcon_(this.iconDom_);
   } else {
-    this.subcategoriesDiv_.style.display = 'none'
-    this.closeIcon_(this.iconDom_)
+    this.subcategoriesDiv_.style.display = "none";
+    this.closeIcon_(this.iconDom_);
   }
-  Blockly.utils.aria.setState(/** @type {!Element} */ (this.htmlDiv_),
-    Blockly.utils.aria.State.EXPANDED, isExpanded)
+  Blockly.utils.aria.setState(
+    /** @type {!Element} */ (this.htmlDiv_),
+    Blockly.utils.aria.State.EXPANDED,
+    isExpanded
+  );
 
-  this.parentToolbox_.handleToolboxItemResize()
-}
+  this.parentToolbox_.handleToolboxItemResize();
+};
 
 /**
  * @override
  */
-Blockly.CollapsibleToolboxCategory.prototype.setVisible_ = function (isVisible) {
-  this.htmlDiv_.style.display = isVisible ? 'block' : 'none'
+Blockly.CollapsibleToolboxCategory.prototype.setVisible_ = function (
+  isVisible
+) {
+  this.htmlDiv_.style.display = isVisible ? "block" : "none";
   for (var i = 0, child; (child = this.getChildToolboxItems()[i]); i++) {
-    child.setVisible_(isVisible)
+    child.setVisible_(isVisible);
   }
-  this.isHidden_ = !isVisible
+  this.isHidden_ = !isVisible;
 
   if (this.parentToolbox_.getSelectedItem() == this) {
-    this.parentToolbox_.clearSelection()
+    this.parentToolbox_.clearSelection();
   }
-}
+};
 
 /**
  * Whether the category is expanded to show its child subcategories.
@@ -248,45 +287,48 @@ Blockly.CollapsibleToolboxCategory.prototype.setVisible_ = function (isVisible) 
  * @public
  */
 Blockly.CollapsibleToolboxCategory.prototype.isExpanded = function () {
-  return this.expanded_
-}
+  return this.expanded_;
+};
 
 /**
  * @override
  */
 Blockly.CollapsibleToolboxCategory.prototype.isCollapsible = function () {
-  return true
-}
+  return true;
+};
 
 /**
  * @override
  */
 Blockly.CollapsibleToolboxCategory.prototype.onClick = function (_e) {
-  this.toggleExpanded()
-}
+  this.toggleExpanded();
+};
 
 /**
  * Toggles whether or not the category is expanded.
  * @public
  */
 Blockly.CollapsibleToolboxCategory.prototype.toggleExpanded = function () {
-  this.setExpanded(!this.expanded_)
-}
+  this.setExpanded(!this.expanded_);
+};
 
 /**
  * @override
  */
 Blockly.CollapsibleToolboxCategory.prototype.getDiv = function () {
-  return this.htmlDiv_
-}
+  return this.htmlDiv_;
+};
 
 /**
  * Gets any children toolbox items. (ex. Gets the subcategories)
  * @return {!Array<!Blockly.IToolboxItem>} The child toolbox items.
  */
 Blockly.CollapsibleToolboxCategory.prototype.getChildToolboxItems = function () {
-  return this.toolboxItems_
-}
+  return this.toolboxItems_;
+};
 
-Blockly.registry.register(Blockly.registry.Type.TOOLBOX_ITEM,
-  Blockly.CollapsibleToolboxCategory.registrationName, Blockly.CollapsibleToolboxCategory)
+Blockly.registry.register(
+  Blockly.registry.Type.TOOLBOX_ITEM,
+  Blockly.CollapsibleToolboxCategory.registrationName,
+  Blockly.CollapsibleToolboxCategory
+);

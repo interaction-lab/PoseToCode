@@ -10,12 +10,12 @@
  * @author aschmiedt@google.com (Abby Schmiedt)
  */
 
-'use strict'
+"use strict";
 
-goog.provide('Blockly.IRegistrable')
+goog.provide("Blockly.IRegistrable");
 
 /**
  * The interface for a Blockly component that can be registered.
  * @interface
  */
-Blockly.IRegistrable = function () {}
+Blockly.IRegistrable = function () {};

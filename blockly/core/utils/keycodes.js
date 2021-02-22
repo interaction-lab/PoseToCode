@@ -10,9 +10,9 @@
  * a JavaScript framework such as Closure.
  * @author samelh@google.com (Sam El-Husseini)
  */
-'use strict'
+"use strict";
 
-goog.provide('Blockly.utils.KeyCodes')
+goog.provide("Blockly.utils.KeyCodes");
 
 /**
  * Key codes for common characters.
@@ -144,8 +144,7 @@ Blockly.utils.KeyCodes = {
   BACKSLASH: 220, // needs localization
   CLOSE_SQUARE_BRACKET: 221, // needs localization
   WIN_KEY: 224,
-  MAC_FF_META:
-      224, // Firefox (Gecko) fires this for the meta key instead of 91
+  MAC_FF_META: 224, // Firefox (Gecko) fires this for the meta key instead of 91
   MAC_WK_CMD_LEFT: 91, // WebKit Left Command key fired, same as META
   MAC_WK_CMD_RIGHT: 93, // WebKit Right Command key fired, different from META
   WIN_IME: 229,
@@ -159,5 +158,5 @@ Blockly.utils.KeyCodes = {
   // they're all using Dell Inspiron laptops, so we suspect that this
   // indicates a hardware/bios problem.
   // http://en.community.dell.com/support-forums/laptop/f/3518/p/19285957/19523128.aspx
-  PHANTOM: 255
-}
+  PHANTOM: 255,
+};

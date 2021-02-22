@@ -1,9 +1,8 @@
 ---
 name: Documentation
 about: Report an issue with our documentation
-labels: 'type: documentation, triage'
-assignees: ''
-
+labels: "type: documentation, triage"
+assignees: ""
 ---
 
 <!--
