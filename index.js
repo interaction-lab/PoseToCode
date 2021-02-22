@@ -20,6 +20,8 @@ const blocklyDiv = document.getElementById("blocklyDiv");
 const workspace = Blockly.inject(blocklyDiv, options);
 const workspaceBlocks = document.getElementById("workspaceBlocks");
 Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
+const loader = document.getElementsByClassName("loader")[0];
+loader.style.visibility = "hidden";
 /* variables to hold current parent block and child block */
 let parentBlock = null;
 let childBlock = null;
@@ -37,6 +39,7 @@ const canvasElement = document.getElementsByClassName("output_canvas")[0];
 const canvasCtx = canvasElement.getContext("2d");
 
 function sleep(milliseconds) {
+  loader.style.visibility = "visible";
   const date = Date.now();
   let currentDate = null;
   do {
@@ -81,6 +84,9 @@ function onResults(results) {
   if (!sleepFlag) {
     if (rightDist < 0.05 && leftDist < 0.05 && !sphereSizeFlag) {
       setTimeout(() => {
+        loader.style.visibility = "hidden";
+      }, 3500);
+      setTimeout(() => {
         console.log("dance");
         /* programatically adding code block */
         if (parentBlock == null) {
@@ -97,9 +103,12 @@ function onResults(results) {
           parentBlock = childBlock;
         }
         allBlocks.push(parentBlock);
-      }, 600);
+      }, 3000);
       sleepFlag = true;
-      sleep(800);
+      loader.style.visibility = "visible";
+      setTimeout(() => {
+        sleep(2000);
+      }, 5);
       sleepFlag = false;
       canvasCtx.restore();
     }
@@ -110,11 +119,17 @@ function onResults(results) {
       !sphereSizeFlag
     ) {
       setTimeout(() => {
+        loader.style.visibility = "hidden";
+      }, 3500);
+      setTimeout(() => {
         console.log("run");
         runCode();
-      }, 600);
+      }, 3000);
       sleepFlag = true;
-      sleep(800);
+      loader.style.visibility = "visible";
+      setTimeout(() => {
+        sleep(2000);
+      }, 5);
       sleepFlag = false;
       canvasCtx.restore();
     }
@@ -125,6 +140,9 @@ function onResults(results) {
       !sphereSizeFlag
     ) {
       setTimeout(() => {
+        loader.style.visibility = "hidden";
+      }, 3500);
+      setTimeout(() => {
         console.log("reset");
         // delete all code blocks in the workspace
         for (i = 0; i < allBlocks.length; i++) {
@@ -132,11 +150,12 @@ function onResults(results) {
         }
         parentBlock = null;
         resetGUI();
-        // TODO: move robot position back to y=0
-        // robot.position.y = 0;
-      }, 600);
+      }, 3000);
       sleepFlag = true;
-      sleep(800);
+      loader.style.visibility = "visible";
+      setTimeout(() => {
+        sleep(2000);
+      }, 5);
       sleepFlag = false;
       canvasCtx.restore();
     }
@@ -150,6 +169,9 @@ function onResults(results) {
       results.poseLandmarks[19].y > results.poseLandmarks[11].y &&
       !sphereSizeFlag
     ) {
+      setTimeout(() => {
+        loader.style.visibility = "hidden";
+      }, 3500);
       setTimeout(() => {
         console.log("create sphere");
         /* add code block */
@@ -167,9 +189,12 @@ function onResults(results) {
           parentBlock = childBlock;
         }
         allBlocks.push(parentBlock);
-      }, 600);
+      }, 3000);
       sleepFlag = true;
-      sleep(800);
+      loader.style.visibility = "visible";
+      setTimeout(() => {
+        sleep(2000);
+      }, 5);
       sleepFlag = false;
       sphereSizeFlag = true;
       canvasCtx.restore();
@@ -180,6 +205,9 @@ function onResults(results) {
       sphereSizeFlag
     ) {
       setTimeout(() => {
+        loader.style.visibility = "hidden";
+      }, 3500);
+      setTimeout(() => {
         console.log("small sphere");
         // change field value of create_sphere block
         if (parentBlock != null) {
@@ -189,10 +217,13 @@ function onResults(results) {
           const childConnection = childBlock.outputConnection;
           parentConnection.connect(childConnection);
         }
-      }, 600);
+      }, 3000);
       sphereSizeFlag = false;
       sleepFlag = true;
-      sleep(800);
+      loader.style.visibility = "visible";
+      setTimeout(() => {
+        sleep(2000);
+      }, 5);
       sleepFlag = false;
       canvasCtx.restore();
     }
@@ -203,7 +234,10 @@ function onResults(results) {
       sphereSizeFlag
     ) {
       setTimeout(() => {
-        console.log("med sphere");
+        loader.style.visibility = "hidden";
+      }, 3500);
+      setTimeout(() => {
+        console.log("medium sphere");
         // change field value of create_sphere block
         if (parentBlock != null) {
           childBlock = workspace.newBlock("size");
@@ -212,10 +246,13 @@ function onResults(results) {
           const childConnection = childBlock.outputConnection;
           parentConnection.connect(childConnection);
         }
-      }, 600);
+      }, 3000);
       sphereSizeFlag = false;
       sleepFlag = true;
-      sleep(800);
+      loader.style.visibility = "visible";
+      setTimeout(() => {
+        sleep(2000);
+      }, 5);
       sleepFlag = false;
       canvasCtx.restore();
     }
@@ -224,6 +261,9 @@ function onResults(results) {
       results.poseLandmarks[19].y < results.poseLandmarks[11].y &&
       sphereSizeFlag
     ) {
+      setTimeout(() => {
+        loader.style.visibility = "hidden";
+      }, 3500);
       setTimeout(() => {
         console.log("large sphere");
         // change field value of create_sphere block
@@ -234,10 +274,13 @@ function onResults(results) {
           const childConnection = childBlock.outputConnection;
           parentConnection.connect(childConnection);
         }
-      }, 600);
+      }, 3000);
       sphereSizeFlag = false;
       sleepFlag = true;
-      sleep(1000);
+      loader.style.visibility = "visible";
+      setTimeout(() => {
+        sleep(2000);
+      }, 5);
       sleepFlag = false;
       canvasCtx.restore();
     }
@@ -247,6 +290,9 @@ function onResults(results) {
       results.poseLandmarks[20].y > results.poseLandmarks[26].y &&
       !sphereSizeFlag
     ) {
+      setTimeout(() => {
+        loader.style.visibility = "hidden";
+      }, 3500);
       setTimeout(() => {
         console.log("place sphere");
         if (parentBlock == null) {
@@ -263,10 +309,13 @@ function onResults(results) {
           parentBlock = childBlock;
         }
         allBlocks.push(parentBlock);
-      }, 600);
+      }, 3000);
       sphereSizeFlag = false;
       sleepFlag = true;
-      sleep(800);
+      loader.style.visibility = "visible";
+      setTimeout(() => {
+        sleep(2000);
+      }, 5);
       sleepFlag = false;
       canvasCtx.restore();
     }
@@ -298,7 +347,6 @@ const camera = new Camera(videoElement, {
 camera.start();
 
 function runCode() {
-  alert("Running!");
   window.LoopTrap = 1000;
   Blockly.JavaScript.INFINITE_LOOP_TRAP =
     'if(--window.LoopTrap == 0) throw "Infinite loop.";\n';
