@@ -10,14 +10,13 @@
  * a JavaScript framework such as Closure.
  * @author fraser@google.com (Neil Fraser)
  */
-'use strict';
+'use strict'
 
 /**
  * @name Blockly.utils.Rect
  * @namespace
  */
-goog.provide('Blockly.utils.Rect');
-
+goog.provide('Blockly.utils.Rect')
 
 /**
  * Class for representing rectangular regions.
@@ -28,19 +27,19 @@ goog.provide('Blockly.utils.Rect');
  * @struct
  * @constructor
  */
-Blockly.utils.Rect = function(top, bottom, left, right) {
+Blockly.utils.Rect = function (top, bottom, left, right) {
   /** @type {number} */
-  this.top = top;
+  this.top = top
 
   /** @type {number} */
-  this.bottom = bottom;
+  this.bottom = bottom
 
   /** @type {number} */
-  this.left = left;
+  this.left = left
 
   /** @type {number} */
-  this.right = right;
-};
+  this.right = right
+}
 
 /**
  * Tests whether this rectangle contains a x/y coordinate.
@@ -49,6 +48,6 @@ Blockly.utils.Rect = function(top, bottom, left, right) {
  * @param {number} y The y coordinate to test for containment.
  * @return {boolean} Whether this rectangle contains given coordinate.
  */
-Blockly.utils.Rect.prototype.contains = function(x, y) {
-  return x >= this.left && x <= this.right && y >= this.top && y <= this.bottom;
-};
+Blockly.utils.Rect.prototype.contains = function (x, y) {
+  return x >= this.left && x <= this.right && y >= this.top && y <= this.bottom
+}

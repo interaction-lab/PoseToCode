@@ -9,11 +9,11 @@
  * @author samelh@google.com (Sam El-Husseini)
  */
 
-'use strict';
+'use strict'
 
-goog.provide('Blockly.IRegistrableField');
+goog.provide('Blockly.IRegistrableField')
 
-goog.requireType('Blockly.Field');
+goog.requireType('Blockly.Field')
 
 /**
  * A registrable field.
@@ -23,9 +23,9 @@ goog.requireType('Blockly.Field');
  *     fromJson:Blockly.IRegistrableField.fromJson
  * }}
  */
-Blockly.IRegistrableField;
+Blockly.IRegistrableField
 
 /**
  * @typedef {function(!Object): Blockly.Field}
  */
-Blockly.IRegistrableField.fromJson;
+Blockly.IRegistrableField.fromJson

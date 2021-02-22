@@ -8,34 +8,33 @@
  * @fileoverview Registry for context menu option items.
  * @author maribethb@google.com (Maribeth Bottorff)
  */
-'use strict';
+'use strict'
 
 /**
  * @name Blockly.ContextMenuRegistry
  * @namespace
  */
-goog.provide('Blockly.ContextMenuRegistry');
+goog.provide('Blockly.ContextMenuRegistry')
 
-goog.require('Blockly.ContextMenuItems');
+goog.require('Blockly.ContextMenuItems')
 
 /**
  * Class for the registry of context menu items. This is intended to be a singleton. You should
  * not create a new instance, and only access this class from Blockly.ContextMenuRegistry.registry.
  * @constructor
  */
-Blockly.ContextMenuRegistry = function() {
-
+Blockly.ContextMenuRegistry = function () {
   // Singleton instance should be registered once.
-  Blockly.ContextMenuRegistry.registry = this;
+  Blockly.ContextMenuRegistry.registry = this
 
   /**
    * Registry of all registered RegistryItems, keyed by id.
    * @type {!Object<string, Blockly.ContextMenuRegistry.RegistryItem>}
    * @private
    */
-  this.registry_ = {};
-  Blockly.ContextMenuItems.registerDefaultOptions();
-};
+  this.registry_ = {}
+  Blockly.ContextMenuItems.registerDefaultOptions()
+}
 
 /**
  * Where this menu item should be rendered. If the menu item should be rendered in multiple
@@ -44,8 +43,8 @@ Blockly.ContextMenuRegistry = function() {
  */
 Blockly.ContextMenuRegistry.ScopeType = {
   BLOCK: 'block',
-  WORKSPACE: 'workspace',
-};
+  WORKSPACE: 'workspace'
+}
 
 /**
  * The actual workspace/block where the menu is being rendered. This is passed to callback and
@@ -55,7 +54,7 @@ Blockly.ContextMenuRegistry.ScopeType = {
  *    workspace: (Blockly.WorkspaceSvg|undefined)
  * }}
  */
-Blockly.ContextMenuRegistry.Scope;
+Blockly.ContextMenuRegistry.Scope
 
 /**
  * A menu item as entered in the registry.
@@ -68,7 +67,7 @@ Blockly.ContextMenuRegistry.Scope;
  *    id: string
  * }}
 */
-Blockly.ContextMenuRegistry.RegistryItem;
+Blockly.ContextMenuRegistry.RegistryItem
 
 /**
  * A menu item as presented to contextmenu.js.
@@ -80,49 +79,49 @@ Blockly.ContextMenuRegistry.RegistryItem;
  *    weight: number
  * }}
  */
-Blockly.ContextMenuRegistry.ContextMenuOption;
+Blockly.ContextMenuRegistry.ContextMenuOption
 
 /**
  * Singleton instance of this class. All interactions with this class should be done on this object.
  * @type {?Blockly.ContextMenuRegistry}
  */
-Blockly.ContextMenuRegistry.registry = null;
+Blockly.ContextMenuRegistry.registry = null
 
 /**
  * Registers a RegistryItem.
  * @param {!Blockly.ContextMenuRegistry.RegistryItem} item Context menu item to register.
  * @throws {Error} if an item with the given id already exists.
  */
-Blockly.ContextMenuRegistry.prototype.register = function(item) {
+Blockly.ContextMenuRegistry.prototype.register = function (item) {
   if (this.registry_[item.id]) {
-    throw Error('Menu item with id "' + item.id + '" is already registered.');
+    throw Error('Menu item with id "' + item.id + '" is already registered.')
   }
-  this.registry_[item.id] = item;
-};
+  this.registry_[item.id] = item
+}
 
 /**
  * Unregisters a RegistryItem with the given id.
  * @param {string} id The id of the RegistryItem to remove.
  * @throws {Error} if an item with the given id does not exist.
  */
-Blockly.ContextMenuRegistry.prototype.unregister = function(id) {
+Blockly.ContextMenuRegistry.prototype.unregister = function (id) {
   if (this.registry_[id]) {
-    delete this.registry_[id];
+    delete this.registry_[id]
   } else {
-    throw new Error('Menu item with id "' + id + '" not found.');
+    throw new Error('Menu item with id "' + id + '" not found.')
   }
-};
+}
 
 /**
  * @param {string} id The id of the RegistryItem to get.
  * @returns {?Blockly.ContextMenuRegistry.RegistryItem} RegistryItem or null if not found
  */
-Blockly.ContextMenuRegistry.prototype.getItem = function(id) {
+Blockly.ContextMenuRegistry.prototype.getItem = function (id) {
   if (this.registry_[id]) {
-    return this.registry_[id];
+    return this.registry_[id]
   }
-  return null;
-};
+  return null
+}
 
 /**
  * Gets the valid context menu options for the given scope type (e.g. block or workspace) and scope.
@@ -133,33 +132,34 @@ Blockly.ContextMenuRegistry.prototype.getItem = function(id) {
  *     (i.e., the exact workspace or block being clicked on)
  * @returns {!Array.<!Blockly.ContextMenuRegistry.ContextMenuOption>} the list of ContextMenuOptions
  */
-Blockly.ContextMenuRegistry.prototype.getContextMenuOptions = function(scopeType, scope) {
-  var menuOptions = [];
-  var registry = this.registry_;
-  Object.keys(registry).forEach(function(id) {
-    var item = registry[id];
+Blockly.ContextMenuRegistry.prototype.getContextMenuOptions = function (scopeType, scope) {
+  const menuOptions = []
+  const registry = this.registry_
+  Object.keys(registry).forEach(function (id) {
+    const item = registry[id]
     if (scopeType == item.scopeType) {
-      var precondition = item.preconditionFn(scope);
+      const precondition = item.preconditionFn(scope)
       if (precondition != 'hidden') {
-        var displayText = typeof item.displayText == 'function' ?
-                            item.displayText(scope) : item.displayText;
+        const displayText = typeof item.displayText === 'function'
+          ? item.displayText(scope)
+          : item.displayText
         /** @type {!Blockly.ContextMenuRegistry.ContextMenuOption} */
-        var menuOption = {
+        const menuOption = {
           text: displayText,
           enabled: (precondition == 'enabled'),
           callback: item.callback,
           scope: scope,
-          weight: item.weight,
-        };
-        menuOptions.push(menuOption);
+          weight: item.weight
+        }
+        menuOptions.push(menuOption)
       }
     }
-  });
-  menuOptions.sort(function(a, b) {
-    return a.weight - b.weight;
-  });
-  return menuOptions;
-};
+  })
+  menuOptions.sort(function (a, b) {
+    return a.weight - b.weight
+  })
+  return menuOptions
+}
 
 // Creates and assigns the singleton instance.
-new Blockly.ContextMenuRegistry();
+new Blockly.ContextMenuRegistry()

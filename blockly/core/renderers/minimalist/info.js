@@ -7,13 +7,12 @@
 /**
  * @fileoverview Minimalist render info object.
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.minimalist');
-goog.provide('Blockly.minimalist.RenderInfo');
+goog.provide('Blockly.minimalist')
+goog.provide('Blockly.minimalist.RenderInfo')
 
-goog.require('Blockly.utils.object');
-
+goog.require('Blockly.utils.object')
 
 /**
  * An object containing all sizing information needed to draw this block.
@@ -28,18 +27,17 @@ goog.require('Blockly.utils.object');
  * @package
  * @extends {Blockly.blockRendering.RenderInfo}
  */
-Blockly.minimalist.RenderInfo = function(renderer, block) {
-  Blockly.minimalist.RenderInfo.superClass_.constructor.call(this, renderer, block);
-
-};
+Blockly.minimalist.RenderInfo = function (renderer, block) {
+  Blockly.minimalist.RenderInfo.superClass_.constructor.call(this, renderer, block)
+}
 Blockly.utils.object.inherits(Blockly.minimalist.RenderInfo,
-    Blockly.blockRendering.RenderInfo);
+  Blockly.blockRendering.RenderInfo)
 
 /**
  * Get the block renderer in use.
  * @return {!Blockly.minimalist.Renderer} The block renderer in use.
  * @package
  */
-Blockly.minimalist.RenderInfo.prototype.getRenderer = function() {
-  return /** @type {!Blockly.minimalist.Renderer} */ (this.renderer_);
-};
+Blockly.minimalist.RenderInfo.prototype.getRenderer = function () {
+  return /** @type {!Blockly.minimalist.Renderer} */ (this.renderer_)
+}

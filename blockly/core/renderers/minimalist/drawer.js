@@ -7,14 +7,13 @@
 /**
  * @fileoverview Minimalist rendering drawer.
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.minimalist.Drawer');
+goog.provide('Blockly.minimalist.Drawer')
 
-goog.require('Blockly.blockRendering.Drawer');
-goog.require('Blockly.utils.object');
-goog.require('Blockly.minimalist.RenderInfo');
-
+goog.require('Blockly.blockRendering.Drawer')
+goog.require('Blockly.utils.object')
+goog.require('Blockly.minimalist.RenderInfo')
 
 /**
  * An object that draws a block based on the given rendering information.
@@ -25,8 +24,8 @@ goog.require('Blockly.minimalist.RenderInfo');
  * @constructor
  * @extends {Blockly.blockRendering.Drawer}
  */
-Blockly.minimalist.Drawer = function(block, info) {
-  Blockly.minimalist.Drawer.superClass_.constructor.call(this, block, info);
-};
+Blockly.minimalist.Drawer = function (block, info) {
+  Blockly.minimalist.Drawer.superClass_.constructor.call(this, block, info)
+}
 Blockly.utils.object.inherits(Blockly.minimalist.Drawer,
-    Blockly.blockRendering.Drawer);
+  Blockly.blockRendering.Drawer)

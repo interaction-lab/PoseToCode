@@ -9,63 +9,62 @@
  * @author aschmiedt@google.com (Abby Schmiedt)
  */
 
-'use strict';
+'use strict'
 
-goog.provide('Blockly.IFlyout');
+goog.provide('Blockly.IFlyout')
 
-goog.requireType('Blockly.BlockSvg');
-goog.requireType('Blockly.IRegistrable');
-goog.requireType('Blockly.utils.dom');
-goog.requireType('Blockly.utils.Coordinate');
-goog.requireType('Blockly.utils.Svg');
-goog.requireType('Blockly.utils.toolbox');
-goog.requireType('Blockly.WorkspaceSvg');
-
+goog.requireType('Blockly.BlockSvg')
+goog.requireType('Blockly.IRegistrable')
+goog.requireType('Blockly.utils.dom')
+goog.requireType('Blockly.utils.Coordinate')
+goog.requireType('Blockly.utils.Svg')
+goog.requireType('Blockly.utils.toolbox')
+goog.requireType('Blockly.WorkspaceSvg')
 
 /**
  * Interface for a flyout.
  * @extends {Blockly.IRegistrable}
  * @interface
  */
-Blockly.IFlyout = function() {};
+Blockly.IFlyout = function () {}
 
 /**
  * Whether the flyout is laid out horizontally or not.
  * @type {boolean}
  */
-Blockly.IFlyout.prototype.horizontalLayout;
+Blockly.IFlyout.prototype.horizontalLayout
 
 /**
  * Is RTL vs LTR.
  * @type {boolean}
  */
-Blockly.IFlyout.prototype.RTL;
+Blockly.IFlyout.prototype.RTL
 
 /**
  * The target workspace
  * @type {?Blockly.WorkspaceSvg}
  */
-Blockly.IFlyout.prototype.targetWorkspace;
+Blockly.IFlyout.prototype.targetWorkspace
 
 /**
  * Margin around the edges of the blocks in the flyout.
  * @type {number}
  * @const
  */
-Blockly.IFlyout.prototype.MARGIN;
+Blockly.IFlyout.prototype.MARGIN
 
 /**
  * Does the flyout automatically close when a block is created?
  * @type {boolean}
  */
-Blockly.IFlyout.prototype.autoClose;
+Blockly.IFlyout.prototype.autoClose
 
 /**
  * Corner radius of the flyout background.
  * @type {number}
  * @const
  */
-Blockly.IFlyout.prototype.CORNER_RADIUS;
+Blockly.IFlyout.prototype.CORNER_RADIUS
 
 /**
  * Creates the flyout's DOM.  Only needs to be called once.  The flyout can
@@ -77,62 +76,62 @@ Blockly.IFlyout.prototype.CORNER_RADIUS;
  *     put the flyout in. This should be <svg> or <g>.
  * @return {!SVGElement} The flyout's SVG group.
  */
-Blockly.IFlyout.prototype.createDom;
+Blockly.IFlyout.prototype.createDom
 
 /**
  * Initializes the flyout.
  * @param {!Blockly.WorkspaceSvg} targetWorkspace The workspace in which to
  *     create new blocks.
  */
-Blockly.IFlyout.prototype.init;
+Blockly.IFlyout.prototype.init
 
 /**
  * Dispose of this flyout.
  * Unlink from all DOM elements to prevent memory leaks.
  */
-Blockly.IFlyout.prototype.dispose;
+Blockly.IFlyout.prototype.dispose
 
 /**
  * Get the width of the flyout.
  * @return {number} The width of the flyout.
  */
-Blockly.IFlyout.prototype.getWidth;
+Blockly.IFlyout.prototype.getWidth
 
 /**
  * Get the height of the flyout.
  * @return {number} The width of the flyout.
  */
-Blockly.IFlyout.prototype.getHeight;
+Blockly.IFlyout.prototype.getHeight
 
 /**
  * Get the workspace inside the flyout.
  * @return {!Blockly.WorkspaceSvg} The workspace inside the flyout.
  */
-Blockly.IFlyout.prototype.getWorkspace;
+Blockly.IFlyout.prototype.getWorkspace
 
 /**
  * Is the flyout visible?
  * @return {boolean} True if visible.
  */
-Blockly.IFlyout.prototype.isVisible;
+Blockly.IFlyout.prototype.isVisible
 
 /**
  * Set whether the flyout is visible. A value of true does not necessarily mean
  * that the flyout is shown. It could be hidden because its container is hidden.
  * @param {boolean} visible True if visible.
  */
-Blockly.IFlyout.prototype.setVisible;
+Blockly.IFlyout.prototype.setVisible
 
 /**
  * Set whether this flyout's container is visible.
  * @param {boolean} visible Whether the container is visible.
  */
-Blockly.IFlyout.prototype.setContainerVisible;
+Blockly.IFlyout.prototype.setContainerVisible
 
 /**
  * Hide and empty the flyout.
  */
-Blockly.IFlyout.prototype.hide;
+Blockly.IFlyout.prototype.hide
 
 /**
  * Show and populate the flyout.
@@ -140,7 +139,7 @@ Blockly.IFlyout.prototype.hide;
  *     display in the flyout. This is either an array of Nodes, a NodeList, a
  *     toolbox definition, or a string with the name of the dynamic category.
  */
-Blockly.IFlyout.prototype.show;
+Blockly.IFlyout.prototype.show
 
 /**
  * Create a copy of this block on the workspace.
@@ -148,24 +147,24 @@ Blockly.IFlyout.prototype.show;
  * @return {!Blockly.BlockSvg} The newly created block.
  * @throws {Error} if something went wrong with deserialization.
  */
-Blockly.IFlyout.prototype.createBlock;
+Blockly.IFlyout.prototype.createBlock
 
 /**
  * Reflow blocks and their mats.
  */
-Blockly.IFlyout.prototype.reflow;
+Blockly.IFlyout.prototype.reflow
 
 /**
  * @return {boolean} True if this flyout may be scrolled with a scrollbar or by
  *     dragging.
  */
-Blockly.IFlyout.prototype.isScrollable;
+Blockly.IFlyout.prototype.isScrollable
 
 /**
  * Position the flyout.
  * @return {void}
  */
-Blockly.IFlyout.prototype.position;
+Blockly.IFlyout.prototype.position
 
 /**
  * Determine if a drag delta is toward the workspace, based on the position
@@ -175,4 +174,4 @@ Blockly.IFlyout.prototype.position;
  *     moved from the position at mouse down, in pixel units.
  * @return {boolean} True if the drag is toward the workspace.
  */
-Blockly.IFlyout.prototype.isDragTowardWorkspace;
+Blockly.IFlyout.prototype.isDragTowardWorkspace

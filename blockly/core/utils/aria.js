@@ -10,22 +10,21 @@
  * a JavaScript framework such as Closure.
  * @author samelh@google.com (Sam El-Husseini)
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.utils.aria');
-
+goog.provide('Blockly.utils.aria')
 
 /**
  * ARIA states/properties prefix.
  * @private
  */
-Blockly.utils.aria.ARIA_PREFIX_ = 'aria-';
+Blockly.utils.aria.ARIA_PREFIX_ = 'aria-'
 
 /**
  * ARIA role attribute.
  * @private
  */
-Blockly.utils.aria.ROLE_ATTRIBUTE_ = 'role';
+Blockly.utils.aria.ROLE_ATTRIBUTE_ = 'role'
 
 /**
  * ARIA role values.
@@ -69,7 +68,7 @@ Blockly.utils.aria.Role = {
 
   // ARIA role for a tree item that sometimes may be expanded or collapsed.
   TREEITEM: 'treeitem'
-};
+}
 
 /**
  * ARIA states and properties.
@@ -134,7 +133,7 @@ Blockly.utils.aria.State = {
 
   // ARIA property for slider minimum value. Value: number.
   VALUEMIN: 'valuemin'
-};
+}
 
 /**
  * Sets the role of an element.
@@ -144,9 +143,9 @@ Blockly.utils.aria.State = {
  * @param {!Element} element DOM node to set role of.
  * @param {!Blockly.utils.aria.Role} roleName Role name.
  */
-Blockly.utils.aria.setRole = function(element, roleName) {
-  element.setAttribute(Blockly.utils.aria.ROLE_ATTRIBUTE_, roleName);
-};
+Blockly.utils.aria.setRole = function (element, roleName) {
+  element.setAttribute(Blockly.utils.aria.ROLE_ATTRIBUTE_, roleName)
+}
 
 /**
  * Sets the state or property of an element.
@@ -158,10 +157,10 @@ Blockly.utils.aria.setRole = function(element, roleName) {
  * @param {string|boolean|number|!Array.<string>} value Value
  * for the state attribute.
  */
-Blockly.utils.aria.setState = function(element, stateName, value) {
+Blockly.utils.aria.setState = function (element, stateName, value) {
   if (Array.isArray(value)) {
-    value = value.join(' ');
+    value = value.join(' ')
   }
-  var attrStateName = Blockly.utils.aria.ARIA_PREFIX_ + stateName;
-  element.setAttribute(attrStateName, value);
-};
+  const attrStateName = Blockly.utils.aria.ARIA_PREFIX_ + stateName
+  element.setAttribute(attrStateName, value)
+}

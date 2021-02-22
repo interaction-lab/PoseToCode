@@ -9,12 +9,11 @@
  * @author fenichel@google.com (Rachel Fenichel)
  */
 
-'use strict';
+'use strict'
 
-goog.provide('Blockly.blockRendering.Measurable');
+goog.provide('Blockly.blockRendering.Measurable')
 
-goog.require('Blockly.blockRendering.Types');
-
+goog.require('Blockly.blockRendering.Types')
 
 /**
  * The base class to represent a part of a block that takes up space during
@@ -25,20 +24,20 @@ goog.require('Blockly.blockRendering.Types');
  * @package
  * @constructor
  */
-Blockly.blockRendering.Measurable = function(constants) {
-  this.width = 0;
-  this.height = 0;
-  this.type = Blockly.blockRendering.Types.NONE;
+Blockly.blockRendering.Measurable = function (constants) {
+  this.width = 0
+  this.height = 0
+  this.type = Blockly.blockRendering.Types.NONE
 
-  this.xPos = 0;
-  this.centerline = 0;
+  this.xPos = 0
+  this.centerline = 0
 
   /**
    * The renderer's constant provider.
    * @type {!Blockly.blockRendering.ConstantProvider}
    * @protected
    */
-  this.constants_ = constants;
+  this.constants_ = constants
 
-  this.notchOffset = this.constants_.NOTCH_OFFSET_LEFT;
-};
+  this.notchOffset = this.constants_.NOTCH_OFFSET_LEFT
+}

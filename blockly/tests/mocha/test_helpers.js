@@ -12,12 +12,12 @@
  * @param {!string} type The expected type of the variable.
  * @param {!string} id The expected id of the variable.
  */
-function assertVariableValues(container, name, type, id) {
-  var variable = container.getVariableById(id);
-  chai.assert.isDefined(variable);
-  chai.assert.equal(variable.name, name);
-  chai.assert.equal(variable.type, type);
-  chai.assert.equal(variable.getId(), id);
+function assertVariableValues (container, name, type, id) {
+  const variable = container.getVariableById(id)
+  chai.assert.isDefined(variable)
+  chai.assert.equal(variable.name, name)
+  chai.assert.equal(variable.type, type)
+  chai.assert.equal(variable.getId(), id)
 }
 
 /**
@@ -25,18 +25,18 @@ function assertVariableValues(container, name, type, id) {
  * @param {function} innerFunc The function where warnings may called.
  * @return {string[]} The warning messages (only the first arguments).
  */
-function captureWarnings(innerFunc) {
-  var msgs = [];
-  var nativeConsoleWarn = console.warn;
+function captureWarnings (innerFunc) {
+  const msgs = []
+  const nativeConsoleWarn = console.warn
   try {
-    console.warn = function(msg) {
-      msgs.push(msg);
-    };
-    innerFunc();
+    console.warn = function (msg) {
+      msgs.push(msg)
+    }
+    innerFunc()
   } finally {
-    console.warn = nativeConsoleWarn;
+    console.warn = nativeConsoleWarn
   }
-  return msgs;
+  return msgs
 }
 
 /**
@@ -45,31 +45,31 @@ function captureWarnings(innerFunc) {
  * @param {Array<!RegExp>|!RegExp} messages A list of regex for the expected
  *    messages (in the expected order).
  */
-function assertWarnings(innerFunc, messages) {
+function assertWarnings (innerFunc, messages) {
   if (!Array.isArray(messages)) {
-    messages = [messages];
+    messages = [messages]
   }
-  var warnings = captureWarnings(innerFunc);
-  chai.assert.lengthOf(warnings, messages.length);
+  const warnings = captureWarnings(innerFunc)
+  chai.assert.lengthOf(warnings, messages.length)
   messages.forEach((message, i) => {
-    chai.assert.match(warnings[i], message);
-  });
+    chai.assert.match(warnings[i], message)
+  })
 }
 
 /**
  * Asserts that the given function logs no warning messages.
  * @param {function} innerFunc The function to call.
  */
-function assertNoWarnings(innerFunc) {
-  assertWarnings(innerFunc, []);
+function assertNoWarnings (innerFunc) {
+  assertWarnings(innerFunc, [])
 }
 
 /**
  * Stubs Blockly.utils.deprecation.warn call.
  * @return {!SinonStub} The created stub.
  */
-function createDeprecationWarningStub() {
-  return sinon.stub(Blockly.utils.deprecation, 'warn');
+function createDeprecationWarningStub () {
+  return sinon.stub(Blockly.utils.deprecation, 'warn')
 }
 
 /**
@@ -79,8 +79,8 @@ function createDeprecationWarningStub() {
  * @param {string} functionName The function name to check that the given spy or
  *    spy call was called with.
  */
-function assertDeprecationWarningCall(spyOrSpyCall, functionName) {
-  sinon.assert.calledWith(spyOrSpyCall, functionName);
+function assertDeprecationWarningCall (spyOrSpyCall, functionName) {
+  sinon.assert.calledWith(spyOrSpyCall, functionName)
 }
 
 /**
@@ -90,9 +90,9 @@ function assertDeprecationWarningCall(spyOrSpyCall, functionName) {
  * @param {string} functionName The function name to check that the given spy
  *    was called with.
  */
-function assertSingleDeprecationWarningCall(spy, functionName) {
-  sinon.assert.calledOnce(spy);
-  assertDeprecationWarningCall(spy.getCall(0), functionName);
+function assertSingleDeprecationWarningCall (spy, functionName) {
+  sinon.assert.calledOnce(spy)
+  assertDeprecationWarningCall(spy.getCall(0), functionName)
 }
 
 /**
@@ -101,14 +101,14 @@ function assertSingleDeprecationWarningCall(spy, functionName) {
  * using workspaceTeardown.call(this).
  * @param {!Blockly.Workspace} workspace The workspace to dispose.
  */
-function workspaceTeardown(workspace) {
+function workspaceTeardown (workspace) {
   try {
-    this.clock.runAll();  // Run all queued setTimeout calls.
-    workspace.dispose();
-    this.clock.runAll();  // Run all remaining queued setTimeout calls.
+    this.clock.runAll() // Run all queued setTimeout calls.
+    workspace.dispose()
+    this.clock.runAll() // Run all remaining queued setTimeout calls.
   } catch (e) {
-    var testRef = this.currentTest || this.test;
-    console.error(testRef.fullTitle() + '\n', e);
+    const testRef = this.currentTest || this.test
+    console.error(testRef.fullTitle() + '\n', e)
   }
 }
 
@@ -119,15 +119,15 @@ function workspaceTeardown(workspace) {
  * @return {!SinonStub} The created stub.
  * @private
  */
-function createEventsFireStubFireImmediately_(clock) {
-  var stub = sinon.stub(Blockly.Events, 'fire');
-  stub.callsFake(function(event) {
+function createEventsFireStubFireImmediately_ (clock) {
+  const stub = sinon.stub(Blockly.Events, 'fire')
+  stub.callsFake(function (event) {
     // Call original method.
-    stub.wrappedMethod.call(this, ...arguments);
+    stub.wrappedMethod.call(this, ...arguments)
     // Advance clock forward to run any queued events.
-    clock.runAll();
-  });
-  return stub;
+    clock.runAll()
+  })
+  return stub
 }
 
 /**
@@ -137,8 +137,8 @@ function createEventsFireStubFireImmediately_(clock) {
  *    sharedTestSetup.
  * @param {string} message The message to add to shared cleanup object.
  */
-function addMessageToCleanup(sharedCleanupObj, message) {
-  sharedCleanupObj.messagesCleanup_.push(message);
+function addMessageToCleanup (sharedCleanupObj, message) {
+  sharedCleanupObj.messagesCleanup_.push(message)
 }
 
 /**
@@ -148,8 +148,8 @@ function addMessageToCleanup(sharedCleanupObj, message) {
  *    sharedTestSetup.
  * @param {string} blockType The block type to add to shared cleanup object.
  */
-function addBlockTypeToCleanup(sharedCleanupObj, blockType) {
-  sharedCleanupObj.blockTypesCleanup_.push(blockType);
+function addBlockTypeToCleanup (sharedCleanupObj, blockType) {
+  sharedCleanupObj.blockTypesCleanup_.push(blockType)
 }
 
 /**
@@ -160,19 +160,19 @@ function addBlockTypeToCleanup(sharedCleanupObj, blockType) {
  *    sharedTestSetup.
  * @private
  */
-function wrapDefineBlocksWithJsonArrayWithCleanup_(sharedCleanupObj) {
-  var stub = sinon.stub(Blockly, 'defineBlocksWithJsonArray');
-  stub.callsFake(function(jsonArray) {
+function wrapDefineBlocksWithJsonArrayWithCleanup_ (sharedCleanupObj) {
+  const stub = sinon.stub(Blockly, 'defineBlocksWithJsonArray')
+  stub.callsFake(function (jsonArray) {
     if (jsonArray) {
       jsonArray.forEach((jsonBlock) => {
         if (jsonBlock) {
-          addBlockTypeToCleanup(sharedCleanupObj, jsonBlock['type']);
+          addBlockTypeToCleanup(sharedCleanupObj, jsonBlock.type)
         }
-      });
+      })
     }
     // Calls original method.
-    stub.wrappedMethod.call(this, ...arguments);
-  });
+    stub.wrappedMethod.call(this, ...arguments)
+  })
 }
 
 /**
@@ -193,23 +193,23 @@ function wrapDefineBlocksWithJsonArrayWithCleanup_(sharedCleanupObj) {
  * @param {Object<string, boolean>} options Options to enable/disable setup
  *    of certain stubs.
  */
-function sharedTestSetup(options = {}) {
-  this.sharedSetupCalled_ = true;
+function sharedTestSetup (options = {}) {
+  this.sharedSetupCalled_ = true
   // Sandbox created for greater control when certain stubs are cleared.
-  this.sharedSetupSandbox_ = sinon.createSandbox();
-  this.clock = this.sharedSetupSandbox_.useFakeTimers();
-  if (options['fireEventsNow'] === undefined || options['fireEventsNow']) {
+  this.sharedSetupSandbox_ = sinon.createSandbox()
+  this.clock = this.sharedSetupSandbox_.useFakeTimers()
+  if (options.fireEventsNow === undefined || options.fireEventsNow) {
     // Stubs event firing unless passed option "fireEventsNow: false"
-    this.eventsFireStub = createEventsFireStubFireImmediately_(this.clock);
+    this.eventsFireStub = createEventsFireStubFireImmediately_(this.clock)
   }
   this.sharedCleanup = {
     blockTypesCleanup_: [],
     messagesCleanup_: []
 
-  };
-  this.blockTypesCleanup_ = this.sharedCleanup.blockTypesCleanup_;
-  this.messagesCleanup_ = this.sharedCleanup.messagesCleanup_;
-  wrapDefineBlocksWithJsonArrayWithCleanup_(this.sharedCleanup);
+  }
+  this.blockTypesCleanup_ = this.sharedCleanup.blockTypesCleanup_
+  this.messagesCleanup_ = this.sharedCleanup.messagesCleanup_
+  wrapDefineBlocksWithJsonArrayWithCleanup_(this.sharedCleanup)
 }
 
 /**
@@ -217,47 +217,47 @@ function sharedTestSetup(options = {}) {
  * workspace, and resets global variables. Should be called in setup of
  * outermost suite using sharedTestTeardown.call(this).
  */
-function sharedTestTeardown() {
-  var testRef = this.currentTest || this.test;
+function sharedTestTeardown () {
+  const testRef = this.currentTest || this.test
   if (!this.sharedSetupCalled_) {
     console.error('"' + testRef.fullTitle() +
-        '" did not call sharedTestSetup');
+        '" did not call sharedTestSetup')
   }
 
   try {
     if (this.workspace) {
-      workspaceTeardown.call(this, this.workspace);
-      this.workspace = null;
+      workspaceTeardown.call(this, this.workspace)
+      this.workspace = null
     } else {
-      this.clock.runAll();  // Run all queued setTimeout calls.
+      this.clock.runAll() // Run all queued setTimeout calls.
     }
   } catch (e) {
-    console.error(testRef.fullTitle() + '\n', e);
+    console.error(testRef.fullTitle() + '\n', e)
   } finally {
     // Clear Blockly.Event state.
-    Blockly.Events.setGroup(false);
-    Blockly.Events.disabled_ = 0;
+    Blockly.Events.setGroup(false)
+    Blockly.Events.disabled_ = 0
     if (Blockly.Events.FIRE_QUEUE_.length) {
       // If this happens, it may mean that some previous test is missing cleanup
       // (i.e. a previous test added an event to the queue on a timeout that
       // did not use a stubbed clock).
-      Blockly.Events.FIRE_QUEUE_.length = 0;
+      Blockly.Events.FIRE_QUEUE_.length = 0
       console.warn(testRef.fullTitle() +
           '" needed cleanup of Blockly.Events.FIRE_QUEUE_. This may indicate ' +
-          'leakage from an earlier test');
+          'leakage from an earlier test')
     }
 
     // Restore all stubbed methods.
-    this.sharedSetupSandbox_.restore();
-    sinon.restore();
+    this.sharedSetupSandbox_.restore()
+    sinon.restore()
 
-    var blockTypes = this.sharedCleanup.blockTypesCleanup_;
+    const blockTypes = this.sharedCleanup.blockTypesCleanup_
     for (let i = 0; i < blockTypes.length; i++) {
-      delete Blockly.Blocks[blockTypes[i]];
+      delete Blockly.Blocks[blockTypes[i]]
     }
-    var messages = this.sharedCleanup.messagesCleanup_;
+    const messages = this.sharedCleanup.messagesCleanup_
     for (let i = 0; i < messages.length; i++) {
-      delete Blockly.Msg[messages[i]];
+      delete Blockly.Msg[messages[i]]
     }
   }
 }
@@ -271,16 +271,16 @@ function sharedTestTeardown() {
  *    that value.
  * @return {!SinonStub} The created stub.
  */
-function createGenUidStubWithReturns(returnIds) {
-  var stub = sinon.stub(Blockly.utils, "genUid");
+function createGenUidStubWithReturns (returnIds) {
+  const stub = sinon.stub(Blockly.utils, 'genUid')
   if (Array.isArray(returnIds)) {
-    for (var i = 0; i < returnIds.length; i++) {
-      stub.onCall(i).returns(returnIds[i]);
+    for (let i = 0; i < returnIds.length; i++) {
+      stub.onCall(i).returns(returnIds[i])
     }
   } else {
-    stub.returns(returnIds);
+    stub.returns(returnIds)
   }
-  return stub;
+  return stub
 }
 
 /**
@@ -289,8 +289,8 @@ function createGenUidStubWithReturns(returnIds) {
  *    calls on.
  * @return {!SinonSpy} The created spy.
  */
-function createFireChangeListenerSpy(workspace) {
-  return sinon.spy(workspace, 'fireChangeListener');
+function createFireChangeListenerSpy (workspace) {
+  return sinon.spy(workspace, 'fireChangeListener')
 }
 
 /**
@@ -300,12 +300,12 @@ function createFireChangeListenerSpy(workspace) {
  * @param {string=} message Optional message to use in assert message.
  * @private
  */
-function assertXmlPropertyEqual_(xmlValue, expectedValue, message) {
-  var value = Blockly.Xml.domToText(xmlValue);
+function assertXmlPropertyEqual_ (xmlValue, expectedValue, message) {
+  const value = Blockly.Xml.domToText(xmlValue)
   if (expectedValue instanceof Node) {
-    expectedValue = Blockly.Xml.domToText(expectedValue);
+    expectedValue = Blockly.Xml.domToText(expectedValue)
   }
-  chai.assert.equal(value, expectedValue, message);
+  chai.assert.equal(value, expectedValue, message)
 }
 
 /**
@@ -315,18 +315,18 @@ function assertXmlPropertyEqual_(xmlValue, expectedValue, message) {
  *    properties.
  * @private
  */
-function assertXmlProperties_(obj, expectedXmlProperties) {
+function assertXmlProperties_ (obj, expectedXmlProperties) {
   Object.keys(expectedXmlProperties).map((key) => {
-    var value = obj[key];
-    var expectedValue = expectedXmlProperties[key];
+    const value = obj[key]
+    const expectedValue = expectedXmlProperties[key]
     if (expectedValue === undefined) {
       chai.assert.isUndefined(value,
-          'Expected ' + key + ' property to be undefined');
-      return;
+        'Expected ' + key + ' property to be undefined')
+      return
     }
-    chai.assert.exists(value, 'Expected ' + key + ' property to exist');
-    assertXmlPropertyEqual_(value, expectedValue, 'Checking property ' + key);
-  });
+    chai.assert.exists(value, 'Expected ' + key + ' property to exist')
+    assertXmlPropertyEqual_(value, expectedValue, 'Checking property ' + key)
+  })
 }
 
 /**
@@ -335,8 +335,8 @@ function assertXmlProperties_(obj, expectedXmlProperties) {
  * @return {boolean} Whether the given key is for xml property.
  * @private
  */
-function isXmlProperty_(key) {
-  return key.toLowerCase().endsWith('xml');
+function isXmlProperty_ (key) {
+  return key.toLowerCase().endsWith('xml')
 }
 
 /**
@@ -349,32 +349,32 @@ function isXmlProperty_(key) {
  *    properties to check on fired event.
  * @param {string=} message Optional message to prepend assert messages.
  */
-function assertEventEquals(event, expectedType,
-    expectedWorkspaceId, expectedBlockId, expectedProperties, message) {
-  var prependMessage = message ? message + ' ' : '';
-  prependMessage += 'Event fired ';
+function assertEventEquals (event, expectedType,
+  expectedWorkspaceId, expectedBlockId, expectedProperties, message) {
+  let prependMessage = message ? message + ' ' : ''
+  prependMessage += 'Event fired '
   chai.assert.equal(event.type, expectedType,
-      prependMessage + 'type');
+    prependMessage + 'type')
   chai.assert.equal(event.workspaceId, expectedWorkspaceId,
-      prependMessage + 'workspace id');
+    prependMessage + 'workspace id')
   chai.assert.equal(event.blockId, expectedBlockId,
-      prependMessage + 'block id');
+    prependMessage + 'block id')
   Object.keys(expectedProperties).map((key) => {
-    var value = event[key];
-    var expectedValue = expectedProperties[key];
+    const value = event[key]
+    const expectedValue = expectedProperties[key]
     if (expectedValue === undefined) {
-      chai.assert.isUndefined(value, prependMessage + key);
-      return;
+      chai.assert.isUndefined(value, prependMessage + key)
+      return
     }
-    chai.assert.exists(value, prependMessage + key);
+    chai.assert.exists(value, prependMessage + key)
     if (isXmlProperty_(key)) {
       assertXmlPropertyEqual_(value, expectedValue,
-          prependMessage + key);
+        prependMessage + key)
     } else {
       chai.assert.equal(value, expectedValue,
-          prependMessage + key);
+        prependMessage + key)
     }
-  });
+  })
 }
 
 /**
@@ -387,16 +387,16 @@ function assertEventEquals(event, expectedType,
  * @param {string} expectedWorkspaceId Expected workspace id of event fired.
  * @param {?string=} expectedBlockId Expected block id of event fired.
  */
-function assertEventFired(spy, instanceType, expectedProperties,
-    expectedWorkspaceId, expectedBlockId) {
+function assertEventFired (spy, instanceType, expectedProperties,
+  expectedWorkspaceId, expectedBlockId) {
   expectedProperties = Object.assign({
     type: instanceType.prototype.type,
     workspaceId: expectedWorkspaceId,
-    blockId: expectedBlockId,
-  }, expectedProperties);
-  var expectedEvent =
-      sinon.match.instanceOf(instanceType).and(sinon.match(expectedProperties));
-  sinon.assert.calledWith(spy, expectedEvent);
+    blockId: expectedBlockId
+  }, expectedProperties)
+  const expectedEvent =
+      sinon.match.instanceOf(instanceType).and(sinon.match(expectedProperties))
+  sinon.assert.calledWith(spy, expectedEvent)
 }
 
 /**
@@ -409,18 +409,18 @@ function assertEventFired(spy, instanceType, expectedProperties,
  * @param {string=} expectedWorkspaceId Expected workspace id of event fired.
  * @param {?string=} expectedBlockId Expected block id of event fired.
  */
-function assertEventNotFired(spy, instanceType, expectedProperties,
-    expectedWorkspaceId, expectedBlockId) {
-  expectedProperties.type = instanceType.prototype.type;
+function assertEventNotFired (spy, instanceType, expectedProperties,
+  expectedWorkspaceId, expectedBlockId) {
+  expectedProperties.type = instanceType.prototype.type
   if (expectedWorkspaceId !== undefined) {
-    expectedProperties.workspaceId = expectedWorkspaceId;
+    expectedProperties.workspaceId = expectedWorkspaceId
   }
   if (expectedBlockId !== undefined) {
-    expectedProperties.blockId = expectedBlockId;
+    expectedProperties.blockId = expectedBlockId
   }
-  var expectedEvent =
-      sinon.match.instanceOf(instanceType).and(sinon.match(expectedProperties));
-  sinon.assert.neverCalledWith(spy, expectedEvent);
+  const expectedEvent =
+      sinon.match.instanceOf(instanceType).and(sinon.match(expectedProperties))
+  sinon.assert.neverCalledWith(spy, expectedEvent)
 }
 
 /**
@@ -430,18 +430,18 @@ function assertEventNotFired(spy, instanceType, expectedProperties,
  *    xml properties and xml properties.
  * @private
  */
-function splitByXmlProperties_(properties) {
-  var xmlProperties = {};
-  var nonXmlProperties = {};
+function splitByXmlProperties_ (properties) {
+  const xmlProperties = {}
+  const nonXmlProperties = {}
   Object.keys(properties).forEach((key) => {
     if (isXmlProperty_(key)) {
-      xmlProperties[key] = properties[key];
-      return false;
+      xmlProperties[key] = properties[key]
+      return false
     } else {
-      nonXmlProperties[key] = properties[key];
+      nonXmlProperties[key] = properties[key]
     }
-  });
-  return [nonXmlProperties, xmlProperties];
+  })
+  return [nonXmlProperties, xmlProperties]
 }
 
 /**
@@ -456,88 +456,88 @@ function splitByXmlProperties_(properties) {
  * @param {string} expectedWorkspaceId Expected workspace id of event fired.
  * @param {?string=} expectedBlockId Expected block id of event fired.
  */
-function assertNthCallEventArgEquals(spy, n, instanceType, expectedProperties,
-    expectedWorkspaceId, expectedBlockId) {
-  var nthCall = spy.getCall(n);
-  var splitProperties = splitByXmlProperties_(expectedProperties);
-  var nonXmlProperties = splitProperties[0];
-  var xmlProperties = splitProperties[1];
+function assertNthCallEventArgEquals (spy, n, instanceType, expectedProperties,
+  expectedWorkspaceId, expectedBlockId) {
+  const nthCall = spy.getCall(n)
+  const splitProperties = splitByXmlProperties_(expectedProperties)
+  const nonXmlProperties = splitProperties[0]
+  const xmlProperties = splitProperties[1]
 
   assertEventFired(nthCall, instanceType, nonXmlProperties, expectedWorkspaceId,
-      expectedBlockId);
-  var eventArg = nthCall.firstArg;
-  assertXmlProperties_(eventArg, xmlProperties);
+    expectedBlockId)
+  const eventArg = nthCall.firstArg
+  assertXmlProperties_(eventArg, xmlProperties)
 }
 
-function defineStackBlock(sharedCleanupObj) {
+function defineStackBlock (sharedCleanupObj) {
   Blockly.defineBlocksWithJsonArray([{
-    "type": "stack_block",
-    "message0": "",
-    "previousStatement": null,
-    "nextStatement": null
-  }]);
+    type: 'stack_block',
+    message0: '',
+    previousStatement: null,
+    nextStatement: null
+  }])
 }
 
-function defineRowBlock(sharedCleanupObj) {
+function defineRowBlock (sharedCleanupObj) {
   Blockly.defineBlocksWithJsonArray([{
-    "type": "row_block",
-    "message0": "%1",
-    "args0": [
+    type: 'row_block',
+    message0: '%1',
+    args0: [
       {
-        "type": "input_value",
-        "name": "INPUT"
+        type: 'input_value',
+        name: 'INPUT'
       }
     ],
-    "output": null
-  }]);
+    output: null
+  }])
 }
 
-function defineStatementBlock(sharedCleanupObj) {
+function defineStatementBlock (sharedCleanupObj) {
   Blockly.defineBlocksWithJsonArray([{
-    "type": "statement_block",
-    "message0": "%1",
-    "args0": [
+    type: 'statement_block',
+    message0: '%1',
+    args0: [
       {
-        "type": "input_statement",
-        "name": "NAME"
+        type: 'input_statement',
+        name: 'NAME'
       }
     ],
-    "previousStatement": null,
-    "nextStatement": null,
-    "colour": 230,
-    "tooltip": "",
-    "helpUrl": ""
-  }]);
+    previousStatement: null,
+    nextStatement: null,
+    colour: 230,
+    tooltip: '',
+    helpUrl: ''
+  }])
 }
-function defineBasicBlockWithField(sharedCleanupObj) {
+function defineBasicBlockWithField (sharedCleanupObj) {
   Blockly.defineBlocksWithJsonArray([{
-    "type": "test_field_block",
-    "message0": "%1",
-    "args0": [
+    type: 'test_field_block',
+    message0: '%1',
+    args0: [
       {
-        "type": "field_input",
-        "name": "NAME"
+        type: 'field_input',
+        name: 'NAME'
       }
     ],
-    "output": null
-  }]);
+    output: null
+  }])
 }
 
-function createTestBlock() {
+function createTestBlock () {
   return {
     id: 'test',
     rendered: false,
     workspace: {
       rendered: false
     }
-  };
+  }
 }
 
-function createRenderedBlock(workspaceSvg, type) {
-  var block = workspaceSvg.newBlock(type);
-  block.initSvg();
-  block.render();
-  return block;
+function createRenderedBlock (workspaceSvg, type) {
+  const block = workspaceSvg.newBlock(type)
+  block.initSvg()
+  block.render()
+  return block
 }
 
 /**
@@ -548,20 +548,20 @@ function createRenderedBlock(workspaceSvg, type) {
  * @param {Object<string, string>=} properties Properties to pass into event
  *    constructor.
  */
-function dispatchPointerEvent(target, type, properties) {
+function dispatchPointerEvent (target, type, properties) {
   const eventInitDict = {
     cancelable: true,
     bubbles: true,
     isPrimary: true,
     pressure: 0.5,
     clientX: 10,
-    clientY: 10,
-  };
-  if (properties) {
-    Object.assign(eventInitDict, properties);
+    clientY: 10
   }
-  const event = new PointerEvent(type, eventInitDict);
-  target.dispatchEvent(event);
+  if (properties) {
+    Object.assign(eventInitDict, properties)
+  }
+  const event = new PointerEvent(type, eventInitDict)
+  target.dispatchEvent(event)
 }
 
 /**
@@ -570,8 +570,8 @@ function dispatchPointerEvent(target, type, properties) {
  * @param {Object<string, string>=} properties Properties to pass into event
  *    constructor.
  */
-function simulateClick(target, properties) {
-  dispatchPointerEvent(target, 'pointerdown', properties);
-  dispatchPointerEvent(target, 'pointerup', properties);
-  dispatchPointerEvent(target, 'click', properties);
+function simulateClick (target, properties) {
+  dispatchPointerEvent(target, 'pointerdown', properties)
+  dispatchPointerEvent(target, 'pointerup', properties)
+  dispatchPointerEvent(target, 'click', properties)
 }

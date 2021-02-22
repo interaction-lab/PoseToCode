@@ -9,15 +9,14 @@
  * for both pointer and touch events.
  * @author samelh@microsoft.com (Sam El-Husseini)
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.TouchGesture');
+goog.provide('Blockly.TouchGesture')
 
-goog.require('Blockly.Gesture');
-goog.require('Blockly.utils');
-goog.require('Blockly.utils.Coordinate');
-goog.require('Blockly.utils.object');
-
+goog.require('Blockly.Gesture')
+goog.require('Blockly.utils')
+goog.require('Blockly.utils.Coordinate')
+goog.require('Blockly.utils.object')
 
 /*
  * Note: In this file "start" refers to touchstart, mousedown, and pointerstart
@@ -32,22 +31,22 @@ goog.require('Blockly.utils.object');
  * @extends {Blockly.Gesture}
  * @constructor
  */
-Blockly.TouchGesture = function(e, creatorWorkspace) {
-  Blockly.TouchGesture.superClass_.constructor.call(this, e, creatorWorkspace);
+Blockly.TouchGesture = function (e, creatorWorkspace) {
+  Blockly.TouchGesture.superClass_.constructor.call(this, e, creatorWorkspace)
 
   /**
    * Boolean for whether or not this gesture is a multi-touch gesture.
    * @type {boolean}
    * @private
    */
-  this.isMultiTouch_ = false;
+  this.isMultiTouch_ = false
 
   /**
    * A map of cached points used for tracking multi-touch gestures.
    * @type {!Object<number|string, Blockly.utils.Coordinate>}
    * @private
    */
-  this.cachedPoints_ = Object.create(null);
+  this.cachedPoints_ = Object.create(null)
 
   /**
    * This is the ratio between the starting distance between the touch points
@@ -57,14 +56,14 @@ Blockly.TouchGesture = function(e, creatorWorkspace) {
    * @type {number}
    * @private
    */
-  this.previousScale_ = 0;
+  this.previousScale_ = 0
 
   /**
    * The starting distance between two touch points.
    * @type {number}
    * @private
    */
-  this.startDistance_ = 0;
+  this.startDistance_ = 0
 
   /**
    * A handle to use to unbind the second touch start or pointer down listener
@@ -73,28 +72,28 @@ Blockly.TouchGesture = function(e, creatorWorkspace) {
    * @type {?Blockly.EventData}
    * @private
    */
-  this.onStartWrapper_ = null;
+  this.onStartWrapper_ = null
 
   /**
    * Boolean for whether or not the workspace supports pinch-zoom.
    * @type {?boolean}
    * @private
    */
-  this.isPinchZoomEnabled_ = null;
-};
-Blockly.utils.object.inherits(Blockly.TouchGesture, Blockly.Gesture);
+  this.isPinchZoomEnabled_ = null
+}
+Blockly.utils.object.inherits(Blockly.TouchGesture, Blockly.Gesture)
 
 /**
  * A multiplier used to convert the gesture scale to a zoom in delta.
  * @const
  */
-Blockly.TouchGesture.ZOOM_IN_MULTIPLIER = 5;
+Blockly.TouchGesture.ZOOM_IN_MULTIPLIER = 5
 
 /**
  * A multiplier used to convert the gesture scale to a zoom out delta.
  * @const
  */
-Blockly.TouchGesture.ZOOM_OUT_MULTIPLIER = 6;
+Blockly.TouchGesture.ZOOM_OUT_MULTIPLIER = 6
 
 /**
  * Start a gesture: update the workspace to indicate that a gesture is in
@@ -102,14 +101,14 @@ Blockly.TouchGesture.ZOOM_OUT_MULTIPLIER = 6;
  * @param {!Event} e A mouse down, touch start or pointer down event.
  * @package
  */
-Blockly.TouchGesture.prototype.doStart = function(e) {
+Blockly.TouchGesture.prototype.doStart = function (e) {
   this.isPinchZoomEnabled_ = this.startWorkspace_.options.zoomOptions &&
-      this.startWorkspace_.options.zoomOptions.pinch;
-  Blockly.TouchGesture.superClass_.doStart.call(this, e);
+      this.startWorkspace_.options.zoomOptions.pinch
+  Blockly.TouchGesture.superClass_.doStart.call(this, e)
   if (!this.isEnding_ && Blockly.Touch.isTouchEvent(e)) {
-    this.handleTouchStart(e);
+    this.handleTouchStart(e)
   }
-};
+}
 
 /**
  * Bind gesture events.
@@ -120,105 +119,105 @@ Blockly.TouchGesture.prototype.doStart = function(e) {
  * @param {!Event} e A mouse down or touch start event.
  * @package
  */
-Blockly.TouchGesture.prototype.bindMouseEvents = function(e) {
+Blockly.TouchGesture.prototype.bindMouseEvents = function (e) {
   this.onStartWrapper_ = Blockly.bindEventWithChecks_(
-      document, 'mousedown', null, this.handleStart.bind(this),
-      /* opt_noCaptureIdentifier */ true);
+    document, 'mousedown', null, this.handleStart.bind(this),
+    /* opt_noCaptureIdentifier */ true)
   this.onMoveWrapper_ = Blockly.bindEventWithChecks_(
-      document, 'mousemove', null, this.handleMove.bind(this),
-      /* opt_noCaptureIdentifier */ true);
+    document, 'mousemove', null, this.handleMove.bind(this),
+    /* opt_noCaptureIdentifier */ true)
   this.onUpWrapper_ = Blockly.bindEventWithChecks_(
-      document, 'mouseup', null, this.handleUp.bind(this),
-      /* opt_noCaptureIdentifier */ true);
+    document, 'mouseup', null, this.handleUp.bind(this),
+    /* opt_noCaptureIdentifier */ true)
 
-  e.preventDefault();
-  e.stopPropagation();
-};
+  e.preventDefault()
+  e.stopPropagation()
+}
 
 /**
  * Handle a mouse down, touch start, or pointer down event.
  * @param {!Event} e A mouse down, touch start, or pointer down event.
  * @package
  */
-Blockly.TouchGesture.prototype.handleStart = function(e) {
+Blockly.TouchGesture.prototype.handleStart = function (e) {
   if (this.isDragging()) {
     // A drag has already started, so this can no longer be a pinch-zoom.
-    return;
+    return
   }
   if (Blockly.Touch.isTouchEvent(e)) {
-    this.handleTouchStart(e);
+    this.handleTouchStart(e)
 
     if (this.isMultiTouch()) {
-      Blockly.longStop_();
+      Blockly.longStop_()
     }
   }
-};
+}
 
 /**
  * Handle a mouse move, touch move, or pointer move event.
  * @param {!Event} e A mouse move, touch move, or pointer move event.
  * @package
  */
-Blockly.TouchGesture.prototype.handleMove = function(e) {
+Blockly.TouchGesture.prototype.handleMove = function (e) {
   if (this.isDragging()) {
     // We are in the middle of a drag, only handle the relevant events
     if (Blockly.Touch.shouldHandleEvent(e)) {
-      Blockly.TouchGesture.superClass_.handleMove.call(this, e);
+      Blockly.TouchGesture.superClass_.handleMove.call(this, e)
     }
-    return;
+    return
   }
   if (this.isMultiTouch()) {
     if (Blockly.Touch.isTouchEvent(e)) {
-      this.handleTouchMove(e);
+      this.handleTouchMove(e)
     }
-    Blockly.longStop_();
+    Blockly.longStop_()
   } else {
-    Blockly.TouchGesture.superClass_.handleMove.call(this, e);
+    Blockly.TouchGesture.superClass_.handleMove.call(this, e)
   }
-};
+}
 
 /**
  * Handle a mouse up, touch end, or pointer up event.
  * @param {!Event} e A mouse up, touch end, or pointer up event.
  * @package
  */
-Blockly.TouchGesture.prototype.handleUp = function(e) {
+Blockly.TouchGesture.prototype.handleUp = function (e) {
   if (Blockly.Touch.isTouchEvent(e) && !this.isDragging()) {
-    this.handleTouchEnd(e);
+    this.handleTouchEnd(e)
   }
   if (!this.isMultiTouch() || this.isDragging()) {
     if (!Blockly.Touch.shouldHandleEvent(e)) {
-      return;
+      return
     }
-    Blockly.TouchGesture.superClass_.handleUp.call(this, e);
+    Blockly.TouchGesture.superClass_.handleUp.call(this, e)
   } else {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault()
+    e.stopPropagation()
 
-    this.dispose();
+    this.dispose()
   }
-};
+}
 
 /**
  * Whether this gesture is part of a multi-touch gesture.
  * @return {boolean} Whether this gesture is part of a multi-touch gesture.
  * @package
  */
-Blockly.TouchGesture.prototype.isMultiTouch = function() {
-  return this.isMultiTouch_;
-};
+Blockly.TouchGesture.prototype.isMultiTouch = function () {
+  return this.isMultiTouch_
+}
 
 /**
  * Sever all links from this object.
  * @package
  */
-Blockly.TouchGesture.prototype.dispose = function() {
-  Blockly.TouchGesture.superClass_.dispose.call(this);
+Blockly.TouchGesture.prototype.dispose = function () {
+  Blockly.TouchGesture.superClass_.dispose.call(this)
 
   if (this.onStartWrapper_) {
-    Blockly.unbindEvent_(this.onStartWrapper_);
+    Blockly.unbindEvent_(this.onStartWrapper_)
   }
-};
+}
 
 /**
  * Handle a touch start or pointer down event and keep track of current
@@ -226,22 +225,22 @@ Blockly.TouchGesture.prototype.dispose = function() {
  * @param {!Event} e A touch start, or pointer down event.
  * @package
  */
-Blockly.TouchGesture.prototype.handleTouchStart = function(e) {
-  var pointerId = Blockly.Touch.getTouchIdentifierFromEvent(e);
+Blockly.TouchGesture.prototype.handleTouchStart = function (e) {
+  const pointerId = Blockly.Touch.getTouchIdentifierFromEvent(e)
   // store the pointerId in the current list of pointers
-  this.cachedPoints_[pointerId] = this.getTouchPoint(e);
-  var pointers = Object.keys(this.cachedPoints_);
+  this.cachedPoints_[pointerId] = this.getTouchPoint(e)
+  const pointers = Object.keys(this.cachedPoints_)
   // If two pointers are down, store info
   if (pointers.length == 2) {
-    var point0 = /** @type {!Blockly.utils.Coordinate} */ (
-      this.cachedPoints_[pointers[0]]);
-    var point1 = /** @type {!Blockly.utils.Coordinate} */ (
-      this.cachedPoints_[pointers[1]]);
-    this.startDistance_ = Blockly.utils.Coordinate.distance(point0, point1);
-    this.isMultiTouch_ = true;
-    e.preventDefault();
+    const point0 = /** @type {!Blockly.utils.Coordinate} */ (
+      this.cachedPoints_[pointers[0]])
+    const point1 = /** @type {!Blockly.utils.Coordinate} */ (
+      this.cachedPoints_[pointers[1]])
+    this.startDistance_ = Blockly.utils.Coordinate.distance(point0, point1)
+    this.isMultiTouch_ = true
+    e.preventDefault()
   }
-};
+}
 
 /**
  * Handle a touch move or pointer move event and zoom in/out if two pointers
@@ -249,64 +248,63 @@ Blockly.TouchGesture.prototype.handleTouchStart = function(e) {
  * @param {!Event} e A touch move, or pointer move event.
  * @package
  */
-Blockly.TouchGesture.prototype.handleTouchMove = function(e) {
-  var pointerId = Blockly.Touch.getTouchIdentifierFromEvent(e);
+Blockly.TouchGesture.prototype.handleTouchMove = function (e) {
+  const pointerId = Blockly.Touch.getTouchIdentifierFromEvent(e)
   // Update the cache
-  this.cachedPoints_[pointerId] = this.getTouchPoint(e);
+  this.cachedPoints_[pointerId] = this.getTouchPoint(e)
 
-  var pointers = Object.keys(this.cachedPoints_);
+  const pointers = Object.keys(this.cachedPoints_)
   if (this.isPinchZoomEnabled_ && pointers.length === 2) {
-    this.handlePinch_(e);
+    this.handlePinch_(e)
   } else {
-    Blockly.TouchGesture.superClass_.handleMove.call(this, e);
+    Blockly.TouchGesture.superClass_.handleMove.call(this, e)
   }
-};
+}
 
 /**
 * Handle pinch zoom gesture.
 * @param {!Event} e A touch move, or pointer move event.
 * @private
 */
-Blockly.TouchGesture.prototype.handlePinch_ = function(e) {
-  var pointers = Object.keys(this.cachedPoints_);
+Blockly.TouchGesture.prototype.handlePinch_ = function (e) {
+  const pointers = Object.keys(this.cachedPoints_)
   // Calculate the distance between the two pointers
-  var point0 = /** @type {!Blockly.utils.Coordinate} */ (
-    this.cachedPoints_[pointers[0]]);
-  var point1 = /** @type {!Blockly.utils.Coordinate} */ (
-    this.cachedPoints_[pointers[1]]);
-  var moveDistance = Blockly.utils.Coordinate.distance(point0, point1);
-  var scale = moveDistance / this.startDistance_;
+  const point0 = /** @type {!Blockly.utils.Coordinate} */ (
+    this.cachedPoints_[pointers[0]])
+  const point1 = /** @type {!Blockly.utils.Coordinate} */ (
+    this.cachedPoints_[pointers[1]])
+  const moveDistance = Blockly.utils.Coordinate.distance(point0, point1)
+  const scale = moveDistance / this.startDistance_
 
   if (this.previousScale_ > 0 && this.previousScale_ < Infinity) {
-    var gestureScale = scale - this.previousScale_;
-    var delta = gestureScale > 0 ?
-        gestureScale * Blockly.TouchGesture.ZOOM_IN_MULTIPLIER :
-        gestureScale * Blockly.TouchGesture.ZOOM_OUT_MULTIPLIER;
-    var workspace = this.startWorkspace_;
-    var position = Blockly.utils.mouseToSvg(
-        e, workspace.getParentSvg(), workspace.getInverseScreenCTM());
-    workspace.zoom(position.x, position.y, delta);
+    const gestureScale = scale - this.previousScale_
+    const delta = gestureScale > 0
+      ? gestureScale * Blockly.TouchGesture.ZOOM_IN_MULTIPLIER
+      : gestureScale * Blockly.TouchGesture.ZOOM_OUT_MULTIPLIER
+    const workspace = this.startWorkspace_
+    const position = Blockly.utils.mouseToSvg(
+      e, workspace.getParentSvg(), workspace.getInverseScreenCTM())
+    workspace.zoom(position.x, position.y, delta)
   }
-  this.previousScale_ = scale;
-  e.preventDefault();
-};
-
+  this.previousScale_ = scale
+  e.preventDefault()
+}
 
 /**
  * Handle a touch end or pointer end event and end the gesture.
  * @param {!Event} e A touch end, or pointer end event.
  * @package
  */
-Blockly.TouchGesture.prototype.handleTouchEnd = function(e) {
-  var pointerId = Blockly.Touch.getTouchIdentifierFromEvent(e);
+Blockly.TouchGesture.prototype.handleTouchEnd = function (e) {
+  const pointerId = Blockly.Touch.getTouchIdentifierFromEvent(e)
   if (this.cachedPoints_[pointerId]) {
-    delete this.cachedPoints_[pointerId];
+    delete this.cachedPoints_[pointerId]
   }
   if (Object.keys(this.cachedPoints_).length < 2) {
-    this.cachedPoints_ = Object.create(null);
-    this.previousScale_ = 0;
+    this.cachedPoints_ = Object.create(null)
+    this.previousScale_ = 0
   }
-};
+}
 
 /**
  * Helper function returning the current touch point coordinate.
@@ -314,12 +312,12 @@ Blockly.TouchGesture.prototype.handleTouchEnd = function(e) {
  * @return {Blockly.utils.Coordinate} The current touch point coordinate
  * @package
  */
-Blockly.TouchGesture.prototype.getTouchPoint = function(e) {
+Blockly.TouchGesture.prototype.getTouchPoint = function (e) {
   if (!this.startWorkspace_) {
-    return null;
+    return null
   }
   return new Blockly.utils.Coordinate(
-      (e.pageX ? e.pageX : e.changedTouches[0].pageX),
-      (e.pageY ? e.pageY : e.changedTouches[0].pageY)
-  );
-};
+    (e.pageX ? e.pageX : e.changedTouches[0].pageX),
+    (e.pageY ? e.pageY : e.changedTouches[0].pageY)
+  )
+}

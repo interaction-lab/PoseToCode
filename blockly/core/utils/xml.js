@@ -10,18 +10,18 @@
  * a JavaScript framework such as Closure.
  * @author fraser@google.com (Neil Fraser)
  */
-'use strict';
+'use strict'
 
 /**
  * @name Blockly.utils.xml
  * @namespace
  */
-goog.provide('Blockly.utils.xml');
+goog.provide('Blockly.utils.xml')
 
 /**
  * Namespace for Blockly's XML.
  */
-Blockly.utils.xml.NAME_SPACE = 'https://developers.google.com/blockly/xml';
+Blockly.utils.xml.NAME_SPACE = 'https://developers.google.com/blockly/xml'
 
 /**
  * Get the document object.  This method is overridden in the Node.js build of
@@ -29,9 +29,9 @@ Blockly.utils.xml.NAME_SPACE = 'https://developers.google.com/blockly/xml';
  * @return {!Document} The document object.
  * @public
  */
-Blockly.utils.xml.document = function() {
-  return document;
-};
+Blockly.utils.xml.document = function () {
+  return document
+}
 
 /**
  * Create DOM element for XML.
@@ -39,10 +39,10 @@ Blockly.utils.xml.document = function() {
  * @return {!Element} New DOM element.
  * @public
  */
-Blockly.utils.xml.createElement = function(tagName) {
+Blockly.utils.xml.createElement = function (tagName) {
   return Blockly.utils.xml.document().createElementNS(
-      Blockly.utils.xml.NAME_SPACE, tagName);
-};
+    Blockly.utils.xml.NAME_SPACE, tagName)
+}
 
 /**
  * Create text element for XML.
@@ -50,9 +50,9 @@ Blockly.utils.xml.createElement = function(tagName) {
  * @return {!Text} New DOM text node.
  * @public
  */
-Blockly.utils.xml.createTextNode = function(text) {
-  return Blockly.utils.xml.document().createTextNode(text);
-};
+Blockly.utils.xml.createTextNode = function (text) {
+  return Blockly.utils.xml.document().createTextNode(text)
+}
 
 /**
  * Converts an XML string into a DOM tree.
@@ -61,10 +61,10 @@ Blockly.utils.xml.createTextNode = function(text) {
  * @throws if XML doesn't parse.
  * @public
  */
-Blockly.utils.xml.textToDomDocument = function(text) {
-  var oParser = new DOMParser();
-  return oParser.parseFromString(text, 'text/xml');
-};
+Blockly.utils.xml.textToDomDocument = function (text) {
+  const oParser = new DOMParser()
+  return oParser.parseFromString(text, 'text/xml')
+}
 
 /**
  * Converts a DOM structure into plain text.
@@ -73,7 +73,7 @@ Blockly.utils.xml.textToDomDocument = function(text) {
  * @return {string} Text representation.
  * @public
  */
-Blockly.utils.xml.domToText = function(dom) {
-  var oSerializer = new XMLSerializer();
-  return oSerializer.serializeToString(dom);
-};
+Blockly.utils.xml.domToText = function (dom) {
+  const oSerializer = new XMLSerializer()
+  return oSerializer.serializeToString(dom)
+}

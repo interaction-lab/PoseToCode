@@ -13,23 +13,22 @@
  *
  * @author Emma Dauterman (evd2014)
  */
- 'use strict';
+'use strict'
 
 /**
  * Namespace for StandardCategories
  */
-var StandardCategories = StandardCategories || Object.create(null);
-
+var StandardCategories = StandardCategories || Object.create(null)
 
 // Map of standard category information necessary to add a standard category
 // to the toolbox.
-StandardCategories.categoryMap = Object.create(null);
+StandardCategories.categoryMap = Object.create(null)
 
-StandardCategories.categoryMap['logic'] =
-    new ListElement(ListElement.TYPE_CATEGORY, 'Logic');
-StandardCategories.categoryMap['logic'].xml =
+StandardCategories.categoryMap.logic =
+    new ListElement(ListElement.TYPE_CATEGORY, 'Logic')
+StandardCategories.categoryMap.logic.xml =
     Blockly.Xml.textToDom(
-    '<xml xmlns="https://developers.google.com/blockly/xml">' +
+      '<xml xmlns="https://developers.google.com/blockly/xml">' +
     '<block type="controls_if"></block>' +
     '<block type="logic_compare"></block>' +
     '<block type="logic_operation"></block>' +
@@ -37,14 +36,14 @@ StandardCategories.categoryMap['logic'].xml =
     '<block type="logic_boolean"></block>' +
     '<block type="logic_null"></block>' +
     '<block type="logic_ternary"></block>' +
-    '</xml>');
-StandardCategories.categoryMap['logic'].hue = 210;
+    '</xml>')
+StandardCategories.categoryMap.logic.hue = 210
 
-StandardCategories.categoryMap['loops'] =
-    new ListElement(ListElement.TYPE_CATEGORY, 'Loops');
-StandardCategories.categoryMap['loops'].xml =
+StandardCategories.categoryMap.loops =
+    new ListElement(ListElement.TYPE_CATEGORY, 'Loops')
+StandardCategories.categoryMap.loops.xml =
     Blockly.Xml.textToDom(
-    '<xml xmlns="https://developers.google.com/blockly/xml">' +
+      '<xml xmlns="https://developers.google.com/blockly/xml">' +
     '<block type="controls_repeat_ext">' +
       '<value name="TIMES">' +
         '<shadow type="math_number">' +
@@ -72,14 +71,14 @@ StandardCategories.categoryMap['loops'].xml =
     '</block>' +
     '<block type="controls_forEach"></block>' +
     '<block type="controls_flow_statements"></block>' +
-    '</xml>');
-StandardCategories.categoryMap['loops'].hue = 120;
+    '</xml>')
+StandardCategories.categoryMap.loops.hue = 120
 
-StandardCategories.categoryMap['math'] =
-    new ListElement(ListElement.TYPE_CATEGORY, 'Math');
-StandardCategories.categoryMap['math'].xml =
+StandardCategories.categoryMap.math =
+    new ListElement(ListElement.TYPE_CATEGORY, 'Math')
+StandardCategories.categoryMap.math.xml =
     Blockly.Xml.textToDom(
-    '<xml xmlns="https://developers.google.com/blockly/xml">' +
+      '<xml xmlns="https://developers.google.com/blockly/xml">' +
     '<block type="math_number"></block>' +
     '<block type="math_arithmetic">' +
       '<value name="A">' +
@@ -131,7 +130,7 @@ StandardCategories.categoryMap['math'].xml =
       '</value>' +
       '<value name="DIVISOR">' +
         '<shadow type="math_number">' +
-          '<field name="NUM">10</field>'+
+          '<field name="NUM">10</field>' +
         '</shadow>' +
       '</value>' +
     '</block>' +
@@ -165,14 +164,14 @@ StandardCategories.categoryMap['math'].xml =
       '</value>' +
     '</block>' +
     '<block type="math_random_float"></block>' +
-    '</xml>');
-StandardCategories.categoryMap['math'].hue = 230;
+    '</xml>')
+StandardCategories.categoryMap.math.hue = 230
 
-StandardCategories.categoryMap['text'] =
-    new ListElement(ListElement.TYPE_CATEGORY, 'Text');
-StandardCategories.categoryMap['text'].xml =
+StandardCategories.categoryMap.text =
+    new ListElement(ListElement.TYPE_CATEGORY, 'Text')
+StandardCategories.categoryMap.text.xml =
     Blockly.Xml.textToDom(
-    '<xml xmlns="https://developers.google.com/blockly/xml">' +
+      '<xml xmlns="https://developers.google.com/blockly/xml">' +
     '<block type="text"></block>' +
     '<block type="text_join"></block>' +
     '<block type="text_append">' +
@@ -248,14 +247,14 @@ StandardCategories.categoryMap['text'].xml =
         '</shadow>' +
       '</value>' +
     '</block>' +
-    '</xml>');
-StandardCategories.categoryMap['text'].hue = 160;
+    '</xml>')
+StandardCategories.categoryMap.text.hue = 160
 
-StandardCategories.categoryMap['lists'] =
-    new ListElement(ListElement.TYPE_CATEGORY, 'Lists');
-StandardCategories.categoryMap['lists'].xml =
+StandardCategories.categoryMap.lists =
+    new ListElement(ListElement.TYPE_CATEGORY, 'Lists')
+StandardCategories.categoryMap.lists.xml =
     Blockly.Xml.textToDom(
-    '<xml xmlns="https://developers.google.com/blockly/xml">' +
+      '<xml xmlns="https://developers.google.com/blockly/xml">' +
     '<block type="lists_create_with">' +
       '<mutation items="0"></mutation>' +
     '</block>' +
@@ -305,14 +304,14 @@ StandardCategories.categoryMap['lists'].xml =
       '</value>' +
     '</block>' +
     '<block type="lists_sort"></block>' +
-    '</xml>');
-StandardCategories.categoryMap['lists'].hue = 260;
+    '</xml>')
+StandardCategories.categoryMap.lists.hue = 260
 
-StandardCategories.categoryMap['colour'] =
-    new ListElement(ListElement.TYPE_CATEGORY, 'Colour');
-StandardCategories.categoryMap['colour'].xml =
+StandardCategories.categoryMap.colour =
+    new ListElement(ListElement.TYPE_CATEGORY, 'Colour')
+StandardCategories.categoryMap.colour.xml =
     Blockly.Xml.textToDom(
-    '<xml xmlns="https://developers.google.com/blockly/xml">' +
+      '<xml xmlns="https://developers.google.com/blockly/xml">' +
     '<block type="colour_picker"></block>' +
     '<block type="colour_random"></block>' +
     '<block type="colour_rgb">' +
@@ -349,33 +348,33 @@ StandardCategories.categoryMap['colour'].xml =
        '</shadow>' +
       '</value>' +
     '</block>' +
-    '</xml>');
-StandardCategories.categoryMap['colour'].hue = 20;
+    '</xml>')
+StandardCategories.categoryMap.colour.hue = 20
 
-StandardCategories.categoryMap['functions'] =
-    new ListElement(ListElement.TYPE_CATEGORY, 'Functions');
-StandardCategories.categoryMap['functions'].hue = 290;
-StandardCategories.categoryMap['functions'].custom = 'PROCEDURE';
+StandardCategories.categoryMap.functions =
+    new ListElement(ListElement.TYPE_CATEGORY, 'Functions')
+StandardCategories.categoryMap.functions.hue = 290
+StandardCategories.categoryMap.functions.custom = 'PROCEDURE'
 
-StandardCategories.categoryMap['variables'] =
-    new ListElement(ListElement.TYPE_CATEGORY, 'Variables');
-StandardCategories.categoryMap['variables'].hue = 330;
-StandardCategories.categoryMap['variables'].custom = 'VARIABLE';
+StandardCategories.categoryMap.variables =
+    new ListElement(ListElement.TYPE_CATEGORY, 'Variables')
+StandardCategories.categoryMap.variables.hue = 330
+StandardCategories.categoryMap.variables.custom = 'VARIABLE'
 
 // All standard block types in provided in Blockly core.
-StandardCategories.coreBlockTypes =  ["controls_if", "logic_compare",
-    "logic_operation", "logic_negate", "logic_boolean", "logic_null",
-    "logic_ternary", "controls_repeat_ext", "controls_whileUntil",
-    "controls_for", "controls_forEach", "controls_flow_statements",
-    "math_number", "math_arithmetic", "math_single", "math_trig",
-    "math_constant", "math_number_property", "math_change", "math_round",
-    "math_on_list", "math_modulo", "math_constrain", "math_random_int",
-    "math_random_float", "text", "text_join", "text_append", "text_length",
-    "text_isEmpty", "text_indexOf", "variables_get", "text_charAt",
-    "text_getSubstring", "text_changeCase", "text_trim", "text_print",
-    "text_prompt_ext", "colour_picker", "colour_random", "colour_rgb",
-    "colour_blend", "lists_create_with", "lists_repeat", "lists_length",
-    "lists_isEmpty", "lists_indexOf", "lists_getIndex", "lists_setIndex",
-    "lists_getSublist", "lists_split", "lists_sort", "variables_set",
-    "procedures_defreturn", "procedures_ifreturn", "procedures_defnoreturn",
-    "procedures_callreturn"];
+StandardCategories.coreBlockTypes = ['controls_if', 'logic_compare',
+  'logic_operation', 'logic_negate', 'logic_boolean', 'logic_null',
+  'logic_ternary', 'controls_repeat_ext', 'controls_whileUntil',
+  'controls_for', 'controls_forEach', 'controls_flow_statements',
+  'math_number', 'math_arithmetic', 'math_single', 'math_trig',
+  'math_constant', 'math_number_property', 'math_change', 'math_round',
+  'math_on_list', 'math_modulo', 'math_constrain', 'math_random_int',
+  'math_random_float', 'text', 'text_join', 'text_append', 'text_length',
+  'text_isEmpty', 'text_indexOf', 'variables_get', 'text_charAt',
+  'text_getSubstring', 'text_changeCase', 'text_trim', 'text_print',
+  'text_prompt_ext', 'colour_picker', 'colour_random', 'colour_rgb',
+  'colour_blend', 'lists_create_with', 'lists_repeat', 'lists_length',
+  'lists_isEmpty', 'lists_indexOf', 'lists_getIndex', 'lists_setIndex',
+  'lists_getSublist', 'lists_split', 'lists_sort', 'variables_set',
+  'procedures_defreturn', 'procedures_ifreturn', 'procedures_defnoreturn',
+  'procedures_callreturn']

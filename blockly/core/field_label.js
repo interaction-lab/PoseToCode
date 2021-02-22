@@ -9,17 +9,16 @@
  *    labels, etc.
  * @author fraser@google.com (Neil Fraser)
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.FieldLabel');
+goog.provide('Blockly.FieldLabel')
 
-goog.require('Blockly.Field');
-goog.require('Blockly.fieldRegistry');
-goog.require('Blockly.utils');
-goog.require('Blockly.utils.dom');
-goog.require('Blockly.utils.object');
-goog.require('Blockly.utils.Size');
-
+goog.require('Blockly.Field')
+goog.require('Blockly.fieldRegistry')
+goog.require('Blockly.utils')
+goog.require('Blockly.utils.dom')
+goog.require('Blockly.utils.object')
+goog.require('Blockly.utils.Size')
 
 /**
  * Class for a non-editable, non-serializable text field.
@@ -32,29 +31,29 @@ goog.require('Blockly.utils.Size');
  * @extends {Blockly.Field}
  * @constructor
  */
-Blockly.FieldLabel = function(opt_value, opt_class, opt_config) {
+Blockly.FieldLabel = function (opt_value, opt_class, opt_config) {
   /**
    * The html class name to use for this field.
    * @type {?string}
    * @private
    */
-  this.class_ = null;
+  this.class_ = null
 
   Blockly.FieldLabel.superClass_.constructor.call(
-      this, opt_value, null, opt_config);
+    this, opt_value, null, opt_config)
 
-  if (!opt_config) {  // If the config was not passed use old configuration.
-    this.class_ = opt_class || null;
+  if (!opt_config) { // If the config was not passed use old configuration.
+    this.class_ = opt_class || null
   }
-};
-Blockly.utils.object.inherits(Blockly.FieldLabel, Blockly.Field);
+}
+Blockly.utils.object.inherits(Blockly.FieldLabel, Blockly.Field)
 
 /**
  * The default value for this field.
  * @type {*}
  * @protected
  */
-Blockly.FieldLabel.prototype.DEFAULT_VALUE = '';
+Blockly.FieldLabel.prototype.DEFAULT_VALUE = ''
 
 /**
  * Construct a FieldLabel from a JSON arg object,
@@ -64,37 +63,37 @@ Blockly.FieldLabel.prototype.DEFAULT_VALUE = '';
  * @package
  * @nocollapse
  */
-Blockly.FieldLabel.fromJson = function(options) {
-  var text = Blockly.utils.replaceMessageReferences(options['text']);
-  return new Blockly.FieldLabel(text, undefined, options);
-};
+Blockly.FieldLabel.fromJson = function (options) {
+  const text = Blockly.utils.replaceMessageReferences(options.text)
+  return new Blockly.FieldLabel(text, undefined, options)
+}
 
 /**
  * Editable fields usually show some sort of UI indicating they are
  * editable. This field should not.
  * @type {boolean}
  */
-Blockly.FieldLabel.prototype.EDITABLE = false;
+Blockly.FieldLabel.prototype.EDITABLE = false
 
 /**
  * @override
  */
-Blockly.FieldLabel.prototype.configure_ = function(config) {
-  Blockly.FieldLabel.superClass_.configure_.call(this, config);
-  this.class_ = config['class'];
-};
+Blockly.FieldLabel.prototype.configure_ = function (config) {
+  Blockly.FieldLabel.superClass_.configure_.call(this, config)
+  this.class_ = config.class
+}
 
 /**
  * Create block UI for this label.
  * @package
  */
-Blockly.FieldLabel.prototype.initView = function() {
-  this.createTextElement_();
+Blockly.FieldLabel.prototype.initView = function () {
+  this.createTextElement_()
   if (this.class_) {
     Blockly.utils.dom.addClass(
-        /** @type {!SVGTextElement} */ (this.textElement_), this.class_);
+      /** @type {!SVGTextElement} */ (this.textElement_), this.class_)
   }
-};
+}
 
 /**
  * Ensure that the input value casts to a valid string.
@@ -102,29 +101,29 @@ Blockly.FieldLabel.prototype.initView = function() {
  * @return {?string} A valid string, or null if invalid.
  * @protected
  */
-Blockly.FieldLabel.prototype.doClassValidation_ = function(opt_newValue) {
+Blockly.FieldLabel.prototype.doClassValidation_ = function (opt_newValue) {
   if (opt_newValue === null || opt_newValue === undefined) {
-    return null;
+    return null
   }
-  return String(opt_newValue);
-};
+  return String(opt_newValue)
+}
 
 /**
  * Set the css class applied to the field's textElement_.
  * @param {?string} cssClass The new css class name, or null to remove.
  */
-Blockly.FieldLabel.prototype.setClass = function(cssClass) {
+Blockly.FieldLabel.prototype.setClass = function (cssClass) {
   if (this.textElement_) {
     // This check isn't necessary, but it's faster than letting removeClass
     // figure it out.
     if (this.class_) {
-      Blockly.utils.dom.removeClass(this.textElement_, this.class_);
+      Blockly.utils.dom.removeClass(this.textElement_, this.class_)
     }
     if (cssClass) {
-      Blockly.utils.dom.addClass(this.textElement_, cssClass);
+      Blockly.utils.dom.addClass(this.textElement_, cssClass)
     }
   }
-  this.class_ = cssClass;
-};
+  this.class_ = cssClass
+}
 
-Blockly.fieldRegistry.register('field_label', Blockly.FieldLabel);
+Blockly.fieldRegistry.register('field_label', Blockly.FieldLabel)

@@ -9,19 +9,18 @@
  * @author samelh@google.com (Sam El-Husseini)
  */
 
-'use strict';
+'use strict'
 
-goog.provide('Blockly.IMovable');
-
+goog.provide('Blockly.IMovable')
 
 /**
  * The interface for an object that is movable.
  * @interface
  */
-Blockly.IMovable = function() {};
+Blockly.IMovable = function () {}
 
 /**
  * Get whether this is movable or not.
  * @return {boolean} True if movable.
  */
-Blockly.IMovable.prototype.isMovable;
+Blockly.IMovable.prototype.isMovable

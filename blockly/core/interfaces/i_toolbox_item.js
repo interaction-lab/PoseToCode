@@ -9,20 +9,19 @@
  * @author aschmiedt@google.com (Abby Schmiedt)
  */
 
-'use strict';
+'use strict'
 
-goog.provide('Blockly.ICollapsibleToolboxItem');
-goog.provide('Blockly.ISelectableToolboxItem');
-goog.provide('Blockly.IToolboxItem');
+goog.provide('Blockly.ICollapsibleToolboxItem')
+goog.provide('Blockly.ISelectableToolboxItem')
+goog.provide('Blockly.IToolboxItem')
 
-goog.requireType('Blockly.utils.toolbox');
-
+goog.requireType('Blockly.utils.toolbox')
 
 /**
  * Interface for an item in the toolbox.
  * @interface
  */
-Blockly.IToolboxItem = function() {};
+Blockly.IToolboxItem = function () {}
 
 /**
  * Initializes the toolbox item.
@@ -31,21 +30,21 @@ Blockly.IToolboxItem = function() {};
  * @return {void}
  * @public
  */
-Blockly.IToolboxItem.prototype.init;
+Blockly.IToolboxItem.prototype.init
 
 /**
  * Gets the div for the toolbox item.
  * @return {?Element} The div for the toolbox item.
  * @public
  */
-Blockly.IToolboxItem.prototype.getDiv;
+Blockly.IToolboxItem.prototype.getDiv
 
 /**
  * Gets a unique identifier for this toolbox item.
  * @return {string} The id for the toolbox item.
  * @public
  */
-Blockly.IToolboxItem.prototype.getId;
+Blockly.IToolboxItem.prototype.getId
 
 /**
  * Gets the parent if the toolbox item is nested.
@@ -53,48 +52,48 @@ Blockly.IToolboxItem.prototype.getId;
  *     this toolbox item is not nested.
  * @public
  */
-Blockly.IToolboxItem.prototype.getParent;
+Blockly.IToolboxItem.prototype.getParent
 
 /**
  * Gets the nested level of the category.
  * @return {number} The nested level of the category.
  * @package
  */
-Blockly.IToolboxItem.prototype.getLevel;
+Blockly.IToolboxItem.prototype.getLevel
 
 /**
  * Whether the toolbox item is selectable.
  * @return {boolean} True if the toolbox item can be selected.
  * @public
  */
-Blockly.IToolboxItem.prototype.isSelectable;
+Blockly.IToolboxItem.prototype.isSelectable
 
 /**
  * Whether the toolbox item is collapsible.
  * @return {boolean} True if the toolbox item is collapsible.
  * @public
  */
-Blockly.IToolboxItem.prototype.isCollapsible;
+Blockly.IToolboxItem.prototype.isCollapsible
 
 /**
  * Dispose of this toolbox item. No-op by default.
  * @public
  */
-Blockly.IToolboxItem.prototype.dispose;
+Blockly.IToolboxItem.prototype.dispose
 
 /**
  * Interface for an item in the toolbox that can be selected.
  * @extends {Blockly.IToolboxItem}
  * @interface
  */
-Blockly.ISelectableToolboxItem = function() {};
+Blockly.ISelectableToolboxItem = function () {}
 
 /**
  * Gets the name of the toolbox item. Used for emitting events.
  * @return {string} The name of the toolbox item.
  * @public
  */
-Blockly.ISelectableToolboxItem.prototype.getName;
+Blockly.ISelectableToolboxItem.prototype.getName
 
 /**
  * Gets the contents of the toolbox item. These are items that are meant to be
@@ -103,7 +102,7 @@ Blockly.ISelectableToolboxItem.prototype.getName;
  *     of items to be displayed in the flyout.
  * @public
  */
-Blockly.ISelectableToolboxItem.prototype.getContents;
+Blockly.ISelectableToolboxItem.prototype.getContents
 
 /**
  * Sets the current toolbox item as selected.
@@ -111,27 +110,27 @@ Blockly.ISelectableToolboxItem.prototype.getContents;
  *     otherwise.
  * @public
  */
-Blockly.ISelectableToolboxItem.prototype.setSelected;
+Blockly.ISelectableToolboxItem.prototype.setSelected
 
 /**
  * Handles when the toolbox item is clicked.
  * @param {!Event} _e Click event to handle.
  * @public
  */
-Blockly.ISelectableToolboxItem.prototype.onClick;
+Blockly.ISelectableToolboxItem.prototype.onClick
 
 /**
  * Interface for an item in the toolbox that can be collapsed.
  * @extends {Blockly.ISelectableToolboxItem}
  * @interface
  */
-Blockly.ICollapsibleToolboxItem = function() {};
+Blockly.ICollapsibleToolboxItem = function () {}
 
 /**
  * Gets any children toolbox items. (ex. Gets the subcategories)
  * @return {!Array<!Blockly.IToolboxItem>} The child toolbox items.
  */
-Blockly.ICollapsibleToolboxItem.prototype.getChildToolboxItems;
+Blockly.ICollapsibleToolboxItem.prototype.getChildToolboxItems
 
 /**
  * Whether the toolbox item is expanded to show its child subcategories.
@@ -139,10 +138,10 @@ Blockly.ICollapsibleToolboxItem.prototype.getChildToolboxItems;
  *     is collapsed.
  * @public
  */
-Blockly.ICollapsibleToolboxItem.prototype.isExpanded;
+Blockly.ICollapsibleToolboxItem.prototype.isExpanded
 
 /**
  * Toggles whether or not the toolbox item is expanded.
  * @public
  */
-Blockly.ICollapsibleToolboxItem.prototype.toggleExpanded;
+Blockly.ICollapsibleToolboxItem.prototype.toggleExpanded

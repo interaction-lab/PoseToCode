@@ -10,14 +10,13 @@
  *    fields based on JSON.
  * @author bekawestberg@gmail.com (Beka Westberg)
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.fieldRegistry');
+goog.provide('Blockly.fieldRegistry')
 
-goog.require('Blockly.registry');
+goog.require('Blockly.registry')
 
-goog.requireType('Blockly.IRegistrableField');
-
+goog.requireType('Blockly.IRegistrableField')
 
 /**
  * Registers a field type.
@@ -30,17 +29,17 @@ goog.requireType('Blockly.IRegistrableField');
  *     registered, or the fieldClass is not an object containing a fromJson
  *     function.
  */
-Blockly.fieldRegistry.register = function(type, fieldClass) {
-  Blockly.registry.register(Blockly.registry.Type.FIELD, type, fieldClass);
-};
+Blockly.fieldRegistry.register = function (type, fieldClass) {
+  Blockly.registry.register(Blockly.registry.Type.FIELD, type, fieldClass)
+}
 
 /**
  * Unregisters the field registered with the given type.
  * @param {string} type The field type name as used in the JSON definition.
  */
-Blockly.fieldRegistry.unregister = function(type) {
-  Blockly.registry.unregister(Blockly.registry.Type.FIELD, type);
-};
+Blockly.fieldRegistry.unregister = function (type) {
+  Blockly.registry.unregister(Blockly.registry.Type.FIELD, type)
+}
 
 /**
  * Construct a Field from a JSON arg object.
@@ -52,15 +51,15 @@ Blockly.fieldRegistry.unregister = function(type) {
  *     found with the given type name
  * @package
  */
-Blockly.fieldRegistry.fromJson = function(options) {
-  var fieldObject = /** @type {?Blockly.IRegistrableField} */ (
-    Blockly.registry.getObject(Blockly.registry.Type.FIELD, options['type']));
+Blockly.fieldRegistry.fromJson = function (options) {
+  const fieldObject = /** @type {?Blockly.IRegistrableField} */ (
+    Blockly.registry.getObject(Blockly.registry.Type.FIELD, options.type))
   if (!fieldObject) {
-    console.warn('Blockly could not create a field of type ' + options['type'] +
+    console.warn('Blockly could not create a field of type ' + options.type +
       '. The field is probably not being registered. This could be because' +
       ' the file is not loaded, the field does not register itself (Issue' +
-      ' #1584), or the registration is not being reached.');
-    return null;
+      ' #1584), or the registration is not being reached.')
+    return null
   }
-  return fieldObject.fromJson(options);
-};
+  return fieldObject.fromJson(options)
+}

@@ -8,233 +8,234 @@
  * @fileoverview Generating JavaScript for list blocks.
  * @author fraser@google.com (Neil Fraser)
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.JavaScript.lists');
+goog.provide('Blockly.JavaScript.lists')
 
-goog.require('Blockly.JavaScript');
+goog.require('Blockly.JavaScript')
 
-
-Blockly.JavaScript['lists_create_empty'] = function(block) {
+Blockly.JavaScript.lists_create_empty = function (block) {
   // Create an empty list.
-  return ['[]', Blockly.JavaScript.ORDER_ATOMIC];
-};
+  return ['[]', Blockly.JavaScript.ORDER_ATOMIC]
+}
 
-Blockly.JavaScript['lists_create_with'] = function(block) {
+Blockly.JavaScript.lists_create_with = function (block) {
   // Create a list with any number of elements of any type.
-  var elements = new Array(block.itemCount_);
-  for (var i = 0; i < block.itemCount_; i++) {
+  const elements = new Array(block.itemCount_)
+  for (let i = 0; i < block.itemCount_; i++) {
     elements[i] = Blockly.JavaScript.valueToCode(block, 'ADD' + i,
-        Blockly.JavaScript.ORDER_COMMA) || 'null';
+      Blockly.JavaScript.ORDER_COMMA) || 'null'
   }
-  var code = '[' + elements.join(', ') + ']';
-  return [code, Blockly.JavaScript.ORDER_ATOMIC];
-};
+  const code = '[' + elements.join(', ') + ']'
+  return [code, Blockly.JavaScript.ORDER_ATOMIC]
+}
 
-Blockly.JavaScript['lists_repeat'] = function(block) {
+Blockly.JavaScript.lists_repeat = function (block) {
   // Create a list with one element repeated.
-  var functionName = Blockly.JavaScript.provideFunction_(
-      'listsRepeat',
-      ['function ' + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ +
+  const functionName = Blockly.JavaScript.provideFunction_(
+    'listsRepeat',
+    ['function ' + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ +
           '(value, n) {',
-       '  var array = [];',
-       '  for (var i = 0; i < n; i++) {',
-       '    array[i] = value;',
-       '  }',
-       '  return array;',
-       '}']);
-  var element = Blockly.JavaScript.valueToCode(block, 'ITEM',
-      Blockly.JavaScript.ORDER_COMMA) || 'null';
-  var repeatCount = Blockly.JavaScript.valueToCode(block, 'NUM',
-      Blockly.JavaScript.ORDER_COMMA) || '0';
-  var code = functionName + '(' + element + ', ' + repeatCount + ')';
-  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
-};
+    '  var array = [];',
+    '  for (var i = 0; i < n; i++) {',
+    '    array[i] = value;',
+    '  }',
+    '  return array;',
+    '}'])
+  const element = Blockly.JavaScript.valueToCode(block, 'ITEM',
+    Blockly.JavaScript.ORDER_COMMA) || 'null'
+  const repeatCount = Blockly.JavaScript.valueToCode(block, 'NUM',
+    Blockly.JavaScript.ORDER_COMMA) || '0'
+  const code = functionName + '(' + element + ', ' + repeatCount + ')'
+  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL]
+}
 
-Blockly.JavaScript['lists_length'] = function(block) {
+Blockly.JavaScript.lists_length = function (block) {
   // String or array length.
-  var list = Blockly.JavaScript.valueToCode(block, 'VALUE',
-      Blockly.JavaScript.ORDER_MEMBER) || '[]';
-  return [list + '.length', Blockly.JavaScript.ORDER_MEMBER];
-};
+  const list = Blockly.JavaScript.valueToCode(block, 'VALUE',
+    Blockly.JavaScript.ORDER_MEMBER) || '[]'
+  return [list + '.length', Blockly.JavaScript.ORDER_MEMBER]
+}
 
-Blockly.JavaScript['lists_isEmpty'] = function(block) {
+Blockly.JavaScript.lists_isEmpty = function (block) {
   // Is the string null or array empty?
-  var list = Blockly.JavaScript.valueToCode(block, 'VALUE',
-      Blockly.JavaScript.ORDER_MEMBER) || '[]';
-  return ['!' + list + '.length', Blockly.JavaScript.ORDER_LOGICAL_NOT];
-};
+  const list = Blockly.JavaScript.valueToCode(block, 'VALUE',
+    Blockly.JavaScript.ORDER_MEMBER) || '[]'
+  return ['!' + list + '.length', Blockly.JavaScript.ORDER_LOGICAL_NOT]
+}
 
-Blockly.JavaScript['lists_indexOf'] = function(block) {
+Blockly.JavaScript.lists_indexOf = function (block) {
   // Find an item in the list.
-  var operator = block.getFieldValue('END') == 'FIRST' ?
-      'indexOf' : 'lastIndexOf';
-  var item = Blockly.JavaScript.valueToCode(block, 'FIND',
-      Blockly.JavaScript.ORDER_NONE) || '\'\'';
-  var list = Blockly.JavaScript.valueToCode(block, 'VALUE',
-      Blockly.JavaScript.ORDER_MEMBER) || '[]';
-  var code = list + '.' + operator + '(' + item + ')';
+  const operator = block.getFieldValue('END') == 'FIRST'
+    ? 'indexOf'
+    : 'lastIndexOf'
+  const item = Blockly.JavaScript.valueToCode(block, 'FIND',
+    Blockly.JavaScript.ORDER_NONE) || '\'\''
+  const list = Blockly.JavaScript.valueToCode(block, 'VALUE',
+    Blockly.JavaScript.ORDER_MEMBER) || '[]'
+  const code = list + '.' + operator + '(' + item + ')'
   if (block.workspace.options.oneBasedIndex) {
-    return [code + ' + 1', Blockly.JavaScript.ORDER_ADDITION];
+    return [code + ' + 1', Blockly.JavaScript.ORDER_ADDITION]
   }
-  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
-};
+  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL]
+}
 
-Blockly.JavaScript['lists_getIndex'] = function(block) {
+Blockly.JavaScript.lists_getIndex = function (block) {
   // Get element at index.
   // Note: Until January 2013 this block did not have MODE or WHERE inputs.
-  var mode = block.getFieldValue('MODE') || 'GET';
-  var where = block.getFieldValue('WHERE') || 'FROM_START';
-  var listOrder = (where == 'RANDOM') ? Blockly.JavaScript.ORDER_COMMA :
-      Blockly.JavaScript.ORDER_MEMBER;
-  var list = Blockly.JavaScript.valueToCode(block, 'VALUE', listOrder) || '[]';
+  const mode = block.getFieldValue('MODE') || 'GET'
+  const where = block.getFieldValue('WHERE') || 'FROM_START'
+  const listOrder = (where == 'RANDOM')
+    ? Blockly.JavaScript.ORDER_COMMA
+    : Blockly.JavaScript.ORDER_MEMBER
+  const list = Blockly.JavaScript.valueToCode(block, 'VALUE', listOrder) || '[]'
 
   switch (where) {
     case ('FIRST'):
       if (mode == 'GET') {
-        var code = list + '[0]';
-        return [code, Blockly.JavaScript.ORDER_MEMBER];
+        var code = list + '[0]'
+        return [code, Blockly.JavaScript.ORDER_MEMBER]
       } else if (mode == 'GET_REMOVE') {
-        var code = list + '.shift()';
-        return [code, Blockly.JavaScript.ORDER_MEMBER];
+        var code = list + '.shift()'
+        return [code, Blockly.JavaScript.ORDER_MEMBER]
       } else if (mode == 'REMOVE') {
-        return list + '.shift();\n';
+        return list + '.shift();\n'
       }
-      break;
+      break
     case ('LAST'):
       if (mode == 'GET') {
-        var code = list + '.slice(-1)[0]';
-        return [code, Blockly.JavaScript.ORDER_MEMBER];
+        var code = list + '.slice(-1)[0]'
+        return [code, Blockly.JavaScript.ORDER_MEMBER]
       } else if (mode == 'GET_REMOVE') {
-        var code = list + '.pop()';
-        return [code, Blockly.JavaScript.ORDER_MEMBER];
+        var code = list + '.pop()'
+        return [code, Blockly.JavaScript.ORDER_MEMBER]
       } else if (mode == 'REMOVE') {
-        return list + '.pop();\n';
+        return list + '.pop();\n'
       }
-      break;
+      break
     case ('FROM_START'):
-      var at = Blockly.JavaScript.getAdjusted(block, 'AT');
+      var at = Blockly.JavaScript.getAdjusted(block, 'AT')
       if (mode == 'GET') {
-        var code = list + '[' + at + ']';
-        return [code, Blockly.JavaScript.ORDER_MEMBER];
+        var code = list + '[' + at + ']'
+        return [code, Blockly.JavaScript.ORDER_MEMBER]
       } else if (mode == 'GET_REMOVE') {
-        var code = list + '.splice(' + at + ', 1)[0]';
-        return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+        var code = list + '.splice(' + at + ', 1)[0]'
+        return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL]
       } else if (mode == 'REMOVE') {
-        return list + '.splice(' + at + ', 1);\n';
+        return list + '.splice(' + at + ', 1);\n'
       }
-      break;
+      break
     case ('FROM_END'):
-      var at = Blockly.JavaScript.getAdjusted(block, 'AT', 1, true);
+      var at = Blockly.JavaScript.getAdjusted(block, 'AT', 1, true)
       if (mode == 'GET') {
-        var code = list + '.slice(' + at + ')[0]';
-        return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+        var code = list + '.slice(' + at + ')[0]'
+        return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL]
       } else if (mode == 'GET_REMOVE') {
-        var code = list + '.splice(' + at + ', 1)[0]';
-        return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+        var code = list + '.splice(' + at + ', 1)[0]'
+        return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL]
       } else if (mode == 'REMOVE') {
-        return list + '.splice(' + at + ', 1);';
+        return list + '.splice(' + at + ', 1);'
       }
-      break;
+      break
     case ('RANDOM'):
       var functionName = Blockly.JavaScript.provideFunction_(
-          'listsGetRandomItem',
-          ['function ' + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ +
+        'listsGetRandomItem',
+        ['function ' + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ +
               '(list, remove) {',
-           '  var x = Math.floor(Math.random() * list.length);',
-           '  if (remove) {',
-           '    return list.splice(x, 1)[0];',
-           '  } else {',
-           '    return list[x];',
-           '  }',
-           '}']);
-      code = functionName + '(' + list + ', ' + (mode != 'GET') + ')';
+        '  var x = Math.floor(Math.random() * list.length);',
+        '  if (remove) {',
+        '    return list.splice(x, 1)[0];',
+        '  } else {',
+        '    return list[x];',
+        '  }',
+        '}'])
+      code = functionName + '(' + list + ', ' + (mode != 'GET') + ')'
       if (mode == 'GET' || mode == 'GET_REMOVE') {
-        return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+        return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL]
       } else if (mode == 'REMOVE') {
-        return code + ';\n';
+        return code + ';\n'
       }
-      break;
+      break
   }
-  throw Error('Unhandled combination (lists_getIndex).');
-};
+  throw Error('Unhandled combination (lists_getIndex).')
+}
 
-Blockly.JavaScript['lists_setIndex'] = function(block) {
+Blockly.JavaScript.lists_setIndex = function (block) {
   // Set element at index.
   // Note: Until February 2013 this block did not have MODE or WHERE inputs.
-  var list = Blockly.JavaScript.valueToCode(block, 'LIST',
-      Blockly.JavaScript.ORDER_MEMBER) || '[]';
-  var mode = block.getFieldValue('MODE') || 'GET';
-  var where = block.getFieldValue('WHERE') || 'FROM_START';
-  var value = Blockly.JavaScript.valueToCode(block, 'TO',
-      Blockly.JavaScript.ORDER_ASSIGNMENT) || 'null';
+  let list = Blockly.JavaScript.valueToCode(block, 'LIST',
+    Blockly.JavaScript.ORDER_MEMBER) || '[]'
+  const mode = block.getFieldValue('MODE') || 'GET'
+  const where = block.getFieldValue('WHERE') || 'FROM_START'
+  const value = Blockly.JavaScript.valueToCode(block, 'TO',
+    Blockly.JavaScript.ORDER_ASSIGNMENT) || 'null'
   // Cache non-trivial values to variables to prevent repeated look-ups.
   // Closure, which accesses and modifies 'list'.
-  function cacheList() {
+  function cacheList () {
     if (list.match(/^\w+$/)) {
-      return '';
+      return ''
     }
-    var listVar = Blockly.JavaScript.variableDB_.getDistinctName(
-        'tmpList', Blockly.VARIABLE_CATEGORY_NAME);
-    var code = 'var ' + listVar + ' = ' + list + ';\n';
-    list = listVar;
-    return code;
+    const listVar = Blockly.JavaScript.variableDB_.getDistinctName(
+      'tmpList', Blockly.VARIABLE_CATEGORY_NAME)
+    const code = 'var ' + listVar + ' = ' + list + ';\n'
+    list = listVar
+    return code
   }
   switch (where) {
     case ('FIRST'):
       if (mode == 'SET') {
-        return list + '[0] = ' + value + ';\n';
+        return list + '[0] = ' + value + ';\n'
       } else if (mode == 'INSERT') {
-        return list + '.unshift(' + value + ');\n';
+        return list + '.unshift(' + value + ');\n'
       }
-      break;
+      break
     case ('LAST'):
       if (mode == 'SET') {
-        var code = cacheList();
-        code += list + '[' + list + '.length - 1] = ' + value + ';\n';
-        return code;
+        var code = cacheList()
+        code += list + '[' + list + '.length - 1] = ' + value + ';\n'
+        return code
       } else if (mode == 'INSERT') {
-        return list + '.push(' + value + ');\n';
+        return list + '.push(' + value + ');\n'
       }
-      break;
+      break
     case ('FROM_START'):
-      var at = Blockly.JavaScript.getAdjusted(block, 'AT');
+      var at = Blockly.JavaScript.getAdjusted(block, 'AT')
       if (mode == 'SET') {
-        return list + '[' + at + '] = ' + value + ';\n';
+        return list + '[' + at + '] = ' + value + ';\n'
       } else if (mode == 'INSERT') {
-        return list + '.splice(' + at + ', 0, ' + value + ');\n';
+        return list + '.splice(' + at + ', 0, ' + value + ');\n'
       }
-      break;
+      break
     case ('FROM_END'):
       var at = Blockly.JavaScript.getAdjusted(block, 'AT', 1, false,
-          Blockly.JavaScript.ORDER_SUBTRACTION);
-      var code = cacheList();
+        Blockly.JavaScript.ORDER_SUBTRACTION)
+      var code = cacheList()
       if (mode == 'SET') {
-        code += list + '[' + list + '.length - ' + at + '] = ' + value + ';\n';
-        return code;
+        code += list + '[' + list + '.length - ' + at + '] = ' + value + ';\n'
+        return code
       } else if (mode == 'INSERT') {
         code += list + '.splice(' + list + '.length - ' + at + ', 0, ' + value +
-            ');\n';
-        return code;
+            ');\n'
+        return code
       }
-      break;
+      break
     case ('RANDOM'):
-      var code = cacheList();
+      var code = cacheList()
       var xVar = Blockly.JavaScript.variableDB_.getDistinctName(
-          'tmpX', Blockly.VARIABLE_CATEGORY_NAME);
+        'tmpX', Blockly.VARIABLE_CATEGORY_NAME)
       code += 'var ' + xVar + ' = Math.floor(Math.random() * ' + list +
-          '.length);\n';
+          '.length);\n'
       if (mode == 'SET') {
-        code += list + '[' + xVar + '] = ' + value + ';\n';
-        return code;
+        code += list + '[' + xVar + '] = ' + value + ';\n'
+        return code
       } else if (mode == 'INSERT') {
-        code += list + '.splice(' + xVar + ', 0, ' + value + ');\n';
-        return code;
+        code += list + '.splice(' + xVar + ', 0, ' + value + ');\n'
+        return code
       }
-      break;
+      break
   }
-  throw Error('Unhandled combination (lists_setIndex).');
-};
+  throw Error('Unhandled combination (lists_setIndex).')
+}
 
 /**
  * Returns an expression calculating the index into a list.
@@ -244,145 +245,149 @@ Blockly.JavaScript['lists_setIndex'] = function(block) {
  * @return {string|undefined} Index expression.
  * @private
  */
-Blockly.JavaScript.lists.getIndex_ = function(listName, where, opt_at) {
+Blockly.JavaScript.lists.getIndex_ = function (listName, where, opt_at) {
   if (where == 'FIRST') {
-    return '0';
+    return '0'
   } else if (where == 'FROM_END') {
-    return listName + '.length - 1 - ' + opt_at;
+    return listName + '.length - 1 - ' + opt_at
   } else if (where == 'LAST') {
-    return listName + '.length - 1';
+    return listName + '.length - 1'
   } else {
-    return opt_at;
+    return opt_at
   }
-};
+}
 
-Blockly.JavaScript['lists_getSublist'] = function(block) {
+Blockly.JavaScript.lists_getSublist = function (block) {
   // Get sublist.
-  var list = Blockly.JavaScript.valueToCode(block, 'LIST',
-      Blockly.JavaScript.ORDER_MEMBER) || '[]';
-  var where1 = block.getFieldValue('WHERE1');
-  var where2 = block.getFieldValue('WHERE2');
+  const list = Blockly.JavaScript.valueToCode(block, 'LIST',
+    Blockly.JavaScript.ORDER_MEMBER) || '[]'
+  const where1 = block.getFieldValue('WHERE1')
+  const where2 = block.getFieldValue('WHERE2')
   if (where1 == 'FIRST' && where2 == 'LAST') {
-    var code = list + '.slice(0)';
+    var code = list + '.slice(0)'
   } else if (list.match(/^\w+$/) ||
       (where1 != 'FROM_END' && where2 == 'FROM_START')) {
     // If the list is a variable or doesn't require a call for length, don't
     // generate a helper function.
     switch (where1) {
       case 'FROM_START':
-        var at1 = Blockly.JavaScript.getAdjusted(block, 'AT1');
-        break;
+        var at1 = Blockly.JavaScript.getAdjusted(block, 'AT1')
+        break
       case 'FROM_END':
         var at1 = Blockly.JavaScript.getAdjusted(block, 'AT1', 1, false,
-            Blockly.JavaScript.ORDER_SUBTRACTION);
-        at1 = list + '.length - ' + at1;
-        break;
+          Blockly.JavaScript.ORDER_SUBTRACTION)
+        at1 = list + '.length - ' + at1
+        break
       case 'FIRST':
-        var at1 = '0';
-        break;
+        var at1 = '0'
+        break
       default:
-        throw Error('Unhandled option (lists_getSublist).');
+        throw Error('Unhandled option (lists_getSublist).')
     }
     switch (where2) {
       case 'FROM_START':
-        var at2 = Blockly.JavaScript.getAdjusted(block, 'AT2', 1);
-        break;
+        var at2 = Blockly.JavaScript.getAdjusted(block, 'AT2', 1)
+        break
       case 'FROM_END':
         var at2 = Blockly.JavaScript.getAdjusted(block, 'AT2', 0, false,
-            Blockly.JavaScript.ORDER_SUBTRACTION);
-        at2 = list + '.length - ' + at2;
-        break;
+          Blockly.JavaScript.ORDER_SUBTRACTION)
+        at2 = list + '.length - ' + at2
+        break
       case 'LAST':
-        var at2 = list + '.length';
-        break;
+        var at2 = list + '.length'
+        break
       default:
-        throw Error('Unhandled option (lists_getSublist).');
+        throw Error('Unhandled option (lists_getSublist).')
     }
-    code = list + '.slice(' + at1 + ', ' + at2 + ')';
+    code = list + '.slice(' + at1 + ', ' + at2 + ')'
   } else {
-    var at1 = Blockly.JavaScript.getAdjusted(block, 'AT1');
-    var at2 = Blockly.JavaScript.getAdjusted(block, 'AT2');
-    var getIndex_ = Blockly.JavaScript.lists.getIndex_;
-    var wherePascalCase = {'FIRST': 'First', 'LAST': 'Last',
-        'FROM_START': 'FromStart', 'FROM_END': 'FromEnd'};
-    var functionName = Blockly.JavaScript.provideFunction_(
-        'subsequence' + wherePascalCase[where1] + wherePascalCase[where2],
-        ['function ' + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ +
+    var at1 = Blockly.JavaScript.getAdjusted(block, 'AT1')
+    var at2 = Blockly.JavaScript.getAdjusted(block, 'AT2')
+    const getIndex_ = Blockly.JavaScript.lists.getIndex_
+    const wherePascalCase = {
+      FIRST: 'First',
+      LAST: 'Last',
+      FROM_START: 'FromStart',
+      FROM_END: 'FromEnd'
+    }
+    const functionName = Blockly.JavaScript.provideFunction_(
+      'subsequence' + wherePascalCase[where1] + wherePascalCase[where2],
+      ['function ' + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ +
             '(sequence' +
             // The value for 'FROM_END' and'FROM_START' depends on `at` so
             // we add it as a parameter.
             ((where1 == 'FROM_END' || where1 == 'FROM_START') ? ', at1' : '') +
             ((where2 == 'FROM_END' || where2 == 'FROM_START') ? ', at2' : '') +
             ') {',
-          '  var start = ' + getIndex_('sequence', where1, 'at1') + ';',
-          '  var end = ' + getIndex_('sequence', where2, 'at2') + ' + 1;',
-          '  return sequence.slice(start, end);',
-          '}']);
+      '  var start = ' + getIndex_('sequence', where1, 'at1') + ';',
+      '  var end = ' + getIndex_('sequence', where2, 'at2') + ' + 1;',
+      '  return sequence.slice(start, end);',
+      '}'])
     var code = functionName + '(' + list +
         // The value for 'FROM_END' and 'FROM_START' depends on `at` so we
         // pass it.
         ((where1 == 'FROM_END' || where1 == 'FROM_START') ? ', ' + at1 : '') +
         ((where2 == 'FROM_END' || where2 == 'FROM_START') ? ', ' + at2 : '') +
-        ')';
+        ')'
   }
-  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
-};
+  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL]
+}
 
-Blockly.JavaScript['lists_sort'] = function(block) {
+Blockly.JavaScript.lists_sort = function (block) {
   // Block for sorting a list.
-  var list = Blockly.JavaScript.valueToCode(block, 'LIST',
-      Blockly.JavaScript.ORDER_FUNCTION_CALL) || '[]';
-  var direction = block.getFieldValue('DIRECTION') === '1' ? 1 : -1;
-  var type = block.getFieldValue('TYPE');
-  var getCompareFunctionName = Blockly.JavaScript.provideFunction_(
-      'listsGetSortCompare',
-      ['function ' + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ +
+  const list = Blockly.JavaScript.valueToCode(block, 'LIST',
+    Blockly.JavaScript.ORDER_FUNCTION_CALL) || '[]'
+  const direction = block.getFieldValue('DIRECTION') === '1' ? 1 : -1
+  const type = block.getFieldValue('TYPE')
+  const getCompareFunctionName = Blockly.JavaScript.provideFunction_(
+    'listsGetSortCompare',
+    ['function ' + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ +
           '(type, direction) {',
-       '  var compareFuncs = {',
-       '    "NUMERIC": function(a, b) {',
-       '        return Number(a) - Number(b); },',
-       '    "TEXT": function(a, b) {',
-       '        return a.toString() > b.toString() ? 1 : -1; },',
-       '    "IGNORE_CASE": function(a, b) {',
-       '        return a.toString().toLowerCase() > ' +
+    '  var compareFuncs = {',
+    '    "NUMERIC": function(a, b) {',
+    '        return Number(a) - Number(b); },',
+    '    "TEXT": function(a, b) {',
+    '        return a.toString() > b.toString() ? 1 : -1; },',
+    '    "IGNORE_CASE": function(a, b) {',
+    '        return a.toString().toLowerCase() > ' +
           'b.toString().toLowerCase() ? 1 : -1; },',
-       '  };',
-       '  var compare = compareFuncs[type];',
-       '  return function(a, b) { return compare(a, b) * direction; }',
-       '}']);
+    '  };',
+    '  var compare = compareFuncs[type];',
+    '  return function(a, b) { return compare(a, b) * direction; }',
+    '}'])
   return [list + '.slice().sort(' +
       getCompareFunctionName + '("' + type + '", ' + direction + '))',
-      Blockly.JavaScript.ORDER_FUNCTION_CALL];
-};
+  Blockly.JavaScript.ORDER_FUNCTION_CALL]
+}
 
-Blockly.JavaScript['lists_split'] = function(block) {
+Blockly.JavaScript.lists_split = function (block) {
   // Block for splitting text into a list, or joining a list into text.
-  var input = Blockly.JavaScript.valueToCode(block, 'INPUT',
-      Blockly.JavaScript.ORDER_MEMBER);
-  var delimiter = Blockly.JavaScript.valueToCode(block, 'DELIM',
-      Blockly.JavaScript.ORDER_NONE) || '\'\'';
-  var mode = block.getFieldValue('MODE');
+  let input = Blockly.JavaScript.valueToCode(block, 'INPUT',
+    Blockly.JavaScript.ORDER_MEMBER)
+  const delimiter = Blockly.JavaScript.valueToCode(block, 'DELIM',
+    Blockly.JavaScript.ORDER_NONE) || '\'\''
+  const mode = block.getFieldValue('MODE')
   if (mode == 'SPLIT') {
     if (!input) {
-      input = '\'\'';
+      input = '\'\''
     }
-    var functionName = 'split';
+    var functionName = 'split'
   } else if (mode == 'JOIN') {
     if (!input) {
-      input = '[]';
+      input = '[]'
     }
-    var functionName = 'join';
+    var functionName = 'join'
   } else {
-    throw Error('Unknown mode: ' + mode);
+    throw Error('Unknown mode: ' + mode)
   }
-  var code = input + '.' + functionName + '(' + delimiter + ')';
-  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
-};
+  const code = input + '.' + functionName + '(' + delimiter + ')'
+  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL]
+}
 
-Blockly.JavaScript['lists_reverse'] = function(block) {
+Blockly.JavaScript.lists_reverse = function (block) {
   // Block for reversing a list.
-  var list = Blockly.JavaScript.valueToCode(block, 'LIST',
-      Blockly.JavaScript.ORDER_FUNCTION_CALL) || '[]';
-  var code = list + '.slice().reverse()';
-  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
-};
+  const list = Blockly.JavaScript.valueToCode(block, 'LIST',
+    Blockly.JavaScript.ORDER_FUNCTION_CALL) || '[]'
+  const code = list + '.slice().reverse()'
+  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL]
+}

@@ -9,13 +9,12 @@
  * Used to demo switching between different cursors.
  * @author aschmiedt@google.com (Abby Schmiedt)
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.BasicCursor');
+goog.provide('Blockly.BasicCursor')
 
-goog.require('Blockly.ASTNode');
-goog.require('Blockly.Cursor');
-
+goog.require('Blockly.ASTNode')
+goog.require('Blockly.Cursor')
 
 /**
  * Class for a basic cursor.
@@ -24,10 +23,10 @@ goog.require('Blockly.Cursor');
  * @constructor
  * @extends {Blockly.Cursor}
  */
-Blockly.BasicCursor = function() {
-  Blockly.BasicCursor.superClass_.constructor.call(this);
-};
-Blockly.utils.object.inherits(Blockly.BasicCursor, Blockly.Cursor);
+Blockly.BasicCursor = function () {
+  Blockly.BasicCursor.superClass_.constructor.call(this)
+}
+Blockly.utils.object.inherits(Blockly.BasicCursor, Blockly.Cursor)
 
 /**
  * Find the next node in the pre order traversal.
@@ -35,18 +34,18 @@ Blockly.utils.object.inherits(Blockly.BasicCursor, Blockly.Cursor);
  *     not set or there is no next value.
  * @override
  */
-Blockly.BasicCursor.prototype.next = function() {
-  var curNode = this.getCurNode();
+Blockly.BasicCursor.prototype.next = function () {
+  const curNode = this.getCurNode()
   if (!curNode) {
-    return null;
+    return null
   }
-  var newNode = this.getNextNode_(curNode, this.validNode_);
+  const newNode = this.getNextNode_(curNode, this.validNode_)
 
   if (newNode) {
-    this.setCurNode(newNode);
+    this.setCurNode(newNode)
   }
-  return newNode;
-};
+  return newNode
+}
 
 /**
  * For a basic cursor we only have the ability to go next and previous, so
@@ -55,9 +54,9 @@ Blockly.BasicCursor.prototype.next = function() {
  *     not set or there is no next value.
  * @override
  */
-Blockly.BasicCursor.prototype.in = function() {
-  return this.next();
-};
+Blockly.BasicCursor.prototype.in = function () {
+  return this.next()
+}
 
 /**
  * Find the previous node in the pre order traversal.
@@ -65,18 +64,18 @@ Blockly.BasicCursor.prototype.in = function() {
  *     is not set or there is no previous value.
  * @override
  */
-Blockly.BasicCursor.prototype.prev = function() {
-  var curNode = this.getCurNode();
+Blockly.BasicCursor.prototype.prev = function () {
+  const curNode = this.getCurNode()
   if (!curNode) {
-    return null;
+    return null
   }
-  var newNode = this.getPreviousNode_(curNode, this.validNode_);
+  const newNode = this.getPreviousNode_(curNode, this.validNode_)
 
   if (newNode) {
-    this.setCurNode(newNode);
+    this.setCurNode(newNode)
   }
-  return newNode;
-};
+  return newNode
+}
 
 /**
  * For a basic cursor we only have the ability to go next and previous, so
@@ -85,9 +84,9 @@ Blockly.BasicCursor.prototype.prev = function() {
  *     not set or there is no previous value.
  * @override
  */
-Blockly.BasicCursor.prototype.out = function() {
-  return this.prev();
-};
+Blockly.BasicCursor.prototype.out = function () {
+  return this.prev()
+}
 
 /**
  * Uses pre order traversal to navigate the Blockly AST. This will allow
@@ -99,24 +98,24 @@ Blockly.BasicCursor.prototype.out = function() {
  * @return {Blockly.ASTNode} The next node in the traversal.
  * @protected
  */
-Blockly.BasicCursor.prototype.getNextNode_ = function(node, isValid) {
+Blockly.BasicCursor.prototype.getNextNode_ = function (node, isValid) {
   if (!node) {
-    return null;
+    return null
   }
-  var newNode = node.in() || node.next();
+  const newNode = node.in() || node.next()
   if (isValid(newNode)) {
-    return newNode;
+    return newNode
   } else if (newNode) {
-    return this.getNextNode_(newNode, isValid);
+    return this.getNextNode_(newNode, isValid)
   }
-  var siblingOrParent = this.findSiblingOrParent_(node.out());
+  const siblingOrParent = this.findSiblingOrParent_(node.out())
   if (isValid(siblingOrParent)) {
-    return siblingOrParent;
+    return siblingOrParent
   } else if (siblingOrParent) {
-    return this.getNextNode_(siblingOrParent, isValid);
+    return this.getNextNode_(siblingOrParent, isValid)
   }
-  return null;
-};
+  return null
+}
 
 /**
  * Reverses the pre order traversal in order to find the previous node. This will
@@ -129,24 +128,24 @@ Blockly.BasicCursor.prototype.getNextNode_ = function(node, isValid) {
  *     previous node exists.
  * @protected
  */
-Blockly.BasicCursor.prototype.getPreviousNode_ = function(node, isValid) {
+Blockly.BasicCursor.prototype.getPreviousNode_ = function (node, isValid) {
   if (!node) {
-    return null;
+    return null
   }
-  var newNode = node.prev();
+  let newNode = node.prev()
 
   if (newNode) {
-    newNode = this.getRightMostChild_(newNode);
+    newNode = this.getRightMostChild_(newNode)
   } else {
-    newNode = node.out();
+    newNode = node.out()
   }
   if (isValid(newNode)) {
-    return newNode;
+    return newNode
   } else if (newNode) {
-    return this.getPreviousNode_(newNode, isValid);
+    return this.getPreviousNode_(newNode, isValid)
   }
-  return null;
-};
+  return null
+}
 
 /**
  * Decides what nodes to traverse and which ones to skip. Currently, it
@@ -155,19 +154,19 @@ Blockly.BasicCursor.prototype.getPreviousNode_ = function(node, isValid) {
  * @return {boolean} True if the node should be visited, false otherwise.
  * @protected
  */
-Blockly.BasicCursor.prototype.validNode_ = function(node) {
-  var isValid = false;
-  var type = node && node.getType();
+Blockly.BasicCursor.prototype.validNode_ = function (node) {
+  let isValid = false
+  const type = node && node.getType()
   if (type == Blockly.ASTNode.types.OUTPUT ||
       type == Blockly.ASTNode.types.INPUT ||
       type == Blockly.ASTNode.types.FIELD ||
       type == Blockly.ASTNode.types.NEXT ||
       type == Blockly.ASTNode.types.PREVIOUS ||
       type == Blockly.ASTNode.types.WORKSPACE) {
-    isValid = true;
+    isValid = true
   }
-  return isValid;
-};
+  return isValid
+}
 
 /**
  * From the given node find either the next valid sibling or parent.
@@ -176,17 +175,16 @@ Blockly.BasicCursor.prototype.validNode_ = function(node) {
  *     valid parents.
  * @private
  */
-Blockly.BasicCursor.prototype.findSiblingOrParent_ = function(node) {
+Blockly.BasicCursor.prototype.findSiblingOrParent_ = function (node) {
   if (!node) {
-    return null;
+    return null
   }
-  var nextNode = node.next();
+  const nextNode = node.next()
   if (nextNode) {
-    return nextNode;
+    return nextNode
   }
-  return this.findSiblingOrParent_(node.out());
-};
-
+  return this.findSiblingOrParent_(node.out())
+}
 
 /**
  * Get the right most child of a node.
@@ -195,14 +193,13 @@ Blockly.BasicCursor.prototype.findSiblingOrParent_ = function(node) {
  *     if no child exists.
  * @private
  */
-Blockly.BasicCursor.prototype.getRightMostChild_ = function(node) {
+Blockly.BasicCursor.prototype.getRightMostChild_ = function (node) {
   if (!node.in()) {
-    return node;
+    return node
   }
-  var newNode = node.in();
+  let newNode = node.in()
   while (newNode.next()) {
-    newNode = newNode.next();
+    newNode = newNode.next()
   }
-  return this.getRightMostChild_(newNode);
-
-};
+  return this.getRightMostChild_(newNode)
+}

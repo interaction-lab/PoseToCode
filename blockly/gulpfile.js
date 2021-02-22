@@ -9,13 +9,13 @@
  * Run this script by calling "npm install" in this directory.
  */
 
-var gulp = require('gulp');
+const gulp = require('gulp')
 
-var typings = require('./scripts/gulpfiles/typings');
-var buildTasks = require('./scripts/gulpfiles/build_tasks');
-var packageTasks = require('./scripts/gulpfiles/package_tasks');
-var gitTasks = require('./scripts/gulpfiles/git_tasks');
-var licenseTasks = require('./scripts/gulpfiles/license_tasks');
+const typings = require('./scripts/gulpfiles/typings')
+const buildTasks = require('./scripts/gulpfiles/build_tasks')
+const packageTasks = require('./scripts/gulpfiles/package_tasks')
+const gitTasks = require('./scripts/gulpfiles/git_tasks')
+const licenseTasks = require('./scripts/gulpfiles/license_tasks')
 
 module.exports = {
   default: buildTasks.build,
@@ -36,4 +36,4 @@ module.exports = {
   typings: gulp.series(typings.typings, typings.msgTypings),
   package: packageTasks.package,
   checkLicenses: licenseTasks.checkLicenses
-};
+}

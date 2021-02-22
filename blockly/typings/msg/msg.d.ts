@@ -441,4 +441,3 @@ declare namespace Blockly.Msg {
   let WORKSPACE_ARIA_LABEL : string ;
   let WORKSPACE_COMMENT_DEFAULT_TEXT : string ;
 }
-

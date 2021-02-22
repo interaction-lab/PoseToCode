@@ -8,10 +8,9 @@
  * @fileoverview The class representing an action.
  * Used primarily for keyboard navigation.
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.Action');
-
+goog.provide('Blockly.Action')
 
 /**
  * Class for a single action.
@@ -20,7 +19,7 @@ goog.provide('Blockly.Action');
  * @param {string} desc The description of the action.
  * @constructor
  */
-Blockly.Action = function(name, desc) {
-  this.name = name;
-  this.desc = desc;
-};
+Blockly.Action = function (name, desc) {
+  this.name = name
+  this.desc = desc
+}

@@ -9,9 +9,9 @@
  * This method is not specific to Blockly.
  * @author fenichel@google.com (Rachel Fenichel);
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.utils.deprecation');
+goog.provide('Blockly.utils.deprecation')
 
 /**
  * Warn developers that a function is deprecated.
@@ -23,12 +23,12 @@ goog.provide('Blockly.utils.deprecation');
  * @param {string=} opt_use The name of a function to use instead, if any.
  * @package
  */
-Blockly.utils.deprecation.warn = function(
-    functionName, deprecationDate, deletionDate, opt_use) {
-  var msg = functionName + ' was deprecated on ' + deprecationDate +
-        ' and will be deleted on ' + deletionDate + '.';
+Blockly.utils.deprecation.warn = function (
+  functionName, deprecationDate, deletionDate, opt_use) {
+  let msg = functionName + ' was deprecated on ' + deprecationDate +
+        ' and will be deleted on ' + deletionDate + '.'
   if (opt_use) {
-    msg += '\nUse ' + opt_use + ' instead.';
+    msg += '\nUse ' + opt_use + ' instead.'
   }
-  console.warn(msg);
-};
+  console.warn(msg)
+}

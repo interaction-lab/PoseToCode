@@ -9,73 +9,72 @@
  * Used primarily for keyboard navigation to show a marked location.
  * @author aschmiedt@google.com (Abby Schmiedt)
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.Marker');
+goog.provide('Blockly.Marker')
 
-goog.require('Blockly.ASTNode');
-goog.require('Blockly.navigation');
-
+goog.require('Blockly.ASTNode')
+goog.require('Blockly.navigation')
 
 /**
  * Class for a marker.
  * This is used in keyboard navigation to save a location in the Blockly AST.
  * @constructor
  */
-Blockly.Marker = function() {
+Blockly.Marker = function () {
   /**
    * The colour of the marker.
    * @type {?string}
    */
-  this.colour = null;
+  this.colour = null
 
   /**
    * The current location of the marker.
    * @type {Blockly.ASTNode}
    * @private
    */
-  this.curNode_ = null;
+  this.curNode_ = null
 
   /**
    * The object in charge of drawing the visual representation of the current node.
    * @type {Blockly.blockRendering.MarkerSvg}
    * @private
    */
-  this.drawer_ = null;
+  this.drawer_ = null
 
   /**
    * The type of the marker.
    * @type {string}
    */
-  this.type = 'marker';
-};
+  this.type = 'marker'
+}
 
 /**
  * Sets the object in charge of drawing the marker.
  * @param {Blockly.blockRendering.MarkerSvg} drawer The object in charge of
  *     drawing the marker.
  */
-Blockly.Marker.prototype.setDrawer = function(drawer) {
-  this.drawer_ = drawer;
-};
+Blockly.Marker.prototype.setDrawer = function (drawer) {
+  this.drawer_ = drawer
+}
 
 /**
  * Get the current drawer for the marker.
  * @return {Blockly.blockRendering.MarkerSvg} The object in charge of drawing
  *     the marker.
  */
-Blockly.Marker.prototype.getDrawer = function() {
-  return this.drawer_;
-};
+Blockly.Marker.prototype.getDrawer = function () {
+  return this.drawer_
+}
 
 /**
  * Gets the current location of the marker.
  * @return {Blockly.ASTNode} The current field, connection, or block the marker
  *     is on.
  */
-Blockly.Marker.prototype.getCurNode = function() {
-  return this.curNode_;
-};
+Blockly.Marker.prototype.getCurNode = function () {
+  return this.curNode_
+}
 
 /**
  * Set the location of the marker and call the update method.
@@ -83,38 +82,38 @@ Blockly.Marker.prototype.getCurNode = function() {
  * output or previous connection on a stack.
  * @param {Blockly.ASTNode} newNode The new location of the marker.
  */
-Blockly.Marker.prototype.setCurNode = function(newNode) {
-  var oldNode = this.curNode_;
-  this.curNode_ = newNode;
+Blockly.Marker.prototype.setCurNode = function (newNode) {
+  const oldNode = this.curNode_
+  this.curNode_ = newNode
   if (this.drawer_) {
-    this.drawer_.draw(oldNode, this.curNode_);
+    this.drawer_.draw(oldNode, this.curNode_)
   }
-};
+}
 
 /**
  * Redraw the current marker.
  * @package
  */
-Blockly.Marker.prototype.draw = function() {
+Blockly.Marker.prototype.draw = function () {
   if (this.drawer_) {
-    this.drawer_.draw(this.curNode_, this.curNode_);
+    this.drawer_.draw(this.curNode_, this.curNode_)
   }
-};
+}
 
 /**
  * Hide the marker SVG.
  */
-Blockly.Marker.prototype.hide = function() {
+Blockly.Marker.prototype.hide = function () {
   if (this.drawer_) {
-    this.drawer_.hide();
+    this.drawer_.hide()
   }
-};
+}
 
 /**
  * Dispose of this marker.
  */
-Blockly.Marker.prototype.dispose = function() {
+Blockly.Marker.prototype.dispose = function () {
   if (this.getDrawer()) {
-    this.getDrawer().dispose();
+    this.getDrawer().dispose()
   }
-};
+}

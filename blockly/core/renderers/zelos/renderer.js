@@ -8,21 +8,20 @@
  * @fileoverview Zelos renderer.
  * @author fenichel@google.com (Rachel Fenichel)
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.zelos.Renderer');
+goog.provide('Blockly.zelos.Renderer')
 
-goog.require('Blockly.blockRendering');
-goog.require('Blockly.blockRendering.Renderer');
-goog.require('Blockly.constants');
-goog.require('Blockly.InsertionMarkerManager');
-goog.require('Blockly.utils.object');
-goog.require('Blockly.zelos.ConstantProvider');
-goog.require('Blockly.zelos.Drawer');
-goog.require('Blockly.zelos.PathObject');
-goog.require('Blockly.zelos.RenderInfo');
-goog.require('Blockly.zelos.MarkerSvg');
-
+goog.require('Blockly.blockRendering')
+goog.require('Blockly.blockRendering.Renderer')
+goog.require('Blockly.constants')
+goog.require('Blockly.InsertionMarkerManager')
+goog.require('Blockly.utils.object')
+goog.require('Blockly.zelos.ConstantProvider')
+goog.require('Blockly.zelos.Drawer')
+goog.require('Blockly.zelos.PathObject')
+goog.require('Blockly.zelos.RenderInfo')
+goog.require('Blockly.zelos.MarkerSvg')
 
 /**
  * The zelos renderer.
@@ -31,11 +30,11 @@ goog.require('Blockly.zelos.MarkerSvg');
  * @constructor
  * @extends {Blockly.blockRendering.Renderer}
  */
-Blockly.zelos.Renderer = function(name) {
-  Blockly.zelos.Renderer.superClass_.constructor.call(this, name);
-};
+Blockly.zelos.Renderer = function (name) {
+  Blockly.zelos.Renderer.superClass_.constructor.call(this, name)
+}
 Blockly.utils.object.inherits(Blockly.zelos.Renderer,
-    Blockly.blockRendering.Renderer);
+  Blockly.blockRendering.Renderer)
 
 /**
  * Create a new instance of the renderer's constant provider.
@@ -43,9 +42,9 @@ Blockly.utils.object.inherits(Blockly.zelos.Renderer,
  * @protected
  * @override
  */
-Blockly.zelos.Renderer.prototype.makeConstants_ = function() {
-  return new Blockly.zelos.ConstantProvider();
-};
+Blockly.zelos.Renderer.prototype.makeConstants_ = function () {
+  return new Blockly.zelos.ConstantProvider()
+}
 
 /**
  * Create a new instance of the renderer's render info object.
@@ -54,9 +53,9 @@ Blockly.zelos.Renderer.prototype.makeConstants_ = function() {
  * @protected
  * @override
  */
-Blockly.zelos.Renderer.prototype.makeRenderInfo_ = function(block) {
-  return new Blockly.zelos.RenderInfo(this, block);
-};
+Blockly.zelos.Renderer.prototype.makeRenderInfo_ = function (block) {
+  return new Blockly.zelos.RenderInfo(this, block)
+}
 
 /**
  * Create a new instance of the renderer's drawer.
@@ -67,10 +66,10 @@ Blockly.zelos.Renderer.prototype.makeRenderInfo_ = function(block) {
  * @protected
  * @override
  */
-Blockly.zelos.Renderer.prototype.makeDrawer_ = function(block, info) {
+Blockly.zelos.Renderer.prototype.makeDrawer_ = function (block, info) {
   return new Blockly.zelos.Drawer(block,
-      /** @type {!Blockly.zelos.RenderInfo} */ (info));
-};
+    /** @type {!Blockly.zelos.RenderInfo} */ (info))
+}
 
 /**
  * Create a new instance of the renderer's cursor drawer.
@@ -81,10 +80,10 @@ Blockly.zelos.Renderer.prototype.makeDrawer_ = function(block, info) {
  * @package
  * @override
  */
-Blockly.zelos.Renderer.prototype.makeMarkerDrawer = function(
-    workspace, marker) {
-  return new Blockly.zelos.MarkerSvg(workspace, this.getConstants(), marker);
-};
+Blockly.zelos.Renderer.prototype.makeMarkerDrawer = function (
+  workspace, marker) {
+  return new Blockly.zelos.MarkerSvg(workspace, this.getConstants(), marker)
+}
 
 /**
  * Create a new instance of a renderer path object.
@@ -95,37 +94,37 @@ Blockly.zelos.Renderer.prototype.makeMarkerDrawer = function(
  * @package
  * @override
  */
-Blockly.zelos.Renderer.prototype.makePathObject = function(root, style) {
+Blockly.zelos.Renderer.prototype.makePathObject = function (root, style) {
   return new Blockly.zelos.PathObject(root, style,
-      /** @type {!Blockly.zelos.ConstantProvider} */ (this.getConstants()));
-};
+    /** @type {!Blockly.zelos.ConstantProvider} */ (this.getConstants()))
+}
 
 /**
  * @override
  */
-Blockly.zelos.Renderer.prototype.shouldHighlightConnection = function(conn) {
-  return conn.type != Blockly.INPUT_VALUE && conn.type !== Blockly.OUTPUT_VALUE;
-};
+Blockly.zelos.Renderer.prototype.shouldHighlightConnection = function (conn) {
+  return conn.type != Blockly.INPUT_VALUE && conn.type !== Blockly.OUTPUT_VALUE
+}
 
 /**
  * @override
  */
 Blockly.zelos.Renderer.prototype.getConnectionPreviewMethod =
-    function(closest, local, topBlock) {
+    function (closest, local, topBlock) {
       if (local.type == Blockly.OUTPUT_VALUE) {
         if (!closest.isConnected()) {
-          return Blockly.InsertionMarkerManager.PREVIEW_TYPE.INPUT_OUTLINE;
+          return Blockly.InsertionMarkerManager.PREVIEW_TYPE.INPUT_OUTLINE
         }
         // TODO: Returning this is a total hack, because we don't want to show
         //   a replacement fade, we want to show an outline affect.
         //   Sadly zelos does not support showing an outline around filled
         //   inputs, so we have to pretend like the connected block is getting
         //   replaced.
-        return Blockly.InsertionMarkerManager.PREVIEW_TYPE.REPLACEMENT_FADE;
+        return Blockly.InsertionMarkerManager.PREVIEW_TYPE.REPLACEMENT_FADE
       }
 
       return Blockly.zelos.Renderer.superClass_
-          .getConnectionPreviewMethod(closest, local, topBlock);
-    };
+        .getConnectionPreviewMethod(closest, local, topBlock)
+    }
 
-Blockly.blockRendering.register('zelos', Blockly.zelos.Renderer);
+Blockly.blockRendering.register('zelos', Blockly.zelos.Renderer)

@@ -13,4 +13,3 @@
 
 import BlocklyMsg = Blockly.Msg;
 export = BlocklyMsg;
-

@@ -8,21 +8,20 @@
  * @fileoverview Inject Blockly's CSS synchronously.
  * @author fraser@google.com (Neil Fraser)
  */
-'use strict';
+'use strict'
 
 /**
  * @name Blockly.Css
  * @namespace
  */
-goog.provide('Blockly.Css');
-
+goog.provide('Blockly.Css')
 
 /**
  * Has CSS already been injected?
  * @type {boolean}
  * @private
  */
-Blockly.Css.injected_ = false;
+Blockly.Css.injected_ = false
 
 /**
  * Add some CSS to the blob that will be injected later.  Allows optional
@@ -30,14 +29,14 @@ Blockly.Css.injected_ = false;
  * The provided array of CSS will be destroyed by this function.
  * @param {!Array.<string>} cssArray Array of CSS strings.
  */
-Blockly.Css.register = function(cssArray) {
+Blockly.Css.register = function (cssArray) {
   if (Blockly.Css.injected_) {
-    throw Error('CSS already injected');
+    throw Error('CSS already injected')
   }
   // Concatenate cssArray onto Blockly.Css.CONTENT.
-  Array.prototype.push.apply(Blockly.Css.CONTENT, cssArray);
-  cssArray.length = 0;  // Garbage collect provided CSS content.
-};
+  Array.prototype.push.apply(Blockly.Css.CONTENT, cssArray)
+  cssArray.length = 0 // Garbage collect provided CSS content.
+}
 
 /**
  * Inject the CSS into the DOM.  This is preferable over using a regular CSS
@@ -49,28 +48,28 @@ Blockly.Css.register = function(cssArray) {
  *     (providing CSS becomes the document's responsibility).
  * @param {string} pathToMedia Path from page to the Blockly media directory.
  */
-Blockly.Css.inject = function(hasCss, pathToMedia) {
+Blockly.Css.inject = function (hasCss, pathToMedia) {
   // Only inject the CSS once.
   if (Blockly.Css.injected_) {
-    return;
+    return
   }
-  Blockly.Css.injected_ = true;
-  var text = Blockly.Css.CONTENT.join('\n');
-  Blockly.Css.CONTENT.length = 0;  // Garbage collect CSS content.
+  Blockly.Css.injected_ = true
+  let text = Blockly.Css.CONTENT.join('\n')
+  Blockly.Css.CONTENT.length = 0 // Garbage collect CSS content.
   if (!hasCss) {
-    return;
+    return
   }
   // Strip off any trailing slash (either Unix or Windows).
-  var mediaPath = pathToMedia.replace(/[\\/]$/, '');
-  text = text.replace(/<<<PATH>>>/g, mediaPath);
+  const mediaPath = pathToMedia.replace(/[\\/]$/, '')
+  text = text.replace(/<<<PATH>>>/g, mediaPath)
 
   // Inject CSS tag at start of head.
-  var cssNode = document.createElement('style');
-  cssNode.id = 'blockly-common-style';
-  var cssTextNode = document.createTextNode(text);
-  cssNode.appendChild(cssTextNode);
-  document.head.insertBefore(cssNode, document.head.firstChild);
-};
+  const cssNode = document.createElement('style')
+  cssNode.id = 'blockly-common-style'
+  const cssTextNode = document.createTextNode(text)
+  cssNode.appendChild(cssTextNode)
+  document.head.insertBefore(cssNode, document.head.firstChild)
+}
 
 /**
  * Array making up the CSS content for Blockly.
@@ -80,7 +79,7 @@ Blockly.Css.CONTENT = [
   '.blocklySvg {',
     'background-color: #fff;',
     'outline: none;',
-    'overflow: hidden;',  /* IE overflows by default. */
+    'overflow: hidden;', /* IE overflows by default. */
     'position: absolute;',
     'display: block;',
   '}',
@@ -384,7 +383,7 @@ Blockly.Css.CONTENT = [
 
   '.blocklyMainBackground {',
     'stroke-width: 1;',
-    'stroke: #c6c6c6;',  /* Equates to #ddd due to border being off-pixel. */
+    'stroke: #c6c6c6;', /* Equates to #ddd due to border being off-pixel. */
   '}',
 
   '.blocklyMutatorBackground {',
@@ -490,7 +489,7 @@ Blockly.Css.CONTENT = [
     'overflow-y: auto;',
     'overflow-x: hidden;',
     'max-height: 100%;',
-    'z-index: 20000;',  /* Arbitrary, but some apps depend on it... */
+    'z-index: 20000;', /* Arbitrary, but some apps depend on it... */
   '}',
 
   '.blocklyWidgetDiv .blocklyMenu.blocklyFocused {',
@@ -500,7 +499,7 @@ Blockly.Css.CONTENT = [
   '.blocklyDropDownDiv .blocklyMenu {',
     'font: normal 13px "Helvetica Neue", Helvetica, sans-serif;',
     'outline: none;',
-    'z-index: 20000;',  /* Arbitrary, but some apps depend on it... */
+    'z-index: 20000;', /* Arbitrary, but some apps depend on it... */
   '}',
 
   /* State: resting. */
@@ -544,6 +543,6 @@ Blockly.Css.CONTENT = [
   '.blocklyMenuItemRtl .blocklyMenuItemCheckbox {',
     'float: right;',
     'margin-right: -24px;',
-  '}',
+  '}'
   /* eslint-enable indent */
-];
+]

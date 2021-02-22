@@ -7,13 +7,12 @@
 /**
  * @fileoverview The class representing a line cursor.
  * A line cursor traverses the blocks as if they were
- * lines of code in a text editor. 
+ * lines of code in a text editor.
  * Previous and next go up and down lines. In and out go
  * through the elements in a line.
  * @author aschmiedt@google.com (Abby Schmiedt)
  */
-'use strict';
-
+'use strict'
 
 /**
  * Class for a line cursor.
@@ -22,11 +21,10 @@
  * @constructor
  * @extends {Blockly.BasicCursor}
  */
-Blockly.LineCursor = function() {
-  Blockly.LineCursor.superClass_.constructor.call(this);
-};
-Blockly.utils.object.inherits(Blockly.LineCursor, Blockly.BasicCursor);
-
+Blockly.LineCursor = function () {
+  Blockly.LineCursor.superClass_.constructor.call(this)
+}
+Blockly.utils.object.inherits(Blockly.LineCursor, Blockly.BasicCursor)
 
 /**
  * Find the next node in the pre order traversal.
@@ -34,24 +32,24 @@ Blockly.utils.object.inherits(Blockly.LineCursor, Blockly.BasicCursor);
  *     not set or there is no next value.
  * @override
  */
-Blockly.LineCursor.prototype.next = function() {
-  var curNode = this.getCurNode();
+Blockly.LineCursor.prototype.next = function () {
+  const curNode = this.getCurNode()
   if (!curNode) {
-    return null;
+    return null
   }
-  var newNode = this.getNextNode_(curNode, this.validLineNode_);
+  let newNode = this.getNextNode_(curNode, this.validLineNode_)
 
   // Skip the input or next value if there is a connected block.
   if (newNode && (newNode.getType() == Blockly.ASTNode.types.INPUT ||
       newNode.getType() == Blockly.ASTNode.types.NEXT) &&
       newNode.getLocation().targetBlock()) {
-    newNode = this.getNextNode_(newNode, this.validLineNode_);
+    newNode = this.getNextNode_(newNode, this.validLineNode_)
   }
   if (newNode) {
-    this.setCurNode(newNode);
+    this.setCurNode(newNode)
   }
-  return newNode;
-};
+  return newNode
+}
 
 /**
  * For a basic cursor we only have the ability to go next and previous, so
@@ -60,18 +58,18 @@ Blockly.LineCursor.prototype.next = function() {
  *     not set or there is no next value.
  * @override
  */
-Blockly.LineCursor.prototype.in = function() {
-  var curNode = this.getCurNode();
+Blockly.LineCursor.prototype.in = function () {
+  const curNode = this.getCurNode()
   if (!curNode) {
-    return null;
+    return null
   }
-  var newNode = this.getNextNode_(curNode, this.validInLineNode_);
+  const newNode = this.getNextNode_(curNode, this.validInLineNode_)
 
   if (newNode) {
-    this.setCurNode(newNode);
+    this.setCurNode(newNode)
   }
-  return newNode;
-};
+  return newNode
+}
 
 /**
  * Find the previous node in the pre order traversal.
@@ -79,24 +77,24 @@ Blockly.LineCursor.prototype.in = function() {
  *     is not set or there is no previous value.
  * @override
  */
-Blockly.LineCursor.prototype.prev = function() {
-  var curNode = this.getCurNode();
+Blockly.LineCursor.prototype.prev = function () {
+  const curNode = this.getCurNode()
   if (!curNode) {
-    return null;
+    return null
   }
-  var newNode = this.getPreviousNode_(curNode, this.validLineNode_);
-  
+  let newNode = this.getPreviousNode_(curNode, this.validLineNode_)
+
   if (newNode && (newNode.getType() == Blockly.ASTNode.types.INPUT ||
     newNode.getType() == Blockly.ASTNode.types.NEXT) &&
     newNode.getLocation().targetBlock()) {
-    newNode = this.getPreviousNode_(newNode, this.validLineNode_);
+    newNode = this.getPreviousNode_(newNode, this.validLineNode_)
   }
 
   if (newNode) {
-    this.setCurNode(newNode);
+    this.setCurNode(newNode)
   }
-  return newNode;
-};
+  return newNode
+}
 
 /**
  * For a basic cursor we only have the ability to go next and previous, so
@@ -105,19 +103,18 @@ Blockly.LineCursor.prototype.prev = function() {
  *     not set or there is no previous value.
  * @override
  */
-Blockly.LineCursor.prototype.out = function() {
-  var curNode = this.getCurNode();
+Blockly.LineCursor.prototype.out = function () {
+  const curNode = this.getCurNode()
   if (!curNode) {
-    return null;
+    return null
   }
-  var newNode = this.getPreviousNode_(curNode, this.validInLineNode_);
+  const newNode = this.getPreviousNode_(curNode, this.validInLineNode_)
 
   if (newNode) {
-    this.setCurNode(newNode);
+    this.setCurNode(newNode)
   }
-  return newNode;
-
-};
+  return newNode
+}
 
 /**
  * Meant to traverse by lines of code. This is blocks, statement inputs and
@@ -126,25 +123,25 @@ Blockly.LineCursor.prototype.out = function() {
  * @return {boolean} True if the node should be visited, false otherwise.
  * @private
  */
-Blockly.LineCursor.prototype.validLineNode_ = function(node) {
+Blockly.LineCursor.prototype.validLineNode_ = function (node) {
   if (!node) {
-    return false;
+    return false
   }
-  var isValid = false;
-  var location = node.getLocation();
-  var type = node && node.getType();
+  let isValid = false
+  const location = node.getLocation()
+  const type = node && node.getType()
   if (type == Blockly.ASTNode.types.BLOCK) {
     if (location.outputConnection === null) {
-      isValid = true;
+      isValid = true
     }
-  } else if (type == Blockly.ASTNode.types.INPUT && 
+  } else if (type == Blockly.ASTNode.types.INPUT &&
       location.type == Blockly.NEXT_STATEMENT) {
-    isValid = true;
+    isValid = true
   } else if (type == Blockly.ASTNode.types.NEXT) {
-    isValid = true;
+    isValid = true
   }
-  return isValid;
-};
+  return isValid
+}
 
 /**
  * Meant to traverse within a block. These are fields and input values.
@@ -152,18 +149,18 @@ Blockly.LineCursor.prototype.validLineNode_ = function(node) {
  * @return {boolean} True if the node should be visited, false otherwise.
  * @private
  */
-Blockly.LineCursor.prototype.validInLineNode_ = function(node) {
+Blockly.LineCursor.prototype.validInLineNode_ = function (node) {
   if (!node) {
-    return false;
+    return false
   }
-  var isValid = false;
-  var location = node.getLocation();
-  var type = node && node.getType();
+  let isValid = false
+  const location = node.getLocation()
+  const type = node && node.getType()
   if (type == Blockly.ASTNode.types.FIELD) {
-      isValid = true;
+    isValid = true
   } else if (type == Blockly.ASTNode.types.INPUT &&
       location.type == Blockly.INPUT_VALUE) {
-      isValid = true;
+    isValid = true
   }
-  return isValid;
-};
+  return isValid
+}

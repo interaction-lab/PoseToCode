@@ -11,16 +11,16 @@
  * @author quachtina96 (Tina Quach)
  */
 
-'use strict';
+'use strict'
 
 /**
  * BlockExporter View Class
  * @param {!Object} blockOptions Map of block types to BlockOption objects.
  * @constructor
  */
-function BlockExporterView(blockOptions) {
+function BlockExporterView (blockOptions) {
   //  Map of block types to BlockOption objects to select from.
-  this.blockOptions = blockOptions;
+  this.blockOptions = blockOptions
 };
 
 /**
@@ -28,76 +28,74 @@ function BlockExporterView(blockOptions) {
  * BlockExporterView.
  * @param {!Object} blockOptions Map of block types to BlockOption objects.
  */
-BlockExporterView.prototype.setBlockOptions = function(blockOptions) {
-  this.blockOptions = blockOptions;
-};
+BlockExporterView.prototype.setBlockOptions = function (blockOptions) {
+  this.blockOptions = blockOptions
+}
 
 /**
  * Updates the helper text to show list of currently selected blocks.
  */
-BlockExporterView.prototype.listSelectedBlocks = function() {
-
-  var selectedBlocksText = this.getSelectedBlockTypes().join(",\n ");
-  document.getElementById('selectedBlocksText').textContent = selectedBlocksText;
-};
+BlockExporterView.prototype.listSelectedBlocks = function () {
+  const selectedBlocksText = this.getSelectedBlockTypes().join(',\n ')
+  document.getElementById('selectedBlocksText').textContent = selectedBlocksText
+}
 
 /**
  * Selects a given block type in the selector.
  * @param {string} blockType Type of block to selector.
  */
-BlockExporterView.prototype.select = function(blockType) {
-  this.blockOptions[blockType].setSelected(true);
-};
+BlockExporterView.prototype.select = function (blockType) {
+  this.blockOptions[blockType].setSelected(true)
+}
 
 /**
  * Deselects a block in the selector.
  * @param {!Blockly.Block} block Type of block to add to selector workspace.
  */
-BlockExporterView.prototype.deselect = function(blockType) {
-  this.blockOptions[blockType].setSelected(false);
-};
-
+BlockExporterView.prototype.deselect = function (blockType) {
+  this.blockOptions[blockType].setSelected(false)
+}
 
 /**
  * Deselects all blocks.
  */
-BlockExporterView.prototype.deselectAllBlocks = function() {
-  for (var blockType in this.blockOptions) {
-    this.deselect(blockType);
+BlockExporterView.prototype.deselectAllBlocks = function () {
+  for (const blockType in this.blockOptions) {
+    this.deselect(blockType)
   }
-};
+}
 
 /**
  * Given an array of selected blocks, selects these blocks in the view, marking
  * the checkboxes accordingly.
  * @param {Array.<Blockly.Block>} blockTypes Array of block types to select.
  */
-BlockExporterView.prototype.setSelectedBlockTypes = function(blockTypes) {
+BlockExporterView.prototype.setSelectedBlockTypes = function (blockTypes) {
   for (var i = 0, blockType; blockType = blockTypes[i]; i++) {
-    this.select(blockType);
+    this.select(blockType)
   }
-};
+}
 
 /**
  * Returns array of selected blocks.
  * @return {!Array.<string>} Array of all selected block types.
  */
-BlockExporterView.prototype.getSelectedBlockTypes = function() {
-  var selectedTypes = [];
-  for (var blockType in this.blockOptions) {
-    var blockOption = this.blockOptions[blockType];
+BlockExporterView.prototype.getSelectedBlockTypes = function () {
+  const selectedTypes = []
+  for (const blockType in this.blockOptions) {
+    const blockOption = this.blockOptions[blockType]
     if (blockOption.isSelected()) {
-      selectedTypes.push(blockType);
+      selectedTypes.push(blockType)
     }
   }
-  return selectedTypes;
-};
+  return selectedTypes
+}
 
 /**
  * Centers the preview block of each block option in the exporter selector.
  */
-BlockExporterView.prototype.centerPreviewBlocks = function() {
-  for (var blockType in this.blockOptions) {
-    this.blockOptions[blockType].centerBlock();
+BlockExporterView.prototype.centerPreviewBlocks = function () {
+  for (const blockType in this.blockOptions) {
+    this.blockOptions[blockType].centerBlock()
   }
-};
+}

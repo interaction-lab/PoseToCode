@@ -10,12 +10,11 @@
  * @author samelh@google.com (Sam El-Husseini)
  */
 
-goog.provide('Blockly.zelos.RightConnectionShape');
+goog.provide('Blockly.zelos.RightConnectionShape')
 
-goog.require('Blockly.blockRendering.Measurable');
-goog.require('Blockly.blockRendering.Types');
-goog.require('Blockly.utils.object');
-
+goog.require('Blockly.blockRendering.Measurable')
+goog.require('Blockly.blockRendering.Types')
+goog.require('Blockly.utils.object')
 
 /**
  * An object containing information about the space a right connection shape
@@ -26,12 +25,12 @@ goog.require('Blockly.utils.object');
  * @constructor
  * @extends {Blockly.blockRendering.Measurable}
  */
-Blockly.zelos.RightConnectionShape = function(constants) {
-  Blockly.zelos.RightConnectionShape.superClass_.constructor.call(this, constants);
-  this.type |= Blockly.blockRendering.Types.getType('RIGHT_CONNECTION');
+Blockly.zelos.RightConnectionShape = function (constants) {
+  Blockly.zelos.RightConnectionShape.superClass_.constructor.call(this, constants)
+  this.type |= Blockly.blockRendering.Types.getType('RIGHT_CONNECTION')
   // Size is dynamic
-  this.height = 0;
-  this.width = 0;
-};
+  this.height = 0
+  this.width = 0
+}
 Blockly.utils.object.inherits(Blockly.zelos.RightConnectionShape,
-    Blockly.blockRendering.Measurable);
+  Blockly.blockRendering.Measurable)

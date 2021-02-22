@@ -9,14 +9,13 @@
  * developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
  * @author fenichel@google.com (Rachel Fenichel)
  */
-'use strict';
+'use strict'
 
 /**
  * @name Blockly.utils.svgPaths
  * @namespace
  */
-goog.provide('Blockly.utils.svgPaths');
-
+goog.provide('Blockly.utils.svgPaths')
 
 /**
  * Create a string representing the given x, y pair.  It does not matter whether
@@ -28,9 +27,9 @@ goog.provide('Blockly.utils.svgPaths');
  * @return {string} A string of the format ' x,y '
  * @public
  */
-Blockly.utils.svgPaths.point = function(x, y) {
-  return ' ' + x + ',' + y + ' ';
-};
+Blockly.utils.svgPaths.point = function (x, y) {
+  return ' ' + x + ',' + y + ' '
+}
 
 /**
  * Draw a cubic or quadratic curve.  See
@@ -45,9 +44,9 @@ Blockly.utils.svgPaths.point = function(x, y) {
  *     documentation for exact format.
  * @public
  */
-Blockly.utils.svgPaths.curve = function(command, points) {
-  return ' ' + command + points.join('');
-};
+Blockly.utils.svgPaths.curve = function (command, points) {
+  return ' ' + command + points.join('')
+}
 
 /**
  * Move the cursor to the given position without drawing a line.
@@ -59,9 +58,9 @@ Blockly.utils.svgPaths.curve = function(command, points) {
  * @return {string} A string of the format ' M x,y '
  * @public
  */
-Blockly.utils.svgPaths.moveTo = function(x, y) {
-  return ' M ' + x + ',' + y + ' ';
-};
+Blockly.utils.svgPaths.moveTo = function (x, y) {
+  return ' M ' + x + ',' + y + ' '
+}
 
 /**
  * Move the cursor to the given position without drawing a line.
@@ -73,9 +72,9 @@ Blockly.utils.svgPaths.moveTo = function(x, y) {
  * @return {string} A string of the format ' m dx,dy '
  * @public
  */
-Blockly.utils.svgPaths.moveBy = function(dx, dy) {
-  return ' m ' + dx + ',' + dy + ' ';
-};
+Blockly.utils.svgPaths.moveBy = function (dx, dy) {
+  return ' m ' + dx + ',' + dy + ' '
+}
 
 /**
  * Draw a line from the current point to the end point, which is the current
@@ -87,9 +86,9 @@ Blockly.utils.svgPaths.moveBy = function(dx, dy) {
  * @return {string} A string of the format ' l dx,dy '
  * @public
  */
-Blockly.utils.svgPaths.lineTo = function(dx, dy) {
-  return ' l ' + dx + ',' + dy + ' ';
-};
+Blockly.utils.svgPaths.lineTo = function (dx, dy) {
+  return ' l ' + dx + ',' + dy + ' '
+}
 
 /**
  * Draw multiple lines connecting all of the given points in order.  This is
@@ -102,9 +101,9 @@ Blockly.utils.svgPaths.lineTo = function(dx, dy) {
  * @return {string} A string of the format ' l (dx,dy)+ '
  * @public
  */
-Blockly.utils.svgPaths.line = function(points) {
-  return ' l' + points.join('');
-};
+Blockly.utils.svgPaths.line = function (points) {
+  return ' l' + points.join('')
+}
 
 /**
  * Draw a horizontal or vertical line.
@@ -119,9 +118,9 @@ Blockly.utils.svgPaths.line = function(points) {
  * @return {string} A string of the format ' command val '
  * @public
  */
-Blockly.utils.svgPaths.lineOnAxis = function(command, val) {
-  return ' ' + command + ' ' + val + ' ';
-};
+Blockly.utils.svgPaths.lineOnAxis = function (command, val) {
+  return ' ' + command + ' ' + val + ' '
+}
 
 /**
  * Draw an elliptical arc curve.
@@ -137,6 +136,6 @@ Blockly.utils.svgPaths.lineOnAxis = function(command, val) {
  * @return {string} A string of the format 'command radius radius flags point'
  * @public
  */
-Blockly.utils.svgPaths.arc = function(command, flags, radius, point) {
-  return command + ' ' + radius + ' ' + radius + ' ' + flags + point;
-};
+Blockly.utils.svgPaths.arc = function (command, flags, radius, point) {
+  return command + ' ' + radius + ' ' + radius + ' ' + flags + point
+}

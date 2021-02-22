@@ -9,24 +9,23 @@
  * between tab navigable fields.
  * @author samelh@google.com (Sam El-Husseini)
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.TabNavigateCursor');
+goog.provide('Blockly.TabNavigateCursor')
 
-goog.require('Blockly.ASTNode');
-goog.require('Blockly.BasicCursor');
-goog.require('Blockly.utils.object');
-
+goog.require('Blockly.ASTNode')
+goog.require('Blockly.BasicCursor')
+goog.require('Blockly.utils.object')
 
 /**
  * A cursor for navigating between tab navigable fields.
  * @constructor
  * @extends {Blockly.BasicCursor}
  */
-Blockly.TabNavigateCursor = function() {
-  Blockly.TabNavigateCursor.superClass_.constructor.call(this);
-};
-Blockly.utils.object.inherits(Blockly.TabNavigateCursor, Blockly.BasicCursor);
+Blockly.TabNavigateCursor = function () {
+  Blockly.TabNavigateCursor.superClass_.constructor.call(this)
+}
+Blockly.utils.object.inherits(Blockly.TabNavigateCursor, Blockly.BasicCursor)
 
 /**
  * Skip all nodes except for tab navigable fields.
@@ -34,15 +33,15 @@ Blockly.utils.object.inherits(Blockly.TabNavigateCursor, Blockly.BasicCursor);
  * @return {boolean} True if the node should be visited, false otherwise.
  * @override
  */
-Blockly.TabNavigateCursor.prototype.validNode_ = function(node) {
-  var isValid = false;
-  var type = node && node.getType();
+Blockly.TabNavigateCursor.prototype.validNode_ = function (node) {
+  let isValid = false
+  const type = node && node.getType()
   if (node) {
-    var location = /** @type {Blockly.Field} */ (node.getLocation());
+    const location = /** @type {Blockly.Field} */ (node.getLocation())
     if (type == Blockly.ASTNode.types.FIELD &&
         location && location.isTabNavigable() && location.isClickable()) {
-      isValid = true;
+      isValid = true
     }
   }
-  return isValid;
-};
+  return isValid
+}

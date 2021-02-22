@@ -8,15 +8,14 @@
  * @fileoverview Methods for dragging a flyout visually.
  * @author fenichel@google.com (Rachel Fenichel)
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.FlyoutDragger');
+goog.provide('Blockly.FlyoutDragger')
 
-goog.require('Blockly.utils.object');
-goog.require('Blockly.WorkspaceDragger');
+goog.require('Blockly.utils.object')
+goog.require('Blockly.WorkspaceDragger')
 
-goog.requireType('Blockly.IFlyout');
-
+goog.requireType('Blockly.IFlyout')
 
 /**
  * Class for a flyout dragger.  It moves a flyout workspace around when it is
@@ -28,9 +27,9 @@ goog.requireType('Blockly.IFlyout');
  * @extends {Blockly.WorkspaceDragger}
  * @constructor
  */
-Blockly.FlyoutDragger = function(flyout) {
+Blockly.FlyoutDragger = function (flyout) {
   Blockly.FlyoutDragger.superClass_.constructor.call(this,
-      flyout.getWorkspace());
+    flyout.getWorkspace())
 
   /**
    * The scrollbar to update to move the flyout.
@@ -39,7 +38,7 @@ Blockly.FlyoutDragger = function(flyout) {
    * @type {!Blockly.Scrollbar}
    * @private
    */
-  this.scrollbar_ = flyout.scrollbar;
+  this.scrollbar_ = flyout.scrollbar
 
   /**
    * Whether the flyout scrolls horizontally.  If false, the flyout scrolls
@@ -47,9 +46,9 @@ Blockly.FlyoutDragger = function(flyout) {
    * @type {boolean}
    * @private
    */
-  this.horizontalLayout_ = flyout.horizontalLayout;
-};
-Blockly.utils.object.inherits(Blockly.FlyoutDragger, Blockly.WorkspaceDragger);
+  this.horizontalLayout_ = flyout.horizontalLayout
+}
+Blockly.utils.object.inherits(Blockly.FlyoutDragger, Blockly.WorkspaceDragger)
 
 /**
  * Move the flyout based on the most recent mouse movements.
@@ -57,10 +56,10 @@ Blockly.utils.object.inherits(Blockly.FlyoutDragger, Blockly.WorkspaceDragger);
  *     moved from the position at the start of the drag, in pixel coordinates.
  * @package
  */
-Blockly.FlyoutDragger.prototype.drag = function(currentDragDeltaXY) {
+Blockly.FlyoutDragger.prototype.drag = function (currentDragDeltaXY) {
   // startScrollXY_ is assigned by the superclass.
-  var newXY = Blockly.utils.Coordinate.sum(this.startScrollXY_,
-      currentDragDeltaXY);
+  const newXY = Blockly.utils.Coordinate.sum(this.startScrollXY_,
+    currentDragDeltaXY)
 
   // We can't call workspace.scroll because the flyout's workspace doesn't own
   // it's own scrollbars. This is because (as of 2.20190722.1) the
@@ -69,8 +68,8 @@ Blockly.FlyoutDragger.prototype.drag = function(currentDragDeltaXY) {
   // Instead we'll just expect setting the scrollbar to update the scroll of
   // the workspace as well.
   if (this.horizontalLayout_) {
-    this.scrollbar_.set(-newXY.x);
+    this.scrollbar_.set(-newXY.x)
   } else {
-    this.scrollbar_.set(-newXY.y);
+    this.scrollbar_.set(-newXY.y)
   }
-};
+}

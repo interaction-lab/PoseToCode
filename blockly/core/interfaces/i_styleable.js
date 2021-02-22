@@ -9,25 +9,24 @@
  * @author aschmiedt@google.com (Abby Schmiedt)
  */
 
-'use strict';
+'use strict'
 
-goog.provide('Blockly.IStyleable');
-
+goog.provide('Blockly.IStyleable')
 
 /**
  * Interface for an object that a style can be added to.
  * @interface
  */
-Blockly.IStyleable = function() {};
+Blockly.IStyleable = function () {}
 
 /**
  * Adds a style on the toolbox. Usually used to change the cursor.
  * @param {string} style The name of the class to add.
  */
-Blockly.IStyleable.prototype.addStyle;
+Blockly.IStyleable.prototype.addStyle
 
 /**
  * Removes a style from the toolbox. Usually used to change the cursor.
  * @param {string} style The name of the class to remove.
  */
-Blockly.IStyleable.prototype.removeStyle;
+Blockly.IStyleable.prototype.removeStyle

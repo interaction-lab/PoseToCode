@@ -25,7 +25,6 @@
  * @provideGoog
  */
 
-
 /**
  * Base namespace for the Closure library.  Checks to see goog is already
  * defined in the current scope before assigning to prevent clobbering if
@@ -33,7 +32,7 @@
  *
  * @const
  */
-var goog = goog || {};
+var goog = goog || {}
 
 /**
  * Reference to the global object.
@@ -55,7 +54,7 @@ goog.global =
     this ||
     // https://developer.mozilla.org/en-US/docs/Web/API/Window/self
     // For in-page browser environments and workers.
-    self;
+    self
 
 /**
  * Builds an object structure for the provided namespace path, ensuring that
@@ -65,25 +64,25 @@ goog.global =
  * @param {string} name name of the object that this file defines.
  * @private
  */
-goog.exportPath_ = function(name) {
-  var parts = name.split('.');
-  var cur = goog.global;
+goog.exportPath_ = function (name) {
+  const parts = name.split('.')
+  let cur = goog.global
 
   // Internet Explorer exhibits strange behavior when throwing errors from
   // methods externed in this manner.  See the testExportSymbolExceptions in
   // base_test.html for an example.
-  if (!(parts[0] in cur) && typeof cur.execScript != 'undefined') {
-    cur.execScript('var ' + parts[0]);
+  if (!(parts[0] in cur) && typeof cur.execScript !== 'undefined') {
+    cur.execScript('var ' + parts[0])
   }
 
   for (var part; parts.length && (part = parts.shift());) {
     if (cur[part] && cur[part] !== Object.prototype[part]) {
-      cur = cur[part];
+      cur = cur[part]
     } else {
-      cur = cur[part] = {};
+      cur = cur[part] = {}
     }
   }
-};
+}
 
 /**
  * Defines a namespace in Closure.
@@ -107,25 +106,25 @@ goog.exportPath_ = function(name) {
  * @param {string} name Namespace provided by this file in the form
  *     "goog.package.part".
  */
-goog.provide = function(name) {
+goog.provide = function (name) {
   // Ensure that the same namespace isn't provided twice.
   // A goog.module/goog.provide maps a goog.require to a specific file
   if (goog.isProvided_(name)) {
-    throw Error('Namespace "' + name + '" already declared.');
+    throw Error('Namespace "' + name + '" already declared.')
   }
 
-  delete goog.implicitNamespaces_[name];
+  delete goog.implicitNamespaces_[name]
 
-  var namespace = name;
+  let namespace = name
   while ((namespace = namespace.substring(0, namespace.lastIndexOf('.')))) {
     if (goog.getObjectByName(namespace)) {
-      break;
+      break
     }
-    goog.implicitNamespaces_[namespace] = true;
+    goog.implicitNamespaces_[namespace] = true
   }
 
-  goog.exportPath_(name);
-};
+  goog.exportPath_(name)
+}
 
 /**
  * @private {?{
@@ -134,7 +133,7 @@ goog.provide = function(name) {
  *   type: ?goog.ModuleType
  * }}
  */
-goog.moduleLoaderState_ = null;
+goog.moduleLoaderState_ = null
 
 /**
  * Check if the given name has been goog.provided. This will return false for
@@ -143,10 +142,10 @@ goog.moduleLoaderState_ = null;
  * @return {boolean} Whether the name has been provided.
  * @private
  */
-goog.isProvided_ = function(name) {
+goog.isProvided_ = function (name) {
   return (!goog.implicitNamespaces_[name] &&
-       goog.isDefAndNotNull(goog.getObjectByName(name)));
-};
+       goog.isDefAndNotNull(goog.getObjectByName(name)))
+}
 
 /**
  * Namespaces implicitly defined by goog.provide. For example,
@@ -156,13 +155,12 @@ goog.isProvided_ = function(name) {
  * @type {!Object<string, (boolean|undefined)>}
  * @private
  */
-goog.implicitNamespaces_ = {};
+goog.implicitNamespaces_ = {}
 
 // NOTE: We add goog.module as an implicit namespace as goog.module is defined
 // here and because the existing module package has not been moved yet out of
 // the goog.module namespace. This satisfies both the debug loader and
 // ahead-of-time dependency management.
-
 
 /**
  * Returns an object based on its fully qualified external name.  The object
@@ -175,18 +173,17 @@ goog.implicitNamespaces_ = {};
  *     |goog.global|.
  * @return {?} The value (object or primitive) or, if not found, null.
  */
-goog.getObjectByName = function(name, opt_obj) {
-  var parts = name.split('.');
-  var cur = opt_obj || goog.global;
-  for (var i = 0; i < parts.length; i++) {
-    cur = cur[parts[i]];
+goog.getObjectByName = function (name, opt_obj) {
+  const parts = name.split('.')
+  let cur = opt_obj || goog.global
+  for (let i = 0; i < parts.length; i++) {
+    cur = cur[parts[i]]
     if (!goog.isDefAndNotNull(cur)) {
-      return null;
+      return null
     }
   }
-  return cur;
-};
-
+  return cur
+}
 
 /**
  * Adds a dependency from a file to the files it requires.
@@ -196,12 +193,9 @@ goog.getObjectByName = function(name, opt_obj) {
  * @param {!Array<string>} requires An array of strings with
  *     the names of the objects this file requires.
  */
-goog.addDependency = function(relPath, provides, requires) {
-  goog.debugLoader_.addDependency(relPath, provides, requires);
-};
-
-
-
+goog.addDependency = function (relPath, provides, requires) {
+  goog.debugLoader_.addDependency(relPath, provides, requires)
+}
 
 // NOTE(nnaze): The debug DOM loader was included in base.js as an original way
 // to do "debug-mode" development.  The dependency system can sometimes be
@@ -221,7 +215,6 @@ goog.addDependency = function(relPath, provides, requires) {
 // different environments (DOM-less JavaScript interpreters like Rhino or V8,
 // for example). See bootstrap/ for more information.
 
-
 /**
  * Implements a system for the dynamic resolution of dependencies that works in
  * parallel with the BUILD system.
@@ -235,20 +228,20 @@ goog.addDependency = function(relPath, provides, requires) {
  * @return {?} If called within a goog.module or ES6 module file, the associated
  *     namespace or module otherwise null.
  */
-goog.require = function(namespace) {
+goog.require = function (namespace) {
   // If the object already exists we do not need to do anything.
   if (!goog.isProvided_(namespace)) {
-    var moduleLoaderState = goog.moduleLoaderState_;
-    goog.moduleLoaderState_ = null;
+    const moduleLoaderState = goog.moduleLoaderState_
+    goog.moduleLoaderState_ = null
     try {
-      goog.debugLoader_.load_(namespace);
+      goog.debugLoader_.load_(namespace)
     } finally {
-      goog.moduleLoaderState_ = moduleLoaderState;
+      goog.moduleLoaderState_ = moduleLoaderState
     }
   }
 
-  return null;
-};
+  return null
+}
 
 /**
  * Requires a symbol for its type information. This is an indication to the
@@ -266,18 +259,18 @@ goog.require = function(namespace) {
  *     "goog.package.part".
  * @return {?}
  */
-goog.requireType = function(namespace) {
+goog.requireType = function (namespace) {
   // Return an empty object so that single-level destructuring of the return
   // value doesn't crash at runtime when using the debug loader. Multi-level
   // destructuring isn't supported.
-  return {};
-};
+  return {}
+}
 
 /**
  * Path for included scripts.
  * @type {string}
  */
-goog.basePath = '';
+goog.basePath = ''
 
 /**
  * Normalize a file path by removing redundant ".." and extraneous "." file
@@ -286,43 +279,40 @@ goog.basePath = '';
  * @return {string}
  * @private
  */
-goog.normalizePath_ = function(path) {
-  var components = path.split('/');
-  var i = 0;
+goog.normalizePath_ = function (path) {
+  const components = path.split('/')
+  let i = 0
   while (i < components.length) {
     if (components[i] == '.') {
-      components.splice(i, 1);
+      components.splice(i, 1)
     } else if (
-        i && components[i] == '..' && components[i - 1] &&
+      i && components[i] == '..' && components[i - 1] &&
         components[i - 1] != '..') {
-      components.splice(--i, 2);
+      components.splice(--i, 2)
     } else {
-      i++;
+      i++
     }
   }
-  return components.join('/');
-};
+  return components.join('/')
+}
 
-
-//==============================================================================
+//= =============================================================================
 // Language Enhancements
-//==============================================================================
-
+//= =============================================================================
 
 /**
  * Returns true if the specified value is defined and not null.
  * @param {?} val Variable to test.
  * @return {boolean} Whether variable is defined and not null.
  */
-goog.isDefAndNotNull = function(val) {
+goog.isDefAndNotNull = function (val) {
   // Note that undefined == null.
-  return val != null;
-};
+  return val != null
+}
 
-//==============================================================================
+//= =============================================================================
 // goog.defineClass implementation
-//==============================================================================
-
+//= =============================================================================
 
 // There's a bug in the compiler where without collapse properties the
 // Closure namespace defines do not guard code correctly. To help reduce code
@@ -332,31 +322,31 @@ goog.isDefAndNotNull = function(val) {
  * Tries to detect the base path of base.js script that bootstraps Closure.
  * @private
  */
-goog.findBasePath_ = function() {
+goog.findBasePath_ = function () {
   /** @type {!Document} */
-  var doc = goog.global.document;
+  const doc = goog.global.document
   // If we have a currentScript available, use it exclusively.
-  var currentScript = doc.currentScript;
+  const currentScript = doc.currentScript
   if (currentScript) {
-    var scripts = [currentScript];
+    var scripts = [currentScript]
   } else {
-    var scripts = doc.getElementsByTagName('SCRIPT');
+    var scripts = doc.getElementsByTagName('SCRIPT')
   }
   // Search backwards since the current script is in almost all cases the one
   // that has base.js.
-  for (var i = scripts.length - 1; i >= 0; --i) {
-    var script = /** @type {!HTMLScriptElement} */ (scripts[i]);
-    var src = script.src;
-    var qmark = src.lastIndexOf('?');
-    var l = qmark == -1 ? src.length : qmark;
+  for (let i = scripts.length - 1; i >= 0; --i) {
+    const script = /** @type {!HTMLScriptElement} */ (scripts[i])
+    const src = script.src
+    const qmark = src.lastIndexOf('?')
+    const l = qmark == -1 ? src.length : qmark
     if (src.substr(l - 7, 7) == 'base.js') {
-      goog.basePath = src.substr(0, l - 7);
-      return;
+      goog.basePath = src.substr(0, l - 7)
+      return
     }
   }
-};
+}
 
-goog.findBasePath_();
+goog.findBasePath_()
 
 /**
  * A debug loader is responsible for downloading and executing javascript
@@ -364,17 +354,16 @@ goog.findBasePath_();
  *
  * @struct @constructor @final @private
  */
-goog.DebugLoader_ = function() {
+goog.DebugLoader_ = function () {
   /** @private @const {!Object<string, !goog.Dependency>} */
-  this.dependencies_ = {};
+  this.dependencies_ = {}
   /** @private @const {!Object<string, string>} */
-  this.idToPath_ = {};
+  this.idToPath_ = {}
   /** @private @const {!Object<string, boolean>} */
-  this.written_ = {};
+  this.written_ = {}
   /** @private {!Array<!goog.Dependency>} */
-  this.depsToLoad_ = [];
-};
-
+  this.depsToLoad_ = []
+}
 
 /**
  * Travserses the dependency graph and queues the given dependency, and all of
@@ -384,82 +373,79 @@ goog.DebugLoader_ = function() {
  * @param {string} namespace
  * @private
  */
-goog.DebugLoader_.prototype.load_ = function(namespace) {
+goog.DebugLoader_.prototype.load_ = function (namespace) {
   if (!this.getPathFromDeps_(namespace)) {
-    throw Error('goog.require could not find: ' + namespace);
+    throw Error('goog.require could not find: ' + namespace)
   } else {
-    var loader = this;
+    const loader = this
 
-    var deps = [];
+    const deps = []
 
     /** @param {string} namespace */
-    var visit = function(namespace) {
-      var path = loader.getPathFromDeps_(namespace);
+    var visit = function (namespace) {
+      const path = loader.getPathFromDeps_(namespace)
 
       if (!path) {
-        throw Error('Bad dependency path or symbol: ' + namespace);
+        throw Error('Bad dependency path or symbol: ' + namespace)
       }
 
       if (loader.written_[path]) {
-        return;
+        return
       }
 
-      loader.written_[path] = true;
+      loader.written_[path] = true
 
-      var dep = loader.dependencies_[path];
-      for (var i = 0; i < dep.requires.length; i++) {
+      const dep = loader.dependencies_[path]
+      for (let i = 0; i < dep.requires.length; i++) {
         if (!goog.isProvided_(dep.requires[i])) {
-          visit(dep.requires[i]);
+          visit(dep.requires[i])
         }
       }
 
-      deps.push(dep);
-    };
+      deps.push(dep)
+    }
 
-    visit(namespace);
+    visit(namespace)
 
-    var wasLoading = !!this.depsToLoad_.length;
-    this.depsToLoad_ = this.depsToLoad_.concat(deps);
+    const wasLoading = !!this.depsToLoad_.length
+    this.depsToLoad_ = this.depsToLoad_.concat(deps)
 
     if (!wasLoading) {
-      this.loadDeps_();
+      this.loadDeps_()
     }
   }
-};
-
+}
 
 /**
  * Loads any queued dependencies until they are all loaded or paused.
  *
  * @private
  */
-goog.DebugLoader_.prototype.loadDeps_ = function() {
-  var loader = this;
+goog.DebugLoader_.prototype.loadDeps_ = function () {
+  const loader = this
 
   while (this.depsToLoad_.length) {
-    (function() {
-      var loadCallDone = false;
-      var dep = loader.depsToLoad_.shift();
+    (function () {
+      let loadCallDone = false
+      const dep = loader.depsToLoad_.shift()
 
       try {
-        dep.load();
+        dep.load()
       } finally {
-        loadCallDone = true;
+        loadCallDone = true
       }
-    })();
+    })()
   }
-};
-
+}
 
 /**
  * @param {string} absPathOrId
  * @return {?string}
  * @private
  */
-goog.DebugLoader_.prototype.getPathFromDeps_ = function(absPathOrId) {
-  return this.idToPath_[absPathOrId];
-};
-
+goog.DebugLoader_.prototype.getPathFromDeps_ = function (absPathOrId) {
+  return this.idToPath_[absPathOrId]
+}
 
 /**
  * Basic super class for all dependencies Closure Library can load.
@@ -476,12 +462,12 @@ goog.DebugLoader_.prototype.getPathFromDeps_ = function(absPathOrId) {
  *     this depends on.
  * @struct @constructor
  */
-goog.Dependency = function(path, requires) {
+goog.Dependency = function (path, requires) {
   /** @const */
-  this.path = path;
+  this.path = path
   /** @const */
-  this.requires = requires;
-};
+  this.requires = requires
+}
 
 /**
  * Map of script ready / state change callbacks. Old IE cannot handle putting
@@ -489,8 +475,7 @@ goog.Dependency = function(path, requires) {
  *
  * @private @const {!Object<string, function(?):undefined>}
  */
-goog.Dependency.callbackMap_ = {};
-
+goog.Dependency.callbackMap_ = {}
 
 /**
  * Starts loading this dependency. This dependency can pause loading if it
@@ -500,13 +485,12 @@ goog.Dependency.callbackMap_ = {};
  * end up calling the loaded method of this dependency; there is no need to
  * call it explicitly.
  */
-goog.Dependency.prototype.load = function() {
+goog.Dependency.prototype.load = function () {
   /** @type {!HTMLDocument} */
-  var doc = goog.global.document;
+  const doc = goog.global.document
   doc.write('<script src="' + this.path + '" type="text/javascript"><' +
-      '/script>');
-};
-
+      '/script>')
+}
 
 /**
  * @param {string} relPath
@@ -514,18 +498,17 @@ goog.Dependency.prototype.load = function() {
  * @param {!Array<string>} requires
  * @see goog.addDependency
  */
-goog.DebugLoader_.prototype.addDependency = function(
-    relPath, provides, requires) {
-  relPath = relPath.replace(/\\/g, '/');
-  var path = goog.normalizePath_(goog.basePath + relPath);
-  var dep = new goog.Dependency(path, requires);
-  this.dependencies_[path] = dep;
-  for (var i = 0; i < provides.length; i++) {
-    this.idToPath_[provides[i]] = path;
+goog.DebugLoader_.prototype.addDependency = function (
+  relPath, provides, requires) {
+  relPath = relPath.replace(/\\/g, '/')
+  const path = goog.normalizePath_(goog.basePath + relPath)
+  const dep = new goog.Dependency(path, requires)
+  this.dependencies_[path] = dep
+  for (let i = 0; i < provides.length; i++) {
+    this.idToPath_[provides[i]] = path
   }
-  this.idToPath_[relPath] = path;
-};
-
+  this.idToPath_[relPath] = path
+}
 
 /** @private @const */
-goog.debugLoader_ = new goog.DebugLoader_();
+goog.debugLoader_ = new goog.DebugLoader_()

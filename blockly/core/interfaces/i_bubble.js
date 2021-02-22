@@ -9,13 +9,12 @@
  * @author samelh@google.com (Sam El-Husseini)
  */
 
-'use strict';
+'use strict'
 
-goog.provide('Blockly.IBubble');
+goog.provide('Blockly.IBubble')
 
-goog.requireType('Blockly.IContextMenu');
-goog.requireType('Blockly.IDeletable');
-
+goog.requireType('Blockly.IContextMenu')
+goog.requireType('Blockly.IDeletable')
 
 /**
  * A bubble interface.
@@ -23,20 +22,20 @@ goog.requireType('Blockly.IDeletable');
  * @extends {Blockly.IDeletable}
  * @extends {Blockly.IContextMenu}
  */
-Blockly.IBubble = function() {};
+Blockly.IBubble = function () {}
 
 /**
  * Return the coordinates of the top-left corner of this bubble's body relative
  * to the drawing surface's origin (0,0), in workspace units.
  * @return {!Blockly.utils.Coordinate} Object with .x and .y properties.
  */
-Blockly.IBubble.prototype.getRelativeToSurfaceXY;
+Blockly.IBubble.prototype.getRelativeToSurfaceXY
 
 /**
  * Return the root node of the bubble's SVG group.
  * @return {!SVGElement} The root SVG node of the bubble's group.
  */
-Blockly.IBubble.prototype.getSvgRoot;
+Blockly.IBubble.prototype.getSvgRoot
 
 /**
  * Set whether auto-layout of this bubble is enabled.  The first time a bubble
@@ -45,13 +44,13 @@ Blockly.IBubble.prototype.getSvgRoot;
  * @param {boolean} enable True if auto-layout should be enabled, false
  *     otherwise.
  */
-Blockly.IBubble.prototype.setAutoLayout;
+Blockly.IBubble.prototype.setAutoLayout
 
 /**
  * Triggers a move callback if one exists at the end of a drag.
  * @param {boolean} adding True if adding, false if removing.
  */
-Blockly.IBubble.prototype.setDragging;
+Blockly.IBubble.prototype.setDragging
 
 /**
  * Move this bubble during a drag, taking into account whether or not there is
@@ -61,23 +60,23 @@ Blockly.IBubble.prototype.setDragging;
  * @param {!Blockly.utils.Coordinate} newLoc The location to translate to, in
  *     workspace coordinates.
  */
-Blockly.IBubble.prototype.moveDuringDrag;
+Blockly.IBubble.prototype.moveDuringDrag
 
 /**
  * Move the bubble to the specified location in workspace coordinates.
  * @param {number} x The x position to move to.
  * @param {number} y The y position to move to.
  */
-Blockly.IBubble.prototype.moveTo;
+Blockly.IBubble.prototype.moveTo
 
 /**
  * Update the style of this bubble when it is dragged over a delete area.
  * @param {boolean} enable True if the bubble is about to be deleted, false
  *     otherwise.
  */
-Blockly.IBubble.prototype.setDeleteStyle;
+Blockly.IBubble.prototype.setDeleteStyle
 
 /**
  * Dispose of this bubble.
  */
-Blockly.IBubble.prototype.dispose;
+Blockly.IBubble.prototype.dispose

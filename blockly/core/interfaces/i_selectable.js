@@ -9,13 +9,12 @@
  * @author samelh@google.com (Sam El-Husseini)
  */
 
-'use strict';
+'use strict'
 
-goog.provide('Blockly.ISelectable');
+goog.provide('Blockly.ISelectable')
 
-goog.requireType('Blockly.IDeletable');
-goog.requireType('Blockly.IMovable');
-
+goog.requireType('Blockly.IDeletable')
+goog.requireType('Blockly.IMovable')
 
 /**
  * The interface for an object that is selectable.
@@ -23,21 +22,21 @@ goog.requireType('Blockly.IMovable');
  * @extends {Blockly.IMovable}
  * @interface
  */
-Blockly.ISelectable = function() {};
+Blockly.ISelectable = function () {}
 
 /**
  * @type {string}
  */
-Blockly.ISelectable.prototype.id;
+Blockly.ISelectable.prototype.id
 
 /**
  * Select this.  Highlight it visually.
  * @return {void}
  */
-Blockly.ISelectable.prototype.select;
+Blockly.ISelectable.prototype.select
 
 /**
  * Unselect this.  Unhighlight it visually.
  * @return {void}
  */
-Blockly.ISelectable.prototype.unselect;
+Blockly.ISelectable.prototype.unselect

@@ -9,15 +9,14 @@
  *    normal label but is serialized to XML. It may only be
  *    edited programmatically.
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.FieldLabelSerializable');
+goog.provide('Blockly.FieldLabelSerializable')
 
-goog.require('Blockly.FieldLabel');
-goog.require('Blockly.fieldRegistry');
-goog.require('Blockly.utils');
-goog.require('Blockly.utils.object');
-
+goog.require('Blockly.FieldLabel')
+goog.require('Blockly.fieldRegistry')
+goog.require('Blockly.utils')
+goog.require('Blockly.utils.object')
 
 /**
  * Class for a non-editable, serializable text field.
@@ -31,12 +30,12 @@ goog.require('Blockly.utils.object');
  * @constructor
  *
  */
-Blockly.FieldLabelSerializable = function(opt_value, opt_class, opt_config) {
+Blockly.FieldLabelSerializable = function (opt_value, opt_class, opt_config) {
   Blockly.FieldLabelSerializable.superClass_.constructor.call(
-      this, opt_value, opt_class, opt_config);
-};
+    this, opt_value, opt_class, opt_config)
+}
 Blockly.utils.object.inherits(Blockly.FieldLabelSerializable,
-    Blockly.FieldLabel);
+  Blockly.FieldLabel)
 
 /**
  * Construct a FieldLabelSerializable from a JSON arg object,
@@ -46,24 +45,24 @@ Blockly.utils.object.inherits(Blockly.FieldLabelSerializable,
  * @package
  * @nocollapse
  */
-Blockly.FieldLabelSerializable.fromJson = function(options) {
-  var text = Blockly.utils.replaceMessageReferences(options['text']);
-  return new Blockly.FieldLabelSerializable(text, undefined, options);
-};
+Blockly.FieldLabelSerializable.fromJson = function (options) {
+  const text = Blockly.utils.replaceMessageReferences(options.text)
+  return new Blockly.FieldLabelSerializable(text, undefined, options)
+}
 
 /**
  * Editable fields usually show some sort of UI indicating they are
  * editable. This field should not.
  * @type {boolean}
  */
-Blockly.FieldLabelSerializable.prototype.EDITABLE = false;
+Blockly.FieldLabelSerializable.prototype.EDITABLE = false
 
 /**
  * Serializable fields are saved by the XML renderer, non-serializable fields
  * are not.  This field should be serialized, but only edited programmatically.
  * @type {boolean}
  */
-Blockly.FieldLabelSerializable.prototype.SERIALIZABLE = true;
+Blockly.FieldLabelSerializable.prototype.SERIALIZABLE = true
 
 Blockly.fieldRegistry.register(
-    'field_label_serializable', Blockly.FieldLabelSerializable);
+  'field_label_serializable', Blockly.FieldLabelSerializable)

@@ -7,15 +7,14 @@
 /**
  * @fileoverview The class representing a theme.
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.Theme');
+goog.provide('Blockly.Theme')
 
-goog.require('Blockly.registry');
-goog.require('Blockly.utils');
-goog.require('Blockly.utils.colour');
-goog.require('Blockly.utils.object');
-
+goog.require('Blockly.registry')
+goog.require('Blockly.utils')
+goog.require('Blockly.utils.colour')
+goog.require('Blockly.utils.object')
 
 /**
  * Class for a theme.
@@ -29,28 +28,27 @@ goog.require('Blockly.utils.object');
  *     component names to style value.
  * @constructor
  */
-Blockly.Theme = function(name, opt_blockStyles, opt_categoryStyles,
-    opt_componentStyles) {
-
+Blockly.Theme = function (name, opt_blockStyles, opt_categoryStyles,
+  opt_componentStyles) {
   /**
    * The theme name. This can be used to reference a specific theme in CSS.
    * @type {string}
    */
-  this.name = name;
+  this.name = name
 
   /**
    * The block styles map.
    * @type {!Object.<string, !Blockly.Theme.BlockStyle>}
    * @package
    */
-  this.blockStyles = opt_blockStyles || Object.create(null);
+  this.blockStyles = opt_blockStyles || Object.create(null)
 
   /**
    * The category styles map.
    * @type {!Object.<string, Blockly.Theme.CategoryStyle>}
    * @package
    */
-  this.categoryStyles = opt_categoryStyles || Object.create(null);
+  this.categoryStyles = opt_categoryStyles || Object.create(null)
 
   /**
    * The UI components styles map.
@@ -58,14 +56,14 @@ Blockly.Theme = function(name, opt_blockStyles, opt_categoryStyles,
    * @package
    */
   this.componentStyles = opt_componentStyles ||
-    (/** @type {Blockly.Theme.ComponentStyle} */ (Object.create(null)));
+    (/** @type {Blockly.Theme.ComponentStyle} */ (Object.create(null)))
 
   /**
    * The font style.
    * @type {!Blockly.Theme.FontStyle}
    * @package
    */
-  this.fontStyle = /** @type {Blockly.Theme.FontStyle} */ (Object.create(null));
+  this.fontStyle = /** @type {Blockly.Theme.FontStyle} */ (Object.create(null))
 
   /**
    * Whether or not to add a 'hat' on top of all blocks with no previous or
@@ -73,11 +71,11 @@ Blockly.Theme = function(name, opt_blockStyles, opt_categoryStyles,
    * @type {?boolean}
    * @package
    */
-  this.startHats = null;
+  this.startHats = null
 
   // Register the theme by name.
-  Blockly.registry.register(Blockly.registry.Type.THEME, name, this);
-};
+  Blockly.registry.register(Blockly.registry.Type.THEME, name, this)
+}
 
 /**
  * A block style.
@@ -88,7 +86,7 @@ Blockly.Theme = function(name, opt_blockStyles, opt_categoryStyles,
  *            hat:string
  *          }}
  */
-Blockly.Theme.BlockStyle;
+Blockly.Theme.BlockStyle
 
 /**
  * A category style.
@@ -96,7 +94,7 @@ Blockly.Theme.BlockStyle;
  *            colour:string
  *          }}
  */
-Blockly.Theme.CategoryStyle;
+Blockly.Theme.CategoryStyle
 
 /**
  * A component style.
@@ -119,7 +117,7 @@ Blockly.Theme.CategoryStyle;
  *            replacementGlowOpacity:?number
  *          }}
  */
-Blockly.Theme.ComponentStyle;
+Blockly.Theme.ComponentStyle
 
 /**
  * A font style.
@@ -129,35 +127,35 @@ Blockly.Theme.ComponentStyle;
  *            size:?number
  *          }}
  */
-Blockly.Theme.FontStyle;
+Blockly.Theme.FontStyle
 
 /**
  * Gets the class name that identifies this theme.
  * @return {string} The CSS class name.
  * @package
  */
-Blockly.Theme.prototype.getClassName = function() {
-  return this.name + '-theme';
-};
+Blockly.Theme.prototype.getClassName = function () {
+  return this.name + '-theme'
+}
 
 /**
  * Overrides or adds a style to the blockStyles map.
  * @param {string} blockStyleName The name of the block style.
  * @param {Blockly.Theme.BlockStyle} blockStyle The block style.
 */
-Blockly.Theme.prototype.setBlockStyle = function(blockStyleName, blockStyle) {
-  this.blockStyles[blockStyleName] = blockStyle;
-};
+Blockly.Theme.prototype.setBlockStyle = function (blockStyleName, blockStyle) {
+  this.blockStyles[blockStyleName] = blockStyle
+}
 
 /**
  * Overrides or adds a style to the categoryStyles map.
  * @param {string} categoryStyleName The name of the category style.
  * @param {Blockly.Theme.CategoryStyle} categoryStyle The category style.
 */
-Blockly.Theme.prototype.setCategoryStyle = function(categoryStyleName,
-    categoryStyle) {
-  this.categoryStyles[categoryStyleName] = categoryStyle;
-};
+Blockly.Theme.prototype.setCategoryStyle = function (categoryStyleName,
+  categoryStyle) {
+  this.categoryStyles[categoryStyleName] = categoryStyle
+}
 
 /**
  * Gets the style for a given Blockly UI component.  If the style value is a
@@ -165,41 +163,41 @@ Blockly.Theme.prototype.setCategoryStyle = function(categoryStyleName,
  * @param {string} componentName The name of the component.
  * @return {?string} The style value.
  */
-Blockly.Theme.prototype.getComponentStyle = function(componentName) {
-  var style = this.componentStyles[componentName];
-  if (style && typeof style == 'string' &&
+Blockly.Theme.prototype.getComponentStyle = function (componentName) {
+  const style = this.componentStyles[componentName]
+  if (style && typeof style === 'string' &&
       this.getComponentStyle(/** @type {string} */ (style))) {
-    return this.getComponentStyle(/** @type {string} */ (style));
+    return this.getComponentStyle(/** @type {string} */ (style))
   }
-  return style ? String(style) : null;
-};
+  return style ? String(style) : null
+}
 
 /**
  * Configure a specific Blockly UI component with a style value.
  * @param {string} componentName The name of the component.
  * @param {*} styleValue The style value.
 */
-Blockly.Theme.prototype.setComponentStyle = function(componentName,
-    styleValue) {
-  this.componentStyles[componentName] = styleValue;
-};
+Blockly.Theme.prototype.setComponentStyle = function (componentName,
+  styleValue) {
+  this.componentStyles[componentName] = styleValue
+}
 
 /**
  * Configure a theme's font style.
  * @param {Blockly.Theme.FontStyle} fontStyle The font style.
 */
-Blockly.Theme.prototype.setFontStyle = function(fontStyle) {
-  this.fontStyle = fontStyle;
-};
+Blockly.Theme.prototype.setFontStyle = function (fontStyle) {
+  this.fontStyle = fontStyle
+}
 
 /**
  * Configure a theme's start hats.
  * @param {boolean} startHats True if the theme enables start hats, false
  *     otherwise.
 */
-Blockly.Theme.prototype.setStartHats = function(startHats) {
-  this.startHats = startHats;
-};
+Blockly.Theme.prototype.setStartHats = function (startHats) {
+  this.startHats = startHats
+}
 
 /**
  * Define a new Blockly theme.
@@ -207,30 +205,30 @@ Blockly.Theme.prototype.setStartHats = function(startHats) {
  * @param {!Object} themeObj An object containing theme properties.
  * @return {!Blockly.Theme} A new Blockly theme.
 */
-Blockly.Theme.defineTheme = function(name, themeObj) {
-  var theme = new Blockly.Theme(name);
-  var base = themeObj['base'];
+Blockly.Theme.defineTheme = function (name, themeObj) {
+  const theme = new Blockly.Theme(name)
+  let base = themeObj.base
   if (base) {
-    if (typeof base == "string") {
-      base = Blockly.registry.getObject(Blockly.registry.Type.THEME, base);
+    if (typeof base === 'string') {
+      base = Blockly.registry.getObject(Blockly.registry.Type.THEME, base)
     }
     if (base instanceof Blockly.Theme) {
-      Blockly.utils.object.deepMerge(theme, base);
-      theme.name = name;
+      Blockly.utils.object.deepMerge(theme, base)
+      theme.name = name
     }
   }
 
   Blockly.utils.object.deepMerge(theme.blockStyles,
-      themeObj['blockStyles']);
+    themeObj.blockStyles)
   Blockly.utils.object.deepMerge(theme.categoryStyles,
-      themeObj['categoryStyles']);
+    themeObj.categoryStyles)
   Blockly.utils.object.deepMerge(theme.componentStyles,
-      themeObj['componentStyles']);
+    themeObj.componentStyles)
   Blockly.utils.object.deepMerge(theme.fontStyle,
-      themeObj['fontStyle']);
-  if (themeObj['startHats'] != null) {
-    theme.startHats = themeObj['startHats'];
+    themeObj.fontStyle)
+  if (themeObj.startHats != null) {
+    theme.startHats = themeObj.startHats
   }
 
-  return theme;
-};
+  return theme
+}

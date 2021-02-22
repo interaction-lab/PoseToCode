@@ -8,15 +8,14 @@
  * @fileoverview Class for a finished loading workspace event.
  * @author BeksOmega
  */
-'use strict';
+'use strict'
 
-goog.provide('Blockly.Events.FinishedLoading');
+goog.provide('Blockly.Events.FinishedLoading')
 
-goog.require('Blockly.Events');
-goog.require('Blockly.Events.Ui');
-goog.require('Blockly.registry');
-goog.require('Blockly.utils.object');
-
+goog.require('Blockly.Events')
+goog.require('Blockly.Events.Ui')
+goog.require('Blockly.registry')
+goog.require('Blockly.utils.object')
 
 /**
  * Class for a finished loading event.
@@ -28,19 +27,18 @@ goog.require('Blockly.utils.object');
  * @extends {Blockly.Events.Ui}
  * @constructor
  */
-Blockly.Events.FinishedLoading = function(opt_workspace) {
-
+Blockly.Events.FinishedLoading = function (opt_workspace) {
   /**
    * Whether or not the event is blank (to be populated by fromJson).
    * @type {boolean}
    */
-  this.isBlank = typeof opt_workspace == 'undefined';
+  this.isBlank = typeof opt_workspace === 'undefined'
 
   /**
    * The workspace identifier for this event.
    * @type {string}
    */
-  this.workspaceId = opt_workspace ? opt_workspace.id : '';
+  this.workspaceId = opt_workspace ? opt_workspace.id : ''
 
   /**
    * The event group ID for the group this event belongs to. Groups define
@@ -48,46 +46,46 @@ Blockly.Events.FinishedLoading = function(opt_workspace) {
    * perspective, and should be undone together.
    * @type {string}
    */
-  this.group = Blockly.Events.getGroup();
+  this.group = Blockly.Events.getGroup()
 
   // Workspace events do not undo or redo.
-  this.recordUndo = false;
-};
+  this.recordUndo = false
+}
 Blockly.utils.object.inherits(Blockly.Events.FinishedLoading,
-    Blockly.Events.Ui);
+  Blockly.Events.Ui)
 
 /**
  * Type of this event.
  * @type {string}
  */
-Blockly.Events.FinishedLoading.prototype.type = Blockly.Events.FINISHED_LOADING;
+Blockly.Events.FinishedLoading.prototype.type = Blockly.Events.FINISHED_LOADING
 
 /**
  * Encode the event as JSON.
  * @return {!Object} JSON representation.
  */
-Blockly.Events.FinishedLoading.prototype.toJson = function() {
-  var json = {
-    'type': this.type,
-  };
+Blockly.Events.FinishedLoading.prototype.toJson = function () {
+  const json = {
+    type: this.type
+  }
   if (this.group) {
-    json['group'] = this.group;
+    json.group = this.group
   }
   if (this.workspaceId) {
-    json['workspaceId'] = this.workspaceId;
+    json.workspaceId = this.workspaceId
   }
-  return json;
-};
+  return json
+}
 
 /**
  * Decode the JSON event.
  * @param {!Object} json JSON representation.
  */
-Blockly.Events.FinishedLoading.prototype.fromJson = function(json) {
-  this.isBlank = false;
-  this.workspaceId = json['workspaceId'];
-  this.group = json['group'];
-};
+Blockly.Events.FinishedLoading.prototype.fromJson = function (json) {
+  this.isBlank = false
+  this.workspaceId = json.workspaceId
+  this.group = json.group
+}
 
 Blockly.registry.register(Blockly.registry.Type.EVENT,
-    Blockly.Events.FINISHED_LOADING, Blockly.Events.FinishedLoading);
+  Blockly.Events.FINISHED_LOADING, Blockly.Events.FinishedLoading)
