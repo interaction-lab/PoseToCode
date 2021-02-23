@@ -85,7 +85,7 @@ function onResults(results) {
     if (rightDist < 0.05 && leftDist < 0.05 && !sphereSizeFlag) {
       setTimeout(() => {
         loader.style.visibility = "hidden";
-      }, 3500);
+      }, 1500);
       setTimeout(() => {
         /* programatically adding code block */
         if (parentBlock == null) {
@@ -102,12 +102,12 @@ function onResults(results) {
           parentBlock = childBlock;
         }
         allBlocks.push(parentBlock);
-      }, 3000);
+      }, 1000);
       sleepFlag = true;
       loader.style.visibility = "visible";
       console.log("dance");
       setTimeout(() => {
-        sleep(2000);
+        sleep(500);
       }, 5);
       sleepFlag = false;
       canvasCtx.restore();
@@ -120,15 +120,15 @@ function onResults(results) {
     ) {
       setTimeout(() => {
         loader.style.visibility = "hidden";
-      }, 3500);
+      }, 1500);
       setTimeout(() => {
         runCode();
-      }, 3000);
+      }, 1000);
       sleepFlag = true;
       loader.style.visibility = "visible";
       console.log("run");
       setTimeout(() => {
-        sleep(2000);
+        sleep(500);
       }, 5);
       sleepFlag = false;
       canvasCtx.restore();
@@ -141,7 +141,7 @@ function onResults(results) {
     ) {
       setTimeout(() => {
         loader.style.visibility = "hidden";
-      }, 3500);
+      }, 1500);
       setTimeout(() => {
         // delete all code blocks in the workspace
         for (i = 0; i < allBlocks.length; i++) {
@@ -149,12 +149,12 @@ function onResults(results) {
         }
         parentBlock = null;
         resetGUI();
-      }, 3000);
+      }, 1000);
       sleepFlag = true;
       loader.style.visibility = "visible";
       console.log("reset");
       setTimeout(() => {
-        sleep(2000);
+        sleep(500);
       }, 5);
       sleepFlag = false;
       canvasCtx.restore();
@@ -171,7 +171,7 @@ function onResults(results) {
     ) {
       setTimeout(() => {
         loader.style.visibility = "hidden";
-      }, 3500);
+      }, 1500);
       setTimeout(() => {
         /* add code block */
         if (parentBlock == null) {
@@ -188,12 +188,12 @@ function onResults(results) {
           parentBlock = childBlock;
         }
         allBlocks.push(parentBlock);
-      }, 3000);
+      }, 1000);
       sleepFlag = true;
       loader.style.visibility = "visible";
       console.log("create sphere");
       setTimeout(() => {
-        sleep(2000);
+        sleep(500);
       }, 5);
       sleepFlag = false;
       sphereSizeFlag = true;
@@ -206,7 +206,7 @@ function onResults(results) {
     ) {
       setTimeout(() => {
         loader.style.visibility = "hidden";
-      }, 3500);
+      }, 1500);
       setTimeout(() => {
         // change field value of create_sphere block
         if (parentBlock != null) {
@@ -216,13 +216,13 @@ function onResults(results) {
           const childConnection = childBlock.outputConnection;
           parentConnection.connect(childConnection);
         }
-      }, 3000);
+      }, 1000);
       sphereSizeFlag = false;
       sleepFlag = true;
       loader.style.visibility = "visible";
       console.log("small sphere");
       setTimeout(() => {
-        sleep(2000);
+        sleep(500);
       }, 5);
       sleepFlag = false;
       canvasCtx.restore();
@@ -235,7 +235,7 @@ function onResults(results) {
     ) {
       setTimeout(() => {
         loader.style.visibility = "hidden";
-      }, 3500);
+      }, 1500);
       setTimeout(() => {
         // change field value of create_sphere block
         if (parentBlock != null) {
@@ -245,13 +245,13 @@ function onResults(results) {
           const childConnection = childBlock.outputConnection;
           parentConnection.connect(childConnection);
         }
-      }, 3000);
+      }, 1000);
       sphereSizeFlag = false;
       sleepFlag = true;
       loader.style.visibility = "visible";
       console.log("medium sphere");
       setTimeout(() => {
-        sleep(2000);
+        sleep(500);
       }, 5);
       sleepFlag = false;
       canvasCtx.restore();
@@ -263,7 +263,7 @@ function onResults(results) {
     ) {
       setTimeout(() => {
         loader.style.visibility = "hidden";
-      }, 3500);
+      }, 1500);
       setTimeout(() => {
         // change field value of create_sphere block
         if (parentBlock != null) {
@@ -273,13 +273,13 @@ function onResults(results) {
           const childConnection = childBlock.outputConnection;
           parentConnection.connect(childConnection);
         }
-      }, 3000);
+      }, 1000);
       sphereSizeFlag = false;
       sleepFlag = true;
       loader.style.visibility = "visible";
       console.log("large sphere");
       setTimeout(() => {
-        sleep(2000);
+        sleep(500);
       }, 5);
       sleepFlag = false;
       canvasCtx.restore();
@@ -292,7 +292,7 @@ function onResults(results) {
     ) {
       setTimeout(() => {
         loader.style.visibility = "hidden";
-      }, 3500);
+      }, 1500);
       setTimeout(() => {
         if (parentBlock == null) {
           parentBlock = workspace.newBlock("place");
@@ -308,13 +308,13 @@ function onResults(results) {
           parentBlock = childBlock;
         }
         allBlocks.push(parentBlock);
-      }, 3000);
+      }, 1000);
       sphereSizeFlag = false;
       sleepFlag = true;
       loader.style.visibility = "visible";
       console.log("place sphere");
       setTimeout(() => {
-        sleep(2000);
+        sleep(500);
       }, 5);
       sleepFlag = false;
       canvasCtx.restore();

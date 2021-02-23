@@ -39,9 +39,7 @@
         <p id="inject-text">Some text</p>
       </div>
     </div>
-    <div id="blocklyDiv">
-      <!--<button id="run" onclick="runCode()">Run!</button>-->
-    </div>
+    <div id="blocklyDiv"></div>
     <div class="poseDiv">
       <video class="input_video" hidden></video>
       <canvas class="output_canvas" style="float: left"></canvas>
@@ -53,7 +51,6 @@
           place sphere (point down to ankles), make sphere (hands in front of
           chest)
         </p>
-        <div class="loader"></div>
       </div>
     </div>
     <canvas id="renderCanvas" touch-action="none"></canvas>
@@ -82,6 +79,7 @@
       id="workspaceBlocks"
       style="display: none"
     ></xml>
+    <div class="loader"></div>
     <script src="index.js"></script>
     <script src="scene.js"></script>
   </body>
