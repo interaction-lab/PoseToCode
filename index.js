@@ -21,7 +21,10 @@ const workspace = Blockly.inject(blocklyDiv, options);
 const workspaceBlocks = document.getElementById("workspaceBlocks");
 Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
 const loader = document.getElementsByClassName("loader")[0];
+const hold = document.getElementById("hold");
+const processing = document.getElementById("processing");
 loader.style.visibility = "hidden";
+processing.style.visibility = "hidden";
 /* variables to hold current parent block and child block */
 let parentBlock = null;
 let childBlock = null;
@@ -40,6 +43,7 @@ const canvasCtx = canvasElement.getContext("2d");
 
 function sleep(milliseconds) {
   loader.style.visibility = "visible";
+  processing.style.visibility = "visible";
   const date = Date.now();
   let currentDate = null;
   do {
@@ -85,6 +89,7 @@ function onResults(results) {
     if (rightDist < 0.05 && leftDist < 0.05 && !sphereSizeFlag) {
       setTimeout(() => {
         loader.style.visibility = "hidden";
+        processing.style.visibility = "hidden";
       }, 1500);
       setTimeout(() => {
         /* programatically adding code block */
@@ -105,6 +110,7 @@ function onResults(results) {
       }, 1000);
       sleepFlag = true;
       loader.style.visibility = "visible";
+      processing.style.visibility = "visible";
       console.log("dance");
       setTimeout(() => {
         sleep(500);
@@ -120,12 +126,14 @@ function onResults(results) {
     ) {
       setTimeout(() => {
         loader.style.visibility = "hidden";
+        processing.style.visibility = "hidden";
       }, 1500);
       setTimeout(() => {
         runCode();
       }, 1000);
       sleepFlag = true;
       loader.style.visibility = "visible";
+      processing.style.visibility = "visible";
       console.log("run");
       setTimeout(() => {
         sleep(500);
@@ -141,6 +149,7 @@ function onResults(results) {
     ) {
       setTimeout(() => {
         loader.style.visibility = "hidden";
+        processing.style.visibility = "hidden";
       }, 1500);
       setTimeout(() => {
         // delete all code blocks in the workspace
@@ -152,6 +161,7 @@ function onResults(results) {
       }, 1000);
       sleepFlag = true;
       loader.style.visibility = "visible";
+      processing.style.visibility = "visible";
       console.log("reset");
       setTimeout(() => {
         sleep(500);
@@ -171,6 +181,7 @@ function onResults(results) {
     ) {
       setTimeout(() => {
         loader.style.visibility = "hidden";
+        processing.style.visibility = "hidden";
       }, 1500);
       setTimeout(() => {
         /* add code block */
@@ -191,6 +202,7 @@ function onResults(results) {
       }, 1000);
       sleepFlag = true;
       loader.style.visibility = "visible";
+      processing.style.visibility = "visible";
       console.log("create sphere");
       setTimeout(() => {
         sleep(500);
@@ -206,6 +218,7 @@ function onResults(results) {
     ) {
       setTimeout(() => {
         loader.style.visibility = "hidden";
+        processing.style.visibility = "hidden";
       }, 1500);
       setTimeout(() => {
         // change field value of create_sphere block
@@ -220,6 +233,7 @@ function onResults(results) {
       sphereSizeFlag = false;
       sleepFlag = true;
       loader.style.visibility = "visible";
+      processing.style.visibility = "visible";
       console.log("small sphere");
       setTimeout(() => {
         sleep(500);
@@ -235,6 +249,7 @@ function onResults(results) {
     ) {
       setTimeout(() => {
         loader.style.visibility = "hidden";
+        processing.style.visibility = "hidden";
       }, 1500);
       setTimeout(() => {
         // change field value of create_sphere block
@@ -249,6 +264,7 @@ function onResults(results) {
       sphereSizeFlag = false;
       sleepFlag = true;
       loader.style.visibility = "visible";
+      processing.style.visibility = "visible";
       console.log("medium sphere");
       setTimeout(() => {
         sleep(500);
@@ -263,6 +279,7 @@ function onResults(results) {
     ) {
       setTimeout(() => {
         loader.style.visibility = "hidden";
+        processing.style.visibility = "hidden";
       }, 1500);
       setTimeout(() => {
         // change field value of create_sphere block
@@ -277,6 +294,7 @@ function onResults(results) {
       sphereSizeFlag = false;
       sleepFlag = true;
       loader.style.visibility = "visible";
+      processing.style.visibility = "visible";
       console.log("large sphere");
       setTimeout(() => {
         sleep(500);
@@ -292,6 +310,7 @@ function onResults(results) {
     ) {
       setTimeout(() => {
         loader.style.visibility = "hidden";
+        processing.style.visibility = "hidden";
       }, 1500);
       setTimeout(() => {
         if (parentBlock == null) {
@@ -312,6 +331,7 @@ function onResults(results) {
       sphereSizeFlag = false;
       sleepFlag = true;
       loader.style.visibility = "visible";
+      processing.style.visibility = "visible";
       console.log("place sphere");
       setTimeout(() => {
         sleep(500);

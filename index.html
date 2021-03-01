@@ -41,9 +41,17 @@
     </div>
     <div id="blocklyDiv"></div>
     <div class="poseDiv">
-      <video class="input_video" hidden></video>
-      <canvas class="output_canvas" style="float: left"></canvas>
-      <div class="poseKey" style="float: center; text-align: center">
+      <div class="video">
+        <video class="input_video"></video>
+        <div class="loader"></div>
+        <canvas class="output_canvas" style="float: left" hidden></canvas>
+      </div>
+      <div class="prompt">
+        <p id="hold" hidden>Hold the pose!</p>
+        <p id="processing">Processing...</p>
+      </div>
+      <!-- <br><br> -->
+      <div class="poseKey">
         <h1>Pose Key</h1>
         <p>reset (both hands above head), dance (both arms out to the side)</p>
         <p>run (paused running motion - left hand up + right hand down)</p>
@@ -53,6 +61,15 @@
         </p>
       </div>
     </div>
+    <!-- <div class="poseKey" style="float: center; text-align: center">
+        <h1>Pose Key</h1>
+        <p>reset (both hands above head), dance (both arms out to the side)</p>
+        <p>run (paused running motion - left hand up + right hand down)</p>
+        <p>
+          place sphere (point down to ankles), make sphere (hands in front of
+          chest)
+        </p>
+      </div> -->
     <canvas id="renderCanvas" touch-action="none"></canvas>
     <xml
       xmlns="https://developers.google.com/blockly/xml"
@@ -60,26 +77,13 @@
       style="display: none"
     >
       <sep></sep>
-      <!--<category name="Click for Actions">
-          <block type="create_sphere">
-          <field name="NAME">small</field>
-          </block>
-          <block type="place"></block>
-          <block type="dance"></block>
-      </category>
-      <category name="Loops">
-          <block type="controls_repeat_ext"></block>
-      </category>
-      <category name="Math">
-          <block type="math_number"></block>
-      </category>-->
     </xml>
     <xml
       xmlns="https://developers.google.com/blockly/xml"
       id="workspaceBlocks"
       style="display: none"
     ></xml>
-    <div class="loader"></div>
+    
     <script src="index.js"></script>
     <script src="scene.js"></script>
   </body>

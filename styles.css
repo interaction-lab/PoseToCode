@@ -8,10 +8,36 @@ body {
 }
 
 #renderCanvas {
-  width: 75%;
+  width: 45%;
   height: 100%;
   touch-action: none;
   float: left;
+}
+
+.video {
+  position: relative;
+}
+
+.prompt{
+  text-align: center;
+  font-size: 30px;
+}
+
+.input_video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  padding-top: 10%;
+  transform: scaleX(1);
+  transform: scaleY(1);
+  object-position: 50% 50%;
+  z-index: 1;
+}
+
+.poseKey {
+  float: center;
+  text-align: center;
+  padding-bottom: 10%
 }
 
 #blocklyDiv {
@@ -20,10 +46,28 @@ body {
   float: right;
 }
 
-#poseDiv {
+.poseDiv {
   height: 100%;
-  width: 25%;
+  width: 30%;
   float: left;
+  display: flex;
+  justify-content:space-between;
+  flex-direction:column;
+  background-color: lightgrey;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 80px;
+  height: 80px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: absolute;
+  z-index: 300000;
+  top: 35%;
+  left: 45%;
 }
 
 #run {
@@ -87,18 +131,7 @@ body {
   cursor: pointer;
 }
 
-.loader {
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 80px;
-  height: 80px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
-  bottom: 0;
-  right: 0;
-  margin: 50px;
-}
+
 
 @-webkit-keyframes spin {
   0% {
