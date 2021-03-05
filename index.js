@@ -21,9 +21,12 @@ const workspace = Blockly.inject(blocklyDiv, options);
 const workspaceBlocks = document.getElementById("workspaceBlocks");
 Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
 const loader = document.getElementsByClassName("loader")[0];
+const progress = document.getElementsByClassName("progress")[0];
 const hold = document.getElementById("hold");
 const processing = document.getElementById("processing");
 loader.style.visibility = "hidden";
+progress.style.visibility = "hidden";
+hold.style.visibility = "hidden";
 processing.style.visibility = "hidden";
 /* variables to hold current parent block and child block */
 let parentBlock = null;
@@ -42,8 +45,6 @@ const canvasElement = document.getElementsByClassName("output_canvas")[0];
 const canvasCtx = canvasElement.getContext("2d");
 
 function sleep(milliseconds) {
-  loader.style.visibility = "visible";
-  processing.style.visibility = "visible";
   const date = Date.now();
   let currentDate = null;
   do {
@@ -51,7 +52,7 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
-function onResults(results) {
+async function onResults(results) {
   canvasCtx.save();
   canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
   canvasCtx.drawImage(
@@ -87,10 +88,16 @@ function onResults(results) {
 
   if (!sleepFlag) {
     if (rightDist < 0.05 && leftDist < 0.05 && !sphereSizeFlag) {
+      sleepFlag = true;
+      hold.style.visibility = "visible";
+      progress.style.visibility = "visible";
+      await moveProgressBar();
       setTimeout(() => {
-        loader.style.visibility = "hidden";
-        processing.style.visibility = "hidden";
-      }, 1500);
+        hold.style.visibility = "hidden";
+        progress.style.visibility = "hidden";
+        loader.style.visibility = "visible";
+        processing.style.visibility = "visible";
+      }, 3500);
       setTimeout(() => {
         /* programatically adding code block */
         if (parentBlock == null) {
@@ -107,15 +114,14 @@ function onResults(results) {
           parentBlock = childBlock;
         }
         allBlocks.push(parentBlock);
-      }, 1000);
-      sleepFlag = true;
-      loader.style.visibility = "visible";
-      processing.style.visibility = "visible";
-      console.log("dance");
+        loader.style.visibility = "hidden";
+        processing.style.visibility = "hidden";
+      }, 5000);
       setTimeout(() => {
         sleep(500);
-      }, 5);
-      sleepFlag = false;
+        sleepFlag = false;
+      }, 5100);
+      console.log("dance");
       canvasCtx.restore();
     }
     // run (paused running motion --> left hand up + right hand down)
@@ -124,21 +130,26 @@ function onResults(results) {
       !(results.poseLandmarks[19].y < results.poseLandmarks[2].y) &&
       !sphereSizeFlag
     ) {
+      sleepFlag = true;
+      hold.style.visibility = "visible";
+      progress.style.visibility = "visible";
+      await moveProgressBar();
       setTimeout(() => {
-        loader.style.visibility = "hidden";
-        processing.style.visibility = "hidden";
-      }, 1500);
+        hold.style.visibility = "hidden";
+        progress.style.visibility = "hidden";
+        loader.style.visibility = "visible";
+        processing.style.visibility = "visible";
+      }, 3500);
       setTimeout(() => {
         runCode();
-      }, 1000);
-      sleepFlag = true;
-      loader.style.visibility = "visible";
-      processing.style.visibility = "visible";
-      console.log("run");
+        loader.style.visibility = "hidden";
+        processing.style.visibility = "hidden";
+      }, 5000);
       setTimeout(() => {
         sleep(500);
-      }, 5);
-      sleepFlag = false;
+        sleepFlag = false;
+      }, 5100);
+      console.log("run");
       canvasCtx.restore();
     }
     // reset (both hands above head)
@@ -147,26 +158,30 @@ function onResults(results) {
       results.poseLandmarks[22].y < results.poseLandmarks[2].y &&
       !sphereSizeFlag
     ) {
+      sleepFlag = true;
+      hold.style.visibility = "visible";
+      progress.style.visibility = "visible";
+      await moveProgressBar();
       setTimeout(() => {
-        loader.style.visibility = "hidden";
-        processing.style.visibility = "hidden";
-      }, 1500);
+        hold.style.visibility = "hidden";
+        progress.style.visibility = "hidden";
+        loader.style.visibility = "visible";
+        processing.style.visibility = "visible";
+      }, 3500);
       setTimeout(() => {
-        // delete all code blocks in the workspace
         for (i = 0; i < allBlocks.length; i++) {
           allBlocks[i].dispose(true);
         }
         parentBlock = null;
         resetGUI();
-      }, 1000);
-      sleepFlag = true;
-      loader.style.visibility = "visible";
-      processing.style.visibility = "visible";
-      console.log("reset");
+        loader.style.visibility = "hidden";
+        processing.style.visibility = "hidden";
+      }, 5000);
       setTimeout(() => {
         sleep(500);
-      }, 5);
-      sleepFlag = false;
+        sleepFlag = false;
+      }, 5100);
+      console.log("reset");
       canvasCtx.restore();
     }
     // make sphere (hands in front of chest)
@@ -179,12 +194,17 @@ function onResults(results) {
       results.poseLandmarks[19].y > results.poseLandmarks[11].y &&
       !sphereSizeFlag
     ) {
+      sleepFlag = true;
+      hold.style.visibility = "visible";
+      progress.style.visibility = "visible";
+      await moveProgressBar();
       setTimeout(() => {
-        loader.style.visibility = "hidden";
-        processing.style.visibility = "hidden";
-      }, 1500);
+        hold.style.visibility = "hidden";
+        progress.style.visibility = "hidden";
+        loader.style.visibility = "visible";
+        processing.style.visibility = "visible";
+      }, 3500);
       setTimeout(() => {
-        /* add code block */
         if (parentBlock == null) {
           parentBlock = workspace.newBlock("create_sphere");
           parentBlock.initSvg();
@@ -199,16 +219,14 @@ function onResults(results) {
           parentBlock = childBlock;
         }
         allBlocks.push(parentBlock);
-      }, 1000);
-      sleepFlag = true;
-      loader.style.visibility = "visible";
-      processing.style.visibility = "visible";
-      console.log("create sphere");
+        loader.style.visibility = "hidden";
+        processing.style.visibility = "hidden";
+      }, 5000);
       setTimeout(() => {
         sleep(500);
-      }, 5);
-      sleepFlag = false;
-      sphereSizeFlag = true;
+        sleepFlag = false;
+      }, 5100);
+      console.log("create sphere");
       canvasCtx.restore();
     }
     // size of sphere (right arm: low)
@@ -216,12 +234,17 @@ function onResults(results) {
       results.poseLandmarks[19].y > results.poseLandmarks[23].y &&
       sphereSizeFlag
     ) {
+      sleepFlag = true;
+      hold.style.visibility = "visible";
+      progress.style.visibility = "visible";
+      await moveProgressBar();
       setTimeout(() => {
-        loader.style.visibility = "hidden";
-        processing.style.visibility = "hidden";
-      }, 1500);
+        hold.style.visibility = "hidden";
+        progress.style.visibility = "hidden";
+        loader.style.visibility = "visible";
+        processing.style.visibility = "visible";
+      }, 3500);
       setTimeout(() => {
-        // change field value of create_sphere block
         if (parentBlock != null) {
           childBlock = workspace.newBlock("size");
           childBlock.setFieldValue("small", "TEXT");
@@ -229,16 +252,14 @@ function onResults(results) {
           const childConnection = childBlock.outputConnection;
           parentConnection.connect(childConnection);
         }
-      }, 1000);
-      sphereSizeFlag = false;
-      sleepFlag = true;
-      loader.style.visibility = "visible";
-      processing.style.visibility = "visible";
-      console.log("small sphere");
+        loader.style.visibility = "hidden";
+        processing.style.visibility = "hidden";
+      }, 5000);
       setTimeout(() => {
         sleep(500);
-      }, 5);
-      sleepFlag = false;
+        sleepFlag = false;
+      }, 5100);
+      console.log("small sphere");
       canvasCtx.restore();
     }
     // size of sphere (right arm: med)
@@ -247,12 +268,17 @@ function onResults(results) {
       results.poseLandmarks[19].y > results.poseLandmarks[11].y &&
       sphereSizeFlag
     ) {
+      sleepFlag = true;
+      hold.style.visibility = "visible";
+      progress.style.visibility = "visible";
+      await moveProgressBar();
       setTimeout(() => {
-        loader.style.visibility = "hidden";
-        processing.style.visibility = "hidden";
-      }, 1500);
+        hold.style.visibility = "hidden";
+        progress.style.visibility = "hidden";
+        loader.style.visibility = "visible";
+        processing.style.visibility = "visible";
+      }, 3500);
       setTimeout(() => {
-        // change field value of create_sphere block
         if (parentBlock != null) {
           childBlock = workspace.newBlock("size");
           childBlock.setFieldValue("medium", "TEXT");
@@ -260,16 +286,14 @@ function onResults(results) {
           const childConnection = childBlock.outputConnection;
           parentConnection.connect(childConnection);
         }
-      }, 1000);
-      sphereSizeFlag = false;
-      sleepFlag = true;
-      loader.style.visibility = "visible";
-      processing.style.visibility = "visible";
-      console.log("medium sphere");
+        loader.style.visibility = "hidden";
+        processing.style.visibility = "hidden";
+      }, 5000);
       setTimeout(() => {
         sleep(500);
-      }, 5);
-      sleepFlag = false;
+        sleepFlag = false;
+      }, 5100);
+      console.log("medium sphere");
       canvasCtx.restore();
     }
     // size of sphere (right arm: high)
@@ -277,12 +301,17 @@ function onResults(results) {
       results.poseLandmarks[19].y < results.poseLandmarks[11].y &&
       sphereSizeFlag
     ) {
+      sleepFlag = true;
+      hold.style.visibility = "visible";
+      progress.style.visibility = "visible";
+      await moveProgressBar();
       setTimeout(() => {
-        loader.style.visibility = "hidden";
-        processing.style.visibility = "hidden";
-      }, 1500);
+        hold.style.visibility = "hidden";
+        progress.style.visibility = "hidden";
+        loader.style.visibility = "visible";
+        processing.style.visibility = "visible";
+      }, 3500);
       setTimeout(() => {
-        // change field value of create_sphere block
         if (parentBlock != null) {
           childBlock = workspace.newBlock("size");
           childBlock.setFieldValue("large", "TEXT");
@@ -290,16 +319,14 @@ function onResults(results) {
           const childConnection = childBlock.outputConnection;
           parentConnection.connect(childConnection);
         }
-      }, 1000);
-      sphereSizeFlag = false;
-      sleepFlag = true;
-      loader.style.visibility = "visible";
-      processing.style.visibility = "visible";
-      console.log("large sphere");
+        loader.style.visibility = "hidden";
+        processing.style.visibility = "hidden";
+      }, 5000);
       setTimeout(() => {
         sleep(500);
-      }, 5);
-      sleepFlag = false;
+        sleepFlag = false;
+      }, 5100);
+      console.log("large sphere");
       canvasCtx.restore();
     }
     // place sphere (point down to ankles)
@@ -308,10 +335,16 @@ function onResults(results) {
       results.poseLandmarks[20].y > results.poseLandmarks[26].y &&
       !sphereSizeFlag
     ) {
+      sleepFlag = true;
+      hold.style.visibility = "visible";
+      progress.style.visibility = "visible";
+      await moveProgressBar();
       setTimeout(() => {
-        loader.style.visibility = "hidden";
-        processing.style.visibility = "hidden";
-      }, 1500);
+        hold.style.visibility = "hidden";
+        progress.style.visibility = "hidden";
+        loader.style.visibility = "visible";
+        processing.style.visibility = "visible";
+      }, 3500);
       setTimeout(() => {
         if (parentBlock == null) {
           parentBlock = workspace.newBlock("place");
@@ -327,16 +360,14 @@ function onResults(results) {
           parentBlock = childBlock;
         }
         allBlocks.push(parentBlock);
-      }, 1000);
-      sphereSizeFlag = false;
-      sleepFlag = true;
-      loader.style.visibility = "visible";
-      processing.style.visibility = "visible";
-      console.log("place sphere");
+        loader.style.visibility = "hidden";
+        processing.style.visibility = "hidden";
+      }, 5000);
       setTimeout(() => {
         sleep(500);
-      }, 5);
-      sleepFlag = false;
+        sleepFlag = false;
+      }, 5100);
+      console.log("small sphere");
       canvasCtx.restore();
     }
   }
@@ -380,6 +411,27 @@ function runCode() {
   setTimeout(function () {
     document.activeElement.blur();
   }, 150);
+}
+
+async function moveProgressBar() {
+  var i = 0;
+  if (i == 0) {
+    i = 1;
+    var elem = document.getElementsByClassName("progress")[0];
+    var width = 10;
+    var id = setInterval(frame, 10);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+        i = 0;
+      } else {
+        width++;
+        elem.style.width = width + "%";
+        elem.innerHTML = width + "%";
+      }
+    }
+  }
+  return;
 }
 
 const modal = document.getElementById("levelUpModal");
