@@ -87,7 +87,7 @@ function runOnGUI() {
   run.onPointerUpObservable.notifyObservers();
   if (level == 1 && detectLevelOneDone()) {
     setTimeout(() => {
-      const audio = new Audio("party_horn-Mike_Koenig-76599891.mp3");
+      const audio = new Audio("sounds/party_horn.mp3");
       audio.play();
       document.getElementById("levelUpModal").style.display = "block";
       document.getElementById("levelUpModal").querySelector("p").innerHTML =
@@ -241,7 +241,7 @@ const createScene = function () {
             idleAnim.stop();
             setTimeout(() => {
               danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
-              music = new Audio("dance.wav");
+              music = new Audio("sounds/dance.wav");
               music.play();
             }, delay);
             delay += danceDelay;

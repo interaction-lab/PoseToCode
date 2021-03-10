@@ -29,9 +29,9 @@ progress.style.visibility = "hidden";
 hold.style.visibility = "hidden";
 processing.style.visibility = "hidden";
 
-click = new Audio("click.wav");
-calculate = new Audio("calculate.wav");
-loading = new Audio("loading.mp3");
+click = new Audio("sounds/click.wav");
+calculate = new Audio("sounds/calculate.wav");
+loading = new Audio("sounds/loading.mp3");
 /* variables to hold current parent block and child block */
 let parentBlock = null;
 let childBlock = null;
