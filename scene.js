@@ -241,6 +241,8 @@ const createScene = function () {
             idleAnim.stop();
             setTimeout(() => {
               danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
+              music = new Audio("dance.wav");
+              music.play();
             }, delay);
             delay += danceDelay;
             levelOneDoneDelay += danceDelay;

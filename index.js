@@ -28,6 +28,9 @@ loader.style.visibility = "hidden";
 progress.style.visibility = "hidden";
 hold.style.visibility = "hidden";
 processing.style.visibility = "hidden";
+
+click = new Audio("click.wav");
+calculate = new Audio("calculate.wav");
 /* variables to hold current parent block and child block */
 let parentBlock = null;
 let childBlock = null;
@@ -102,10 +105,12 @@ async function onResults(results) {
         /* programatically adding code block */
         if (parentBlock == null) {
           parentBlock = workspace.newBlock("dance");
+          click.play();
           parentBlock.initSvg();
           parentBlock.render();
         } else {
           childBlock = workspace.newBlock("dance");
+          click.play();
           childBlock.initSvg();
           childBlock.render();
           const parentConnection = parentBlock.nextConnection;
@@ -137,13 +142,15 @@ async function onResults(results) {
       setTimeout(() => {
         hold.style.visibility = "hidden";
         progress.style.visibility = "hidden";
+        calculate.play();
         loader.style.visibility = "visible";
         processing.style.visibility = "visible";
       }, 3500);
       setTimeout(() => {
-        runCode();
         loader.style.visibility = "hidden";
         processing.style.visibility = "hidden";
+        calculate.pause();
+        runCode();
       }, 5000);
       setTimeout(() => {
         sleep(500);
@@ -207,10 +214,12 @@ async function onResults(results) {
       setTimeout(() => {
         if (parentBlock == null) {
           parentBlock = workspace.newBlock("create_sphere");
+          click.play();
           parentBlock.initSvg();
           parentBlock.render();
         } else {
           childBlock = workspace.newBlock("create_sphere");
+          click.play();
           childBlock.initSvg();
           childBlock.render();
           const parentConnection = parentBlock.nextConnection;
@@ -247,6 +256,7 @@ async function onResults(results) {
       setTimeout(() => {
         if (parentBlock != null) {
           childBlock = workspace.newBlock("size");
+          click.play();
           childBlock.setFieldValue("small", "TEXT");
           const parentConnection = parentBlock.getInput("TEXT").connection;
           const childConnection = childBlock.outputConnection;
@@ -281,6 +291,7 @@ async function onResults(results) {
       setTimeout(() => {
         if (parentBlock != null) {
           childBlock = workspace.newBlock("size");
+          click.play();
           childBlock.setFieldValue("medium", "TEXT");
           const parentConnection = parentBlock.getInput("TEXT").connection;
           const childConnection = childBlock.outputConnection;
@@ -314,6 +325,7 @@ async function onResults(results) {
       setTimeout(() => {
         if (parentBlock != null) {
           childBlock = workspace.newBlock("size");
+          click.play();
           childBlock.setFieldValue("large", "TEXT");
           const parentConnection = parentBlock.getInput("TEXT").connection;
           const childConnection = childBlock.outputConnection;
@@ -348,10 +360,12 @@ async function onResults(results) {
       setTimeout(() => {
         if (parentBlock == null) {
           parentBlock = workspace.newBlock("place");
+          click.play();
           parentBlock.initSvg();
           parentBlock.render();
         } else {
           childBlock = workspace.newBlock("place");
+          click.play();
           childBlock.initSvg();
           childBlock.render();
           const parentConnection = parentBlock.nextConnection;
