@@ -31,6 +31,7 @@ processing.style.visibility = "hidden";
 
 click = new Audio("click.wav");
 calculate = new Audio("calculate.wav");
+loading = new Audio("loading.mp3");
 /* variables to hold current parent block and child block */
 let parentBlock = null;
 let childBlock = null;
@@ -428,6 +429,7 @@ function runCode() {
 }
 
 async function moveProgressBar() {
+  loading.play();
   var i = 0;
   if (i == 0) {
     i = 1;
