@@ -53,13 +53,11 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
-
-
 async function onResults(results) {
   resetCanvas();
   drawPoseSkeleton(results);
   detectedPose = detectPose(results);
-  if(detectedPose != POSES.NONE){
+  if (detectedPose != POSES.NONE) {
     console.log(detectedPose);
   }
   if (!sleepFlag) {
@@ -314,7 +312,6 @@ function setSphereSizeLarge() {
   console.log("large sphere");
 }
 
-
 function setSphereSizeMedium() {
   setTimeout(() => {
     if (parentBlock != null) {
@@ -428,74 +425,93 @@ function createSphereBlock() {
 
 // Detection
 const POSES = {
-    NONE: "none",
-    DANCE: "bothArmsMedium",
-    RESET: "bothArmsHigh"
+  NONE: "none",
+  DANCE: "bothArmsMedium",
+  RESET: "bothArmsHigh",
+  CREATESPHEREBLOCK: "createSphereBlock",
 };
 
-function detectPose(results){
-  if(bothArmsHigh(results)){
-    return POSES.RESET
-  } 
-  else if(handsInFrontOfChest(results)){
-     return POSES.DANCE;
-   }
-   return POSES.NONE;
+function detectPose(results) {
+  if (bothArmsHigh(results)) {
+    return POSES.RESET;
+  } else if (handsInFrontOfChest(results)) {
+    return POSES.DANCE;
+  } else if (createSphereBlock(results)) {
+    return POSES.CREATESPHEREBLOCK;
+  }
+  return POSES.NONE;
 }
 
 function bothArmsHigh(results) {
-  return results.poseLandmarks.length >= 22 &&
+  return (
+    results.poseLandmarks.length >= 22 &&
     results.poseLandmarks[21].y < results.poseLandmarks[2].y &&
     results.poseLandmarks[22].y < results.poseLandmarks[2].y &&
-    !sphereSizeFlag;
+    !sphereSizeFlag
+  );
 }
 
 function handsInFrontOfChest(results) {
-  return results.poseLandmarks.length >= 20 &&
+  return (
+    results.poseLandmarks.length >= 20 &&
     results.poseLandmarks[20].x > results.poseLandmarks[12].x &&
     results.poseLandmarks[19].x < results.poseLandmarks[11].x &&
     results.poseLandmarks[20].y < results.poseLandmarks[14].y &&
     results.poseLandmarks[20].y > results.poseLandmarks[12].y &&
     results.poseLandmarks[19].y < results.poseLandmarks[13].y &&
     results.poseLandmarks[19].y > results.poseLandmarks[11].y &&
-    !sphereSizeFlag;
+    !sphereSizeFlag
+  );
 }
 
 function leftArmHighRightArmLow(results) {
-  return results.poseLandmarks.length >= 20 &&
+  return (
+    results.poseLandmarks.length >= 20 &&
     results.poseLandmarks[20].y < results.poseLandmarks[5].y &&
     !(results.poseLandmarks[19].y < results.poseLandmarks[2].y) &&
-    !sphereSizeFlag;
+    !sphereSizeFlag
+  );
 }
 
 function rightArmMedium(results) {
-  return results.poseLandmarks.length >= 23 &&
+  return (
+    results.poseLandmarks.length >= 23 &&
     results.poseLandmarks[19].y < results.poseLandmarks[23].y &&
     results.poseLandmarks[19].y > results.poseLandmarks[11].y &&
-    sphereSizeFlag;
+    sphereSizeFlag
+  );
 }
 
 function rightArmLow(results) {
-  return results.poseLandmarks.length >= 23 &&
+  return (
+    results.poseLandmarks.length >= 23 &&
     results.poseLandmarks[19].y > results.poseLandmarks[23].y &&
-    sphereSizeFlag;
+    sphereSizeFlag
+  );
 }
 
 function rightArmHigh(results) {
-  return results.poseLandmarks.length >= 19 &&
+  return (
+    results.poseLandmarks.length >= 19 &&
     results.poseLandmarks[19].y < results.poseLandmarks[11].y &&
-    sphereSizeFlag;
+    sphereSizeFlag
+  );
 }
 
 function bothArmsMedium(results) {
-  return results.poseLandmarks.length >= 14 &&
-    results.poseLandmarks[11].y - results.poseLandmarks[13].y < 0.05
-    && results.poseLandmarks[14].y - results.poseLandmarks[12].y < 0.05 && !sphereSizeFlag;
+  return (
+    results.poseLandmarks.length >= 14 &&
+    results.poseLandmarks[11].y - results.poseLandmarks[13].y < 0.05 &&
+    results.poseLandmarks[14].y - results.poseLandmarks[12].y < 0.05 &&
+    !sphereSizeFlag
+  );
 }
 
 function bothArmsLow(results) {
-  return results.poseLandmarks.length >= 26 &&
+  return (
+    results.poseLandmarks.length >= 26 &&
     results.poseLandmarks[19].y > results.poseLandmarks[25].y &&
     results.poseLandmarks[20].y > results.poseLandmarks[26].y &&
-    !sphereSizeFlag;
+    !sphereSizeFlag
+  );
 }
