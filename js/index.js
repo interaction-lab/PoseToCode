@@ -429,15 +429,31 @@ const POSES = {
   DANCE: "bothArmsMedium",
   RESET: "bothArmsHigh",
   CREATESPHEREBLOCK: "createSphereBlock",
+  RUNCODE: "runCode",
+  SETSPHERESMALL: "setSphereSmall",
+  SETSPHEREMEDIUM: "setSphereMedium",
+  SETSPHERELARGE: "setSphereLarge",
 };
 
 function detectPose(results) {
-  if (bothArmsHigh(results)) {
-    return POSES.RESET;
-  } else if (handsInFrontOfChest(results)) {
-    return POSES.DANCE;
-  } else if (createSphereBlock(results)) {
-    return POSES.CREATESPHEREBLOCK;
+  if (results != null && results.poseLandmarks != null) {
+    if (rightArmLow(results)) {
+      return POSES.SETSPHERESMALL;
+    } else if (rightArmMedium(results)) {
+      return POSES.SETSPHEREMEDIUM;
+    } else if (rightArmHigh(results)) {
+      return POSES.SETSPHERELARGE;
+    } else if (leftArmHighRightArmLow(results)) {
+      return POSES.RUNCODE;
+    } else if (bothArmsHigh(results)) {
+      return POSES.RESET;
+    } else if (bothArmsMedium(results)) {
+      return POSES.DANCE;
+    } else if (bothArmsLow(results)) {
+      return POSES.CREATESPHEREBLOCK;
+    } else if (handsInFrontOfChest(results)) {
+      return POSES.DANCE;
+    }
   }
   return POSES.NONE;
 }
