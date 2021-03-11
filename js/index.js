@@ -40,9 +40,6 @@ const allBlocks = [];
 
 let sphereSizeFlag = false;
 let sleepFlag = false;
-let startMotion = 0;
-let standingDistLeft = 0;
-let standingDistRight = 0;
 
 const videoElement = document.getElementsByClassName("input_video")[0];
 const canvasElement = document.getElementsByClassName("output_canvas")[0];
@@ -56,90 +53,87 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
+
+
 async function onResults(results) {
   resetCanvas();
   drawPoseSkeleton(results);
-
-  if (startMotion <= 100) {
-    standingDistLeft =
-      results.poseLandmarks[28].y - results.poseLandmarks[24].y;
-    standingDistRight =
-      results.poseLandmarks[27].y - results.poseLandmarks[23].y;
-    startMotion += 1;
+  detectedPose = detectPose(results);
+  if(detectedPose != POSES.NONE){
+    console.log(detectedPose);
   }
-  // dance (both arms out to the side)
   if (!sleepFlag) {
-    if (bothArmsMedium(results)) {
-      sleepFlag = true;
-      showProgressBar();
-      await moveProgressBar();
-      hideProgressBar();
-      addDanceBlock();
-      canvasCtx.restore();
-    }
+    // if (bothArmsMedium(results)) {
+    //   sleepFlag = true;
+    //   showProgressBar();
+    //   await moveProgressBar();
+    //   hideProgressBar();
+    //   await addDanceBlock();
+    //   canvasCtx.restore();
+    // }
     // run (paused running motion --> left hand up + right hand down)
-    else if (leftArmHighRightArmLow(results)) {
-      sleepFlag = true;
-      hideProgressBar();
-      await moveProgressBar();
-      showProgressBar();
-      runCode();
-      canvasCtx.restore();
-    }
-    // reset (both hands above head)
-    else if (bothArmsHigh(results)) {
-      sleepFlag = true;
-      showProgressBar();
-      await moveProgressBar();
-      hideProgressBar();
-      resetAllBlocks();
-      canvasCtx.restore();
-    }
-    // make sphere (hands in front of chest)
-    else if (handsInFrontOfChest(results)) {
-      sleepFlag = true;
-      showProgressBar()
-      await moveProgressBar();
-      hideProgressBar();
-      createSphereBlock();
-      canvasCtx.restore();
-    }
-    // size of sphere (right arm: low)
-    else if (rightArmLow(results)) {
-      sleepFlag = true;
-      hideProgressBar()
-      await moveProgressBar();
-      showProgressBar();
-      setSphereSizeSmall();
-      canvasCtx.restore();
-    }
-    // size of sphere (right arm: med)
-    else if (rightArmMedium(results)) {
-      sleepFlag = true;
-      hideProgressBar();
-      await moveProgressBar();
-      showProgressBar();
-      setSphereSizeMedium();
-      canvasCtx.restore();
-    }
-    // size of sphere (right arm: high)
-    else if (rightArmHigh(results)) {
-      sleepFlag = true;
-      hideProgressBar();
-      await moveProgressBar();
-      showProgressBar();
-      setSphereSizeLarge();
-      canvasCtx.restore();
-    }
-    // place sphere (point down to ankles)
-    else if (bothArmsLow(results)) {
-      sleepFlag = true;
-      hideProgressBar();
-      await moveProgressBar();
-      showProgressBar();
-      placeSphere();
-      canvasCtx.restore();
-    }
+    // else if (leftArmHighRightArmLow(results)) {
+    //   sleepFlag = true;
+    //   hideProgressBar();
+    //   await moveProgressBar();
+    //   showProgressBar();
+    //   runCode();
+    //   canvasCtx.restore();
+    // }
+    // // reset (both hands above head)
+    // else if (bothArmsHigh(results)) {
+    //   sleepFlag = true;
+    //   showProgressBar();
+    //   await moveProgressBar();
+    //   hideProgressBar();
+    //   resetAllBlocks();
+    //   canvasCtx.restore();
+    // }
+    // // make sphere (hands in front of chest)
+    // else if (handsInFrontOfChest(results)) {
+    //   sleepFlag = true;
+    //   showProgressBar()
+    //   await moveProgressBar();
+    //   hideProgressBar();
+    //   createSphereBlock();
+    //   canvasCtx.restore();
+    // }
+    // // size of sphere (right arm: low)
+    // else if (rightArmLow(results)) {
+    //   sleepFlag = true;
+    //   hideProgressBar()
+    //   await moveProgressBar();
+    //   showProgressBar();
+    //   setSphereSizeSmall();
+    //   canvasCtx.restore();
+    // }
+    // // size of sphere (right arm: med)
+    // else if (rightArmMedium(results)) {
+    //   sleepFlag = true;
+    //   hideProgressBar();
+    //   await moveProgressBar();
+    //   showProgressBar();
+    //   setSphereSizeMedium();
+    //   canvasCtx.restore();
+    // }
+    // // size of sphere (right arm: high)
+    // else if (rightArmHigh(results)) {
+    //   sleepFlag = true;
+    //   hideProgressBar();
+    //   await moveProgressBar();
+    //   showProgressBar();
+    //   setSphereSizeLarge();
+    //   canvasCtx.restore();
+    // }
+    // // place sphere (point down to ankles)
+    // else if (bothArmsLow(results)) {
+    //   sleepFlag = true;
+    //   hideProgressBar();
+    //   await moveProgressBar();
+    //   showProgressBar();
+    //   placeSphere();
+    //   canvasCtx.restore();
+    // }
   }
 }
 
@@ -361,7 +355,7 @@ function setSphereSizeSmall() {
   console.log("small sphere");
 }
 
-function addDanceBlock() {
+async function addDanceBlock() {
   setTimeout(() => {
     /* programatically adding code block */
     if (parentBlock == null) {
@@ -433,8 +427,32 @@ function createSphereBlock() {
 }
 
 // Detection
+const POSES = {
+    NONE: "none",
+    DANCE: "bothArmsMedium",
+    RESET: "bothArmsHigh"
+};
+
+function detectPose(results){
+  if(bothArmsHigh(results)){
+    return POSES.RESET
+  } 
+  else if(handsInFrontOfChest(results)){
+     return POSES.DANCE;
+   }
+   return POSES.NONE;
+}
+
+function bothArmsHigh(results) {
+  return results.poseLandmarks.length >= 22 &&
+    results.poseLandmarks[21].y < results.poseLandmarks[2].y &&
+    results.poseLandmarks[22].y < results.poseLandmarks[2].y &&
+    !sphereSizeFlag;
+}
+
 function handsInFrontOfChest(results) {
-  return results.poseLandmarks[20].x > results.poseLandmarks[12].x &&
+  return results.poseLandmarks.length >= 20 &&
+    results.poseLandmarks[20].x > results.poseLandmarks[12].x &&
     results.poseLandmarks[19].x < results.poseLandmarks[11].x &&
     results.poseLandmarks[20].y < results.poseLandmarks[14].y &&
     results.poseLandmarks[20].y > results.poseLandmarks[12].y &&
@@ -444,40 +462,40 @@ function handsInFrontOfChest(results) {
 }
 
 function leftArmHighRightArmLow(results) {
-  return results.poseLandmarks[20].y < results.poseLandmarks[5].y &&
+  return results.poseLandmarks.length >= 20 &&
+    results.poseLandmarks[20].y < results.poseLandmarks[5].y &&
     !(results.poseLandmarks[19].y < results.poseLandmarks[2].y) &&
     !sphereSizeFlag;
 }
 
-function bothArmsHigh(results) {
-  return results.poseLandmarks[21].y < results.poseLandmarks[2].y &&
-    results.poseLandmarks[22].y < results.poseLandmarks[2].y &&
-    !sphereSizeFlag;
-}
-
 function rightArmMedium(results) {
-  return results.poseLandmarks[19].y < results.poseLandmarks[23].y &&
+  return results.poseLandmarks.length >= 23 &&
+    results.poseLandmarks[19].y < results.poseLandmarks[23].y &&
     results.poseLandmarks[19].y > results.poseLandmarks[11].y &&
     sphereSizeFlag;
 }
 
 function rightArmLow(results) {
-  return results.poseLandmarks[19].y > results.poseLandmarks[23].y &&
+  return results.poseLandmarks.length >= 23 &&
+    results.poseLandmarks[19].y > results.poseLandmarks[23].y &&
     sphereSizeFlag;
 }
 
 function rightArmHigh(results) {
-  return results.poseLandmarks[19].y < results.poseLandmarks[11].y &&
+  return results.poseLandmarks.length >= 19 &&
+    results.poseLandmarks[19].y < results.poseLandmarks[11].y &&
     sphereSizeFlag;
 }
 
 function bothArmsMedium(results) {
-  return results.poseLandmarks[11].y - results.poseLandmarks[13].y < 0.05
+  return results.poseLandmarks.length >= 14 &&
+    results.poseLandmarks[11].y - results.poseLandmarks[13].y < 0.05
     && results.poseLandmarks[14].y - results.poseLandmarks[12].y < 0.05 && !sphereSizeFlag;
 }
 
 function bothArmsLow(results) {
-  return results.poseLandmarks[19].y > results.poseLandmarks[25].y &&
+  return results.poseLandmarks.length >= 26 &&
+    results.poseLandmarks[19].y > results.poseLandmarks[25].y &&
     results.poseLandmarks[20].y > results.poseLandmarks[26].y &&
     !sphereSizeFlag;
 }
