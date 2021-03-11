@@ -56,82 +56,17 @@ function sleep(milliseconds) {
 async function onResults(results) {
   resetCanvas();
   drawPoseSkeleton(results);
-  detectedPose = detectPose(results);
-  if (detectedPose != POSES.NONE) {
-    console.log(detectedPose);
-  }
   if (!sleepFlag) {
-    // if (bothArmsMedium(results)) {
-    //   sleepFlag = true;
-    //   showProgressBar();
-    //   await moveProgressBar();
-    //   hideProgressBar();
-    //   await addDanceBlock();
-    //   canvasCtx.restore();
-    // }
-    // run (paused running motion --> left hand up + right hand down)
-    // else if (leftArmHighRightArmLow(results)) {
-    //   sleepFlag = true;
-    //   hideProgressBar();
-    //   await moveProgressBar();
-    //   showProgressBar();
-    //   runCode();
-    //   canvasCtx.restore();
-    // }
-    // // reset (both hands above head)
-    // else if (bothArmsHigh(results)) {
-    //   sleepFlag = true;
-    //   showProgressBar();
-    //   await moveProgressBar();
-    //   hideProgressBar();
-    //   resetAllBlocks();
-    //   canvasCtx.restore();
-    // }
-    // // make sphere (hands in front of chest)
-    // else if (handsInFrontOfChest(results)) {
-    //   sleepFlag = true;
-    //   showProgressBar()
-    //   await moveProgressBar();
-    //   hideProgressBar();
-    //   createSphereBlock();
-    //   canvasCtx.restore();
-    // }
-    // // size of sphere (right arm: low)
-    // else if (rightArmLow(results)) {
-    //   sleepFlag = true;
-    //   hideProgressBar()
-    //   await moveProgressBar();
-    //   showProgressBar();
-    //   setSphereSizeSmall();
-    //   canvasCtx.restore();
-    // }
-    // // size of sphere (right arm: med)
-    // else if (rightArmMedium(results)) {
-    //   sleepFlag = true;
-    //   hideProgressBar();
-    //   await moveProgressBar();
-    //   showProgressBar();
-    //   setSphereSizeMedium();
-    //   canvasCtx.restore();
-    // }
-    // // size of sphere (right arm: high)
-    // else if (rightArmHigh(results)) {
-    //   sleepFlag = true;
-    //   hideProgressBar();
-    //   await moveProgressBar();
-    //   showProgressBar();
-    //   setSphereSizeLarge();
-    //   canvasCtx.restore();
-    // }
-    // // place sphere (point down to ankles)
-    // else if (bothArmsLow(results)) {
-    //   sleepFlag = true;
-    //   hideProgressBar();
-    //   await moveProgressBar();
-    //   showProgressBar();
-    //   placeSphere();
-    //   canvasCtx.restore();
-    // }
+    detectedPose = detectPose(results);
+    if (detectedPose != POSES.NONE) {
+      console.log(detectedPose);
+      sleepFlag = true;
+      showProgressBar();
+      await moveProgressBar();
+      hideProgressBar();
+      processDetectedPose(detectedPose);
+      canvasCtx.restore();
+    }
   }
 }
 
@@ -429,6 +364,7 @@ const POSES = {
   DANCE: "bothArmsMedium",
   RESET: "bothArmsHigh",
   CREATESPHEREBLOCK: "createSphereBlock",
+  PLACESPHEREBLOCK: "placeSphereBlock",
   RUNCODE: "runCode",
   SETSPHERESMALL: "setSphereSmall",
   SETSPHEREMEDIUM: "setSphereMedium",
@@ -452,10 +388,30 @@ function detectPose(results) {
     } else if (bothArmsLow(results)) {
       return POSES.CREATESPHEREBLOCK;
     } else if (handsInFrontOfChest(results)) {
-      return POSES.DANCE;
+      return POSES.PLACESPHEREBLOCK;
     }
   }
   return POSES.NONE;
+}
+
+function processDetectedPose(pose) {
+  if (pose == POSES.SETSPHERESMALL) {
+    setSphereSizeSmall();
+  } else if (pose == POSES.SETSPHEREMEDIUM) {
+    setSphereSizeMedium();
+  } else if (pose == POSES.SETSPHERELARGE) {
+    setSphereSizeLarge();
+  } else if (pose == POSES.RUNCODE) {
+    runCode();
+  } else if (pose == POSES.RESET) {
+    resetAllBlocks();
+  } else if ((pose = POSES.DANCE)) {
+    addDanceBlock();
+  } else if ((pose = POSES.CREATESPHEREBLOCK)) {
+    createSphereBlock();
+  } else if ((pose = POSES.PLACESPHEREBLOCK)) {
+    placeSphere();
+  }
 }
 
 function bothArmsHigh(results) {
