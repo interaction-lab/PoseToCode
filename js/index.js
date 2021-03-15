@@ -131,10 +131,13 @@ function attemptFullDetection(){
 }
 
 
-progressBarLeftHigh = document.getElementById("leftArmMed");
+progressBarLeftHigh = document.getElementById("leftArmMedBar");
 function updateProgressBars(){
-  var maxValue = 100;
-  progressBarLeftHigh.value = cumulativeArmStates[ARMS.LEFT][ARMSTATES.HIGH] / timeToHoldPoseMS * maxValue;
+  var percent = cumulativeArmStates[ARMS.LEFT][ARMSTATES.MED] / timeToHoldPoseMS * 100;
+  if(percent > 100){
+    percent = 100;
+  }
+  progressBarLeftHigh.style.width = percent + "%";
 }
 
 lastUpdateTime = curTime = null;
@@ -543,15 +546,15 @@ function getStateOfArms(results) {
     results.poseLandmarks[19].y > results.poseLandmarks[11].y) {
     armStates[ARMS.LEFT] = ARMSTATES.OUTINFRONT;
   }
-  else if (results.poseLandmarks[21].y < results.poseLandmarks[2].y) {
+  else if (results.poseLandmarks[15].y < results.poseLandmarks[2].y) {
     armStates[ARMS.LEFT] = ARMSTATES.HIGH;
   }
-  else if (results.poseLandmarks[20].y < results.poseLandmarks[24].y &&
-    results.poseLandmarks[20].y > results.poseLandmarks[12].y) {
+  else if (results.poseLandmarks[15].y < results.poseLandmarks[23].y &&
+    results.poseLandmarks[15].y > results.poseLandmarks[12].y) {
     armStates[ARMS.LEFT] = ARMSTATES.MED;
   }
-  else if (results.poseLandmarks[20].y > results.poseLandmarks[26].y) {
-    armStates[ARMS.RIGHT] = ARMSTATES.LOW;
+  else if (results.poseLandmarks[15].y > results.poseLandmarks[23].y) {
+    armStates[ARMS.LEFT] = ARMSTATES.LOW;
   }
 
   if (results.poseLandmarks[20].x > results.poseLandmarks[12].x &&
@@ -559,14 +562,14 @@ function getStateOfArms(results) {
     results.poseLandmarks[20].y > results.poseLandmarks[12].y) {
     armStates[ARMS.RIGHT] = ARMSTATES.OUTINFRONT
   }
-  else if (results.poseLandmarks[22].y < results.poseLandmarks[2].y) {
+  else if (results.poseLandmarks[16].y < results.poseLandmarks[5].y) {
     armStates[ARMS.RIGHT] = ARMSTATES.HIGH;
   }
-  else if (results.poseLandmarks[19].y < results.poseLandmarks[23].y &&
-    results.poseLandmarks[19].y > results.poseLandmarks[11].y) {
+  else if (results.poseLandmarks[16].y < results.poseLandmarks[24].y &&
+    results.poseLandmarks[16].y > results.poseLandmarks[11].y) {
     armStates[ARMS.RIGHT] = ARMSTATES.MED;
   }
-  else if (results.poseLandmarks[19].y > results.poseLandmarks[23].y) {
+  else if (results.poseLandmarks[16].y > results.poseLandmarks[24].y) {
     armStates[ARMS.RIGHT] = ARMSTATES.LOW;
   }
   return armStates;
