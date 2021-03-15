@@ -86,9 +86,9 @@ const SPHERESIZES = {
   LARGE: "large"
 }
 const BLOCKTYPES = {
-  CREATESPHERE : "create_sphere",
+  CREATESPHERE: "create_sphere",
   PLACESPHERE: "place",
-  DANCE : "dance"
+  DANCE: "dance"
 }
 
 // States / Globals
@@ -106,7 +106,6 @@ cumulativeArmStates = {
     [ARMSTATES.OUTINFRONT]: 0
   }
 }
-
 progressBars = {
   [ARMS.LEFT]: {
     [ARMSTATES.LOW]: document.getElementById("leftArmLowBar"),
@@ -123,13 +122,16 @@ progressBars = {
 }
 leftProgressheader = document.getElementById("leftProgressHeader");
 rightProgressheader = document.getElementById("rightProgressHeader");
+codeIsRunning = false;
 
 // Main
 async function onResults(results) {
   deltaTime = getDeltaTimeMS();
   resetCanvas();
   drawPoseSkeleton(results);
-  if (results != null && results.poseLandmarks != null) {
+  if (!codeIsRunning &&
+    results != null &&
+    results.poseLandmarks != null) {
     curArmStates = getStateOfArms(results);
     updateCumulativeArmStates(curArmStates, deltaTime);
     updateProgressBars();
@@ -362,7 +364,8 @@ function drawPoseSkeleton(results) {
 }
 
 // Codeblock Actions
-function runCode() {
+async function runCode() {
+  codeIsRunning = true;
   window.LoopTrap = 1000;
   Blockly.JavaScript.INFINITE_LOOP_TRAP =
     'if(--window.LoopTrap == 0) throw "Infinite loop.";\n';
@@ -376,6 +379,7 @@ function runCode() {
   setTimeout(function () {
     document.activeElement.blur();
   }, 150);
+  codeIsRunning = false;
 }
 
 function resetAllBlocks() {
@@ -383,14 +387,14 @@ function resetAllBlocks() {
     allBlocks[i].dispose(true);
   }
   parentBlock = null;
-  resetGUI();
+  //resetGUI();
   console.log("reset");
 }
 
-function addNewBlock(blockName){
-  block = workspace.newBlock(blockName, fields);
+function addNewBlock(blockName, fields = []) {
+  block = workspace.newBlock(blockName);
   click.play();
-  for(var i = fields.length - 1; i >= 0; --i){
+  for (var i = fields.length - 1; i >= 0; --i) {
     block.setFieldValue(fields[i]['value'], fields[i]['name'])
   }
   block.initSvg();
@@ -408,15 +412,15 @@ function placeSphere() {
 }
 
 function addDanceBlock() {
-  addNewBlock(BLOCKTYPES.DANCE, []);
+  addNewBlock(BLOCKTYPES.DANCE);
   console.log("dance block added");
 }
 
 function createSphereBlock(sphereSize) {
   fields = [
     {
-      "name" : "NAME",
-      "value" : sphereSize
+      "name": "NAME",
+      "value": sphereSize
     }
   ];
   addNewBlock(BLOCKTYPES.CREATESPHERE, fields)
