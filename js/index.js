@@ -97,16 +97,31 @@ cumulativeArmStates = {
   }
 }
 
+function decayAllOtherStates(curArmStates, deltaTime){
+  var decayFactor = 0.8 * deltaTime;
+  for (let arm in cumulativeArmStates){
+    for(let state in cumulativeArmStates[arm]){
+      if(curArmStates[arm] == state){
+        continue;
+      }
+      curArmStates[arm][state] -= decayFactor;
+    }
+  }
+}
+
 function updateCumulativeArmStates(curArmStates, deltaTime){
   cumulativeArmStates[ARMS.LEFT][curArmStates[ARMS.LEFT]] += deltaTime;
   cumulativeArmStates[ARMS.RIGHT][curArmStates[ARMS.RIGHT]] += deltaTime;
+  decayAllOtherStates(curArmStates,deltaTime);
 }
 
-counterThreshHold = 10000;
+
+
+timeToHoldPoseMS = 10000;
 function attemptFullDetection(){
   for (let arm in cumulativeArmStates){
     for(let state in cumulativeArmStates[arm]){
-      if(cumulativeArmStates[arm][state] > counterThreshHold){
+      if(cumulativeArmStates[arm][state] > timeToHoldPoseMS){
         console.log(arm);
         console.log(state);
         console.log(cumulativeArmStates[arm][state]);
@@ -115,6 +130,12 @@ function attemptFullDetection(){
   }
 }
 
+
+progressBarLeftHigh = document.getElementById("leftArmMed");
+function updateProgressBars(){
+  var maxValue = 100;
+  progressBarLeftHigh.value = cumulativeArmStates[ARMS.LEFT][ARMSTATES.HIGH] / timeToHoldPoseMS * maxValue;
+}
 
 lastUpdateTime = curTime = null;
 function getDeltaTimeMS(){
@@ -135,6 +156,7 @@ async function onResults(results) {
   if (results != null && results.poseLandmarks != null) {
     curArmStates = getStateOfArms(results);
     updateCumulativeArmStates(curArmStates, deltaTime);
+    updateProgressBars();
     attemptFullDetection();
   }
 
