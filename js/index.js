@@ -53,9 +53,6 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
-// pose needs a struct
-// 
-
 // Detection
 const POSES = {
   NONE: "none",
@@ -113,28 +110,37 @@ function decayAllOtherStates(curArmStates, deltaTime) {
 }
 
 function updateCumulativeArmStates(curArmStates, deltaTime) {
+  const scaleFactor = 1.2;
+  const scaledTimeToHoldPose = timeToHoldPoseMS * scaleFactor;
   cumulativeArmStates[ARMS.LEFT][curArmStates[ARMS.LEFT]] += deltaTime;
   cumulativeArmStates[ARMS.RIGHT][curArmStates[ARMS.RIGHT]] += deltaTime;
+  if (cumulativeArmStates[ARMS.LEFT][curArmStates[ARMS.LEFT]] > scaledTimeToHoldPose) {
+    cumulativeArmStates[ARMS.LEFT][curArmStates[ARMS.LEFT]] = scaledTimeToHoldPose;
+  }
+  if (cumulativeArmStates[ARMS.RIGHT][curArmStates[ARMS.RIGHT]] > scaledTimeToHoldPose) {
+    cumulativeArmStates[ARMS.RIGHT][curArmStates[ARMS.RIGHT]] = scaledTimeToHoldPose;
+  }
   decayAllOtherStates(curArmStates, deltaTime);
 }
 
 
 
-timeToHoldPoseMS = 10000;
-function updateTopArmScores() {
-  // find most likely pose right now to display
+timeToHoldPoseMS = 4000;
+function getBestArmScores() {
   var bestArmScores = {
-    [ARMS.LEFT] : ARMSTATES.NONE,
-    [ARMS.RIGHT] : ARMSTATES.NONE
+    [ARMS.LEFT]: ARMSTATES.NONE,
+    [ARMS.RIGHT]: ARMSTATES.NONE
   };
   for (let arm in cumulativeArmStates) {
-    var bestStateScore = -1;
+    var bestArmScore = -1;
     for (let state in cumulativeArmStates[arm]) {
-      if(bestStateScore < cumulativeArmStates[arm][state]){
+      if (bestArmScore < cumulativeArmStates[arm][state]) {
         bestArmScores[arm] = state;
+        bestArmScore = cumulativeArmStates[arm][state];
       }
     }
   }
+  return bestArmScores;
 }
 
 
@@ -152,6 +158,8 @@ progressBars = {
     [ARMSTATES.OUTINFRONT]: document.getElementById("rightArmOutBar")
   }
 }
+leftProgressheader = document.getElementById("leftProgressHeader");
+rightProgressheader = document.getElementById("rightProgressHeader");
 
 function updateProgressBars() {
   for (let arm in progressBars) {
@@ -177,16 +185,58 @@ function getDeltaTimeMS() {
   return deltaTime;
 }
 
+function updateBestArmText(bestArmScores) {
+  leftProgressheader.innerHTML = "Best Left: " + bestArmScores[ARMS.LEFT];
+  rightProgressheader.innerHTML = "Best Right: " + bestArmScores[ARMS.RIGHT];
+}
+
+
+// NONE -> anything not used
+// DANCE -> {MEDIUM, MEDIUM, FALSE}
+// RESET -> {LOW, HIGH, FALSE}
+// RUNCODE -> {MEDIUM, HIGH,FALSE}
+// PLACESPHERE -> {MEDIUM, MEDIUM, TRUE}
+// MAKESPHERESMALL -> {HIGH, LOW, FALSE}
+// MAKESPHEREMED -> {HIGH, MEDIUM, FALSE}
+// MAKESPHERELARGER -> {HIGH, HIGH, FALSE}
+function armScoresOverThreshHold(bestArmScores) {
+  return cumulativeArmStates[ARMS.LEFT][bestArmScores[ARMS.LEFT]] >= timeToHoldPoseMS &&
+    cumulativeArmStates[ARMS.RIGHT][bestArmScores[ARMS.RIGHT]] >= timeToHoldPoseMS;
+}
+
+function attemptPoseDetection(bestArmScores) {
+  if (!armScoresOverThreshHold(bestArmScores)) {
+    return false;
+  }
+  if (bestArmScores[ARMS.LEFT] == ARMSTATES.MED &&
+    bestArmScores[ARMS.RIGHT] == ARMSTATES.MED) {
+    addDanceBlock();
+    return true;
+  }
+  return false;
+}
+
+function resetAllArmScores() {
+  for (let arm in progressBars) {
+    for (let state in progressBars[arm]) {
+      cumulativeArmStates[arm][state] = 0;
+    }
+  }
+}
+
 async function onResults(results) {
   deltaTime = getDeltaTimeMS();
   resetCanvas();
   drawPoseSkeleton(results);
-  // detect each arm
   if (results != null && results.poseLandmarks != null) {
     curArmStates = getStateOfArms(results);
     updateCumulativeArmStates(curArmStates, deltaTime);
     updateProgressBars();
-    updateTopArmScores();
+    var bestArmScores = getBestArmScores();
+    updateBestArmText(bestArmScores);
+    if (attemptPoseDetection(bestArmScores)) {
+      resetAllArmScores();
+    }
   }
 
   // if (!sleepFlag) {
@@ -421,33 +471,24 @@ function setSphereSizeSmall() {
   console.log("small sphere");
 }
 
-async function addDanceBlock() {
-  setTimeout(() => {
-    /* programatically adding code block */
-    if (parentBlock == null) {
-      parentBlock = workspace.newBlock("dance");
-      click.play();
-      parentBlock.initSvg();
-      parentBlock.render();
-    } else {
-      childBlock = workspace.newBlock("dance");
-      click.play();
-      childBlock.initSvg();
-      childBlock.render();
-      const parentConnection = parentBlock.nextConnection;
-      const childConnection = childBlock.previousConnection;
-      parentConnection.connect(childConnection);
-      parentBlock = childBlock;
-    }
-    allBlocks.push(parentBlock);
-    loader.style.visibility = "hidden";
-    processing.style.visibility = "hidden";
-  }, 5000);
-  setTimeout(() => {
-    sleep(500);
-    sleepFlag = false;
-  }, 5100);
-  console.log("dance");
+function addDanceBlock() {
+  if (parentBlock == null) {
+    parentBlock = workspace.newBlock("dance");
+    click.play();
+    parentBlock.initSvg();
+    parentBlock.render();
+  } else {
+    childBlock = workspace.newBlock("dance");
+    click.play();
+    childBlock.initSvg();
+    childBlock.render();
+    const parentConnection = parentBlock.nextConnection;
+    const childConnection = childBlock.previousConnection;
+    parentConnection.connect(childConnection);
+    parentBlock = childBlock;
+  }
+  allBlocks.push(parentBlock);
+  console.log("dance block added");
 }
 
 function runCode() {
