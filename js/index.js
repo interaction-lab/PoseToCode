@@ -71,82 +71,104 @@ const POSES = {
 
 
 const ARMS = {
-  LEFT: 0,
-  RIGHT: 1
+  LEFT: "Left",
+  RIGHT: "Right"
 }
 const ARMSTATES = {
-  NONE: 0,
-  LOW: 1,
-  MED: 2,
-  HIGH: 3,
-  OUTINFRONT: 4
+  NONE: "None",
+  LOW: "Low",
+  MED: "Medium",
+  HIGH: "High",
+  OUTINFRONT: "Out"
 }
 
 cumulativeArmStates = {
-  [ARMS.LEFT] : {
-    [ARMSTATES.LOW] : 0,
-    [ARMSTATES.MED] : 0,
-    [ARMSTATES.HIGH] : 0,
-    [ARMSTATES.OUTINFRONT] : 0
+  [ARMS.LEFT]: {
+    [ARMSTATES.LOW]: 0,
+    [ARMSTATES.MED]: 0,
+    [ARMSTATES.HIGH]: 0,
+    [ARMSTATES.OUTINFRONT]: 0
   },
-  [ARMS.RIGHT] : {
-    [ARMSTATES.LOW] : 0,
-    [ARMSTATES.MED] : 0,
-    [ARMSTATES.HIGH] : 0,
-    [ARMSTATES.OUTINFRONT] : 0
+  [ARMS.RIGHT]: {
+    [ARMSTATES.LOW]: 0,
+    [ARMSTATES.MED]: 0,
+    [ARMSTATES.HIGH]: 0,
+    [ARMSTATES.OUTINFRONT]: 0
   }
 }
 
-function decayAllOtherStates(curArmStates, deltaTime){
+function decayAllOtherStates(curArmStates, deltaTime) {
   var decayFactor = 0.8 * deltaTime;
-  for (let arm in cumulativeArmStates){
-    for(let state in cumulativeArmStates[arm]){
-      if(curArmStates[arm] == state){
+  for (let arm in cumulativeArmStates) {
+    for (let state in cumulativeArmStates[arm]) {
+      if (curArmStates[arm] == state) {
         continue;
       }
       cumulativeArmStates[arm][state] -= decayFactor;
-      if(cumulativeArmStates[arm][state] < 0){
+      if (cumulativeArmStates[arm][state] < 0) {
         cumulativeArmStates[arm][state] = 0;
       }
     }
   }
 }
 
-function updateCumulativeArmStates(curArmStates, deltaTime){
+function updateCumulativeArmStates(curArmStates, deltaTime) {
   cumulativeArmStates[ARMS.LEFT][curArmStates[ARMS.LEFT]] += deltaTime;
   cumulativeArmStates[ARMS.RIGHT][curArmStates[ARMS.RIGHT]] += deltaTime;
-  decayAllOtherStates(curArmStates,deltaTime);
+  decayAllOtherStates(curArmStates, deltaTime);
 }
 
 
 
 timeToHoldPoseMS = 10000;
-function attemptFullDetection(){
-  for (let arm in cumulativeArmStates){
-    for(let state in cumulativeArmStates[arm]){
-      if(cumulativeArmStates[arm][state] > timeToHoldPoseMS){
-        console.log(arm);
-        console.log(state);
-        console.log(cumulativeArmStates[arm][state]);
+function updateTopArmScores() {
+  // find most likely pose right now to display
+  var bestArmScores = {
+    [ARMS.LEFT] : ARMSTATES.NONE,
+    [ARMS.RIGHT] : ARMSTATES.NONE
+  };
+  for (let arm in cumulativeArmStates) {
+    var bestStateScore = -1;
+    for (let state in cumulativeArmStates[arm]) {
+      if(bestStateScore < cumulativeArmStates[arm][state]){
+        bestArmScores[arm] = state;
       }
     }
   }
 }
 
 
-progressBarLeftHigh = document.getElementById("leftArmMedBar");
-function updateProgressBars(){
-  var percent = cumulativeArmStates[ARMS.LEFT][ARMSTATES.MED] / timeToHoldPoseMS * 100;
-  if(percent > 100){
-    percent = 100;
+progressBars = {
+  [ARMS.LEFT]: {
+    [ARMSTATES.LOW]: document.getElementById("leftArmLowBar"),
+    [ARMSTATES.MED]: document.getElementById("leftArmMedBar"),
+    [ARMSTATES.HIGH]: document.getElementById("leftArmHighBar"),
+    [ARMSTATES.OUTINFRONT]: document.getElementById("leftArmOutBar")
+  },
+  [ARMS.RIGHT]: {
+    [ARMSTATES.LOW]: document.getElementById("rightArmLowBar"),
+    [ARMSTATES.MED]: document.getElementById("rightArmMedBar"),
+    [ARMSTATES.HIGH]: document.getElementById("rightArmHighBar"),
+    [ARMSTATES.OUTINFRONT]: document.getElementById("rightArmOutBar")
   }
-  progressBarLeftHigh.style.width = percent + "%";
-  progressBarLeftHigh.innerHTML = "LEFT ARM MEDIUM " + Math.round(percent) + "%";
+}
+
+function updateProgressBars() {
+  for (let arm in progressBars) {
+    for (let state in progressBars[arm]) {
+      percent = cumulativeArmStates[arm][state] / timeToHoldPoseMS * 100;
+      if (percent > 100) {
+        percent = 100;
+      }
+      progressBars[arm][state].style.width = percent + "%";
+      progressBars[arm][state].innerHTML = state + ": " + Math.round(percent) + "%";
+    }
+  }
 }
 
 lastUpdateTime = curTime = null;
-function getDeltaTimeMS(){
-  if(lastUpdateTime == null){
+function getDeltaTimeMS() {
+  if (lastUpdateTime == null) {
     lastUpdateTime = Date.now();
   }
   curTime = Date.now();
@@ -164,7 +186,7 @@ async function onResults(results) {
     curArmStates = getStateOfArms(results);
     updateCumulativeArmStates(curArmStates, deltaTime);
     updateProgressBars();
-    attemptFullDetection();
+    updateTopArmScores();
   }
 
   // if (!sleepFlag) {
