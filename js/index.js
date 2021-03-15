@@ -398,6 +398,12 @@ function resetAllBlocks() {
   console.log("reset");
 }
 
+const SPHERESIZES = {
+  SMALL : "small",
+  MEDIUM : "medium",
+  LARG : "large"
+}
+
 function setSphereSizeLarge() {
   if (parentBlock != null) {
     childBlock = workspace.newBlock("size");
@@ -423,15 +429,16 @@ function setSphereSizeMedium() {
 }
 
 function setSphereSizeSmall() {
-  if (parentBlock != null) {
-    childBlock = workspace.newBlock("size");
-    click.play();
-    childBlock.setFieldValue("small", "TEXT");
-    const parentConnection = parentBlock.getInput("TEXT").connection;
-    const childConnection = childBlock.outputConnection;
-    parentConnection.connect(childConnection);
-  }
-  console.log("small sphere");
+  createSphereBlock(SPHERESIZES.SMALL);
+  // if (parentBlock != null) {
+  //   childBlock = workspace.newBlock("size");
+  //   click.play();
+    
+  //   const parentConnection = parentBlock.getInput("TEXT").connection;
+  //   const childConnection = childBlock.outputConnection;
+  //   parentConnection.connect(childConnection);
+  // }
+  // console.log("small sphere");
 }
 
 function addDanceBlock() {
@@ -454,15 +461,17 @@ function addDanceBlock() {
   console.log("dance block added");
 }
 
-function createSphereBlock() {
+function createSphereBlock(sphereSize) {
   if (parentBlock == null) {
     parentBlock = workspace.newBlock("create_sphere");
     click.play();
+    parentBlock.setFieldValue("small", "NAME");
     parentBlock.initSvg();
     parentBlock.render();
   } else {
     childBlock = workspace.newBlock("create_sphere");
     click.play();
+    childBlock.setFieldValue("small", "TEXT");
     childBlock.initSvg();
     childBlock.render();
     const parentConnection = parentBlock.nextConnection;
