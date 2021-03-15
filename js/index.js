@@ -399,46 +399,21 @@ function resetAllBlocks() {
 }
 
 const SPHERESIZES = {
-  SMALL : "small",
-  MEDIUM : "medium",
-  LARG : "large"
+  SMALL: "small",
+  MEDIUM: "medium",
+  LARGE: "large"
 }
 
 function setSphereSizeLarge() {
-  if (parentBlock != null) {
-    childBlock = workspace.newBlock("size");
-    click.play();
-    childBlock.setFieldValue("large", "TEXT");
-    const parentConnection = parentBlock.getInput("TEXT").connection;
-    const childConnection = childBlock.outputConnection;
-    parentConnection.connect(childConnection);
-  }
-  console.log("large sphere");
+  createSphereBlock(SPHERESIZES.LARGE);
 }
 
 function setSphereSizeMedium() {
-  if (parentBlock != null) {
-    childBlock = workspace.newBlock("size");
-    click.play();
-    childBlock.setFieldValue("medium", "TEXT");
-    const parentConnection = parentBlock.getInput("TEXT").connection;
-    const childConnection = childBlock.outputConnection;
-    parentConnection.connect(childConnection);
-  }
-  console.log("medium sphere");
+  createSphereBlock(SPHERESIZES.MEDIUM);
 }
 
 function setSphereSizeSmall() {
   createSphereBlock(SPHERESIZES.SMALL);
-  // if (parentBlock != null) {
-  //   childBlock = workspace.newBlock("size");
-  //   click.play();
-    
-  //   const parentConnection = parentBlock.getInput("TEXT").connection;
-  //   const childConnection = childBlock.outputConnection;
-  //   parentConnection.connect(childConnection);
-  // }
-  // console.log("small sphere");
 }
 
 function addDanceBlock() {
@@ -462,25 +437,17 @@ function addDanceBlock() {
 }
 
 function createSphereBlock(sphereSize) {
-  if (parentBlock == null) {
-    parentBlock = workspace.newBlock("create_sphere");
-    click.play();
-    parentBlock.setFieldValue("small", "NAME");
-    parentBlock.initSvg();
-    parentBlock.render();
-  } else {
-    childBlock = workspace.newBlock("create_sphere");
-    click.play();
-    childBlock.setFieldValue("small", "TEXT");
-    childBlock.initSvg();
-    childBlock.render();
-    const parentConnection = parentBlock.nextConnection;
-    const childConnection = childBlock.previousConnection;
-    parentConnection.connect(childConnection);
-    parentBlock = childBlock;
+  block = workspace.newBlock("create_sphere");
+  click.play();
+  block.setFieldValue(sphereSize, "NAME");
+  block.initSvg();
+  block.render();
+  if (parentBlock != null) {
+    parentBlock.nextConnection.connect(block.previousConnection);
   }
+  parentBlock = block;
   allBlocks.push(parentBlock);
-  console.log("create sphere block");
+  console.log("create sphere block of size " + sphereSize);
 }
 
 
