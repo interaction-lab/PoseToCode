@@ -53,21 +53,104 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
-async function onResults(results) {
-  resetCanvas();
-  drawPoseSkeleton(results);
-  if (!sleepFlag) {
-    detectedPose = detectPose(results);
-    if (detectedPose != POSES.NONE) {
-      console.log(detectedPose);
-      sleepFlag = true;
-      showProgressBar();
-      await moveProgressBar();
-      hideProgressBar();
-      processDetectedPose(detectedPose);
-      canvasCtx.restore();
+// pose needs a struct
+// 
+
+// Detection
+const POSES = {
+  NONE: "none",
+  DANCE: "bothArmsMedium",
+  RESET: "bothArmsHigh",
+  CREATESPHEREBLOCK: "createSphereBlock",
+  PLACESPHEREBLOCK: "placeSphereBlock",
+  RUNCODE: "runCode",
+  SETSPHERESMALL: "setSphereSmall",
+  SETSPHEREMEDIUM: "setSphereMedium",
+  SETSPHERELARGE: "setSphereLarge",
+};
+
+
+const ARMS = {
+  LEFT: 0,
+  RIGHT: 1
+}
+const ARMSTATES = {
+  NONE: 0,
+  LOW: 1,
+  MED: 2,
+  HIGH: 3,
+  OUTINFRONT: 4
+}
+
+cumulativeArmStates = {
+  [ARMS.LEFT] : {
+    [ARMSTATES.LOW] : 0,
+    [ARMSTATES.MED] : 0,
+    [ARMSTATES.HIGH] : 0,
+    [ARMSTATES.OUTINFRONT] : 0
+  },
+  [ARMS.RIGHT] : {
+    [ARMSTATES.LOW] : 0,
+    [ARMSTATES.MED] : 0,
+    [ARMSTATES.HIGH] : 0,
+    [ARMSTATES.OUTINFRONT] : 0
+  }
+}
+
+function updateCumulativeArmStates(curArmStates, deltaTime){
+  cumulativeArmStates[ARMS.LEFT][curArmStates[ARMS.LEFT]] += deltaTime;
+  cumulativeArmStates[ARMS.RIGHT][curArmStates[ARMS.RIGHT]] += deltaTime;
+}
+
+counterThreshHold = 10000;
+function attemptFullDetection(){
+  for (let arm in cumulativeArmStates){
+    for(let state in cumulativeArmStates[arm]){
+      if(cumulativeArmStates[arm][state] > counterThreshHold){
+        console.log(arm);
+        console.log(state);
+        console.log(cumulativeArmStates[arm][state]);
+      }
     }
   }
+}
+
+
+lastUpdateTime = curTime = null;
+function getDeltaTimeMS(){
+  if(lastUpdateTime == null){
+    lastUpdateTime = Date.now();
+  }
+  curTime = Date.now();
+  deltaTime = curTime - lastUpdateTime;
+  lastUpdateTime = curTime;
+  return deltaTime;
+}
+
+async function onResults(results) {
+  deltaTime = getDeltaTimeMS();
+  resetCanvas();
+  drawPoseSkeleton(results);
+  // detect each arm
+  if (results != null && results.poseLandmarks != null) {
+    curArmStates = getStateOfArms(results);
+    updateCumulativeArmStates(curArmStates, deltaTime);
+    attemptFullDetection();
+  }
+
+  // if (!sleepFlag) {
+  //   detectedPose = detectPose(results);
+  //   if (detectedPose != POSES.NONE) {
+  //     console.log(detectedPose);
+  //     sleepFlag = true;
+  //     showProgressBar();
+  //     await moveProgressBar();
+  //     hideProgressBar();
+  //     //if pose fully dected
+  //     processDetectedPose(detectedPose);
+  //     canvasCtx.restore();
+  //   }
+  // }
 }
 
 const pose = new Pose({
@@ -358,22 +441,41 @@ function createSphereBlock() {
   console.log("create sphere");
 }
 
-// Detection
-const POSES = {
-  NONE: "none",
-  DANCE: "bothArmsMedium",
-  RESET: "bothArmsHigh",
-  CREATESPHEREBLOCK: "createSphereBlock",
-  PLACESPHEREBLOCK: "placeSphereBlock",
-  RUNCODE: "runCode",
-  SETSPHERESMALL: "setSphereSmall",
-  SETSPHEREMEDIUM: "setSphereMedium",
-  SETSPHERELARGE: "setSphereLarge",
-};
+
+
+// detecyed right arm {HIGH, MED, LOW} 3
+// detect left arm position {HIGH, MEDIUM, LOW} 3
+// detect right/left out front {TRUE, FALSE} 2
+
+
+
+// as soon as somehting dected, reset -> becomes 10
+
+// LEFT{LOW:0,MED:1,HIGH:6}
+// RIGHT{LOW,MED,HIGH}
+// arm_out_front {happenign:0}
+
+
+// NONE -> anything not used
+// DANCE -> {MEDIUM, MEDIUM, FALSE}
+// RESET -> {LOW, HIGH, FALSE}
+// RUNCODE -> {MEDIUM, HIGH,FALSE}
+// PLACESPHERE -> {MEDIUM, MEDIUM, TRUE}
+// MAKESPHERESMALL -> {HIGH, LOW, FALSE}
+// MAKESPHEREMED -> {HIGH, MEDIUM, FALSE}
+// MAKESPHERELARGER -> {HIGH, HIGH, FALSE}
+
+
 
 function detectPose(results) {
   if (results != null && results.poseLandmarks != null) {
-    if (rightArmLow(results)) {
+    if (bothArmsHigh(results)) {
+      return POSES.RESET;
+    } else if (bothArmsMedium(results)) {
+      return POSES.DANCE;
+    } else if (bothArmsLow(results)) {
+      return POSES.CREATESPHEREBLOCK;
+    } else if (rightArmLow(results)) {
       return POSES.SETSPHERESMALL;
     } else if (rightArmMedium(results)) {
       return POSES.SETSPHEREMEDIUM;
@@ -381,12 +483,6 @@ function detectPose(results) {
       return POSES.SETSPHERELARGE;
     } else if (leftArmHighRightArmLow(results)) {
       return POSES.RUNCODE;
-    } else if (bothArmsHigh(results)) {
-      return POSES.RESET;
-    } else if (bothArmsMedium(results)) {
-      return POSES.DANCE;
-    } else if (bothArmsLow(results)) {
-      return POSES.CREATESPHEREBLOCK;
     } else if (handsInFrontOfChest(results)) {
       return POSES.PLACESPHEREBLOCK;
     }
@@ -412,6 +508,46 @@ function processDetectedPose(pose) {
   } else if ((pose = POSES.PLACESPHEREBLOCK)) {
     placeSphere();
   }
+}
+
+// Assumes results.poseLandmarks != null
+function getStateOfArms(results) {
+  armStates = {
+    [ARMS.LEFT]: ARMSTATES.NONE,
+    [ARMS.RIGHT]: ARMSTATES.NONE
+  }
+  if (results.poseLandmarks[19].x < results.poseLandmarks[11].x &&
+    results.poseLandmarks[19].y < results.poseLandmarks[13].y &&
+    results.poseLandmarks[19].y > results.poseLandmarks[11].y) {
+    armStates[ARMS.LEFT] = ARMSTATES.OUTINFRONT;
+  }
+  else if (results.poseLandmarks[21].y < results.poseLandmarks[2].y) {
+    armStates[ARMS.LEFT] = ARMSTATES.HIGH;
+  }
+  else if (results.poseLandmarks[20].y < results.poseLandmarks[24].y &&
+    results.poseLandmarks[20].y > results.poseLandmarks[12].y) {
+    armStates[ARMS.LEFT] = ARMSTATES.MED;
+  }
+  else if (results.poseLandmarks[20].y > results.poseLandmarks[26].y) {
+    armStates[ARMS.RIGHT] = ARMSTATES.LOW;
+  }
+
+  if (results.poseLandmarks[20].x > results.poseLandmarks[12].x &&
+    results.poseLandmarks[20].y < results.poseLandmarks[14].y &&
+    results.poseLandmarks[20].y > results.poseLandmarks[12].y) {
+    armStates[ARMS.RIGHT] = ARMSTATES.OUTINFRONT
+  }
+  else if (results.poseLandmarks[22].y < results.poseLandmarks[2].y) {
+    armStates[ARMS.RIGHT] = ARMSTATES.HIGH;
+  }
+  else if (results.poseLandmarks[19].y < results.poseLandmarks[23].y &&
+    results.poseLandmarks[19].y > results.poseLandmarks[11].y) {
+    armStates[ARMS.RIGHT] = ARMSTATES.MED;
+  }
+  else if (results.poseLandmarks[19].y > results.poseLandmarks[23].y) {
+    armStates[ARMS.RIGHT] = ARMSTATES.LOW;
+  }
+  return armStates;
 }
 
 function bothArmsHigh(results) {
