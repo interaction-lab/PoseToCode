@@ -104,7 +104,10 @@ function decayAllOtherStates(curArmStates, deltaTime){
       if(curArmStates[arm] == state){
         continue;
       }
-      curArmStates[arm][state] -= decayFactor;
+      cumulativeArmStates[arm][state] -= decayFactor;
+      if(cumulativeArmStates[arm][state] < 0){
+        cumulativeArmStates[arm][state] = 0;
+      }
     }
   }
 }
@@ -138,6 +141,7 @@ function updateProgressBars(){
     percent = 100;
   }
   progressBarLeftHigh.style.width = percent + "%";
+  progressBarLeftHigh.innerHTML = "LEFT ARM MEDIUM " + Math.round(percent) + "%";
 }
 
 lastUpdateTime = curTime = null;
