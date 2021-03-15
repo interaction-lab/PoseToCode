@@ -80,6 +80,16 @@ const ARMSTATES = {
   HIGH: "High",
   OUTINFRONT: "Out"
 }
+const SPHERESIZES = {
+  SMALL: "small",
+  MEDIUM: "medium",
+  LARGE: "large"
+}
+const BLOCKTYPES = {
+  CREATESPHERE : "create_sphere",
+  PLACESPHERE: "place",
+  DANCE : "dance"
+}
 
 // States / Globals
 cumulativeArmStates = {
@@ -368,28 +378,7 @@ function runCode() {
   }, 150);
 }
 
-function placeSphere() {
-  if (parentBlock == null) {
-    parentBlock = workspace.newBlock("place");
-    click.play();
-    parentBlock.initSvg();
-    parentBlock.render();
-  } else {
-    childBlock = workspace.newBlock("place");
-    click.play();
-    childBlock.initSvg();
-    childBlock.render();
-    const parentConnection = parentBlock.nextConnection;
-    const childConnection = childBlock.previousConnection;
-    parentConnection.connect(childConnection);
-    parentBlock = childBlock;
-  }
-  allBlocks.push(parentBlock);
-  console.log("place sphere");
-}
-
 function resetAllBlocks() {
-
   for (i = 0; i < allBlocks.length; i++) {
     allBlocks[i].dispose(true);
   }
@@ -398,10 +387,40 @@ function resetAllBlocks() {
   console.log("reset");
 }
 
-const SPHERESIZES = {
-  SMALL: "small",
-  MEDIUM: "medium",
-  LARGE: "large"
+function addNewBlock(blockName){
+  block = workspace.newBlock(blockName, fields);
+  click.play();
+  for(var i = fields.length - 1; i >= 0; --i){
+    block.setFieldValue(fields[i]['value'], fields[i]['name'])
+  }
+  block.initSvg();
+  block.render();
+  if (parentBlock != null) {
+    parentBlock.nextConnection.connect(block.previousConnection);
+  }
+  parentBlock = block;
+  allBlocks.push(parentBlock);
+}
+
+function placeSphere() {
+  addNewBlock(BLOCKTYPES.PLACESPHERE);
+  console.log("place sphere");
+}
+
+function addDanceBlock() {
+  addNewBlock(BLOCKTYPES.DANCE, []);
+  console.log("dance block added");
+}
+
+function createSphereBlock(sphereSize) {
+  fields = [
+    {
+      "name" : "NAME",
+      "value" : sphereSize
+    }
+  ];
+  addNewBlock(BLOCKTYPES.CREATESPHERE, fields)
+  console.log("create sphere block of size " + sphereSize);
 }
 
 function setSphereSizeLarge() {
@@ -415,40 +434,3 @@ function setSphereSizeMedium() {
 function setSphereSizeSmall() {
   createSphereBlock(SPHERESIZES.SMALL);
 }
-
-function addDanceBlock() {
-  if (parentBlock == null) {
-    parentBlock = workspace.newBlock("dance");
-    click.play();
-    parentBlock.initSvg();
-    parentBlock.render();
-  } else {
-    childBlock = workspace.newBlock("dance");
-    click.play();
-    childBlock.initSvg();
-    childBlock.render();
-    const parentConnection = parentBlock.nextConnection;
-    const childConnection = childBlock.previousConnection;
-    parentConnection.connect(childConnection);
-    parentBlock = childBlock;
-  }
-  allBlocks.push(parentBlock);
-  console.log("dance block added");
-}
-
-function createSphereBlock(sphereSize) {
-  block = workspace.newBlock("create_sphere");
-  click.play();
-  block.setFieldValue(sphereSize, "NAME");
-  block.initSvg();
-  block.render();
-  if (parentBlock != null) {
-    parentBlock.nextConnection.connect(block.previousConnection);
-  }
-  parentBlock = block;
-  allBlocks.push(parentBlock);
-  console.log("create sphere block of size " + sphereSize);
-}
-
-
-
