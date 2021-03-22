@@ -12,7 +12,7 @@
     <script src="blockly/javascript_compressed.js"></script>
     <script src="blockly/blocks_compressed.js"></script>
     <script src="blockly/msg/js/en.js"></script>
-    <script src="code_blocks.js"></script>
+    <script src="js/code_blocks.js"></script>
     <!-- mediapipe imports -->
     <script
       src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"
@@ -52,6 +52,19 @@
         <p id="processing">Processing...</p>
       </div>
       <div class="poseKey">
+        <div class="armProgress">
+          <h2 id="leftProgressHeader">Left</h2>
+          <div class="armBar" id="leftArmOutBar"></div>
+          <div class="armBar" id="leftArmHighBar"></div>
+          <div class="armBar" id="leftArmMedBar"></div>
+          <div class="armBar" id="leftArmLowBar"></div>
+
+          <h2 id="rightProgressHeader">Right</h2>
+          <div class="armBar" id="rightArmOutBar"></div>
+          <div class="armBar" id="rightArmHighBar"></div>
+          <div class="armBar" id="rightArmMedBar"></div>
+          <div class="armBar" id="rightArmLowBar"></div>
+        </div>
         <h1>Pose Key</h1>
         <p>reset (both hands above head), dance (both arms out to the side)</p>
         <p>run (paused running motion - left hand up + right hand down)</p>
@@ -75,7 +88,7 @@
       style="display: none"
     ></xml>
 
-    <script src="index.js"></script>
-    <script src="scene.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/scene.js"></script>
   </body>
 </html>
