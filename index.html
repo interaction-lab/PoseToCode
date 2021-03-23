@@ -43,14 +43,41 @@
     <div class="poseDiv">
       <div class="video">
         <video class="input_video" hidden></video>
-        <div class="loader"></div>
         <canvas class="output_canvas" style="float: left; width: 100%"></canvas>
       </div>
-      <div class="progress">10%</div>
-      <div class="prompt">
-        <p id="hold">Hold the pose!</p>
-        <p id="processing">Processing...</p>
-      </div>
+     <div style=" margin: 0 auto;">
+      <style type="text/css">
+        .tg  {border-collapse:collapse;border-spacing:0;}
+        .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+          overflow:hidden;padding:10px 5px;word-break:normal;}
+        .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+          font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+        .tg .tg-baqh{text-align:center;vertical-align:top}
+        .tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+        </style>
+        <table class="tg">
+        <thead>
+          <tr>
+            <th class="tg-c3ow"><img src="https://user-images.githubusercontent.com/15292506/112219722-a14d4e80-8be2-11eb-94c2-1514a1720d23.PNG" width="80" height="125"></th>
+            <th class="tg-c3ow"><img src="https://user-images.githubusercontent.com/15292506/112219732-a4483f00-8be2-11eb-846f-635de0b052df.PNG" width="80" height="125"></th>
+            <th class="tg-c3ow"><img src="https://user-images.githubusercontent.com/15292506/112219728-a3171200-8be2-11eb-8fbe-025913384417.PNG" width="80" height="125"></th>
+            <th class="tg-baqh"><img src="https://user-images.githubusercontent.com/15292506/112219753-ab6f4d00-8be2-11eb-9d9c-977c12d2cf5e.PNG" width="80" height="125"></th>
+            <th class="tg-baqh"><img src="https://user-images.githubusercontent.com/15292506/112219736-a5796c00-8be2-11eb-82ea-2cd41f803665.PNG" width="80" height="125"></th>
+            <th class="tg-baqh"><img src="https://user-images.githubusercontent.com/15292506/112219748-a90cf300-8be2-11eb-8d96-ccad8b96b2fa.PNG" width="80" height="125"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="tg-c3ow">Set Sphere Large</td>
+            <td class="tg-c3ow">Set Sphere Medium</td>
+            <td class="tg-c3ow">Set Sphere Small</td>
+            <td class="tg-baqh">Dance Block</td>
+            <td class="tg-baqh">Reset</td>
+            <td class="tg-baqh">Run Code</td>
+          </tr>
+        </tbody>
+        </table>
+     </div>
       <div class="poseKey">
         <div class="armProgress">
           <h2 id="leftProgressHeader">Left</h2>
@@ -65,13 +92,6 @@
           <div class="armBar" id="rightArmMedBar"></div>
           <div class="armBar" id="rightArmLowBar"></div>
         </div>
-        <h1>Pose Key</h1>
-        <p>reset (both hands above head), dance (both arms out to the side)</p>
-        <p>run (paused running motion - left hand up + right hand down)</p>
-        <p>
-          place sphere (point down to ankles), make sphere (hands in front of
-          chest)
-        </p>
       </div>
     </div>
     <canvas id="renderCanvas" touch-action="none"></canvas>

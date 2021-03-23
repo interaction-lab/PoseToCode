@@ -20,14 +20,6 @@ const blocklyDiv = document.getElementById("blocklyDiv");
 const workspace = Blockly.inject(blocklyDiv, options);
 const workspaceBlocks = document.getElementById("workspaceBlocks");
 Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
-const loader = document.getElementsByClassName("loader")[0];
-const progress = document.getElementsByClassName("progress")[0];
-const hold = document.getElementById("hold");
-const processing = document.getElementById("processing");
-loader.style.visibility = "hidden";
-progress.style.visibility = "hidden";
-hold.style.visibility = "hidden";
-processing.style.visibility = "hidden";
 
 click = new Audio("sounds/click.wav");
 calculate = new Audio("sounds/calculate.wav");
@@ -70,7 +62,7 @@ timeToHoldPoseMS = 4000;
 
 // Constants
 const ARMS = {
-  LEFT: "Left",
+  LEFT: "Left", 
   RIGHT: "Right"
 }
 const ARMSTATES = {
@@ -204,8 +196,8 @@ function updateProgressBars() {
 }
 
 function updateBestArmText(bestArmScores) {
-  leftProgressheader.innerHTML = "Best Left: " + bestArmScores[ARMS.LEFT];
-  rightProgressheader.innerHTML = "Best Right: " + bestArmScores[ARMS.RIGHT];
+  leftProgressheader.innerHTML = "Best " + ARMS.LEFT + ": " + bestArmScores[ARMS.LEFT];
+  rightProgressheader.innerHTML = "Best " + ARMS.RIGHT + ": " + bestArmScores[ARMS.RIGHT];
 }
 
 function armScoresOverThreshHold(bestArmScores) {
@@ -272,33 +264,33 @@ function getStateOfArms(results) {
   if (results.poseLandmarks[19].x < results.poseLandmarks[11].x &&
     results.poseLandmarks[19].y < results.poseLandmarks[13].y &&
     results.poseLandmarks[19].y > results.poseLandmarks[11].y) {
-    armStates[ARMS.LEFT] = ARMSTATES.OUTINFRONT;
+    armStates[ARMS.RIGHT] = ARMSTATES.OUTINFRONT;
   }
   else if (results.poseLandmarks[15].y < results.poseLandmarks[2].y) {
-    armStates[ARMS.LEFT] = ARMSTATES.HIGH;
+    armStates[ARMS.RIGHT] = ARMSTATES.HIGH;
   }
   else if (results.poseLandmarks[15].y < results.poseLandmarks[23].y &&
     results.poseLandmarks[15].y > results.poseLandmarks[12].y) {
-    armStates[ARMS.LEFT] = ARMSTATES.MED;
+    armStates[ARMS.RIGHT] = ARMSTATES.MED;
   }
   else if (results.poseLandmarks[15].y > results.poseLandmarks[23].y) {
-    armStates[ARMS.LEFT] = ARMSTATES.LOW;
+    armStates[ARMS.RIGHT] = ARMSTATES.LOW;
   }
 
   if (results.poseLandmarks[20].x > results.poseLandmarks[12].x &&
     results.poseLandmarks[20].y < results.poseLandmarks[14].y &&
     results.poseLandmarks[20].y > results.poseLandmarks[12].y) {
-    armStates[ARMS.RIGHT] = ARMSTATES.OUTINFRONT
+    armStates[ARMS.LEFT] = ARMSTATES.OUTINFRONT
   }
   else if (results.poseLandmarks[16].y < results.poseLandmarks[5].y) {
-    armStates[ARMS.RIGHT] = ARMSTATES.HIGH;
+    armStates[ARMS.LEFT] = ARMSTATES.HIGH;
   }
   else if (results.poseLandmarks[16].y < results.poseLandmarks[24].y &&
     results.poseLandmarks[16].y > results.poseLandmarks[11].y) {
-    armStates[ARMS.RIGHT] = ARMSTATES.MED;
+    armStates[ARMS.LEFT] = ARMSTATES.MED;
   }
   else if (results.poseLandmarks[16].y > results.poseLandmarks[24].y) {
-    armStates[ARMS.RIGHT] = ARMSTATES.LOW;
+    armStates[ARMS.LEFT] = ARMSTATES.LOW;
   }
   return armStates;
 }

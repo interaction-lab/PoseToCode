@@ -8,7 +8,7 @@ body {
 }
 
 #renderCanvas {
-  width: 30%;
+  width: 35%;
   height: 100%;
   touch-action: none;
   float: left;
@@ -48,7 +48,7 @@ body {
 
 .poseDiv {
   height: 100%;
-  width: 45%;
+  width: 40%;
   float: left;
   display: flex;
   justify-content: space-between;
@@ -85,7 +85,7 @@ body {
 }
 .armBar{
   width: 1%;
-  height: 30px;
+  height: 20px;
   background-color: #4CAF50;
 }
 
