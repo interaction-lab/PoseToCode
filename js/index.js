@@ -20,14 +20,6 @@ const blocklyDiv = document.getElementById("blocklyDiv");
 const workspace = Blockly.inject(blocklyDiv, options);
 const workspaceBlocks = document.getElementById("workspaceBlocks");
 Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
-const loader = document.getElementsByClassName("loader")[0];
-const progress = document.getElementsByClassName("progress")[0];
-const hold = document.getElementById("hold");
-const processing = document.getElementById("processing");
-loader.style.visibility = "hidden";
-progress.style.visibility = "hidden";
-hold.style.visibility = "hidden";
-processing.style.visibility = "hidden";
 
 click = new Audio("sounds/click.wav");
 calculate = new Audio("sounds/calculate.wav");
@@ -70,8 +62,8 @@ timeToHoldPoseMS = 4000;
 
 // Constants
 const ARMS = {
-  LEFT: "Left",
-  RIGHT: "Right"
+  LEFT: "Right", // Todo: these are flipped due to the camera for now
+  RIGHT: "Left"
 }
 const ARMSTATES = {
   NONE: "None",
@@ -204,8 +196,8 @@ function updateProgressBars() {
 }
 
 function updateBestArmText(bestArmScores) {
-  leftProgressheader.innerHTML = "Best Left: " + bestArmScores[ARMS.LEFT];
-  rightProgressheader.innerHTML = "Best Right: " + bestArmScores[ARMS.RIGHT];
+  leftProgressheader.innerHTML = "Best " + ARMS.LEFT + ": " + bestArmScores[ARMS.LEFT];
+  rightProgressheader.innerHTML = "Best " + ARMS.RIGHT + ": " + bestArmScores[ARMS.RIGHT];
 }
 
 function armScoresOverThreshHold(bestArmScores) {
