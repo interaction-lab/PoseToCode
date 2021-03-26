@@ -177,14 +177,17 @@ const createScene = function () {
   // Load robot character from github and play animation
   BABYLON.SceneLoader.ImportMesh(
     "",
-    "https://raw.githubusercontent.com/interaction-lab/PoseToCode/main/public/",
-    "robot.glb",
+    "https://raw.githubusercontent.com/interaction-lab/PoseToCode/integration/Robot/",
+    "blue_robo_idle_dance.glb",
     scene,
     function (newMeshes, particleSystems, skeletons, animationGroups) {
       const robot = newMeshes[0];
       // Scale the model down
-      robot.scaling.scaleInPlace(0.6);
-      robot.position.x -= 1.5;
+      robot.scaling.scaleInPlace(3);
+      // robot.position.x -= 1.5;
+      // robot.position.y += 10;
+      // robot.position.y -= 2;
+      // robot.position.z += 10;
       // Lock camera on the character
       camera1.target = robot;
 
@@ -194,6 +197,7 @@ const createScene = function () {
       const placeMediumAnim = scene.getAnimationGroupByName("placeMedium");
       const placeSmallAnim = scene.getAnimationGroupByName("placeSmall");
       const danceAnim = scene.getAnimationGroupByName("Dance");
+      // const danceAnim = scene.getAnimationGroupByName("Red_Robot_ReferenceAction");
       // Start with Idle Animation
       idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 
@@ -240,6 +244,8 @@ const createScene = function () {
           } else if (animations[i] == "dance") {
             idleAnim.stop();
             setTimeout(() => {
+              danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
+              danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
               danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
               music = new Audio("sounds/dance.wav");
               music.play();
