@@ -178,7 +178,7 @@ const createScene = function () {
   BABYLON.SceneLoader.ImportMesh(
     "",
     "https://raw.githubusercontent.com/interaction-lab/PoseToCode/integration/Robot/",
-    "blue_robo_idle_dance.glb",
+    "blue_robo_idle_dance_two.glb",
     scene,
     function (newMeshes, particleSystems, skeletons, animationGroups) {
       const robot = newMeshes[0];
