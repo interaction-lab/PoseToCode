@@ -15,9 +15,9 @@ const largeDiameter = 1.2;
 const mediumDiameter = 0.9;
 const smallDiameter = 0.6;
 const startDelay = 500;
-const makeSphereDelay = 500;
-const placeSphereDelay = 5000;
-const danceDelay = 7000;
+const makeSphereDelay = 2000;
+const placeSphereDelay = 2000;
+const danceDelay = 2000;
 
 let level = 1;
 const levelOneDone = false;
@@ -250,7 +250,8 @@ const createScene = function () {
               currSphere.position = new BABYLON.Vector3(0, 1.5, .5);
               guiElements.push(currSphere);
               sizeIndex++;
-            }, 650);
+            }, delay);
+            delay += makeSphereDelay;
             levelOneDoneDelay += makeSphereDelay;
           } else if (animations[i] == "dance") {
             idleAnim.stop();
@@ -267,10 +268,12 @@ const createScene = function () {
             idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
           } else if (animations[i] == "place") {
             idleAnim.stop();
-            sleep(500); 
-            // placeSmallAnim.start(false, 1.0, placeSmallAnim.from, placeSmallAnim.to, false);
+            //sleep(500); 
             setTimeout(() => {
               placeSmallAnim.start(false, 1.0, placeSmallAnim.from, placeSmallAnim.to, false);
+            }, delay-1200);
+            setTimeout(() => {
+              //placeSmallAnim.start(false, 1.0, placeSmallAnim.from, placeSmallAnim.to, false);
               if (currSize == "small") {
                 endY += 0.1;
                 moveSphere(new BABYLON.Vector3(endX, endY, endZ), currSphere);
@@ -296,12 +299,12 @@ const createScene = function () {
                 //   false
                 // )s;
               }
-            }, 800);
-            // delay += placeSphereDelay;
+            }, delay);
+            delay += placeSphereDelay;
             idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
             // moveRobotUp(robot, delay);
           }
-          // sleep(500);
+          //sleep(3000);
         }
         animations = [];
       });
