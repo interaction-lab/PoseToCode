@@ -163,6 +163,7 @@ const createScene = function () {
     new BABYLON.Vector3(0, 0, 0),
     scene
   );
+  scene.clearColor = new BABYLON.Color3(.8, .9, 1);
   const camera1 = new BABYLON.ArcRotateCamera(
     "camera1",
     Math.PI / 2,
@@ -187,18 +188,19 @@ const createScene = function () {
   BABYLON.SceneLoader.ImportMesh(
     "",
     "https://raw.githubusercontent.com/interaction-lab/PoseToCode/integration/Robot/",
-    "blue_robo_sphere.glb",
+    "blue_robo_finalish.glb",
     scene,
     function (newMeshes, particleSystems, skeletons, animationGroups) {
       const robot = newMeshes[0];
       // Scale the model down
-      robot.scaling.scaleInPlace(3);
+      robot.scaling.scaleInPlace(3.25);
       // robot.position.x -= 1.5;
       // robot.position.y += 10;
       // robot.position.y -= 2;
       // robot.position.z += 10;
       // Lock camera on the character
       camera1.target = robot;
+      // camera.setTarget(BABYLON.Vector3.Zero());
 
       // Get all the animations
       const idleAnim = scene.getAnimationGroupByName("Idle");
