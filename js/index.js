@@ -357,7 +357,7 @@ function drawPoseSkeleton(results) {
 }
 
 // Codeblock Actions
-function runCode() {
+async function runCode() {
   codeIsRunning = true;
   window.LoopTrap = 1000;
   Blockly.JavaScript.INFINITE_LOOP_TRAP =

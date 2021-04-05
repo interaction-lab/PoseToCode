@@ -9,6 +9,7 @@ let guiElements = [];
 // Arrays to store robot actions and sizes of snowballs
 let animations = [];
 let sizes = [];
+let currHeight = 0;
 const run = createRunTrigger();
 
 const largeDiameter = 1.2;
@@ -79,7 +80,7 @@ function createRunTrigger() {
 function moveSphere(translate, currSphere) {
   let j = 0;
   const deltaDistance = 0.1;
-  const dist = translate.length();
+  const dist = translate.length() - currHeight;
   const dir = new BABYLON.Vector3(0, -2, .5);
   dir.normalize();
   scene.registerAfterRender(function () {
@@ -220,7 +221,7 @@ const createScene = function () {
         let startY = 1.3;
         const startZ = 1;
         const endX = 0.7;
-        let endY = -1.5;
+        let endY = -3;
         const endZ = 0.2;
         // Index tracker for sizes of snowball
         let sizeIndex = 0;
@@ -279,10 +280,12 @@ const createScene = function () {
               if (currSize == "small") {
                 endY += 0.1;
                 moveSphere(new BABYLON.Vector3(endX, endY, endZ), currSphere);
+                currHeight += smallDiameter/2;
                 // placeSmallAnim.start(false, 1.0, placeSmallAnim.from, placeSmallAnim.to, false);
               } else if (currSize == "medium") {
                 endY += 0.3;
                 moveSphere(new BABYLON.Vector3(endX, endY, endZ), currSphere);
+                currHeight += mediumDiameter/2;
                 // placeMediumAnim.start(
                 //   false,
                 //   1.0,
@@ -293,6 +296,7 @@ const createScene = function () {
               } else if (currSize == "large") {
                 endY += 0.5;
                 moveSphere(new BABYLON.Vector3(endX, endY, endZ), currSphere);
+                currHeight += largeDiameter/2;
                 // placeLargeAnim.start(
                 //   false,
                 //   1.0,
