@@ -114,13 +114,14 @@ progressBars = {
 }
 leftProgressheader = document.getElementById("leftProgressHeader");
 rightProgressheader = document.getElementById("rightProgressHeader");
-codeIsRunning = false;
+var codeIsRunning = false;
 
 // Main
 async function onResults(results) {
   deltaTime = getDeltaTimeMS();
   resetCanvas();
   drawPoseSkeleton(results);
+  console.log("codeIsRunning: " + codeIsRunning);
   if (!codeIsRunning &&
     results != null &&
     results.poseLandmarks != null) {
@@ -356,13 +357,14 @@ function drawPoseSkeleton(results) {
 }
 
 // Codeblock Actions
-async function runCode() {
+function runCode() {
   codeIsRunning = true;
   window.LoopTrap = 1000;
   Blockly.JavaScript.INFINITE_LOOP_TRAP =
     'if(--window.LoopTrap == 0) throw "Infinite loop.";\n';
   const code = Blockly.JavaScript.workspaceToCode(workspace);
   try {
+    console.log(codeIsRunning);
     eval(code);
   } catch (e) {
     alert(e);
