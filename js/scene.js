@@ -195,22 +195,14 @@ const createScene = function () {
       const robot = newMeshes[0];
       // Scale the model down
       robot.scaling.scaleInPlace(3.25);
-      // robot.position.x -= 1.5;
-      // robot.position.y += 10;
-      // robot.position.y -= 2;
-      // robot.position.z += 10;
       // Lock camera on the character
       camera1.target = robot;
-      // camera.setTarget(BABYLON.Vector3.Zero());
 
       // Get all the animations
       const idleAnim = scene.getAnimationGroupByName("Idle");
       const makeSphereAnim = scene.getAnimationGroupByName("MakeSphere");
-      const placeLargeAnim = scene.getAnimationGroupByName("PlaceSphere");
-      const placeMediumAnim = scene.getAnimationGroupByName("PlaceSphere");
-      const placeSmallAnim = scene.getAnimationGroupByName("PlaceSphere");
+      const placeSphere = scene.getAnimationGroupByName("PlaceSphere");
       const danceAnim = scene.getAnimationGroupByName("Dance");
-      // const danceAnim = scene.getAnimationGroupByName("Red_Robot_ReferenceAction");
       // Start with Idle Animation
       idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 
@@ -271,46 +263,27 @@ const createScene = function () {
             idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
           } else if (animations[i] == "place") {
             idleAnim.stop();
-            //sleep(500); 
             setTimeout(() => {
-              placeSmallAnim.start(false, 1.0, placeSmallAnim.from, placeSmallAnim.to, false);
+              placeSphere.start(false, 1.0, placeSphere.from, placeSphere.to, false);
             }, delay-1200);
             setTimeout(() => {
-              //placeSmallAnim.start(false, 1.0, placeSmallAnim.from, placeSmallAnim.to, false);
               if (currSize == "small") {
                 endY += 0.1;
                 moveSphere(new BABYLON.Vector3(endX, endY, endZ), currSphere);
                 currHeight += smallDiameter/2;
-                // placeSmallAnim.start(false, 1.0, placeSmallAnim.from, placeSmallAnim.to, false);
               } else if (currSize == "medium") {
                 endY += 0.3;
                 moveSphere(new BABYLON.Vector3(endX, endY, endZ), currSphere);
                 currHeight += mediumDiameter/2;
-                // placeMediumAnim.start(
-                //   false,
-                //   1.0,
-                //   placeMediumAnim.from,
-                //   placeMediumAnim.to,
-                //   false
-                // );
               } else if (currSize == "large") {
                 endY += 0.5;
                 moveSphere(new BABYLON.Vector3(endX, endY, endZ), currSphere);
                 currHeight += largeDiameter/2;
-                // placeLargeAnim.start(
-                //   false,
-                //   1.0,
-                //   placeLargeAnim.from,
-                //   placeLargeAnim.to,
-                //   false
-                // )s;
               }
             }, delay);
             delay += placeSphereDelay;
             idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
-            // moveRobotUp(robot, delay);
           }
-          //sleep(3000);
         }
         animations = [];
       });
