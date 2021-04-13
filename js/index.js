@@ -374,7 +374,6 @@ async function runCode() {
   setTimeout(function () {
     document.activeElement.blur();
   }, 150);
-  codeIsRunning = false;
   setTimeout(function () {
     codeIsRunning = false;
   }, time);
@@ -408,13 +407,13 @@ function addNewBlock(blockName, fields = []) {
 function placeSphere() {
   addNewBlock(BLOCKTYPES.PLACESPHERE);
   console.log("place sphere");
-  time += 1000;
+  time += 2000;
 }
 
 function addDanceBlock() {
   addNewBlock(BLOCKTYPES.DANCE);
   console.log("dance block added");
-  time += 1500;
+  time += 2000;
 }
 
 function createSphereBlock(sphereSize) {
