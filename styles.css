@@ -5,10 +5,11 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  zoom: 0.85;
 }
 
 #renderCanvas {
-  width: 35%;
+  width: 30%;
   height: 100%;
   touch-action: none;
   float: left;
@@ -37,21 +38,25 @@ body {
 .poseKey {
   float: center;
   text-align: center;
-  padding-bottom: 10%;
+  padding-bottom: 1%;
+  display: flex;
+  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 #blocklyDiv {
   height: 80%;
-  width: 25%;
+  width: 20%;
   float: right;
 }
 
 .poseDiv {
   height: 100%;
-  width: 40%;
+  width: 50%;
   float: left;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   flex-direction: column;
   background-color: lightgrey;
 }
