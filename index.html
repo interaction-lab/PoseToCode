@@ -8,6 +8,10 @@
     <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
     <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
     <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="blockly/blockly_compressed.js"></script>
     <script src="blockly/javascript_compressed.js"></script>
     <script src="blockly/blocks_compressed.js"></script>
@@ -41,11 +45,16 @@
     </div>
     <div id="blocklyDiv"></div>
     <div class="poseDiv">
-      <div class="video">
+      <div class="video" style="position: relative;">
         <video class="input_video" hidden></video>
-        <canvas class="output_canvas" style="float: left; width: 100%"></canvas>
+        <div class="d-flex justify-content-center">
+        <div class="spinner-border" style="top: 5; left: 5; width: 6rem; height: 6rem; position: absolute; z-index: 1; margin: 100px;" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        </div>
+        <canvas class="output_canvas" style="position: absolute; float: left; width: 100%; z-index: 9;"></canvas>
       </div>
-     <div style=" margin: 0 auto;">
+     <div style="margin: 0 auto; display: block;">
       <style type="text/css">
         .tg  {border-collapse:collapse;border-spacing:0;}
         .tg td{border-radius: 0px 0px 10px 10px; font-family:Arial, sans-serif;font-size:20px;
@@ -55,7 +64,7 @@
         .tg .tg-baqh{text-align:center;vertical-align:top}
         .tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
         </style>
-        <table class="tg">
+        <table class="tg" style="display: block; position: relative; float: left; padding-top: 50%;">
         <thead>
           <tr>
             <th class="tg-c3ow" style="background-color:#C3B1E1"><img src="https://user-images.githubusercontent.com/15292506/112219728-a3171200-8be2-11eb-8fbe-025913384417.PNG" width="80" height="125"></th>
