@@ -249,17 +249,16 @@ const createScene = function () {
             delay += makeSphereDelay;
             levelOneDoneDelay += makeSphereDelay;
           } else if (animations[i] == "dance") {
+            music = new Audio("sounds/dance.wav");
             idleAnim.stop();
             setTimeout(() => {
               danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
-              danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
-              danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
-              music = new Audio("sounds/dance.wav");
               music.play();
             }, delay);
             delay += danceDelay;
             levelOneDoneDelay += danceDelay;
             danceAnim.stop();
+            music.pause();
             idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
           } else if (animations[i] == "place") {
             idleAnim.stop();
