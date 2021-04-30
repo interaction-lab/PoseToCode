@@ -1,4 +1,5 @@
 const toolbox = document.getElementById("toolbox");
+var time = 0;
 const options = {
   toolbox: toolbox,
   collapse: true,
@@ -374,7 +375,9 @@ async function runCode() {
   setTimeout(function () {
     document.activeElement.blur();
   }, 150);
-  codeIsRunning = false;
+  setTimeout(function () {
+    codeIsRunning = false;
+  }, time);
 }
 
 function resetAllBlocks() {
@@ -384,6 +387,7 @@ function resetAllBlocks() {
   parentBlock = null;
   //resetGUI();
   console.log("reset");
+  time = 0;
 }
 
 function addNewBlock(blockName, fields = []) {
@@ -404,11 +408,13 @@ function addNewBlock(blockName, fields = []) {
 function placeSphere() {
   addNewBlock(BLOCKTYPES.PLACESPHERE);
   console.log("place sphere");
+  time += 2000;
 }
 
 function addDanceBlock() {
   addNewBlock(BLOCKTYPES.DANCE);
   console.log("dance block added");
+  time += 2000;
 }
 
 function createSphereBlock(sphereSize) {
@@ -420,16 +426,20 @@ function createSphereBlock(sphereSize) {
   ];
   addNewBlock(BLOCKTYPES.CREATESPHERE, fields)
   console.log("create sphere block of size " + sphereSize);
+  time += 1000;
 }
 
 function setSphereSizeLarge() {
   createSphereBlock(SPHERESIZES.LARGE);
+  time += 1000;
 }
 
 function setSphereSizeMedium() {
   createSphereBlock(SPHERESIZES.MEDIUM);
+  time += 1000;
 }
 
 function setSphereSizeSmall() {
   createSphereBlock(SPHERESIZES.SMALL);
+  time += 1000;
 }
