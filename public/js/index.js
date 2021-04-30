@@ -222,6 +222,7 @@ function attemptPoseDetection(bestArmScores) {
   }
   else if (bestArmScores[ARMS.LEFT] == ARMSTATES.MED &&
     bestArmScores[ARMS.RIGHT] == ARMSTATES.HIGH) {
+    resetGUI();
     runCode();
     return true;
   }

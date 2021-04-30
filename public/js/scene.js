@@ -111,9 +111,9 @@ function resetGUI() {
     guiElements[i].isVisible = false;
   }
   guiElements = [];
-  animations = [];
-  sizes = [];
-  reset.onPointerUpObservable.notifyObservers();
+  // animations = [];
+  // sizes = [];
+  // reset.onPointerUpObservable.notifyObservers();
   setTimeout(function () {
     document.activeElement.blur();
   }, 150);
