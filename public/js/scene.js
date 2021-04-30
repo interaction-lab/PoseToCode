@@ -188,7 +188,7 @@ const createScene = function () {
   // Load robot character from github and play animation
   BABYLON.SceneLoader.ImportMesh(
     "",
-    "https://raw.githubusercontent.com/interaction-lab/PoseToCode/integration/Robot/",
+    "https://raw.githubusercontent.com/interaction-lab/PoseToCode/integration/public/Robot/",
     "blue_robo_finalish.glb",
     scene,
     function (newMeshes, particleSystems, skeletons, animationGroups) {
