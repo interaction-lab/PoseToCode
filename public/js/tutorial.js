@@ -1,51 +1,6 @@
-const toolbox = document.getElementById("toolbox");
-var time = 0;
-const options = {
-  toolbox: toolbox,
-  collapse: true,
-  comments: false,
-  disable: true,
-  maxBlocks: Infinity,
-  trashcan: true,
-  horizontalLayout: false,
-  toolboxPosition: "start",
-  css: true,
-  media: "https://blockly-demo.appspot.com/static/media/",
-  rtl: false,
-  scrollbars: true,
-  sounds: true,
-  oneBasedIndex: true,
-};
-/* Inject your Blockly workspace */
-const blocklyDiv = document.getElementById("blocklyDiv");
-const workspace = Blockly.inject(blocklyDiv, options);
-const workspaceBlocks = document.getElementById("workspaceBlocks");
-Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
-
-click = new Audio("sounds/click.wav");
-calculate = new Audio("sounds/calculate.wav");
-loading = new Audio("sounds/loading.mp3");
-/* variables to hold current parent block and child block */
-let parentBlock = null;
-let childBlock = null;
-/* keep track of all blocks for resetting */
-const allBlocks = [];
-
-let sphereSizeFlag = false;
-let sleepFlag = false;
-
 const videoElement = document.getElementsByClassName("input_video")[0];
 const canvasElement = document.getElementsByClassName("output_canvas")[0];
 const canvasCtx = canvasElement.getContext("2d");
-
-// Helpers
-function sleep(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
-}
 
 lastUpdateTime = curTime = null;
 function getDeltaTimeMS() {
@@ -115,14 +70,18 @@ progressBars = {
 }
 leftProgressheader = document.getElementById("leftProgressHeader");
 rightProgressheader = document.getElementById("rightProgressHeader");
+text = document.getElementById("instructions");
+image = document.getElementById("image");
+imageName = document.getElementById("imageName");
+var imageIndex = 0;
+all_images = ["https://user-images.githubusercontent.com/15292506/112219728-a3171200-8be2-11eb-8fbe-025913384417.PNG", "https://user-images.githubusercontent.com/31269392/113462721-256bb700-93d7-11eb-9b52-6cc50c2b1370.png", "https://user-images.githubusercontent.com/15292506/112219748-a90cf300-8be2-11eb-8d96-ccad8b96b2fa.PNG"];
+all_poses = ["Make Small Sphere", "Place Sphere", "Run Code"];
 var codeIsRunning = false;
 
 // Main
 async function onResults(results) {
   deltaTime = getDeltaTimeMS();
-  resetCanvas();
   drawPoseSkeleton(results);
-  console.log("codeIsRunning: " + codeIsRunning);
   if (!codeIsRunning &&
     results != null &&
     results.poseLandmarks != null) {
@@ -133,6 +92,13 @@ async function onResults(results) {
     updateBestArmText(bestArmScores);
     if (attemptPoseDetection(bestArmScores)) {
       resetAllArmScores();
+      if(imageIndex == 2) {
+        window.location.href = "./poseToCode.html";
+      } else {
+        imageIndex++;
+        image.src = all_images[imageIndex];
+        imageName.innerHTML = all_poses[imageIndex];
+      }
     }
   }
 }
@@ -200,6 +166,38 @@ function updateProgressBars() {
 function updateBestArmText(bestArmScores) {
   leftProgressheader.innerHTML = "Best " + ARMS.LEFT + ": " + bestArmScores[ARMS.LEFT];
   rightProgressheader.innerHTML = "Best " + ARMS.RIGHT + ": " + bestArmScores[ARMS.RIGHT];
+  if(imageIndex == 0) {
+    //make small sphere (left up, right down)
+    if(bestArmScores[ARMS.LEFT] != ARMSTATES.HIGH) {
+      text.innerHTML = "Raise your left arm!";
+    } else if (bestArmScores[ARMS.RIGHT] != ARMSTATES.LOW) {
+      text.innerHTML = "Lower your right arm!";
+    } else if (bestArmScores[ARMS.LEFT] == ARMSTATES.HIGH && bestArmScores[ARMS.RIGHT] == ARMSTATES.LOW) {
+      text.innerHTML = "Awesome! Hold that pose.";
+    }
+  }
+  else if(imageIndex == 1) {
+    //place sphere (both out)
+    if(bestArmScores[ARMS.LEFT] != ARMSTATES.OUTINFRONT) {
+      text.innerHTML = "Adjust your left arm!";
+    } else if (bestArmScores[ARMS.RIGHT] != ARMSTATES.OUTINFRONT) {
+      text.innerHTML = "Adjust your right arm!";
+    } else if (bestArmScores[ARMS.LEFT] == ARMSTATES.OUTINFRONT && bestArmScores[ARMS.RIGHT] == ARMSTATES.OUTINFRONT) {
+      text.innerHTML = "Awesome! Hold that pose.";
+    }
+  }
+  else if(imageIndex == 2) {
+    //run code  (right high, left medium)
+    if(bestArmScores[ARMS.LEFT] == ARMSTATES.LOW) {
+      text.innerHTML = "Raise your left arm!";
+    } else if(bestArmScores[ARMS.LEFT] == ARMSTATES.HIGH) {
+      text.innerHTML = "Lower your left arm!";
+    } else if (bestArmScores[ARMS.RIGHT] != ARMSTATES.HIGH) {
+      text.innerHTML = "Raise your right arm!";
+    } else if (bestArmScores[ARMS.LEFT] == ARMSTATES.MED && bestArmScores[ARMS.RIGHT] == ARMSTATES.HIGH) {
+      text.innerHTML = "Awesome! Hold that pose.";
+    }
+  }
 }
 
 function armScoresOverThreshHold(bestArmScores) {
@@ -211,40 +209,16 @@ function attemptPoseDetection(bestArmScores) {
   if (!armScoresOverThreshHold(bestArmScores)) {
     return false;
   }
-  if (bestArmScores[ARMS.LEFT] == ARMSTATES.MED &&
-    bestArmScores[ARMS.RIGHT] == ARMSTATES.MED) {
-    addDanceBlock();
-    return true;
-  }
-  else if (bestArmScores[ARMS.LEFT] == ARMSTATES.LOW &&
-    bestArmScores[ARMS.RIGHT] == ARMSTATES.HIGH) {
-    resetAllBlocks();
-    return true;
-  }
   else if (bestArmScores[ARMS.LEFT] == ARMSTATES.MED &&
     bestArmScores[ARMS.RIGHT] == ARMSTATES.HIGH) {
-    resetGUI();
-    runCode();
     return true;
   }
   else if (bestArmScores[ARMS.LEFT] == ARMSTATES.OUTINFRONT &&
     bestArmScores[ARMS.RIGHT] == ARMSTATES.OUTINFRONT) {
-    placeSphere();
     return true;
   }
   else if (bestArmScores[ARMS.LEFT] == ARMSTATES.HIGH &&
     bestArmScores[ARMS.RIGHT] == ARMSTATES.LOW) {
-    setSphereSizeSmall();
-    return true;
-  }
-  else if (bestArmScores[ARMS.LEFT] == ARMSTATES.HIGH &&
-    bestArmScores[ARMS.RIGHT] == ARMSTATES.MED) {
-    setSphereSizeMedium();
-    return true;
-  }
-  else if (bestArmScores[ARMS.LEFT] == ARMSTATES.HIGH &&
-    bestArmScores[ARMS.RIGHT] == ARMSTATES.HIGH) {
-    setSphereSizeLarge();
     return true;
   }
   return false;
@@ -323,23 +297,6 @@ const camera = new Camera(videoElement, {
 });
 camera.start();
 
-const modal = document.getElementById("levelUpModal");
-const span = document.getElementsByClassName("close")[0];
-span.onclick = function () {
-  modal.style.display = "none";
-};
-
-window.onclick = function (event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-};
-
-function resetCanvas() {
-  canvasCtx.save();
-  canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-}
-
 function drawPoseSkeleton(results) {
   canvasCtx.drawImage(
     results.image,
@@ -356,90 +313,4 @@ function drawPoseSkeleton(results) {
     color: "#FF0000",
     lineWidth: 2,
   });
-}
-
-// Codeblock Actions
-async function runCode() {
-  codeIsRunning = true;
-  window.LoopTrap = 1000;
-  Blockly.JavaScript.INFINITE_LOOP_TRAP =
-    'if(--window.LoopTrap == 0) throw "Infinite loop.";\n';
-  const code = Blockly.JavaScript.workspaceToCode(workspace);
-  try {
-    console.log(codeIsRunning);
-    eval(code);
-  } catch (e) {
-    alert(e);
-  }
-  runOnGUI();
-  setTimeout(function () {
-    document.activeElement.blur();
-  }, 150);
-  setTimeout(function () {
-    codeIsRunning = false;
-  }, time);
-}
-
-function resetAllBlocks() {
-  for (i = 0; i < allBlocks.length; i++) {
-    allBlocks[i].dispose(true);
-  }
-  parentBlock = null;
-  //resetGUI();
-  console.log("reset");
-  time = 0;
-}
-
-function addNewBlock(blockName, fields = []) {
-  block = workspace.newBlock(blockName);
-  click.play();
-  for (var i = fields.length - 1; i >= 0; --i) {
-    block.setFieldValue(fields[i]['value'], fields[i]['name'])
-  }
-  block.initSvg();
-  block.render();
-  if (parentBlock != null) {
-    parentBlock.nextConnection.connect(block.previousConnection);
-  }
-  parentBlock = block;
-  allBlocks.push(parentBlock);
-}
-
-function placeSphere() {
-  addNewBlock(BLOCKTYPES.PLACESPHERE);
-  console.log("place sphere");
-  time += 2000;
-}
-
-function addDanceBlock() {
-  addNewBlock(BLOCKTYPES.DANCE);
-  console.log("dance block added");
-  time += 2000;
-}
-
-function createSphereBlock(sphereSize) {
-  fields = [
-    {
-      "name": "NAME",
-      "value": sphereSize
-    }
-  ];
-  addNewBlock(BLOCKTYPES.CREATESPHERE, fields)
-  console.log("create sphere block of size " + sphereSize);
-  time += 1000;
-}
-
-function setSphereSizeLarge() {
-  createSphereBlock(SPHERESIZES.LARGE);
-  time += 1000;
-}
-
-function setSphereSizeMedium() {
-  createSphereBlock(SPHERESIZES.MEDIUM);
-  time += 1000;
-}
-
-function setSphereSizeSmall() {
-  createSphereBlock(SPHERESIZES.SMALL);
-  time += 1000;
 }
