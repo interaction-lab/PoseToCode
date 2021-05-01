@@ -5,7 +5,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  zoom: 0.85;
+  /*zoom: 0.85;*/
 }
 
 #renderCanvas {
@@ -16,7 +16,13 @@ body {
 }
 
 .video {
+  height: 40%;
   position: relative;
+}
+
+.key {
+  padding-top: 0%;
+  height: 30%;
 }
 
 .prompt {
@@ -38,11 +44,13 @@ body {
 .poseKey {
   float: center;
   text-align: center;
-  padding-bottom: 1%;
+  padding-top: 0;
+  /*padding-bottom: 1%;*/
+  height: 40%;
   display: flex;
   overflow: hidden;
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 #blocklyDiv {
