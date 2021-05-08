@@ -16,6 +16,10 @@ const options = {
   sounds: true,
   oneBasedIndex: true,
 };
+
+/* Instantiate log */
+const Logger = new Log();
+
 /* Inject your Blockly workspace */
 const blocklyDiv = document.getElementById("blocklyDiv");
 const workspace = Blockly.inject(blocklyDiv, options);
@@ -132,7 +136,10 @@ async function onResults(results) {
     var bestArmScores = getBestArmScores();
     updateBestArmText(bestArmScores);
     if (attemptPoseDetection(bestArmScores)) {
+      Logger.update(Date.now(), results.poseLandmarks, 1);
       resetAllArmScores();
+    } else {
+      Logger.update(Date.now(), results.poseLandmarks, 0);
     }
   }
 }

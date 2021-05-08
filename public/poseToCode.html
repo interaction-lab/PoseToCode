@@ -111,6 +111,25 @@
       style="display: none"
     ></xml>
 
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyAO65WOMDS6I-sVQT1-nB-7NiDoaOmy57M",
+        authDomain: "robotblocks-c0d53.firebaseapp.com",
+        projectId: "robotblocks-c0d53",
+        storageBucket: "robotblocks-c0d53.appspot.com",
+        messagingSenderId: "285104221142",
+        appId: "1:285104221142:web:72bf8f6661e6e32e1b9277"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script src="js/log.js"></script>
     <script src="js/index.js"></script>
     <script src="js/scene.js"></script>
   </body>
