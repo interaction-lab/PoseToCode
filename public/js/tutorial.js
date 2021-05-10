@@ -275,7 +275,7 @@ function getStateOfArms(results) {
 // MediaPipe and DOM events
 const userPose = new Pose({
   locateFile: (file) => {
-    return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
+    return `https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.2/${file}`;
   },
 });
 
