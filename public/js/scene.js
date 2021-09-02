@@ -207,7 +207,7 @@ const createScene = function () {
       idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 
       // function for when the "run" button is clicked
-      run.onPointerUpObservable.add(function () {
+      run.onPointerUpObservable.add(function () {  
         let delay = startDelay;
         const startX = -1.5;
         let startY = 1.3;
