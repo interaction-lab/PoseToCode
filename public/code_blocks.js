@@ -1,4 +1,4 @@
-Blockly.Blocks.create_sphere = {
+Blockly.Blocks.make_sphere = {
   init: function () {
     this.appendDummyInput()
       .appendField('Make Sphere of')

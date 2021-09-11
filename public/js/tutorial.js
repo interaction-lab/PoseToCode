@@ -34,7 +34,7 @@ const SPHERESIZES = {
   LARGE: "large"
 }
 const BLOCKTYPES = {
-  CREATESPHERE: "create_sphere",
+  CREATESPHERE: "make_sphere",
   PLACESPHERE: "place",
   DANCE: "dance"
 }
