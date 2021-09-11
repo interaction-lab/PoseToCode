@@ -228,6 +228,7 @@ function attemptPoseDetection(bestArmScores) {
     resetAllBlocks();
     return true;
   }
+  // run pose
   else if (bestArmScores[ARMS.LEFT] == ARMSTATES.MED &&
     bestArmScores[ARMS.RIGHT] == ARMSTATES.HIGH) {
     resetGUI();
@@ -367,24 +368,26 @@ function drawPoseSkeleton(results) {
 
 // Codeblock Actions
 async function runCode() {
-  codeIsRunning = true;
+  alert("runCode func");
+  //codeIsRunning = true;
   window.LoopTrap = 1000;
   Blockly.JavaScript.INFINITE_LOOP_TRAP =
     'if(--window.LoopTrap == 0) throw "Infinite loop.";\n';
   const code = Blockly.JavaScript.workspaceToCode(workspace);
   try {
-    console.log(codeIsRunning);
+    //console.log(codeIsRunning);
+    alert("about to run this code: " + code);
     eval(code);
   } catch (e) {
     alert(e);
   }
-  runOnGUI();
-  setTimeout(function () {
+  //runOnGUI();
+  /*setTimeout(function () {
     document.activeElement.blur();
   }, 150);
   setTimeout(function () {
     codeIsRunning = false;
-  }, time);
+  }, time);*/
 }
 
 function resetAllBlocks() {
@@ -392,7 +395,7 @@ function resetAllBlocks() {
     allBlocks[i].dispose(true);
   }
   parentBlock = null;
-  //resetGUI();
+  resetGUI();
   console.log("reset");
   time = 0;
 }

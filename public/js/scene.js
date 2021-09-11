@@ -19,6 +19,8 @@ const startDelay = 500;
 const makeSphereDelay = 2000;
 const placeSphereDelay = 2000;
 const danceDelay = 2000;
+// move this later
+let startYMakeSphere = 1.3;
 
 let level = 1;
 const levelOneDone = false;
@@ -38,12 +40,57 @@ function sleep(milliseconds) {
 // functions for code blocks
 Blockly.JavaScript.create_sphere = function (block) {
   const dropdown_name = block.getFieldValue("NAME");
-  animations.push("make sphere");
-  sizes.push(dropdown_name);
-  const code = 'console.log("make sphere");\n';
+  if(dropdown_name == "small")
+  {
+    const code = 'makeSmallSphere();\n';
+  }
+  /*else if(dropdown_name == "medium")
+  {
+    const code = 'makeMediumSphere();\n';
+  }
+  else if(dropdown_name == "large")
+  {
+    const code = 'makeLargeSphere();\n';
+  }*/
+  //animations.push("make sphere");
+  //sizes.push(dropdown_name);
+  
   console.log(animations);
   return code;
 };
+
+function makeSmallSphere()
+{
+  alert("small sphere func");
+  makeSphere("small");
+
+}
+function makeSphere(currSize)
+{
+  alert("make sphere func");
+  makeSphereAnim.start(false, 1.0, makeSphereAnim.from, makeSphereAnim.to, false);
+  setTimeout(() => {
+    startYMakeSphere += 0.5;
+    // change diameter of the ball based on selected size
+    if (currSize == "small") {
+      diam = smallDiameter;
+    } else if (currSize == "medium") {
+      diam = mediumDiameter;
+    } else if (currSize == "large") {
+      diam = largeDiameter;
+    }
+    // create a new snowball at the position of the robot's hands
+    currSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {
+      diameter: diam,
+      segments: 32,
+    });
+    currSphere.position = new BABYLON.Vector3(0, 1.5, .5);
+    guiElements.push(currSphere);
+    sizeIndex++;
+  }, delay);
+  delay += makeSphereDelay;
+  levelOneDoneDelay += makeSphereDelay;
+}
 
 Blockly.JavaScript.place = function (block) {
   animations.push("place");
