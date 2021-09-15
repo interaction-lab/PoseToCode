@@ -367,27 +367,168 @@ function drawPoseSkeleton(results) {
 }
 
 // Codeblock Actions
-async function runCode() {
-  codeIsRunning = true;
-  window.LoopTrap = 1000;
-  Blockly.JavaScript.INFINITE_LOOP_TRAP =
-    'if(--window.LoopTrap == 0) throw "Infinite loop.";\n';
-  const code = Blockly.JavaScript.workspaceToCode(workspace);
-  try {
-    alert("about to run this code: " + code);
-    console.log(codeIsRunning);
-    eval(code);
-  } catch (e) {
-    alert(e);
-  }
-  //runOnGUI();
-  setTimeout(function () {
-    document.activeElement.blur();
-  }, 150);
-  setTimeout(function () {
-    codeIsRunning = false;
-  }, time);
+// async function runCode() {
+//   codeIsRunning = true;
+//   window.LoopTrap = 1000;
+//   Blockly.JavaScript.INFINITE_LOOP_TRAP =
+//     'if(--window.LoopTrap == 0) throw "Infinite loop.";\n';
+//   const code = Blockly.JavaScript.workspaceToCode(workspace);
+//   try {
+//     alert("about to run this code: " + code);
+//     console.log(codeIsRunning);
+//     eval(code);
+//   } catch (e) {
+//     alert(e);
+//   }
+//   //runOnGUI();
+//   setTimeout(function () {
+//     document.activeElement.blur();
+//   }, 150);
+//   setTimeout(function () {
+//     codeIsRunning = false;
+//   }, time);
+// }
+
+var myInterpreter = null;
+
+function runCode() {
+  stepCode();
 }
+
+
+function initApi(interpreter, globalObject) {
+  // Add an API function for the alert() block, generated for "text_print" blocks.
+  interpreter.setProperty(
+    globalObject,
+    "alert",
+    interpreter.createNativeFunction(function (text) {
+      // text = arguments.length ? text : "";
+      // outputArea.value += "\n" + text;
+    })
+  );
+
+  // Add an API function for the prompt() block.
+  // var wrapper = function (text) {
+  //   return interpreter.createPrimitive(prompt(text));
+  // };
+  // interpreter.setProperty(
+  //   globalObject,
+  //   "prompt",
+  //   interpreter.createNativeFunction(wrapper)
+  // );
+
+  // Add an API function for highlighting blocks.
+  // var wrapper = function (id) {
+  //   id = String(id || "");
+  //   return interpreter.createPrimitive(highlightBlock(id));
+  // };
+  // interpreter.setProperty(
+  //   globalObject,
+  //   "highlightBlock",
+  //   interpreter.createNativeFunction(wrapper)
+  // );
+}
+
+var highlightPause = false;
+var latestCode = "";
+
+// function highlightBlock(id) {
+//   workspace.highlightBlock(id);
+//   highlightPause = true;
+// }
+
+function resetStepUi(clearOutput) {
+  // workspace.highlightBlock(null);
+  // highlightPause = false;
+
+  // if (clearOutput) {
+  //   outputArea.value = "Program output:\n=================";
+  // }
+}
+
+function generateCodeAndLoadIntoInterpreter() {
+  // Generate JavaScript code and parse it.
+  // Blockly.JavaScript.STATEMENT_PREFIX = "highlightBlock(%1);\n";
+  // Blockly.JavaScript.addReservedWords("highlightBlock");
+  latestCode = Blockly.JavaScript.workspaceToCode(workspace);
+  resetStepUi(true);
+}
+
+function stepCode() {
+  if (!myInterpreter) {
+    var myCode = 'alert(url);';
+    var initFunc = function(interpreter, globalObject) {
+      interpreter.setProperty(globalObject, 'url', String(location));
+
+      var wrapper = function alert(text) {
+        return window.alert(text);
+      };
+      interpreter.setProperty(globalObject, 'alert',
+          interpreter.createNativeFunction(wrapper));
+    };
+    var myInterpreter = new Interpreter(myCode, initFunc);
+    myInterpreter.run();
+
+
+
+
+    // First statement of this code.
+    // Clear the program output.
+    // resetStepUi(true);
+    // myInterpreter = new Interpreter(latestCode, initApi);
+    // //myInterpreter.appendCode('alert("foo");')
+
+    // // And then show generated code in an alert.
+    // // In a timeout to allow the outputArea.value to reset first.
+    // setTimeout(function () {
+    //   alert(
+    //     "Ready to execute the following code\n" +
+    //       "===================================\n" +
+    //       latestCode
+    //   );
+    //   highlightPause = true;
+    //   stepCode();
+    // }, 1);
+    return;
+  }
+  highlightPause = false;
+  do {
+    try {
+      var hasMoreCode = myInterpreter.step();
+    } finally {
+      if (!hasMoreCode) {
+        // Program complete, no more code to execute.
+        // outputArea.value += "\n\n<< Program complete >>";
+
+        myInterpreter = null;
+        resetStepUi(false);
+
+        // Cool down, to discourage accidentally restarting the program.
+        // stepButton.disabled = "disabled";
+        // setTimeout(function () {
+        //   stepButton.disabled = "";
+        // }, 2000);
+
+        return;
+      }
+    }
+    // Keep executing until a highlight statement is reached,
+    // or the code completes or errors.
+  } while (hasMoreCode && !highlightPause);
+}
+
+// Load the interpreter now, and upon future changes.
+generateCodeAndLoadIntoInterpreter();
+workspace.addChangeListener(function (event) {
+  if (!(event instanceof Blockly.Events.Ui)) {
+    // Something changed. Parser needs to be reloaded.
+    generateCodeAndLoadIntoInterpreter();
+  }
+});
+
+
+
+
 
 function resetAllBlocks() {
   for (i = 0; i < allBlocks.length; i++) {
