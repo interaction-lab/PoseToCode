@@ -77,13 +77,11 @@ const ARMSTATES = {
   HIGH: "High",
   OUTINFRONT: "Out"
 }
-const SPHERESIZES = {
-  SMALL: "small",
-  MEDIUM: "medium",
-  LARGE: "large"
-}
+
 const BLOCKTYPES = {
-  CREATESPHERE: "make_sphere",
+  CREATESMALLSPHERE: "make_small_sphere",
+  CREATEMEDIUMSPHERE: "make_medium_sphere",
+  CREATELARGESPHERE: "make_large_sphere",
   PLACESPHERE: "place",
   DANCE: "dance"
 }
@@ -242,17 +240,17 @@ function attemptPoseDetection(bestArmScores) {
   }
   else if (bestArmScores[ARMS.LEFT] == ARMSTATES.HIGH &&
     bestArmScores[ARMS.RIGHT] == ARMSTATES.LOW) {
-    setSphereSizeSmall();
+    makeSmallSphereBlock();
     return true;
   }
   else if (bestArmScores[ARMS.LEFT] == ARMSTATES.HIGH &&
     bestArmScores[ARMS.RIGHT] == ARMSTATES.MED) {
-    setSphereSizeMedium();
+    makeMediumSphereBlock();
     return true;
   }
   else if (bestArmScores[ARMS.LEFT] == ARMSTATES.HIGH &&
     bestArmScores[ARMS.RIGHT] == ARMSTATES.HIGH) {
-    setSphereSizeLarge();
+    makeLargeSphereBlock();
     return true;
   }
   return false;
@@ -413,22 +411,32 @@ function initApi(interpreter, globalObject) {
   );
   interpreter.setProperty(
     globalObject,
-    "place",
+    "placeSphereCode",
     interpreter.createNativeFunction(function (text) {
       placeSphereCode();
     })
   );
-
-  // Add an API function for highlighting blocks.
-  // var wrapper = function (id) {
-  //   id = String(id || "");
-  //   return interpreter.createPrimitive(highlightBlock(id));
-  // };
-  // interpreter.setProperty(
-  //   globalObject,
-  //   "highlightBlock",
-  //   interpreter.createNativeFunction(wrapper)
-  // );
+  interpreter.setProperty(
+    globalObject,
+    "makeSmallSphere",
+    interpreter.createNativeFunction(function (text) {
+      makeSphere("small");
+    })
+  );
+  interpreter.setProperty(
+    globalObject,
+    "makeMediumSphere",
+    interpreter.createNativeFunction(function (text) {
+      makeSphere("medium");
+    })
+  );
+  interpreter.setProperty(
+    globalObject,
+    "makeLargeSphere",
+    interpreter.createNativeFunction(function (text) {
+      makeSphere("large");
+    })
+  );
 }
 
 var highlightPause = false;
@@ -530,29 +538,20 @@ function addDanceBlock() {
   time += 2000;
 }
 
-function createSphereBlock(sphereSize) {
-  fields = [
-    {
-      "name": "NAME",
-      "value": sphereSize
-    }
-  ];
-  addNewBlock(BLOCKTYPES.CREATESPHERE, fields)
-  console.log("create sphere block of size " + sphereSize);
-  time += 1000;
+function makeSmallSphereBlock(sphereSize) {
+  addNewBlock(BLOCKTYPES.CREATESMALLSPHERE);
+  console.log("create small sphere block");
+  time += 2000;
 }
 
-function setSphereSizeLarge() {
-  createSphereBlock(SPHERESIZES.LARGE);
-  time += 1000;
+function makeMediumSphereBlock(sphereSize) {
+  addNewBlock(BLOCKTYPES.CREATEMEDIUMSPHERE);
+  console.log("create medium sphere block");
+  time += 2000;
 }
 
-function setSphereSizeMedium() {
-  createSphereBlock(SPHERESIZES.MEDIUM);
-  time += 1000;
-}
-
-function setSphereSizeSmall() {
-  createSphereBlock(SPHERESIZES.SMALL);
-  time += 1000;
+function makeLargeSphereBlock(sphereSize) {
+  addNewBlock(BLOCKTYPES.CREATELARGESPHERE);
+  console.log("create large sphere block");
+  time += 2000;
 }

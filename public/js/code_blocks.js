@@ -1,16 +1,31 @@
-Blockly.Blocks.make_sphere = {
+Blockly.Blocks.make_small_sphere = {
   init: function () {
-    this.appendDummyInput()
-      .appendField("Make Sphere of")
-      .appendField("size:")
-      .appendField(
-        new Blockly.FieldDropdown([
-          ["small", "small"],
-          ["medium", "medium"],
-          ["large", "large"],
-        ]),
-        "NAME"
-      );
+    this.appendDummyInput().appendField("Make Small Sphere");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  },
+};
+
+Blockly.Blocks.make_medium_sphere = {
+  init: function () {
+    this.appendDummyInput().appendField("Make Medium Sphere");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  },
+};
+
+Blockly.Blocks.make_large_sphere = {
+  init: function () {
+    this.appendDummyInput().appendField("Make Large Sphere");
+    this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(230);

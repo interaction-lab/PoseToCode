@@ -85,18 +85,24 @@ const createScene = function () {
 };
 
 // Code block functions
-Blockly.JavaScript.make_sphere = function (block) {
-  currSphereSize = block.getFieldValue("NAME");
-  var code;
-  if(currSphereSize == "small") code = 'makeSmallSphere();\n';
-  else if(currSphereSize == "medium") code = 'makeMediumSphere();\n';
-  else if(currSphereSize == "large") code = 'makeLargeSphere();\n';
+Blockly.JavaScript.make_small_sphere = function (block) {
+  currSphereSize = "small";
+  var code = 'makeSmallSphere();\n';
   return code;
 };
 
-function makeSmallSphere() { makeSphere("small"); }
-function makeMediumSphere() { makeSphere("medium"); }
-function makeLargeSphere() { makeSphere("large"); }
+Blockly.JavaScript.make_medium_sphere = function (block) {
+  currSphereSize = "medium";
+  const code = 'makeMediumSphere();\n';
+  return code;
+};
+
+Blockly.JavaScript.make_large_sphere = function (block) {
+  currSphereSize = "large";
+  const code = 'makeLargeSphere();\n';
+  return code;
+};
+
 function makeSphere(currSphereSize) {
   makeSphereAnim.start(false, 1.0, makeSphereAnim.from, makeSphereAnim.to, false);
   setTimeout(() => {
