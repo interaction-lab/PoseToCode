@@ -395,27 +395,29 @@ function runCode() {
   stepCode();
 }
 
-
 function initApi(interpreter, globalObject) {
-  // Add an API function for the alert() block, generated for "text_print" blocks.
   interpreter.setProperty(
     globalObject,
     "alert",
     interpreter.createNativeFunction(function (text) {
-      // text = arguments.length ? text : "";
-      // outputArea.value += "\n" + text;
+      text = arguments.length ? text : "";
+      alert(text);
     })
   );
-
-  // Add an API function for the prompt() block.
-  // var wrapper = function (text) {
-  //   return interpreter.createPrimitive(prompt(text));
-  // };
-  // interpreter.setProperty(
-  //   globalObject,
-  //   "prompt",
-  //   interpreter.createNativeFunction(wrapper)
-  // );
+  interpreter.setProperty(
+    globalObject,
+    "dance",
+    interpreter.createNativeFunction(function (text) {
+      dance();
+    })
+  );
+  interpreter.setProperty(
+    globalObject,
+    "place",
+    interpreter.createNativeFunction(function (text) {
+      placeSphereCode();
+    })
+  );
 
   // Add an API function for highlighting blocks.
   // var wrapper = function (id) {
@@ -440,10 +442,6 @@ var latestCode = "";
 function resetStepUi(clearOutput) {
   // workspace.highlightBlock(null);
   // highlightPause = false;
-
-  // if (clearOutput) {
-  //   outputArea.value = "Program output:\n=================";
-  // }
 }
 
 function generateCodeAndLoadIntoInterpreter() {
@@ -456,39 +454,18 @@ function generateCodeAndLoadIntoInterpreter() {
 
 function stepCode() {
   if (!myInterpreter) {
-    var myCode = 'alert(url);';
-    var initFunc = function(interpreter, globalObject) {
-      interpreter.setProperty(globalObject, 'url', String(location));
-
-      var wrapper = function alert(text) {
-        return window.alert(text);
-      };
-      interpreter.setProperty(globalObject, 'alert',
-          interpreter.createNativeFunction(wrapper));
-    };
-    var myInterpreter = new Interpreter(myCode, initFunc);
-    myInterpreter.run();
-
-
-
-
-    // First statement of this code.
-    // Clear the program output.
-    // resetStepUi(true);
-    // myInterpreter = new Interpreter(latestCode, initApi);
-    // //myInterpreter.appendCode('alert("foo");')
-
-    // // And then show generated code in an alert.
-    // // In a timeout to allow the outputArea.value to reset first.
-    // setTimeout(function () {
-    //   alert(
-    //     "Ready to execute the following code\n" +
-    //       "===================================\n" +
-    //       latestCode
-    //   );
-    //   highlightPause = true;
-    //   stepCode();
-    // }, 1);
+    resetStepUi(true);
+    myInterpreter = new Interpreter(latestCode, initApi);
+    // Show generated code in an alert.
+    setTimeout(function () {
+      alert(
+        "Ready to execute the following code\n" +
+          "===================================\n" +
+          latestCode
+      );
+      highlightPause = true;
+      myInterpreter.run();
+    }, 1);
     return;
   }
   highlightPause = false;
@@ -497,18 +474,8 @@ function stepCode() {
       var hasMoreCode = myInterpreter.step();
     } finally {
       if (!hasMoreCode) {
-        // Program complete, no more code to execute.
-        // outputArea.value += "\n\n<< Program complete >>";
-
         myInterpreter = null;
         resetStepUi(false);
-
-        // Cool down, to discourage accidentally restarting the program.
-        // stepButton.disabled = "disabled";
-        // setTimeout(function () {
-        //   stepButton.disabled = "";
-        // }, 2000);
-
         return;
       }
     }
@@ -525,10 +492,6 @@ workspace.addChangeListener(function (event) {
     generateCodeAndLoadIntoInterpreter();
   }
 });
-
-
-
-
 
 function resetAllBlocks() {
   for (i = 0; i < allBlocks.length; i++) {
@@ -557,7 +520,7 @@ function addNewBlock(blockName, fields = []) {
 
 function placeSphere() {
   addNewBlock(BLOCKTYPES.PLACESPHERE);
-  console.log("place sphere");
+  console.log("place sphere block added");
   time += 2000;
 }
 
