@@ -74,8 +74,7 @@ const ARMSTATES = {
   NONE: "None",
   LOW: "Low",
   MED: "Medium",
-  HIGH: "High",
-  OUTINFRONT: "Out"
+  HIGH: "High"
 }
 
 const BLOCKTYPES = {
@@ -91,14 +90,12 @@ cumulativeArmStates = {
   [ARMS.LEFT]: {
     [ARMSTATES.LOW]: 0,
     [ARMSTATES.MED]: 0,
-    [ARMSTATES.HIGH]: 0,
-    [ARMSTATES.OUTINFRONT]: 0
+    [ARMSTATES.HIGH]: 0
   },
   [ARMS.RIGHT]: {
     [ARMSTATES.LOW]: 0,
     [ARMSTATES.MED]: 0,
-    [ARMSTATES.HIGH]: 0,
-    [ARMSTATES.OUTINFRONT]: 0
+    [ARMSTATES.HIGH]: 0
   }
 }
 progressBars = {
@@ -106,13 +103,11 @@ progressBars = {
     [ARMSTATES.LOW]: document.getElementById("leftArmLowBar"),
     [ARMSTATES.MED]: document.getElementById("leftArmMedBar"),
     [ARMSTATES.HIGH]: document.getElementById("leftArmHighBar"),
-    [ARMSTATES.OUTINFRONT]: document.getElementById("leftArmOutBar")
   },
   [ARMS.RIGHT]: {
     [ARMSTATES.LOW]: document.getElementById("rightArmLowBar"),
     [ARMSTATES.MED]: document.getElementById("rightArmMedBar"),
     [ARMSTATES.HIGH]: document.getElementById("rightArmHighBar"),
-    [ARMSTATES.OUTINFRONT]: document.getElementById("rightArmOutBar")
   }
 }
 leftProgressheader = document.getElementById("leftProgressHeader");
@@ -124,7 +119,6 @@ async function onResults(results) {
   deltaTime = getDeltaTimeMS();
   resetCanvas();
   drawPoseSkeleton(results);
-  //console.log("codeIsRunning: " + codeIsRunning);
   if (!codeIsRunning &&
     results != null &&
     results.poseLandmarks != null) {
@@ -233,8 +227,8 @@ function attemptPoseDetection(bestArmScores) {
     runCode();
     return true;
   }
-  else if (bestArmScores[ARMS.LEFT] == ARMSTATES.OUTINFRONT &&
-    bestArmScores[ARMS.RIGHT] == ARMSTATES.OUTINFRONT) {
+  else if (bestArmScores[ARMS.LEFT] == ARMSTATES.LOW &&
+    bestArmScores[ARMS.RIGHT] == ARMSTATES.LOW) {
     placeSphere();
     return true;
   }
@@ -264,41 +258,39 @@ function resetAllArmScores() {
   }
 }
 
+function getMidSection(results) {
+  console.log("shoulder:" + results.poseLandmarks[11].y);
+  console.log("hip:" + results.poseLandmarks[23].y);
+  console.log((results.poseLandmarks[11].y + results.poseLandmarks[23].y)/2);
+  return (results.poseLandmarks[11].y + results.poseLandmarks[23].y)/2;
+}
+
 // Assumes results.poseLandmarks != null
 function getStateOfArms(results) {
   armStates = {
     [ARMS.LEFT]: ARMSTATES.NONE,
     [ARMS.RIGHT]: ARMSTATES.NONE
   }
-  if (results.poseLandmarks[19].x < results.poseLandmarks[11].x &&
-    results.poseLandmarks[19].y < results.poseLandmarks[13].y &&
-    results.poseLandmarks[19].y > results.poseLandmarks[11].y) {
-    armStates[ARMS.RIGHT] = ARMSTATES.OUTINFRONT;
-  }
-  else if (results.poseLandmarks[15].y < results.poseLandmarks[2].y) {
+
+  if (results.poseLandmarks[15].y < results.poseLandmarks[2].y) {
     armStates[ARMS.RIGHT] = ARMSTATES.HIGH;
   }
-  else if (results.poseLandmarks[15].y < results.poseLandmarks[23].y &&
+  else if (results.poseLandmarks[15].y < getMidSection(results) &&
     results.poseLandmarks[15].y > results.poseLandmarks[12].y) {
     armStates[ARMS.RIGHT] = ARMSTATES.MED;
   }
-  else if (results.poseLandmarks[15].y > results.poseLandmarks[23].y) {
+  else if (results.poseLandmarks[15].y > getMidSection(results)) {
     armStates[ARMS.RIGHT] = ARMSTATES.LOW;
   }
 
-  if (results.poseLandmarks[20].x > results.poseLandmarks[12].x &&
-    results.poseLandmarks[20].y < results.poseLandmarks[14].y &&
-    results.poseLandmarks[20].y > results.poseLandmarks[12].y) {
-    armStates[ARMS.LEFT] = ARMSTATES.OUTINFRONT
-  }
-  else if (results.poseLandmarks[16].y < results.poseLandmarks[5].y) {
+  if (results.poseLandmarks[16].y < results.poseLandmarks[5].y) {
     armStates[ARMS.LEFT] = ARMSTATES.HIGH;
   }
-  else if (results.poseLandmarks[16].y < results.poseLandmarks[24].y &&
+  else if (results.poseLandmarks[16].y < getMidSection(results) &&
     results.poseLandmarks[16].y > results.poseLandmarks[11].y) {
     armStates[ARMS.LEFT] = ARMSTATES.MED;
   }
-  else if (results.poseLandmarks[16].y > results.poseLandmarks[24].y) {
+  else if (results.poseLandmarks[16].y > getMidSection(results)) {
     armStates[ARMS.LEFT] = ARMSTATES.LOW;
   }
   return armStates;
@@ -364,32 +356,10 @@ function drawPoseSkeleton(results) {
   });
 }
 
-// Codeblock Actions
-// async function runCode() {
-//   codeIsRunning = true;
-//   window.LoopTrap = 1000;
-//   Blockly.JavaScript.INFINITE_LOOP_TRAP =
-//     'if(--window.LoopTrap == 0) throw "Infinite loop.";\n';
-//   const code = Blockly.JavaScript.workspaceToCode(workspace);
-//   try {
-//     alert("about to run this code: " + code);
-//     console.log(codeIsRunning);
-//     eval(code);
-//   } catch (e) {
-//     alert(e);
-//   }
-//   //runOnGUI();
-//   setTimeout(function () {
-//     document.activeElement.blur();
-//   }, 150);
-//   setTimeout(function () {
-//     codeIsRunning = false;
-//   }, time);
-// }
-
 var myInterpreter = null;
 
 function runCode() {
+  codeIsRunning = true;
   stepCode();
 }
 
@@ -471,25 +441,15 @@ function stepCode() {
           "===================================\n" +
           latestCode
       );
-      highlightPause = true;
+      //highlightPause = true;
       myInterpreter.run();
+      myInterpreter = null;
+      setTimeout(function () {
+        codeIsRunning = false;
+      }, time);
     }, 1);
     return;
   }
-  highlightPause = false;
-  do {
-    try {
-      var hasMoreCode = myInterpreter.step();
-    } finally {
-      if (!hasMoreCode) {
-        myInterpreter = null;
-        resetStepUi(false);
-        return;
-      }
-    }
-    // Keep executing until a highlight statement is reached,
-    // or the code completes or errors.
-  } while (hasMoreCode && !highlightPause);
 }
 
 // Load the interpreter now, and upon future changes.
