@@ -462,6 +462,10 @@ workspace.addChangeListener(function (event) {
 });
 
 function resetAllBlocks() {
+  if (document.getElementById('resetAlert').style.display === "none") {
+    document.getElementById('resetAlert').style.display = "block";
+    setTimeout(function() { document.getElementById('resetAlert').style.display = "none";},3000);
+  }
   for (i = 0; i < allBlocks.length; i++) {
     allBlocks[i].dispose(true);
   }
@@ -469,6 +473,7 @@ function resetAllBlocks() {
   resetGUI();
   console.log("reset");
   time = 0;
+  
 }
 
 function addNewBlock(blockName, fields = []) {

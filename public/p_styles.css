@@ -145,3 +145,13 @@ table {
     transform: rotate(360deg);
   }
 }
+
+#resetAlert {
+  border: solid 5px white;
+  width:100%;
+  height:100%;
+  background-color:#7FCC7F;
+  color:white;
+  font-size: 100px;
+  padding: 5px;
+}
