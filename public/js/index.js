@@ -68,13 +68,14 @@ timeToHoldPoseMS = 4000;
 // Constants
 const ARMS = {
   LEFT: "Left", 
-  RIGHT: "Right"
+  RIGHT: "Right",
 }
 const ARMSTATES = {
   NONE: "None",
   LOW: "Low",
   MED: "Medium",
-  HIGH: "High"
+  HIGH: "High",
+  BELOWKNEE: "Below Knee"
 }
 
 const BLOCKTYPES = {
@@ -90,12 +91,14 @@ cumulativeArmStates = {
   [ARMS.LEFT]: {
     [ARMSTATES.LOW]: 0,
     [ARMSTATES.MED]: 0,
-    [ARMSTATES.HIGH]: 0
+    [ARMSTATES.HIGH]: 0,
+    [ARMSTATES.BELOWKNEE]: 0
   },
   [ARMS.RIGHT]: {
     [ARMSTATES.LOW]: 0,
     [ARMSTATES.MED]: 0,
-    [ARMSTATES.HIGH]: 0
+    [ARMSTATES.HIGH]: 0,
+    [ARMSTATES.BELOWKNEE]: 0
   }
 }
 progressBars = {
@@ -103,11 +106,13 @@ progressBars = {
     [ARMSTATES.LOW]: document.getElementById("leftArmLowBar"),
     [ARMSTATES.MED]: document.getElementById("leftArmMedBar"),
     [ARMSTATES.HIGH]: document.getElementById("leftArmHighBar"),
+    [ARMSTATES.BELOWKNEE]: document.getElementById("leftHandBelowKneeBar")
   },
   [ARMS.RIGHT]: {
     [ARMSTATES.LOW]: document.getElementById("rightArmLowBar"),
     [ARMSTATES.MED]: document.getElementById("rightArmMedBar"),
     [ARMSTATES.HIGH]: document.getElementById("rightArmHighBar"),
+    [ARMSTATES.BELOWKNEE]: document.getElementById("rightHandBelowKneeBar")
   }
 }
 leftProgressheader = document.getElementById("leftProgressHeader");
@@ -157,6 +162,7 @@ function updateCumulativeArmStates(curArmStates, deltaTime) {
   const scaledTimeToHoldPose = timeToHoldPoseMS * scaleFactor;
   cumulativeArmStates[ARMS.LEFT][curArmStates[ARMS.LEFT]] += deltaTime;
   cumulativeArmStates[ARMS.RIGHT][curArmStates[ARMS.RIGHT]] += deltaTime;
+
   if (cumulativeArmStates[ARMS.LEFT][curArmStates[ARMS.LEFT]] > scaledTimeToHoldPose) {
     cumulativeArmStates[ARMS.LEFT][curArmStates[ARMS.LEFT]] = scaledTimeToHoldPose;
   }
@@ -227,8 +233,8 @@ function attemptPoseDetection(bestArmScores) {
     runCode();
     return true;
   }
-  else if (bestArmScores[ARMS.LEFT] == ARMSTATES.LOW &&
-    bestArmScores[ARMS.RIGHT] == ARMSTATES.LOW) {
+  else if (bestArmScores[ARMS.LEFT] == ARMSTATES.BELOWKNEE &&
+    bestArmScores[ARMS.RIGHT] == ARMSTATES.BELOWKNEE) {
     placeSphere();
     return true;
   }
@@ -259,9 +265,6 @@ function resetAllArmScores() {
 }
 
 function getMidSection(results) {
-  console.log("shoulder:" + results.poseLandmarks[11].y);
-  console.log("hip:" + results.poseLandmarks[23].y);
-  console.log((results.poseLandmarks[11].y + results.poseLandmarks[23].y)/2);
   return (results.poseLandmarks[11].y + results.poseLandmarks[23].y)/2;
 }
 
@@ -271,8 +274,10 @@ function getStateOfArms(results) {
     [ARMS.LEFT]: ARMSTATES.NONE,
     [ARMS.RIGHT]: ARMSTATES.NONE
   }
-
-  if (results.poseLandmarks[15].y < results.poseLandmarks[2].y) {
+  if(results.poseLandmarks[26].y < results.poseLandmarks[20].y) {
+    armStates[ARMS.RIGHT] = ARMSTATES.BELOWKNEE;
+  }
+  else if (results.poseLandmarks[15].y < results.poseLandmarks[2].y) {
     armStates[ARMS.RIGHT] = ARMSTATES.HIGH;
   }
   else if (results.poseLandmarks[15].y < getMidSection(results) &&
@@ -283,7 +288,10 @@ function getStateOfArms(results) {
     armStates[ARMS.RIGHT] = ARMSTATES.LOW;
   }
 
-  if (results.poseLandmarks[16].y < results.poseLandmarks[5].y) {
+  if (results.poseLandmarks[25].y < results.poseLandmarks[19].y) {
+    armStates[ARMS.LEFT] = ARMSTATES.BELOWKNEE;
+  }
+  else if (results.poseLandmarks[16].y < results.poseLandmarks[5].y) {
     armStates[ARMS.LEFT] = ARMSTATES.HIGH;
   }
   else if (results.poseLandmarks[16].y < getMidSection(results) &&
