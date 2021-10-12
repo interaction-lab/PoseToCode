@@ -25,8 +25,7 @@ const ARMSTATES = {
   NONE: "None",
   LOW: "Low",
   MED: "Medium",
-  HIGH: "High",
-  OUTINFRONT: "Out"
+  HIGH: "High"
 }
 const SPHERESIZES = {
   SMALL: "small",
@@ -44,28 +43,24 @@ cumulativeArmStates = {
   [ARMS.LEFT]: {
     [ARMSTATES.LOW]: 0,
     [ARMSTATES.MED]: 0,
-    [ARMSTATES.HIGH]: 0,
-    [ARMSTATES.OUTINFRONT]: 0
+    [ARMSTATES.HIGH]: 0
   },
   [ARMS.RIGHT]: {
     [ARMSTATES.LOW]: 0,
     [ARMSTATES.MED]: 0,
-    [ARMSTATES.HIGH]: 0,
-    [ARMSTATES.OUTINFRONT]: 0
+    [ARMSTATES.HIGH]: 0
   }
 }
 progressBars = {
   [ARMS.LEFT]: {
     [ARMSTATES.LOW]: document.getElementById("leftArmLowBar"),
     [ARMSTATES.MED]: document.getElementById("leftArmMedBar"),
-    [ARMSTATES.HIGH]: document.getElementById("leftArmHighBar"),
-    [ARMSTATES.OUTINFRONT]: document.getElementById("leftArmOutBar")
+    [ARMSTATES.HIGH]: document.getElementById("leftArmHighBar")
   },
   [ARMS.RIGHT]: {
     [ARMSTATES.LOW]: document.getElementById("rightArmLowBar"),
     [ARMSTATES.MED]: document.getElementById("rightArmMedBar"),
-    [ARMSTATES.HIGH]: document.getElementById("rightArmHighBar"),
-    [ARMSTATES.OUTINFRONT]: document.getElementById("rightArmOutBar")
+    [ARMSTATES.HIGH]: document.getElementById("rightArmHighBar")
   }
 }
 leftProgressheader = document.getElementById("leftProgressHeader");
@@ -74,7 +69,9 @@ text = document.getElementById("instructions");
 image = document.getElementById("image");
 imageName = document.getElementById("imageName");
 var imageIndex = 0;
-all_images = ["https://user-images.githubusercontent.com/15292506/112219728-a3171200-8be2-11eb-8fbe-025913384417.PNG", "https://user-images.githubusercontent.com/31269392/113462721-256bb700-93d7-11eb-9b52-6cc50c2b1370.png", "https://user-images.githubusercontent.com/15292506/112219748-a90cf300-8be2-11eb-8d96-ccad8b96b2fa.PNG"];
+all_images = ["https://user-images.githubusercontent.com/15292506/112219728-a3171200-8be2-11eb-8fbe-025913384417.PNG", 
+"https://user-images.githubusercontent.com/15292506/112219736-a5796c00-8be2-11eb-82ea-2cd41f803665.PNG", 
+"https://user-images.githubusercontent.com/15292506/112219748-a90cf300-8be2-11eb-8d96-ccad8b96b2fa.PNG"];
 all_poses = ["Make Small Sphere", "Place Sphere", "Run Code"];
 var codeIsRunning = false;
 
@@ -177,12 +174,12 @@ function updateBestArmText(bestArmScores) {
     }
   }
   else if(imageIndex == 1) {
-    //place sphere (both out)
-    if(bestArmScores[ARMS.LEFT] != ARMSTATES.OUTINFRONT) {
-      text.innerHTML = "Adjust your left arm!";
-    } else if (bestArmScores[ARMS.RIGHT] != ARMSTATES.OUTINFRONT) {
-      text.innerHTML = "Adjust your right arm!";
-    } else if (bestArmScores[ARMS.LEFT] == ARMSTATES.OUTINFRONT && bestArmScores[ARMS.RIGHT] == ARMSTATES.OUTINFRONT) {
+    //place sphere (left down, right up)
+    if(bestArmScores[ARMS.LEFT] != ARMSTATES.LOW) {
+      text.innerHTML = "Lower your left arm!";
+    } else if (bestArmScores[ARMS.RIGHT] != ARMSTATES.HIGH) {
+      text.innerHTML = "Raise your right arm!";
+    } else if (bestArmScores[ARMS.LEFT] == ARMSTATES.LOW && bestArmScores[ARMS.RIGHT] == ARMSTATES.HIGH) {
       text.innerHTML = "Awesome! Hold that pose.";
     }
   }
@@ -213,8 +210,8 @@ function attemptPoseDetection(bestArmScores) {
     bestArmScores[ARMS.RIGHT] == ARMSTATES.HIGH) {
     return true;
   }
-  else if (bestArmScores[ARMS.LEFT] == ARMSTATES.OUTINFRONT &&
-    bestArmScores[ARMS.RIGHT] == ARMSTATES.OUTINFRONT) {
+  else if (bestArmScores[ARMS.LEFT] == ARMSTATES.LOW &&
+    bestArmScores[ARMS.RIGHT] == ARMSTATES.HIGH) {
     return true;
   }
   else if (bestArmScores[ARMS.LEFT] == ARMSTATES.HIGH &&
@@ -232,41 +229,35 @@ function resetAllArmScores() {
   }
 }
 
+function getMidSection(results) {
+  return (results.poseLandmarks[11].y + results.poseLandmarks[23].y)/2;
+}
+
 // Assumes results.poseLandmarks != null
 function getStateOfArms(results) {
   armStates = {
     [ARMS.LEFT]: ARMSTATES.NONE,
     [ARMS.RIGHT]: ARMSTATES.NONE
   }
-  if (results.poseLandmarks[19].x < results.poseLandmarks[11].x &&
-    results.poseLandmarks[19].y < results.poseLandmarks[13].y &&
-    results.poseLandmarks[19].y > results.poseLandmarks[11].y) {
-    armStates[ARMS.RIGHT] = ARMSTATES.OUTINFRONT;
-  }
-  else if (results.poseLandmarks[15].y < results.poseLandmarks[2].y) {
+  if (results.poseLandmarks[15].y < results.poseLandmarks[2].y) {
     armStates[ARMS.RIGHT] = ARMSTATES.HIGH;
   }
-  else if (results.poseLandmarks[15].y < results.poseLandmarks[23].y &&
+  else if (results.poseLandmarks[15].y < getMidSection(results) &&
     results.poseLandmarks[15].y > results.poseLandmarks[12].y) {
     armStates[ARMS.RIGHT] = ARMSTATES.MED;
   }
-  else if (results.poseLandmarks[15].y > results.poseLandmarks[23].y) {
+  else if (results.poseLandmarks[15].y > getMidSection(results)) {
     armStates[ARMS.RIGHT] = ARMSTATES.LOW;
   }
 
-  if (results.poseLandmarks[20].x > results.poseLandmarks[12].x &&
-    results.poseLandmarks[20].y < results.poseLandmarks[14].y &&
-    results.poseLandmarks[20].y > results.poseLandmarks[12].y) {
-    armStates[ARMS.LEFT] = ARMSTATES.OUTINFRONT
-  }
-  else if (results.poseLandmarks[16].y < results.poseLandmarks[5].y) {
+  if (results.poseLandmarks[16].y < results.poseLandmarks[5].y) {
     armStates[ARMS.LEFT] = ARMSTATES.HIGH;
   }
-  else if (results.poseLandmarks[16].y < results.poseLandmarks[24].y &&
+  else if (results.poseLandmarks[16].y < getMidSection(results) &&
     results.poseLandmarks[16].y > results.poseLandmarks[11].y) {
     armStates[ARMS.LEFT] = ARMSTATES.MED;
   }
-  else if (results.poseLandmarks[16].y > results.poseLandmarks[24].y) {
+  else if (results.poseLandmarks[16].y > getMidSection(results)) {
     armStates[ARMS.LEFT] = ARMSTATES.LOW;
   }
   return armStates;

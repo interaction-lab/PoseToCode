@@ -61,18 +61,14 @@ body {
 }
 .tg th{border-radius: 10px 10px 0px 0px; font-family:Arial, sans-serif;font-size:20px;
 font-weight:normal;overflow-x: scroll; padding:10px 5px;word-break:normal;}
-.tg .tg-baqh{text-align:center;vertical-align:top}
-.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+.tg .tg-baqh{text-align:center;vertical-align:top;}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top; height:105px; width: 60px;}
 table {
   /* display: block;
   position: relative;  */
   float: left; 
   padding-top: 0%; 
   width: 100%;
-}
-
-.poseKey {
-  background-color: red;
 }
 
 #leftProgressHeader #rightProgressHeader {
