@@ -404,25 +404,34 @@ function initApi(interpreter, globalObject) {
       makeSphere("large");
     })
   );
+  var wrapper = function (id) {
+    id = String(id || "");
+    return interpreter.createPrimitive(highlightBlock(id));
+  };
+  interpreter.setProperty(
+    globalObject,
+    "highlightBlock",
+    interpreter.createNativeFunction(wrapper)
+  );
 }
 
 var highlightPause = false;
 var latestCode = "";
 
-// function highlightBlock(id) {
-//   workspace.highlightBlock(id);
-//   highlightPause = true;
-// }
+function highlightBlock(id) {
+  workspace.highlightBlock(id);
+  highlightPause = true;
+}
 
 function resetStepUi(clearOutput) {
-  // workspace.highlightBlock(null);
-  // highlightPause = false;
+  workspace.highlightBlock(null);
+  highlightPause = false;
 }
 
 function generateCodeAndLoadIntoInterpreter() {
   // Generate JavaScript code and parse it.
-  // Blockly.JavaScript.STATEMENT_PREFIX = "highlightBlock(%1);\n";
-  // Blockly.JavaScript.addReservedWords("highlightBlock");
+  Blockly.JavaScript.STATEMENT_PREFIX = "highlightBlock(%1);\n";
+  Blockly.JavaScript.addReservedWords("highlightBlock");
   latestCode = Blockly.JavaScript.workspaceToCode(workspace);
   resetStepUi(true);
 }
@@ -438,7 +447,7 @@ function stepCode() {
           "===================================\n" +
           latestCode
       );
-      //highlightPause = true;
+      highlightPause = true;
       myInterpreter.run();
       myInterpreter = null;
       setTimeout(function () {
