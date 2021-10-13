@@ -52,7 +52,6 @@
             <th class="tg-c3ow" style="background-color:#C3B1E1"><img src="https://user-images.githubusercontent.com/15292506/112219722-a14d4e80-8be2-11eb-94c2-1514a1720d23.PNG" width="60" height="105"></th>
             <th class="tg-c3ow" style="background-color:#C3B1E1"><img src="https://user-images.githubusercontent.com/15292506/112219736-a5796c00-8be2-11eb-82ea-2cd41f803665.PNG" width="60" height="105"></th>
             <th class="tg-c3ow" style="background-color:#C3B1E1"><img src="https://user-images.githubusercontent.com/15292506/112219753-ab6f4d00-8be2-11eb-9d9c-977c12d2cf5e.PNG" width="60" height="105"></th>
-            <!--<th class="tg-baqh" style="background-color:#7FCC7F"><img src="https://user-images.githubusercontent.com/15292506/112219736-a5796c00-8be2-11eb-82ea-2cd41f803665.PNG" width="60" height="105"></th>-->
             <th class="tg-c3ow" style="background-color:#7FCC7F"><img src="https://user-images.githubusercontent.com/15292506/112219748-a90cf300-8be2-11eb-8d96-ccad8b96b2fa.PNG" width="60" height="105"></th>
           </tr>
         </thead>
@@ -63,7 +62,6 @@
             <td class="tg-c3ow" style="background-color:#C3B1E1">Make Sphere Large</td>
             <td class="tg-c3ow" style="background-color:#C3B1E1">Place Sphere</td>
             <td class="tg-c3ow" style="background-color:#C3B1E1">Dance</td>
-            <!--<td class="tg-baqh" style="background-color:#7FCC7F">Reset Code</td>-->
             <td class="tg-c3ow" style="background-color:#7FCC7F">    Run Code    </td>
           </tr>
         </tbody>
@@ -84,9 +82,7 @@
       </div>
     </div>
     <canvas id="renderCanvas" touch-action="none"></canvas>
-    <div id="blocklyDiv">
-      <div id='resetAlert' style="display:none;"><b>Workspace reset!</b></div>
-    </div>
+    <div id="blocklyDiv"></div>
     
     </div>
     <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
@@ -110,6 +106,15 @@
       };
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
+    </script>
+    <script>
+      // reset code when space bar is clicked
+      document.body.onkeyup = function(e) {
+        if(e.keyCode == 32) {
+          resetAllBlocks();
+          alert("Workspace has been reset - get started again!");
+        }
+      }
     </script>
 
     <script src="js/log.js"></script>
