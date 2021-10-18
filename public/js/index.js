@@ -63,7 +63,7 @@ function getDeltaTimeMS() {
 }
 
 // Variables to Tweak
-timeToHoldPoseMS = 4000;
+timeToHoldPoseMS = 2000;
 
 // Constants
 const ARMS = {
@@ -216,11 +216,6 @@ function attemptPoseDetection(bestArmScores) {
     addDanceBlock();
     return true;
   }
-  /*else if (bestArmScores[ARMS.LEFT] == ARMSTATES.LOW &&
-    bestArmScores[ARMS.RIGHT] == ARMSTATES.HIGH) {
-    resetAllBlocks();
-    return true;
-  }*/
   // run pose
   else if (bestArmScores[ARMS.LEFT] == ARMSTATES.MED &&
     bestArmScores[ARMS.RIGHT] == ARMSTATES.HIGH) {
@@ -356,7 +351,6 @@ function drawPoseSkeleton(results) {
 var myInterpreter = null;
 
 function runCode() {
-  codeIsRunning = true;
   stepCode();
 }
 
@@ -436,26 +430,23 @@ function generateCodeAndLoadIntoInterpreter() {
   resetStepUi(true);
 }
 
+function stepThroughAllCode() {
+  codeIsRunning = true;
+  if (myInterpreter.step()) {
+    myInterpreter.step()
+    setTimeout(stepThroughAllCode, 500); // need the correct timing
+  }
+  else{
+    codeIsRunning = false;
+  }
+}
+
 function stepCode() {
   if (!myInterpreter) {
     resetStepUi(true);
-    myInterpreter = new Interpreter(latestCode, initApi);
-    // Show generated code in an alert.
-    setTimeout(function () {
-      alert(
-        "Ready to execute the following code\n" +
-        "===================================\n" +
-        latestCode
-      );
-      highlightPause = true;
-      myInterpreter.run();
-      myInterpreter = null;
-      setTimeout(function () {
-        codeIsRunning = false;
-      }, time);
-    }, 1);
-    return;
+    myInterpreter = new Interpreter(latestCode, initApi);    
   }
+  stepThroughAllCode();
 }
 
 // Load the interpreter now, and upon future changes.
@@ -504,19 +495,19 @@ function addDanceBlock() {
   time += 2000;
 }
 
-function makeSmallSphereBlock(sphereSize) {
+function makeSmallSphereBlock() {
   addNewBlock(BLOCKTYPES.CREATESMALLSPHERE);
   console.log("create small sphere block");
   time += 2000;
 }
 
-function makeMediumSphereBlock(sphereSize) {
+function makeMediumSphereBlock() {
   addNewBlock(BLOCKTYPES.CREATEMEDIUMSPHERE);
   console.log("create medium sphere block");
   time += 2000;
 }
 
-function makeLargeSphereBlock(sphereSize) {
+function makeLargeSphereBlock() {
   addNewBlock(BLOCKTYPES.CREATELARGESPHERE);
   console.log("create large sphere block");
   time += 2000;
