@@ -130,20 +130,20 @@ function placeSphereCode() {
   idleAnim.stop();
   setTimeout(() => {
     placeSphereAnim.start(false, 1.0, placeSphereAnim.from, placeSphereAnim.to, false);
-  }, delay-1200);
+  }, delay - 1200);
   setTimeout(() => {
     if (currSphereSize == "small") {
       endYPosition += 0.1;
       moveSphere(new BABYLON.Vector3(endXPosition, endYPosition, endZPosition), currSphere);
-      currHeight += smallSphereDiameter/2;
+      currHeight += smallSphereDiameter / 2;
     } else if (currSphereSize == "medium") {
       endYPosition += 0.3;
       moveSphere(new BABYLON.Vector3(endXPosition, endYPosition, endZPosition), currSphere);
-      currHeight += mediumSphereDiameter/2;
+      currHeight += mediumSphereDiameter / 2;
     } else if (currSphereSize == "large") {
       endYPosition += 0.5;
       moveSphere(new BABYLON.Vector3(endXPosition, endYPosition, endZPosition), currSphere);
-      currHeight += largeSphereDiameter/2;
+      currHeight += largeSphereDiameter / 2;
     }
   }, delay);
   delay += placeSphereDelay;

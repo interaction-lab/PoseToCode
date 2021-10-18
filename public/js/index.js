@@ -67,7 +67,7 @@ timeToHoldPoseMS = 4000;
 
 // Constants
 const ARMS = {
-  LEFT: "Left", 
+  LEFT: "Left",
   RIGHT: "Right",
 }
 const ARMSTATES = {
@@ -260,7 +260,7 @@ function resetAllArmScores() {
 }
 
 function getMidSection(results) {
-  return (results.poseLandmarks[11].y + results.poseLandmarks[23].y)/2;
+  return (results.poseLandmarks[11].y + results.poseLandmarks[23].y) / 2;
 }
 
 // Assumes results.poseLandmarks != null
@@ -444,8 +444,8 @@ function stepCode() {
     setTimeout(function () {
       alert(
         "Ready to execute the following code\n" +
-          "===================================\n" +
-          latestCode
+        "===================================\n" +
+        latestCode
       );
       highlightPause = true;
       myInterpreter.run();
@@ -474,7 +474,7 @@ function resetAllBlocks() {
   parentBlock = null;
   resetGUI();
   time = 0;
-  
+
 }
 
 function addNewBlock(blockName, fields = []) {

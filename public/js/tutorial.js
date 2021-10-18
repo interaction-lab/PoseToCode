@@ -18,7 +18,7 @@ timeToHoldPoseMS = 4000;
 
 // Constants
 const ARMS = {
-  LEFT: "Left", 
+  LEFT: "Left",
   RIGHT: "Right"
 }
 const ARMSTATES = {
@@ -69,9 +69,9 @@ text = document.getElementById("instructions");
 image = document.getElementById("image");
 imageName = document.getElementById("imageName");
 var imageIndex = 0;
-all_images = ["https://user-images.githubusercontent.com/15292506/112219728-a3171200-8be2-11eb-8fbe-025913384417.PNG", 
-"https://user-images.githubusercontent.com/15292506/112219736-a5796c00-8be2-11eb-82ea-2cd41f803665.PNG", 
-"https://user-images.githubusercontent.com/15292506/112219748-a90cf300-8be2-11eb-8d96-ccad8b96b2fa.PNG"];
+all_images = ["https://user-images.githubusercontent.com/15292506/112219728-a3171200-8be2-11eb-8fbe-025913384417.PNG",
+  "https://user-images.githubusercontent.com/15292506/112219736-a5796c00-8be2-11eb-82ea-2cd41f803665.PNG",
+  "https://user-images.githubusercontent.com/15292506/112219748-a90cf300-8be2-11eb-8d96-ccad8b96b2fa.PNG"];
 all_poses = ["Make Small Sphere", "Place Sphere", "Run Code"];
 var codeIsRunning = false;
 
@@ -89,7 +89,7 @@ async function onResults(results) {
     updateBestArmText(bestArmScores);
     if (attemptPoseDetection(bestArmScores)) {
       resetAllArmScores();
-      if(imageIndex == 2) {
+      if (imageIndex == 2) {
         window.location.href = "./poseToCode.html";
       } else {
         imageIndex++;
@@ -163,9 +163,9 @@ function updateProgressBars() {
 function updateBestArmText(bestArmScores) {
   leftProgressheader.innerHTML = "Best " + ARMS.LEFT + ": " + bestArmScores[ARMS.LEFT];
   rightProgressheader.innerHTML = "Best " + ARMS.RIGHT + ": " + bestArmScores[ARMS.RIGHT];
-  if(imageIndex == 0) {
+  if (imageIndex == 0) {
     //make small sphere (left up, right down)
-    if(bestArmScores[ARMS.LEFT] != ARMSTATES.HIGH) {
+    if (bestArmScores[ARMS.LEFT] != ARMSTATES.HIGH) {
       text.innerHTML = "Raise your left arm!";
     } else if (bestArmScores[ARMS.RIGHT] != ARMSTATES.LOW) {
       text.innerHTML = "Lower your right arm!";
@@ -173,9 +173,9 @@ function updateBestArmText(bestArmScores) {
       text.innerHTML = "Awesome! Hold that pose.";
     }
   }
-  else if(imageIndex == 1) {
+  else if (imageIndex == 1) {
     //place sphere (left down, right up)
-    if(bestArmScores[ARMS.LEFT] != ARMSTATES.LOW) {
+    if (bestArmScores[ARMS.LEFT] != ARMSTATES.LOW) {
       text.innerHTML = "Lower your left arm!";
     } else if (bestArmScores[ARMS.RIGHT] != ARMSTATES.HIGH) {
       text.innerHTML = "Raise your right arm!";
@@ -183,11 +183,11 @@ function updateBestArmText(bestArmScores) {
       text.innerHTML = "Awesome! Hold that pose.";
     }
   }
-  else if(imageIndex == 2) {
+  else if (imageIndex == 2) {
     //run code  (right high, left medium)
-    if(bestArmScores[ARMS.LEFT] == ARMSTATES.LOW) {
+    if (bestArmScores[ARMS.LEFT] == ARMSTATES.LOW) {
       text.innerHTML = "Raise your left arm!";
-    } else if(bestArmScores[ARMS.LEFT] == ARMSTATES.HIGH) {
+    } else if (bestArmScores[ARMS.LEFT] == ARMSTATES.HIGH) {
       text.innerHTML = "Lower your left arm!";
     } else if (bestArmScores[ARMS.RIGHT] != ARMSTATES.HIGH) {
       text.innerHTML = "Raise your right arm!";
@@ -230,7 +230,7 @@ function resetAllArmScores() {
 }
 
 function getMidSection(results) {
-  return (results.poseLandmarks[11].y + results.poseLandmarks[23].y)/2;
+  return (results.poseLandmarks[11].y + results.poseLandmarks[23].y) / 2;
 }
 
 // Assumes results.poseLandmarks != null
