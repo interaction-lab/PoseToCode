@@ -448,6 +448,7 @@ function stepThroughAllCode() {
   console.log(myInterpreter);
   if (myInterpreter.step()) {
     myInterpreter.step();
+    myInterpreter.step();
     setTimeout(stepThroughAllCode, 500); // need the correct timing
   }
   else{
@@ -456,10 +457,10 @@ function stepThroughAllCode() {
 }
 
 function stepCode() {
-  if (!myInterpreter) {
-    resetStepUi(true);
-    myInterpreter = new Interpreter(latestCode, initApi);    
-  }
+ 
+  resetStepUi(true);
+  myInterpreter = new Interpreter(latestCode, initApi);    
+  myInterpreter.step(); // dummy first step
   stepThroughAllCode();
 }
 
