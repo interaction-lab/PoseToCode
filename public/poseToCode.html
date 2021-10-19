@@ -134,11 +134,20 @@
     firebase.initializeApp(firebaseConfig);
   </script>
   <script>
-    // reset code when space bar is clicked
     document.body.onkeyup = function (e) {
-      if (e.keyCode == 32) {
+      if (e.keyCode == 32) { // space bar
         resetAllBlocks();
         alert("Workspace has been reset - get started again!");
+      }
+      else if (e.keyCode == 81) { // q
+        generateCodeAndLoadIntoInterpreter();
+        makeLargeSphereBlock();
+        placeSphere();
+        addDanceBlock();
+      }
+      else if (e.keyCode == 87) { // w
+        resetGUI();
+        runCode();
       }
     }
   </script>

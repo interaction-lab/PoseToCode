@@ -18,7 +18,7 @@ const options = {
 };
 
 /* Instantiate log */
-const Logger = new Log();
+// const Logger = new Log(); TODO: uncomment this, used to debug rn to avoid errors
 
 /* Inject your Blockly workspace */
 const blocklyDiv = document.getElementById("blocklyDiv");
@@ -85,6 +85,15 @@ const BLOCKTYPES = {
   DANCE: "dance"
 }
 
+createSphereTiming = 2000;
+const BLOCKTIMINGMAP = {
+  CREATESMALLSPHERE : createSphereTiming,
+  CREATEMEDIUMSPHERE : createSphereTiming,
+  CREATELARGESPHERE : createSphereTiming,
+  PLACESPHERE : 2000,
+  DANCE : 2000
+}
+
 // States / Globals
 cumulativeArmStates = {
   [ARMS.LEFT]: {
@@ -128,10 +137,10 @@ async function onResults(results) {
     var bestArmScores = getBestArmScores();
     updateBestArmText(bestArmScores);
     if (attemptPoseDetection(bestArmScores)) {
-      Logger.update(Date.now(), results.poseLandmarks, 1);
+     // Logger.update(Date.now(), results.poseLandmarks, 1); TODO: uncomment when deploying
       resetAllArmScores();
     } else {
-      Logger.update(Date.now(), results.poseLandmarks, 0);
+     // Logger.update(Date.now(), results.poseLandmarks, 0); TODO: uncomment when deployign
     }
   }
 }
@@ -432,8 +441,13 @@ function generateCodeAndLoadIntoInterpreter() {
 
 function stepThroughAllCode() {
   codeIsRunning = true;
+  console.log("stepping");
+  console.log(latestCode);
+  console.log("------------");
+  console.log(allBlocks);
+  console.log(myInterpreter);
   if (myInterpreter.step()) {
-    myInterpreter.step()
+    myInterpreter.step();
     setTimeout(stepThroughAllCode, 500); // need the correct timing
   }
   else{
@@ -486,29 +500,24 @@ function addNewBlock(blockName, fields = []) {
 function placeSphere() {
   addNewBlock(BLOCKTYPES.PLACESPHERE);
   console.log("place sphere block added");
-  time += 2000;
 }
 
 function addDanceBlock() {
   addNewBlock(BLOCKTYPES.DANCE);
   console.log("dance block added");
-  time += 2000;
 }
 
 function makeSmallSphereBlock() {
   addNewBlock(BLOCKTYPES.CREATESMALLSPHERE);
   console.log("create small sphere block");
-  time += 2000;
 }
 
 function makeMediumSphereBlock() {
   addNewBlock(BLOCKTYPES.CREATEMEDIUMSPHERE);
   console.log("create medium sphere block");
-  time += 2000;
 }
 
 function makeLargeSphereBlock() {
   addNewBlock(BLOCKTYPES.CREATELARGESPHERE);
   console.log("create large sphere block");
-  time += 2000;
 }
