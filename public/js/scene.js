@@ -77,6 +77,13 @@ const createScene = function () {
       makeSphereAnim = scene.getAnimationGroupByName("MakeSphere");
       placeSphereAnim = scene.getAnimationGroupByName("PlaceSphere");
       danceAnim = scene.getAnimationGroupByName("Dance");
+
+      // enable animation blending
+      idleAnim.enableBlending = true;
+      makeSphereAnim.enableBlending = true;
+      placeSphereAnim.enableBlending = true;
+      danceAnim.enableBlending = true;
+
       // Start with Idle Animation
       idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
     }
@@ -117,7 +124,7 @@ function makeSphere(currSphereSize) {
     });
     currSphere.position = new BABYLON.Vector3(0, 1.5, .5);
     guiElements.push(currSphere);
-  }, delay);
+  }, 200);
   delay += makeSphereDelay;
   levelOneDoneDelay += makeSphereDelay;
 }
@@ -130,22 +137,22 @@ function placeSphereCode() {
   idleAnim.stop();
   setTimeout(() => {
     placeSphereAnim.start(false, 1.0, placeSphereAnim.from, placeSphereAnim.to, false);
-  }, delay-1200);
+  }, 0);
   setTimeout(() => {
     if (currSphereSize == "small") {
       endYPosition += 0.1;
       moveSphere(new BABYLON.Vector3(endXPosition, endYPosition, endZPosition), currSphere);
-      currHeight += smallSphereDiameter/2;
+      currHeight += smallSphereDiameter / 2;
     } else if (currSphereSize == "medium") {
       endYPosition += 0.3;
       moveSphere(new BABYLON.Vector3(endXPosition, endYPosition, endZPosition), currSphere);
-      currHeight += mediumSphereDiameter/2;
+      currHeight += mediumSphereDiameter / 2;
     } else if (currSphereSize == "large") {
       endYPosition += 0.5;
       moveSphere(new BABYLON.Vector3(endXPosition, endYPosition, endZPosition), currSphere);
-      currHeight += largeSphereDiameter/2;
+      currHeight += largeSphereDiameter / 2;
     }
-  }, delay);
+  }, placeSphereDelay);
   delay += placeSphereDelay;
   idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 }
@@ -160,7 +167,7 @@ function dance() {
   setTimeout(() => {
     danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
     music.play();
-  }, delay);
+  }, 0);
   delay += danceDelay;
   levelOneDoneDelay += danceDelay;
   danceAnim.stop();
@@ -197,7 +204,7 @@ function moveSphere(translate, currSphere) {
 function moveRobotUp(robot, delay) {
   setTimeout(() => {
     robot.position.y += 0.5;
-  }, delay);
+  }, 0);
 }
 
 function runOnGUI() {
