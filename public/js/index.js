@@ -441,14 +441,9 @@ function generateCodeAndLoadIntoInterpreter() {
 
 function stepThroughAllCode() {
   codeIsRunning = true;
-  console.log("stepping");
-  console.log(latestCode);
-  console.log("------------");
-  console.log(allBlocks);
-  console.log(myInterpreter);
   if (myInterpreter.step()) {
     myInterpreter.step();
-    myInterpreter.step();
+    myInterpreter.step(); // not sure why but this is needed to run 3 times?
     setTimeout(stepThroughAllCode, 500); // need the correct timing
   }
   else{
@@ -457,7 +452,6 @@ function stepThroughAllCode() {
 }
 
 function stepCode() {
- 
   resetStepUi(true);
   myInterpreter = new Interpreter(latestCode, initApi);    
   myInterpreter.step(); // dummy first step

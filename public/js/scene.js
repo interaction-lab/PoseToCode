@@ -77,6 +77,13 @@ const createScene = function () {
       makeSphereAnim = scene.getAnimationGroupByName("MakeSphere");
       placeSphereAnim = scene.getAnimationGroupByName("PlaceSphere");
       danceAnim = scene.getAnimationGroupByName("Dance");
+
+      // enable animation blending
+      idleAnim.enableBlending = true;
+      makeSphereAnim.enableBlending = true;
+      placeSphereAnim.enableBlending = true;
+      danceAnim.enableBlending = true;
+
       // Start with Idle Animation
       idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
     }
@@ -117,7 +124,7 @@ function makeSphere(currSphereSize) {
     });
     currSphere.position = new BABYLON.Vector3(0, 1.5, .5);
     guiElements.push(currSphere);
-  }, 0);
+  }, 200);
   delay += makeSphereDelay;
   levelOneDoneDelay += makeSphereDelay;
 }
