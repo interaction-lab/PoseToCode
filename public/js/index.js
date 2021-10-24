@@ -77,6 +77,15 @@ const ARMSTATES = {
   HIGH: "High"
 }
 
+const POSES = {
+  MAKESPHERESMALL: "MakeSphereSmall",
+  MAKESPHEREMEDIUM: "MakeSphereMedium",
+  MAKESPHERELARGE: "MakeSphereLarge",
+  PLACESPHERE: "PlaceSphere",
+  DANCE: "Dance",
+  RUNCODE: "RunCode",
+}
+
 const BLOCKTYPES = {
   CREATESMALLSPHERE: "make_small_sphere",
   CREATEMEDIUMSPHERE: "make_medium_sphere",
@@ -107,6 +116,20 @@ cumulativeArmStates = {
     [ARMSTATES.HIGH]: 0
   }
 }
+
+cumulativeArmProgress = {
+  [ARMS.LEFT]: {
+    [ARMSTATES.LOW]: 0,
+    [ARMSTATES.MED]: 0,
+    [ARMSTATES.HIGH]: 0
+  },
+  [ARMS.RIGHT]: {
+    [ARMSTATES.LOW]: 0,
+    [ARMSTATES.MED]: 0,
+    [ARMSTATES.HIGH]: 0
+  }
+}
+
 progressBars = {
   [ARMS.LEFT]: {
     [ARMSTATES.LOW]: document.getElementById("leftArmLowBar"),
@@ -119,6 +142,25 @@ progressBars = {
     [ARMSTATES.HIGH]: document.getElementById("rightArmHighBar")
   }
 }
+
+robotProgressBars = {
+  [POSES.MAKESPHERESMALL]: document.getElementById("makeSphereSmallBar"),
+  [POSES.MAKESPHEREMEDIUM]: document.getElementById("makeSphereMediumBar"),
+  [POSES.MAKESPHERELARGE]: document.getElementById("makeSphereLargeBar"),
+  [POSES.PLACESPHERE]: document.getElementById("placeSphereBar"),
+  [POSES.DANCE]: document.getElementById("danceBar"),
+  [POSES.RUNCODE]: document.getElementById("runCodeBar")
+}
+
+robotProgressPercents = {
+  [POSES.MAKESPHERESMALL]: 0,
+  [POSES.MAKESPHEREMEDIUM]: 0,
+  [POSES.MAKESPHERELARGE]: 0,
+  [POSES.PLACESPHERE]: 0,
+  [POSES.DANCE]: 0,
+  [POSES.RUNCODE]: 0
+}
+
 leftProgressheader = document.getElementById("leftProgressHeader");
 rightProgressheader = document.getElementById("rightProgressHeader");
 var codeIsRunning = false;
@@ -139,6 +181,7 @@ async function onResults(results) {
     if (attemptPoseDetection(bestArmScores)) {
      // Logger.update(Date.now(), results.poseLandmarks, 1); TODO: uncomment when deploying
       resetAllArmScores();
+      resetAllPoseProgress();
     } else {
      // Logger.update(Date.now(), results.poseLandmarks, 0); TODO: uncomment when deployign
     }
@@ -194,15 +237,45 @@ function getBestArmScores() {
 }
 
 function updateProgressBars() {
-  for (let arm in progressBars) {
-    for (let state in progressBars[arm]) {
-      percent = cumulativeArmStates[arm][state] / timeToHoldPoseMS * 100;
-      if (percent > 100) {
+  for(let arm in cumulativeArmStates) {
+    for(let state in cumulativeArmStates[arm]) {
+
+      percent = (cumulativeArmStates[arm][state] / timeToHoldPoseMS * 100);
+      if(percent > 100) {
         percent = 100;
       }
-      progressBars[arm][state].style.width = percent + "%";
-      progressBars[arm][state].innerHTML = state;
+      cumulativeArmProgress[arm][state] = percent;
+
     }
+  }
+  for(let state in cumulativeArmStates[ARMS.LEFT]) {
+    if(state == ARMSTATES.HIGH) {
+      robotProgressPercents[POSES.MAKESPHERESMALL] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
+      robotProgressPercents[POSES.MAKESPHEREMEDIUM] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
+      robotProgressPercents[POSES.MAKESPHERELARGE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
+      
+      robotProgressPercents[POSES.MAKESPHERELARGE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
+      robotProgressPercents[POSES.PLACESPHERE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
+      robotProgressPercents[POSES.RUNCODE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
+    }
+    if(state == ARMSTATES.MED) {
+      robotProgressPercents[POSES.DANCE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
+      robotProgressPercents[POSES.RUNCODE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
+    
+      robotProgressPercents[POSES.MAKESPHEREMEDIUM] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
+      robotProgressPercents[POSES.DANCE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
+    }
+    if(state == ARMSTATES.LOW) {
+      robotProgressPercents[POSES.PLACESPHERE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
+      
+      robotProgressPercents[POSES.MAKESPHERESMALL] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
+    }
+  }
+
+  for(let pose in robotProgressBars) {
+    robotProgressBars[pose].style.width = robotProgressPercents[pose] + "%";
+    robotProgressBars[pose].innerHTML = pose;
+    robotProgressPercents[pose] = 0;
   }
 }
 
@@ -260,6 +333,13 @@ function resetAllArmScores() {
     for (let state in progressBars[arm]) {
       cumulativeArmStates[arm][state] = 0;
     }
+  }
+}
+
+function resetAllPoseProgress() {
+  for(let pose in robotProgressBars) {
+    robotProgressPercents[pose] = 0;
+    //robotProgressBars[pose].innerHTML = pose;
   }
 }
 
