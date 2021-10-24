@@ -131,7 +131,7 @@ async function onResults(results) {
   if (!codeIsRunning &&
     results != null &&
     results.poseLandmarks != null) {
-    curArmStates = getStateOfArms(results);
+    curArmStates = updateArmStateWithDetectPose(results);
     updateCumulativeArmStates(curArmStates, deltaTime);
     updateProgressBars();
     var bestArmScores = getBestArmScores();
@@ -268,7 +268,7 @@ function getMidSection(results) {
 }
 
 // Assumes results.poseLandmarks != null
-function getStateOfArms(results) {
+function updateArmStateWithDetectPose(results) {
   armStates = {
     [ARMS.LEFT]: ARMSTATES.NONE,
     [ARMS.RIGHT]: ARMSTATES.NONE
