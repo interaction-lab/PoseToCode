@@ -59,7 +59,8 @@ body {
   padding:10px 5px;
   word-break:normal;
 }
-.tg th{border-radius: 10px 10px 0px 0px; font-family:Arial, sans-serif;font-size:20px;
+
+.tg th{border-radius: 10px 10px 0px 0px; font-family:Arial, sans-serif;font-size:20px;position: relative;
 font-weight:normal;overflow-x: scroll; padding:10px 5px;word-break:normal;}
 .tg .tg-baqh{text-align:center;vertical-align:top;}
 .tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top; height:105px; width: 60px;}
@@ -80,6 +81,18 @@ table {
 .armProgress{
   width: 100%;
   background-color: #ddd;
+}
+.robotImage {
+  position: relative;
+  z-index: 2;
+}
+
+.poseBar {
+  width: 100%;
+  height: 1%;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
 }
 .armBar{
   width: 1%;

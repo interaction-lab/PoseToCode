@@ -273,15 +273,15 @@ function updateProgressBars() {
   }
 
   for(let pose in robotProgressBars) {
-    robotProgressBars[pose].style.width = robotProgressPercents[pose] + "%";
-    robotProgressBars[pose].innerHTML = pose;
+    robotProgressBars[pose].style.height = robotProgressPercents[pose] + "%";
+    //robotProgressBars[pose].innerHTML = pose;
     robotProgressPercents[pose] = 0;
   }
 }
 
 function updateBestArmText(bestArmScores) {
-  leftProgressheader.innerHTML = "Best " + ARMS.LEFT + ": " + bestArmScores[ARMS.LEFT];
-  rightProgressheader.innerHTML = "Best " + ARMS.RIGHT + ": " + bestArmScores[ARMS.RIGHT];
+  //leftProgressheader.innerHTML = "Best " + ARMS.LEFT + ": " + bestArmScores[ARMS.LEFT];
+  //rightProgressheader.innerHTML = "Best " + ARMS.RIGHT + ": " + bestArmScores[ARMS.RIGHT];
 }
 
 function armScoresOverThreshHold(bestArmScores) {
@@ -339,7 +339,6 @@ function resetAllArmScores() {
 function resetAllPoseProgress() {
   for(let pose in robotProgressBars) {
     robotProgressPercents[pose] = 0;
-    //robotProgressBars[pose].innerHTML = pose;
   }
 }
 
