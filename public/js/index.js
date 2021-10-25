@@ -177,7 +177,6 @@ async function onResults(results) {
     updateCumulativeArmStates(curArmStates, deltaTime);
     updateProgressBars();
     var bestArmScores = getBestArmScores();
-    updateBestArmText(bestArmScores);
     if (attemptPoseDetection(bestArmScores)) {
      // Logger.update(Date.now(), results.poseLandmarks, 1); TODO: uncomment when deploying
       resetAllArmScores();
@@ -274,14 +273,8 @@ function updateProgressBars() {
 
   for(let pose in robotProgressBars) {
     robotProgressBars[pose].style.height = robotProgressPercents[pose] + "%";
-    //robotProgressBars[pose].innerHTML = pose;
     robotProgressPercents[pose] = 0;
   }
-}
-
-function updateBestArmText(bestArmScores) {
-  //leftProgressheader.innerHTML = "Best " + ARMS.LEFT + ": " + bestArmScores[ARMS.LEFT];
-  //rightProgressheader.innerHTML = "Best " + ARMS.RIGHT + ": " + bestArmScores[ARMS.RIGHT];
 }
 
 function armScoresOverThreshHold(bestArmScores) {
