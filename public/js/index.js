@@ -15,6 +15,15 @@ const options = {
   scrollbars: true,
   sounds: true,
   oneBasedIndex: true,
+  zoom:{
+    controls: true,
+    wheel: true,
+    startScale : 2,
+    maxScale : 3,
+    minScale : 0.3,
+    scaleSpeed : 1.2,
+    pinch : true
+  }
 };
 
 /* Instantiate log */
