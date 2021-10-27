@@ -59,10 +59,9 @@ body {
   padding:10px 5px;
   word-break:normal;
 }
-.tg th{border-radius: 10px 10px 0px 0px; font-family:Arial, sans-serif;font-size:20px;
-font-weight:normal;overflow-x: scroll; padding:10px 5px;word-break:normal;}
-.tg .tg-baqh{text-align:center;vertical-align:top;}
-.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top; height:105px; width: 60px;}
+
+.tg th{border-radius: 10px 10px 0px 0px; font-family:Arial, sans-serif;position: relative;font-weight:normal;overflow-x: scroll; padding:10px 5px;word-break:normal;}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top; height:105px; width: 60px;font-size:50px;}
 table {
   /* display: block;
   position: relative;  */
@@ -71,20 +70,17 @@ table {
   width: 100%;
 }
 
-#leftProgressHeader #rightProgressHeader {
-  padding: 0; 
-  margin: 0;
-  text-align: center;
+.robotImage {
+  position: relative;
+  z-index: 2;
 }
 
-.armProgress{
+.poseBar {
   width: 100%;
-  background-color: #ddd;
-}
-.armBar{
-  width: 1%;
-  height: 25px;
-  background-color: #4CAF50;
+  height: 1%;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
 }
 
 .modal {
