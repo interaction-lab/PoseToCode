@@ -60,8 +60,8 @@ body {
   word-break:normal;
 }
 
-.tg th{border-radius: 10px 10px 0px 0px; font-family:Arial, sans-serif;position: relative;font-weight:normal;overflow-x: scroll; padding:10px 5px;word-break:normal;}
-.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top; height:105px; width: 60px;font-size:50px;}
+.tg th{border-radius: 10px 10px 0px 0px; font-family:Arial, sans-serif;position: relative;font-weight:normal;overflow-x: scroll; padding:5px 5px;word-break:normal;}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top;font-size:20px;} 
 table {
   /* display: block;
   position: relative;  */
