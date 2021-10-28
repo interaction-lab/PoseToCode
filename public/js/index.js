@@ -183,6 +183,7 @@ async function onResults(results) {
     results != null &&
     results.poseLandmarks != null) {
     curArmStates = updateArmStateWithDetectPose(results);
+    curArmStates = armStates;
     updateCumulativeArmStates(curArmStates, deltaTime);
     updateProgressBars();
     var bestArmScores = getBestArmScores();
@@ -348,34 +349,110 @@ function getMidSection(results) {
   return (results.poseLandmarks[11].y + results.poseLandmarks[23].y) / 2;
 }
 
-// Assumes results.poseLandmarks != null
-function updateArmStateWithDetectPose(results) {
-  armStates = {
-    [ARMS.LEFT]: ARMSTATES.NONE,
-    [ARMS.RIGHT]: ARMSTATES.NONE
-  }
-  if (results.poseLandmarks[15].y < results.poseLandmarks[2].y) {
-    armStates[ARMS.RIGHT] = ARMSTATES.HIGH;
-  }
-  else if (results.poseLandmarks[15].y < getMidSection(results) &&
-    results.poseLandmarks[15].y > results.poseLandmarks[12].y) {
-    armStates[ARMS.RIGHT] = ARMSTATES.MED;
-  }
-  else if (results.poseLandmarks[15].y > getMidSection(results)) {
-    armStates[ARMS.RIGHT] = ARMSTATES.LOW;
-  }
 
-  if (results.poseLandmarks[16].y < results.poseLandmarks[5].y) {
-    armStates[ARMS.LEFT] = ARMSTATES.HIGH;
+armInputsR = [
+  0, 9 , 11, 12, 13, 15, 17, 19, 21, 23
+];
+armInputsL = [
+  0, 10, 11, 12, 14, 16, 18, 20, 22, 24
+];
+numInputs = 4 * armInputsL.length; 
+
+let optionsNN = {
+  inputs: numInputs, 
+  outputs: 3, // LOW, MED, HIGH
+  task: 'classification',
+  debug: false
+}
+leftBrain = ml5.neuralNetwork(optionsNN);
+rightBrain = ml5.neuralNetwork(optionsNN);
+
+pretrainedFolder = "js/models/leftArm/"
+const leftModelInfo = {
+  model: pretrainedFolder + 'model.json',
+  metadata: pretrainedFolder + 'model_meta.json',
+  weights: pretrainedFolder + 'model.weights.bin',
+};
+leftBrain.load(leftModelInfo, leftBrainLoaded);
+
+pretrainedFolder = "js/models/rightArm/"
+const rightModelInfo = {
+  model: pretrainedFolder + 'model.json',
+  metadata: pretrainedFolder + 'model_meta.json',
+  weights: pretrainedFolder + 'model.weights.bin',
+};
+rightBrain.load(rightModelInfo, rightBrainLoaded);
+
+
+rBrainLoaded = false;
+function rightBrainLoaded(){
+  rBrainLoaded = true;
+}
+lBrainLoaded = false;
+function leftBrainLoaded(){
+  lBrainLoaded = true;
+}
+
+
+// Assumes results.poseLandmarks != null
+armStates = {
+  [ARMS.LEFT]: ARMSTATES.NONE,
+  [ARMS.RIGHT]: ARMSTATES.NONE
+}
+function updateArmStateWithDetectPose(results) {
+  if(!lBrainLoaded || !rBrainLoaded){
+    console.log(lBrainLoaded);
+    return armStates;
   }
-  else if (results.poseLandmarks[16].y < getMidSection(results) &&
-    results.poseLandmarks[16].y > results.poseLandmarks[11].y) {
-    armStates[ARMS.LEFT] = ARMSTATES.MED;
-  }
-  else if (results.poseLandmarks[16].y > getMidSection(results)) {
-    armStates[ARMS.LEFT] = ARMSTATES.LOW;
-  }
+  classifyPose(results.poseLandmarks, armInputsL, leftBrain, ARMS.LEFT);
+  classifyPose(results.poseLandmarks, armInputsR, rightBrain, ARMS.RIGHT);
   return armStates;
+}
+
+function classifyPose(pose, armInputs, brain, armIndex) {
+  if (pose) {
+    let inputs = [];
+    for (let j = 0; j < armInputsL.length; j++) {
+      let i = armInputs[j];
+      inputs.push(pose[i].x, pose[i].y, pose[i].z, pose[i].visibility);
+    }
+    if(armIndex == ARMS.LEFT){
+      brain.classify(inputs, gotResultL);
+    }
+    else{
+      brain.classify(inputs, gotResultR);
+    }
+  }
+}
+
+poseLabelMap = {
+  "HIGH_R" : ARMSTATES.HIGH,
+  "HIGH_L" : ARMSTATES.HIGH,
+  "MED_R" : ARMSTATES.MED,
+  "MED_L" : ARMSTATES.MED,
+  "LOW_R" : ARMSTATES.LOW,
+  "LOW_L" : ARMSTATES.LOW
+}
+
+function gotResultL(error, results) {
+  if (results[0].confidence > 0.75) {
+    poseLabel = results[0].label.toUpperCase();
+    console.log(poseLabel);
+    armStates[ARMS.LEFT] = poseLabelMap[poseLabel];
+  }
+  else{
+    armStates[ARMS.LEFT] = ARMSTATES.NONE;
+  }
+}
+
+function gotResultR(error, results) {
+  if (results[0].confidence > 0.75) {
+    poseLabel = results[0].label.toUpperCase();
+    armStates[ARMS.RIGHT] = poseLabelMap[poseLabel];
+  }
+  else{
+    armStates[ARMS.LEFT] = ARMSTATES.NONE;
+  }
 }
 
 // MediaPipe and DOM events
