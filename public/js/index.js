@@ -15,14 +15,14 @@ const options = {
   scrollbars: true,
   sounds: true,
   oneBasedIndex: true,
-  zoom:{
+  zoom: {
     controls: true,
     wheel: true,
-    startScale : 2,
-    maxScale : 3,
-    minScale : 0.3,
-    scaleSpeed : 1.2,
-    pinch : true
+    startScale: 2,
+    maxScale: 3,
+    minScale: 0.3,
+    scaleSpeed: 1.2,
+    pinch: true
   }
 };
 
@@ -105,11 +105,11 @@ const BLOCKTYPES = {
 
 createSphereTiming = 2000;
 const BLOCKTIMINGMAP = {
-  CREATESMALLSPHERE : createSphereTiming,
-  CREATEMEDIUMSPHERE : createSphereTiming,
-  CREATELARGESPHERE : createSphereTiming,
-  PLACESPHERE : 2000,
-  DANCE : 2000
+  CREATESMALLSPHERE: createSphereTiming,
+  CREATEMEDIUMSPHERE: createSphereTiming,
+  CREATELARGESPHERE: createSphereTiming,
+  PLACESPHERE: 2000,
+  DANCE: 2000
 }
 
 // States / Globals
@@ -117,12 +117,14 @@ cumulativeArmStates = {
   [ARMS.LEFT]: {
     [ARMSTATES.LOW]: 0,
     [ARMSTATES.MED]: 0,
-    [ARMSTATES.HIGH]: 0
+    [ARMSTATES.HIGH]: 0,
+    [ARMSTATES.NONE] : 0
   },
   [ARMS.RIGHT]: {
     [ARMSTATES.LOW]: 0,
     [ARMSTATES.MED]: 0,
-    [ARMSTATES.HIGH]: 0
+    [ARMSTATES.HIGH]: 0,
+    [ARMSTATES.NONE] : 0
   }
 }
 
@@ -130,12 +132,14 @@ cumulativeArmProgress = {
   [ARMS.LEFT]: {
     [ARMSTATES.LOW]: 0,
     [ARMSTATES.MED]: 0,
-    [ARMSTATES.HIGH]: 0
+    [ARMSTATES.HIGH]: 0,
+    [ARMSTATES.NONE] : 0
   },
   [ARMS.RIGHT]: {
     [ARMSTATES.LOW]: 0,
     [ARMSTATES.MED]: 0,
-    [ARMSTATES.HIGH]: 0
+    [ARMSTATES.HIGH]: 0,
+    [ARMSTATES.NONE] : 0
   }
 }
 
@@ -179,21 +183,30 @@ async function onResults(results) {
   deltaTime = getDeltaTimeMS();
   resetCanvas();
   drawPoseSkeleton(results);
-  if (!codeIsRunning &&
-    results != null &&
-    results.poseLandmarks != null) {
-    curArmStates = updateArmStateWithDetectPose(results);
+  if (!codeIsRunning) {
+    if (results != null &&
+      results.poseLandmarks != null) {
+      updateArmStateWithDetectPose(results);
+    }
+    else { // reset if out of frame long enough
+      armStates = {
+        [ARMS.LEFT]: ARMSTATES.NONE,
+        [ARMS.RIGHT]: ARMSTATES.NONE
+      };
+    }
+    curArmStates = armStates;
     updateCumulativeArmStates(curArmStates, deltaTime);
     updateProgressBars();
     var bestArmScores = getBestArmScores();
     if (attemptPoseDetection(bestArmScores)) {
-     // Logger.update(Date.now(), results.poseLandmarks, 1); TODO: uncomment when deploying
+      // Logger.update(Date.now(), results.poseLandmarks, 1); TODO: uncomment when deploying
       resetAllArmScores();
       resetAllPoseProgress();
     } else {
-     // Logger.update(Date.now(), results.poseLandmarks, 0); TODO: uncomment when deployign
+      // Logger.update(Date.now(), results.poseLandmarks, 0); TODO: uncomment when deployign
     }
   }
+
 }
 
 // Update Functions
@@ -245,42 +258,42 @@ function getBestArmScores() {
 }
 
 function updateProgressBars() {
-  for(let arm in cumulativeArmStates) {
-    for(let state in cumulativeArmStates[arm]) {
+  for (let arm in cumulativeArmStates) {
+    for (let state in cumulativeArmStates[arm]) {
 
       percent = (cumulativeArmStates[arm][state] / timeToHoldPoseMS * 100);
-      if(percent > 100) {
+      if (percent > 100) {
         percent = 100;
       }
       cumulativeArmProgress[arm][state] = percent;
 
     }
   }
-  for(let state in cumulativeArmStates[ARMS.LEFT]) {
-    if(state == ARMSTATES.HIGH) {
+  for (let state in cumulativeArmStates[ARMS.LEFT]) {
+    if (state == ARMSTATES.HIGH) {
       robotProgressPercents[POSES.MAKESPHERESMALL] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
       robotProgressPercents[POSES.MAKESPHEREMEDIUM] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
       robotProgressPercents[POSES.MAKESPHERELARGE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
-      
+
       robotProgressPercents[POSES.MAKESPHERELARGE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
       robotProgressPercents[POSES.PLACESPHERE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
       robotProgressPercents[POSES.RUNCODE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
     }
-    if(state == ARMSTATES.MED) {
+    if (state == ARMSTATES.MED) {
       robotProgressPercents[POSES.DANCE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
       robotProgressPercents[POSES.RUNCODE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
-    
+
       robotProgressPercents[POSES.MAKESPHEREMEDIUM] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
       robotProgressPercents[POSES.DANCE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
     }
-    if(state == ARMSTATES.LOW) {
+    if (state == ARMSTATES.LOW) {
       robotProgressPercents[POSES.PLACESPHERE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
-      
+
       robotProgressPercents[POSES.MAKESPHERESMALL] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
     }
   }
 
-  for(let pose in robotProgressBars) {
+  for (let pose in robotProgressBars) {
     robotProgressBars[pose].style.height = robotProgressPercents[pose] + "%";
     robotProgressPercents[pose] = 0;
   }
@@ -327,6 +340,12 @@ function attemptPoseDetection(bestArmScores) {
     makeLargeSphereBlock();
     return true;
   }
+  else if (bestArmScores[ARMS.LEFT] == ARMSTATES.NONE &&
+    bestArmScores[ARMS.RIGHT] == ARMSTATES.NONE) {
+    console.log("reset");
+    resetAllBlocks();
+    return true;
+  }
   return false;
 }
 
@@ -339,7 +358,7 @@ function resetAllArmScores() {
 }
 
 function resetAllPoseProgress() {
-  for(let pose in robotProgressBars) {
+  for (let pose in robotProgressBars) {
     robotProgressPercents[pose] = 0;
   }
 }
@@ -348,34 +367,109 @@ function getMidSection(results) {
   return (results.poseLandmarks[11].y + results.poseLandmarks[23].y) / 2;
 }
 
-// Assumes results.poseLandmarks != null
-function updateArmStateWithDetectPose(results) {
-  armStates = {
-    [ARMS.LEFT]: ARMSTATES.NONE,
-    [ARMS.RIGHT]: ARMSTATES.NONE
-  }
-  if (results.poseLandmarks[15].y < results.poseLandmarks[2].y) {
-    armStates[ARMS.RIGHT] = ARMSTATES.HIGH;
-  }
-  else if (results.poseLandmarks[15].y < getMidSection(results) &&
-    results.poseLandmarks[15].y > results.poseLandmarks[12].y) {
-    armStates[ARMS.RIGHT] = ARMSTATES.MED;
-  }
-  else if (results.poseLandmarks[15].y > getMidSection(results)) {
-    armStates[ARMS.RIGHT] = ARMSTATES.LOW;
-  }
 
-  if (results.poseLandmarks[16].y < results.poseLandmarks[5].y) {
-    armStates[ARMS.LEFT] = ARMSTATES.HIGH;
+armInputsR = [
+  0, 9, 11, 12, 13, 15, 17, 19, 21, 23
+];
+armInputsL = [
+  0, 10, 11, 12, 14, 16, 18, 20, 22, 24
+];
+numInputs = 4 * armInputsL.length;
+
+let optionsNN = {
+  inputs: numInputs,
+  outputs: 3, // LOW, MED, HIGH
+  task: 'classification',
+  debug: false
+}
+leftBrain = ml5.neuralNetwork(optionsNN);
+rightBrain = ml5.neuralNetwork(optionsNN);
+
+pretrainedFolder = "js/models/leftArm/"
+const leftModelInfo = {
+  model: pretrainedFolder + 'model.json',
+  metadata: pretrainedFolder + 'model_meta.json',
+  weights: pretrainedFolder + 'model.weights.bin',
+};
+leftBrain.load(leftModelInfo, leftBrainLoaded);
+
+pretrainedFolder = "js/models/rightArm/"
+const rightModelInfo = {
+  model: pretrainedFolder + 'model.json',
+  metadata: pretrainedFolder + 'model_meta.json',
+  weights: pretrainedFolder + 'model.weights.bin',
+};
+rightBrain.load(rightModelInfo, rightBrainLoaded);
+
+
+rBrainLoaded = false;
+function rightBrainLoaded() {
+  rBrainLoaded = true;
+}
+lBrainLoaded = false;
+function leftBrainLoaded() {
+  lBrainLoaded = true;
+}
+
+
+// Assumes results.poseLandmarks != null
+armStates = {
+  [ARMS.LEFT]: ARMSTATES.NONE,
+  [ARMS.RIGHT]: ARMSTATES.NONE
+}
+function updateArmStateWithDetectPose(results) {
+  if (!lBrainLoaded || !rBrainLoaded) {
+    console.log(lBrainLoaded);
+    return armStates;
   }
-  else if (results.poseLandmarks[16].y < getMidSection(results) &&
-    results.poseLandmarks[16].y > results.poseLandmarks[11].y) {
-    armStates[ARMS.LEFT] = ARMSTATES.MED;
-  }
-  else if (results.poseLandmarks[16].y > getMidSection(results)) {
-    armStates[ARMS.LEFT] = ARMSTATES.LOW;
-  }
+  classifyPose(results.poseLandmarks, armInputsL, leftBrain, ARMS.LEFT);
+  classifyPose(results.poseLandmarks, armInputsR, rightBrain, ARMS.RIGHT);
   return armStates;
+}
+
+function classifyPose(pose, armInputs, brain, armIndex) {
+  if (pose) {
+    let inputs = [];
+    for (let j = 0; j < armInputsL.length; j++) {
+      let i = armInputs[j];
+      inputs.push(pose[i].x, pose[i].y, pose[i].z, pose[i].visibility);
+    }
+    if (armIndex == ARMS.LEFT) {
+      brain.classify(inputs, gotResultL);
+    }
+    else {
+      brain.classify(inputs, gotResultR);
+    }
+  }
+}
+
+poseLabelMap = {
+  "HIGH_R": ARMSTATES.HIGH,
+  "HIGH_L": ARMSTATES.HIGH,
+  "MED_R": ARMSTATES.MED,
+  "MED_L": ARMSTATES.MED,
+  "LOW_R": ARMSTATES.LOW,
+  "LOW_L": ARMSTATES.LOW
+}
+
+function gotResultL(error, results) {
+  if (results[0].confidence > 0.75) {
+    poseLabel = results[0].label.toUpperCase();
+    armStates[ARMS.LEFT] = poseLabelMap[poseLabel];
+  }
+  else {
+    armStates[ARMS.LEFT] = ARMSTATES.NONE;
+  }
+}
+
+function gotResultR(error, results) {
+  if (results[0].confidence > 0.75) {
+    poseLabel = results[0].label.toUpperCase();
+    armStates[ARMS.RIGHT] = poseLabelMap[poseLabel];
+  }
+  else {
+    armStates[ARMS.RIGHT] = ARMSTATES.NONE;
+  }
 }
 
 // MediaPipe and DOM events
@@ -527,14 +621,14 @@ function stepThroughAllCode() {
     myInterpreter.step(); // not sure why but this is needed to run 3 times?
     setTimeout(stepThroughAllCode, 500); // need the correct timing
   }
-  else{
+  else {
     codeIsRunning = false;
   }
 }
 
 function stepCode() {
   resetStepUi(true);
-  myInterpreter = new Interpreter(latestCode, initApi);    
+  myInterpreter = new Interpreter(latestCode, initApi);
   myInterpreter.step(); // dummy first step
   stepThroughAllCode();
 }
