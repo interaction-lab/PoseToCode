@@ -93,6 +93,7 @@ const POSES = {
   PLACESPHERE: "PlaceSphere",
   DANCE: "Dance",
   RUNCODE: "RunCode",
+  NONE: "none"
 }
 
 const BLOCKTYPES = {
@@ -118,13 +119,13 @@ cumulativeArmStates = {
     [ARMSTATES.LOW]: 0,
     [ARMSTATES.MED]: 0,
     [ARMSTATES.HIGH]: 0,
-    [ARMSTATES.NONE] : 0
+    [ARMSTATES.NONE]: 0
   },
   [ARMS.RIGHT]: {
     [ARMSTATES.LOW]: 0,
     [ARMSTATES.MED]: 0,
     [ARMSTATES.HIGH]: 0,
-    [ARMSTATES.NONE] : 0
+    [ARMSTATES.NONE]: 0
   }
 }
 
@@ -133,13 +134,13 @@ cumulativeArmProgress = {
     [ARMSTATES.LOW]: 0,
     [ARMSTATES.MED]: 0,
     [ARMSTATES.HIGH]: 0,
-    [ARMSTATES.NONE] : 0
+    [ARMSTATES.NONE]: 0
   },
   [ARMS.RIGHT]: {
     [ARMSTATES.LOW]: 0,
     [ARMSTATES.MED]: 0,
     [ARMSTATES.HIGH]: 0,
-    [ARMSTATES.NONE] : 0
+    [ARMSTATES.NONE]: 0
   }
 }
 
@@ -196,8 +197,9 @@ async function onResults(results) {
     }
     curArmStates = armStates;
     updateCumulativeArmStates(curArmStates, deltaTime);
-    updateProgressBars();
+
     var bestArmScores = getBestArmScores();
+    updateProgressBars(bestArmScores);
     if (attemptPoseDetection(bestArmScores)) {
       // Logger.update(Date.now(), results.poseLandmarks, 1); TODO: uncomment when deploying
       resetAllArmScores();
@@ -257,45 +259,95 @@ function getBestArmScores() {
   return bestArmScores;
 }
 
-function updateProgressBars() {
-  for (let arm in cumulativeArmStates) {
-    for (let state in cumulativeArmStates[arm]) {
+const poseMapping = {
+  [POSES.MAKESPHERESMALL]: {
+    [ARMS.LEFT]: ARMSTATES.HIGH,
+    [ARMS.RIGHT]: ARMSTATES.LOW
+  },
+  [POSES.MAKESPHEREMEDIUM]: {
+    [ARMS.LEFT]: ARMSTATES.HIGH,
+    [ARMS.RIGHT]: ARMSTATES.MED
+  },
+  [POSES.MAKESPHERELARGE]: {
+    [ARMS.LEFT]: ARMSTATES.HIGH,
+    [ARMS.RIGHT]: ARMSTATES.HIGH
+  },
+  [POSES.PLACESPHERE]: {
+    [ARMS.LEFT]: ARMSTATES.LOW,
+    [ARMS.RIGHT]: ARMSTATES.HIGH
+  },
+  [POSES.DANCE]: {
+    [ARMS.LEFT]: ARMSTATES.MED,
+    [ARMS.RIGHT]: ARMSTATES.MED
+  },
+  [POSES.RUNCODE]: {
+    [ARMS.LEFT]: ARMSTATES.MED,
+    [ARMS.RIGHT]: ARMSTATES.HIGH
+  },
+  [POSES.NONE]: {
+    [ARMS.LEFT]: ARMSTATES.LOW,
+    [ARMS.RIGHT]: ARMSTATES.LOW
+  }
+};
 
-      percent = (cumulativeArmStates[arm][state] / timeToHoldPoseMS * 100);
-      if (percent > 100) {
-        percent = 100;
+function cArm(armState, compareTo) {
+  console.log(armState);
+  console.log(compareTo);
+  return armState[ARMS.LEFT] == compareTo[ARMS.LEFT] && armState[ARMS.RIGHT] == compareTo[ARMS.RIGHT];
+}
+
+function updateProgressBars(bestArmScores) {
+  updateCumulativeArmStates();
+  console.log(poseMapping);
+  for (let pose in poseMapping) {
+    if (cArm(bestArmScores, poseMapping[pose])) {
+      console.log(pose);
+      if (pose != POSES.NONE) {
+        robotProgressBars[pose] += cumulativeArmProgress[ARMS.LEFT];
       }
-      cumulativeArmProgress[arm][state] = percent;
-
+      break;
     }
   }
-  for (let state in cumulativeArmStates[ARMS.LEFT]) {
-    if (state == ARMSTATES.HIGH) {
-      robotProgressPercents[POSES.MAKESPHERESMALL] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
-      robotProgressPercents[POSES.MAKESPHEREMEDIUM] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
-      robotProgressPercents[POSES.MAKESPHERELARGE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
 
-      robotProgressPercents[POSES.MAKESPHERELARGE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
-      robotProgressPercents[POSES.PLACESPHERE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
-      robotProgressPercents[POSES.RUNCODE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
-    }
-    if (state == ARMSTATES.MED) {
-      robotProgressPercents[POSES.DANCE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
-      robotProgressPercents[POSES.RUNCODE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
+  // for (let state in cumulativeArmStates[ARMS.LEFT]) {
+  //   if (state == ARMSTATES.HIGH) {
+  //     robotProgressPercents[POSES.MAKESPHERESMALL] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
+  //     robotProgressPercents[POSES.MAKESPHEREMEDIUM] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
+  //     robotProgressPercents[POSES.MAKESPHERELARGE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
 
-      robotProgressPercents[POSES.MAKESPHEREMEDIUM] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
-      robotProgressPercents[POSES.DANCE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
-    }
-    if (state == ARMSTATES.LOW) {
-      robotProgressPercents[POSES.PLACESPHERE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
+  //     robotProgressPercents[POSES.MAKESPHERELARGE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
+  //     robotProgressPercents[POSES.PLACESPHERE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
+  //     robotProgressPercents[POSES.RUNCODE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
+  //   }
+  //   if (state == ARMSTATES.MED) {
+  //     robotProgressPercents[POSES.DANCE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
+  //     robotProgressPercents[POSES.RUNCODE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
 
-      robotProgressPercents[POSES.MAKESPHERESMALL] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
-    }
-  }
+  //     robotProgressPercents[POSES.MAKESPHEREMEDIUM] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
+  //     robotProgressPercents[POSES.DANCE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
+  //   }
+  //   if (state == ARMSTATES.LOW) {
+  //     robotProgressPercents[POSES.PLACESPHERE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
+
+  //     robotProgressPercents[POSES.MAKESPHERESMALL] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
+  //   }
+  // }
 
   for (let pose in robotProgressBars) {
     robotProgressBars[pose].style.height = robotProgressPercents[pose] + "%";
     robotProgressPercents[pose] = 0;
+  }
+
+  function updateCumulativeArmStates() {
+    for (let arm in cumulativeArmStates) {
+      for (let state in cumulativeArmStates[arm]) {
+        percent = (cumulativeArmStates[arm][state] / timeToHoldPoseMS * 100);
+        if (percent > 100) {
+          percent = 100;
+        }
+        cumulativeArmProgress[arm][state] = percent;
+      }
+    }
   }
 }
 
