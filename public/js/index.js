@@ -114,36 +114,6 @@ const BLOCKTIMINGMAP = {
 }
 
 // States / Globals
-cumulativeArmStates = {
-  [ARMS.LEFT]: {
-    [ARMSTATES.LOW]: 0,
-    [ARMSTATES.MED]: 0,
-    [ARMSTATES.HIGH]: 0,
-    [ARMSTATES.NONE]: 0
-  },
-  [ARMS.RIGHT]: {
-    [ARMSTATES.LOW]: 0,
-    [ARMSTATES.MED]: 0,
-    [ARMSTATES.HIGH]: 0,
-    [ARMSTATES.NONE]: 0
-  }
-}
-
-cumulativeArmProgress = {
-  [ARMS.LEFT]: {
-    [ARMSTATES.LOW]: 0,
-    [ARMSTATES.MED]: 0,
-    [ARMSTATES.HIGH]: 0,
-    [ARMSTATES.NONE]: 0
-  },
-  [ARMS.RIGHT]: {
-    [ARMSTATES.LOW]: 0,
-    [ARMSTATES.MED]: 0,
-    [ARMSTATES.HIGH]: 0,
-    [ARMSTATES.NONE]: 0
-  }
-}
-
 progressBars = {
   [ARMS.LEFT]: {
     [ARMSTATES.LOW]: document.getElementById("leftArmLowBar"),
@@ -166,98 +136,15 @@ robotProgressBars = {
   [POSES.RUNCODE]: document.getElementById("runCodeBar")
 }
 
-robotProgressPercents = {
+cummulativePoseScores = {
   [POSES.MAKESPHERESMALL]: 0,
   [POSES.MAKESPHEREMEDIUM]: 0,
   [POSES.MAKESPHERELARGE]: 0,
   [POSES.PLACESPHERE]: 0,
   [POSES.DANCE]: 0,
-  [POSES.RUNCODE]: 0
-}
-
-leftProgressheader = document.getElementById("leftProgressHeader");
-rightProgressheader = document.getElementById("rightProgressHeader");
-var codeIsRunning = false;
-
-// Main
-async function onResults(results) {
-  deltaTime = getDeltaTimeMS();
-  resetCanvas();
-  drawPoseSkeleton(results);
-  if (!codeIsRunning) {
-    if (results != null &&
-      results.poseLandmarks != null) {
-      updateArmStateWithDetectPose(results);
-    }
-    else { // reset if out of frame long enough
-      armStates = {
-        [ARMS.LEFT]: ARMSTATES.NONE,
-        [ARMS.RIGHT]: ARMSTATES.NONE
-      };
-    }
-    curArmStates = armStates;
-    updateCumulativeArmStates(curArmStates, deltaTime);
-
-    var bestArmScores = getBestArmScores();
-    updateProgressBars(bestArmScores);
-    if (attemptPoseDetection(bestArmScores)) {
-      // Logger.update(Date.now(), results.poseLandmarks, 1); TODO: uncomment when deploying
-      resetAllArmScores();
-      resetAllPoseProgress();
-    } else {
-      // Logger.update(Date.now(), results.poseLandmarks, 0); TODO: uncomment when deployign
-    }
-  }
-
-}
-
-// Update Functions
-function decayAllOtherStates(curArmStates, deltaTime) {
-  var decayFactor = 0.8 * deltaTime;
-  for (let arm in cumulativeArmStates) {
-    for (let state in cumulativeArmStates[arm]) {
-      if (curArmStates[arm] == state) {
-        continue;
-      }
-      cumulativeArmStates[arm][state] -= decayFactor;
-      if (cumulativeArmStates[arm][state] < 0) {
-        cumulativeArmStates[arm][state] = 0;
-      }
-    }
-  }
-}
-
-function updateCumulativeArmStates(curArmStates, deltaTime) {
-  const scaleFactor = 1.2;
-  const scaledTimeToHoldPose = timeToHoldPoseMS * scaleFactor;
-  cumulativeArmStates[ARMS.LEFT][curArmStates[ARMS.LEFT]] += deltaTime;
-  cumulativeArmStates[ARMS.RIGHT][curArmStates[ARMS.RIGHT]] += deltaTime;
-
-  if (cumulativeArmStates[ARMS.LEFT][curArmStates[ARMS.LEFT]] > scaledTimeToHoldPose) {
-    cumulativeArmStates[ARMS.LEFT][curArmStates[ARMS.LEFT]] = scaledTimeToHoldPose;
-  }
-  if (cumulativeArmStates[ARMS.RIGHT][curArmStates[ARMS.RIGHT]] > scaledTimeToHoldPose) {
-    cumulativeArmStates[ARMS.RIGHT][curArmStates[ARMS.RIGHT]] = scaledTimeToHoldPose;
-  }
-  decayAllOtherStates(curArmStates, deltaTime);
-}
-
-function getBestArmScores() {
-  var bestArmScores = {
-    [ARMS.LEFT]: ARMSTATES.NONE,
-    [ARMS.RIGHT]: ARMSTATES.NONE
-  };
-  for (let arm in cumulativeArmStates) {
-    var bestArmScore = -1;
-    for (let state in cumulativeArmStates[arm]) {
-      if (bestArmScore < cumulativeArmStates[arm][state]) {
-        bestArmScores[arm] = state;
-        bestArmScore = cumulativeArmStates[arm][state];
-      }
-    }
-  }
-  return bestArmScores;
-}
+  [POSES.RUNCODE]: 0,
+  [POSES.NONE]: 0
+};
 
 const poseMapping = {
   [POSES.MAKESPHERESMALL]: {
@@ -290,110 +177,116 @@ const poseMapping = {
   }
 };
 
+leftProgressheader = document.getElementById("leftProgressHeader");
+rightProgressheader = document.getElementById("rightProgressHeader");
+var codeIsRunning = false;
+
+// Main
+async function onResults(results) {
+  deltaTime = getDeltaTimeMS();
+  resetCanvas();
+  drawPoseSkeleton(results);
+  if (!codeIsRunning) {
+    if (results != null &&
+      results.poseLandmarks != null) {
+      updateArmStateWithDetectPose(results);
+    }
+    else { // reset if out of frame long enough
+      armStates = {
+        [ARMS.LEFT]: ARMSTATES.NONE,
+        [ARMS.RIGHT]: ARMSTATES.NONE
+      };
+    }
+    curArmStates = armStates; // workaround for async
+    var bestPose = updateProgressBars(curArmStates, deltaTime);
+    if (checkBarFull(bestPose)) {
+      // Logger.update(Date.now(), results.poseLandmarks, 1); TODO: uncomment when deploying
+      resetAllPoseProgress();
+    } else {
+      // Logger.update(Date.now(), results.poseLandmarks, 0); TODO: uncomment when deployign
+    }
+  }
+}
+
+// Update Functions
+function updateCumulativePoseStates(bestArmScores, deltaTime) {
+  const scaleFactor = 1.2;
+  const scaledTimeToHoldPose = timeToHoldPoseMS * scaleFactor;
+  var decayFactor = 0.8 * deltaTime;
+  var bestPose;
+  for (let pose in poseMapping) {
+    if (cArm(bestArmScores, poseMapping[pose])) {
+      addToPoseState(pose, deltaTime, scaledTimeToHoldPose);
+      bestPose = pose;
+    }
+    else {
+      decayPoseProgress(pose, decayFactor);
+    }
+  }
+  return bestPose;
+}
+
+function addToPoseState(pose, deltaTime, scaledTimeToHoldPose) {
+  cummulativePoseScores[pose] += deltaTime;
+  if (cummulativePoseScores[pose] > scaledTimeToHoldPose) {
+    cummulativePoseScores[pose] = scaledTimeToHoldPose;
+  }
+}
+
+function decayPoseProgress(pose, decayFactor) {
+  cummulativePoseScores[pose] -= decayFactor;
+  if (cummulativePoseScores[pose] < 0) {
+    cummulativePoseScores[pose] = 0;
+  }
+}
+
 function cArm(armState, compareTo) {
-  console.log(armState);
-  console.log(compareTo);
   return armState[ARMS.LEFT] == compareTo[ARMS.LEFT] && armState[ARMS.RIGHT] == compareTo[ARMS.RIGHT];
 }
 
-function updateProgressBars(bestArmScores) {
-  updateCumulativeArmStates();
-  console.log(poseMapping);
-  for (let pose in poseMapping) {
-    if (cArm(bestArmScores, poseMapping[pose])) {
-      console.log(pose);
-      if (pose != POSES.NONE) {
-        robotProgressBars[pose] += cumulativeArmProgress[ARMS.LEFT];
-      }
-      break;
-    }
-  }
-
-  // for (let state in cumulativeArmStates[ARMS.LEFT]) {
-  //   if (state == ARMSTATES.HIGH) {
-  //     robotProgressPercents[POSES.MAKESPHERESMALL] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
-  //     robotProgressPercents[POSES.MAKESPHEREMEDIUM] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
-  //     robotProgressPercents[POSES.MAKESPHERELARGE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
-
-  //     robotProgressPercents[POSES.MAKESPHERELARGE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
-  //     robotProgressPercents[POSES.PLACESPHERE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
-  //     robotProgressPercents[POSES.RUNCODE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
-  //   }
-  //   if (state == ARMSTATES.MED) {
-  //     robotProgressPercents[POSES.DANCE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
-  //     robotProgressPercents[POSES.RUNCODE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
-
-  //     robotProgressPercents[POSES.MAKESPHEREMEDIUM] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
-  //     robotProgressPercents[POSES.DANCE] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
-  //   }
-  //   if (state == ARMSTATES.LOW) {
-  //     robotProgressPercents[POSES.PLACESPHERE] += cumulativeArmProgress[ARMS.LEFT][state] / 2;
-
-  //     robotProgressPercents[POSES.MAKESPHERESMALL] += cumulativeArmProgress[ARMS.RIGHT][state] / 2;
-  //   }
-  // }
-
+function updateProgressBars(bestArmScores, deltaTime) {
+  var curPoseDetected = updateCumulativePoseStates(bestArmScores, deltaTime);
   for (let pose in robotProgressBars) {
-    robotProgressBars[pose].style.height = robotProgressPercents[pose] + "%";
-    robotProgressPercents[pose] = 0;
+    console.log((cummulativePoseScores[pose] / timeToHoldPoseMS));
+    robotProgressBars[pose].style.height = (cummulativePoseScores[pose] / timeToHoldPoseMS) * 100 + "%";
   }
-
-  function updateCumulativeArmStates() {
-    for (let arm in cumulativeArmStates) {
-      for (let state in cumulativeArmStates[arm]) {
-        percent = (cumulativeArmStates[arm][state] / timeToHoldPoseMS * 100);
-        if (percent > 100) {
-          percent = 100;
-        }
-        cumulativeArmProgress[arm][state] = percent;
-      }
-    }
-  }
+  return curPoseDetected;
 }
 
-function armScoresOverThreshHold(bestArmScores) {
-  return cumulativeArmStates[ARMS.LEFT][bestArmScores[ARMS.LEFT]] >= timeToHoldPoseMS &&
-    cumulativeArmStates[ARMS.RIGHT][bestArmScores[ARMS.RIGHT]] >= timeToHoldPoseMS;
+function poseScoresOverThreshHold(bestPose) {
+  return cummulativePoseScores[bestPose] >= timeToHoldPoseMS;
 }
 
-function attemptPoseDetection(bestArmScores) {
-  if (!armScoresOverThreshHold(bestArmScores)) {
+function checkBarFull(bestPose) {
+  if (!poseScoresOverThreshHold(bestPose)) {
     return false;
   }
-  if (bestArmScores[ARMS.LEFT] == ARMSTATES.MED &&
-    bestArmScores[ARMS.RIGHT] == ARMSTATES.MED) {
+  if (bestPose == POSES.DANCE) {
     addDanceBlock();
     return true;
   }
-  // run pose
-  else if (bestArmScores[ARMS.LEFT] == ARMSTATES.MED &&
-    bestArmScores[ARMS.RIGHT] == ARMSTATES.HIGH) {
+  else if (bestPose == POSES.RUNCODE) {
     resetGUI();
     runCode();
     return true;
   }
-  else if (bestArmScores[ARMS.LEFT] == ARMSTATES.LOW &&
-    bestArmScores[ARMS.RIGHT] == ARMSTATES.HIGH) {
+  else if (bestPose == POSES.PLACESPHERE) {
     placeSphere();
     return true;
   }
-  else if (bestArmScores[ARMS.LEFT] == ARMSTATES.HIGH &&
-    bestArmScores[ARMS.RIGHT] == ARMSTATES.LOW) {
+  else if (bestPose == POSES.MAKESPHERESMALL) {
     makeSmallSphereBlock();
     return true;
   }
-  else if (bestArmScores[ARMS.LEFT] == ARMSTATES.HIGH &&
-    bestArmScores[ARMS.RIGHT] == ARMSTATES.MED) {
+  else if (bestPose == POSES.MAKESPHEREMEDIUM) {
     makeMediumSphereBlock();
     return true;
   }
-  else if (bestArmScores[ARMS.LEFT] == ARMSTATES.HIGH &&
-    bestArmScores[ARMS.RIGHT] == ARMSTATES.HIGH) {
+  else if (bestPose == POSES.MAKESPHERELARGE) {
     makeLargeSphereBlock();
     return true;
   }
-  else if (bestArmScores[ARMS.LEFT] == ARMSTATES.NONE &&
-    bestArmScores[ARMS.RIGHT] == ARMSTATES.NONE) {
+  else if (bestPose == POSES.NONE) {
     console.log("reset");
     resetAllBlocks();
     return true;
@@ -401,22 +294,11 @@ function attemptPoseDetection(bestArmScores) {
   return false;
 }
 
-function resetAllArmScores() {
-  for (let arm in progressBars) {
-    for (let state in progressBars[arm]) {
-      cumulativeArmStates[arm][state] = 0;
-    }
-  }
-}
 
 function resetAllPoseProgress() {
   for (let pose in robotProgressBars) {
-    robotProgressPercents[pose] = 0;
+    cummulativePoseScores[pose] = 0;
   }
-}
-
-function getMidSection(results) {
-  return (results.poseLandmarks[11].y + results.poseLandmarks[23].y) / 2;
 }
 
 
