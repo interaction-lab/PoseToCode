@@ -26,6 +26,7 @@ body {
   width: 20%;
   float: right;
 }
+
 .video_div {
   position: relative
 }
@@ -73,6 +74,8 @@ table {
 .robotImage {
   position: relative;
   z-index: 2;
+  width: 33%;
+  height: 33%;
 }
 
 .poseBar {
@@ -81,6 +84,8 @@ table {
   position: absolute;
   bottom: 0;
   z-index: 1;
+  background-color: #228B22; 
+  opacity: 0.5;
 }
 
 .modal {
