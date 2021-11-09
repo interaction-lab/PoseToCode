@@ -61,8 +61,8 @@ body {
   word-break:normal;
 }
 
-.tg th{border-radius: 10px 10px 0px 0px; font-family:Arial, sans-serif;position: relative;font-weight:normal; padding:5px 5px;word-break:normal;}
-.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top;font-size:15px;} 
+.tg th{border-radius: 10px 10px 0px 0px; font-family:Arial, sans-serif;position: relative;font-weight:bold; padding:5px 5px;word-break:normal;}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top;font-size:30px;} 
 table {
   /* display: block;
   position: relative;  */

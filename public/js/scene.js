@@ -144,7 +144,7 @@ function placeSphereCode() {
       moveSphere(new BABYLON.Vector3(endXPosition, endYPosition, endZPosition), currSphere);
       currHeight += smallSphereDiameter / 2;
     } else if (currSphereSize == "medium") {
-      endYPosition += 0.3;
+      endYPosition += 0.2;
       moveSphere(new BABYLON.Vector3(endXPosition, endYPosition, endZPosition), currSphere);
       currHeight += mediumSphereDiameter / 2;
     } else if (currSphereSize == "large") {

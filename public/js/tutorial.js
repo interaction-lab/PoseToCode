@@ -54,6 +54,7 @@ const canvasCtx = canvasElement.getContext("2d");
 var completedChallenge1 = false;
 var challenge1Alert = false;
 var completedChallenge2 = false;
+var challenge2Alert = false;
 var completedChallenge3 = false;
 
 function startTutorial() {
@@ -552,14 +553,16 @@ function stepThroughAllCode() {
     setTimeout(stepThroughAllCode, 500); // need the correct timing
   }
   else {
-    codeIsRunning = false;
+    setTimeout(codeIsRunning = false, 500);
     if(!challenge1Alert && completedChallenge1) {
       alert("Congratulations! You finished Challenge 1. Challenge 2 is to create a large sphere and place it on the floor.");
       challenge1Alert = true;
       resetAllBlocks();
     }
-    else if (completedChallenge2) {
+    else if (!challenge2Alert && completedChallenge2) {
       alert("Congratulations! You finished Challenge 2. Challenge 3 is to build a snowman by creating and placing differently sized spheres.");
+      challenge2Alert = true;
+      resetAllBlocks();
     }
     else if (completedChallenge3) {
       alert("Congratulations! You completed the tutorial!");
