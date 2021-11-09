@@ -54,6 +54,7 @@ const canvasCtx = canvasElement.getContext("2d");
 var completedChallenge1 = false;
 var challenge1Alert = false;
 var completedChallenge2 = false;
+var completedChallenge3 = false;
 
 function startTutorial() {
   alert("Challenge 1: Make the Robot Dance!");
@@ -558,7 +559,10 @@ function stepThroughAllCode() {
       resetAllBlocks();
     }
     else if (completedChallenge2) {
-      alert("Congratulations! You finished Challenge 2. Now, try to build a snowman.");
+      alert("Congratulations! You finished Challenge 2. Challenge 3 is to build a snowman by creating and placing differently sized spheres.");
+    }
+    else if (completedChallenge3) {
+      alert("Congratulations! You completed the tutorial!");
       window.location.href = "./poseToCode.html";
     }
     document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "white";
@@ -568,13 +572,18 @@ function stepThroughAllCode() {
 function stepCode() {
   resetStepUi(true);
   myInterpreter = new Interpreter(latestCode, initApi);
-  if (latestCode.includes("dance()")) {
-    completedChallenge1 =  true;
+  var regex_challenge1 = /highlightBlock\(.*\);[\r\n]dance\(\);/
+  var regex_challenge2 = /highlightBlock\(.*\);[\r\n]makeLargeSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);/
+  var regex_challenge3 = /highlightBlock\(.*\);[\r\n]makeLargeSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeMediumSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeSmallSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);/
+  if (latestCode.match(regex_challenge1)) {
+    completedChallenge1 = true;
   }
-  if (completedChallenge1 && latestCode.includes("makeLargeSphere()") && latestCode.includes("placeSphereCode()")) {
+  if (completedChallenge1 && latestCode.match(regex_challenge2)) {
     completedChallenge2 =  true;
   }
-  //console.log(latestCode);
+  if (completedChallenge2 && latestCode.match(regex_challenge3)) {
+    completedChallenge3 =  true;
+  }
   myInterpreter.step(); // dummy first step
   stepThroughAllCode();
 }
