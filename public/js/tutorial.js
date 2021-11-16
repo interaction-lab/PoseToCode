@@ -563,6 +563,7 @@ function stepThroughAllCode() {
       alert("Congratulations! You finished Challenge 2. Challenge 3 is to build a snowman by creating and placing differently sized spheres.");
       challenge2Alert = true;
       resetAllBlocks();
+      document.getElementById("snowmanImage").style.display = "block";
     }
     else if (completedChallenge3) {
       alert("Congratulations! You completed the tutorial!");
