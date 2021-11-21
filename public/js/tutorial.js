@@ -553,21 +553,21 @@ function stepThroughAllCode() {
     setTimeout(stepThroughAllCode, 500); // need the correct timing
   }
   else {
-    setTimeout(codeIsRunning = false, 500);
     if(!challenge1Alert && completedChallenge1) {
-      alert("Congratulations! You finished Challenge 1. Challenge 2 is to create a large sphere and place it on the floor.");
+      alert("Congratulations! You completed Challenge 1: Dance Routine!");
+      alert("Challenge 2: Build a Snowman. Construct a snowman by creating and placing differently sized spheres.");
       challenge1Alert = true;
-      resetAllBlocks();
-    }
-    else if (!challenge2Alert && completedChallenge2) {
-      alert("Congratulations! You finished Challenge 2. Challenge 3 is to build a snowman by creating and placing differently sized spheres.");
-      challenge2Alert = true;
       resetAllBlocks();
       document.getElementById("snowmanImage").style.display = "block";
     }
+    else if (!challenge2Alert && completedChallenge2) {
+      alert("Congratulations! You completed Challenge 2: Build a Snowman!");
+      alert("Challenge 3: Make a Cake. Construct a frosted cake with two layers!");
+      challenge2Alert = true;
+      resetAllBlocks();
+    }
     else if (completedChallenge3) {
       alert("Congratulations! You completed the tutorial!");
-      window.location.href = "./poseToCode.html";
     }
     document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "white";
   }
@@ -576,9 +576,9 @@ function stepThroughAllCode() {
 function stepCode() {
   resetStepUi(true);
   myInterpreter = new Interpreter(latestCode, initApi);
-  var regex_challenge1 = /highlightBlock\(.*\);[\r\n]dance\(\);/
-  var regex_challenge2 = /highlightBlock\(.*\);[\r\n]makeLargeSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);/
-  var regex_challenge3 = /highlightBlock\(.*\);[\r\n]makeLargeSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeMediumSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeSmallSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);/
+  var regex_challenge1 = /highlightBlock\(.*\);[\r\n]dance\(\);/ //TODO: replace with regex for multiple dance move blocks
+  var regex_challenge2 = /highlightBlock\(.*\);[\r\n]makeLargeSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeMediumSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeSmallSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);/
+  var regex_challenge3 = /highlightBlock\(.*\);[\r\n]dance\(\);/ //TODO: replace with regex for multiple cake building blocks
   if (latestCode.match(regex_challenge1)) {
     completedChallenge1 = true;
   }
