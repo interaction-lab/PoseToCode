@@ -168,7 +168,7 @@ const BLOCKTIMINGMAP = {
 }
 
 // States / Globals
-robotProgressBars = {
+var robotProgressBars = {
   [POSES[challengeIndex][0]]: document.getElementById("LeftHighRightLowBar"),
   [POSES[challengeIndex][1]]: document.getElementById("LeftHighRightMedBar"),
   [POSES[challengeIndex][2]]: document.getElementById("LeftHighRightHighBar"),
@@ -177,7 +177,7 @@ robotProgressBars = {
   [POSES[challengeIndex][5]]: document.getElementById("LeftMedRightHighBar")
 }
 
-cummulativePoseScores = {
+var cummulativePoseScores = {
   [POSES[challengeIndex][0]]: 0,
   [POSES[challengeIndex][1]]: 0,
   [POSES[challengeIndex][2]]: 0,
@@ -187,7 +187,7 @@ cummulativePoseScores = {
   [POSES[challengeIndex][6]]: 0
 };
 
-const poseMapping = {
+var poseMapping = {
     [POSES[challengeIndex][0]]: {
     [ARMS.LEFT]: ARMSTATES.HIGH,
     [ARMS.RIGHT]: ARMSTATES.LOW
@@ -238,6 +238,7 @@ async function onResults(results) {
     }
     curArmStates = armStates; // workaround for async
     var bestPose = updateProgressBars(curArmStates, deltaTime);
+    console.log(bestPose);
     if (checkBarFull(bestPose)) {
       // Logger.update(Date.now(), results.poseLandmarks, 1); TODO: uncomment when deploying
       resetAllPoseProgress();
@@ -254,6 +255,7 @@ function updateCumulativePoseStates(bestArmScores, deltaTime) {
   var decayFactor = 0.8 * deltaTime;
   var bestPose;
   for (let pose in poseMapping) {
+    console.log(pose);
     if (cArm(bestArmScores, poseMapping[pose])) {
       addToPoseState(pose, deltaTime, scaledTimeToHoldPose);
       bestPose = pose;
@@ -286,7 +288,6 @@ function cArm(armState, compareTo) {
 function updateProgressBars(bestArmScores, deltaTime) {
   var curPoseDetected = updateCumulativePoseStates(bestArmScores, deltaTime);
   for (let pose in robotProgressBars) {
-    console.log(pose);
     console.log((cummulativePoseScores[pose] / timeToHoldPoseMS));
     robotProgressBars[pose].style.height = (cummulativePoseScores[pose] / timeToHoldPoseMS) * 100 + "%";
   }
@@ -294,11 +295,13 @@ function updateProgressBars(bestArmScores, deltaTime) {
 }
 
 function poseScoresOverThreshHold(bestPose) {
+  console.log("cumulative: " + cummulativePoseScores[bestPose]);
   return cummulativePoseScores[bestPose] >= timeToHoldPoseMS;
 }
 
 function checkBarFull(bestPose) {
   if (!poseScoresOverThreshHold(bestPose)) {
+    console.log("not over threshold");
     return false;
   }
   if (bestPose == POSES[challengeIndex][0]) {
@@ -649,6 +652,57 @@ function resetPoseNames() {
   document.getElementById("pose2").innerHTML = POSENAMES[challengeIndex][2];
   document.getElementById("pose3").innerHTML = POSENAMES[challengeIndex][3];
   document.getElementById("pose4").innerHTML = POSENAMES[challengeIndex][4];
+
+  poseMapping = {
+    [POSES[challengeIndex][0]]: {
+    [ARMS.LEFT]: ARMSTATES.HIGH,
+    [ARMS.RIGHT]: ARMSTATES.LOW
+  },
+  [POSES[challengeIndex][1]]: {
+    [ARMS.LEFT]: ARMSTATES.HIGH,
+    [ARMS.RIGHT]: ARMSTATES.MED
+  },
+  [POSES[challengeIndex][2]]: {
+    [ARMS.LEFT]: ARMSTATES.HIGH,
+    [ARMS.RIGHT]: ARMSTATES.HIGH
+  },
+  [POSES[challengeIndex][3]]: {
+    [ARMS.LEFT]: ARMSTATES.LOW,
+    [ARMS.RIGHT]: ARMSTATES.HIGH
+  },
+  [POSES[challengeIndex][4]]: {
+    [ARMS.LEFT]: ARMSTATES.MED,
+    [ARMS.RIGHT]: ARMSTATES.MED
+  },
+  [POSES[challengeIndex][5]]: {
+    [ARMS.LEFT]: ARMSTATES.MED,
+    [ARMS.RIGHT]: ARMSTATES.HIGH
+  },
+  [POSES[challengeIndex][6]]: {
+    [ARMS.LEFT]: ARMSTATES.NONE,
+    [ARMS.RIGHT]: ARMSTATES.NONE
+  }
+}
+
+cummulativePoseScores = {
+  [POSES[challengeIndex][0]]: 0,
+  [POSES[challengeIndex][1]]: 0,
+  [POSES[challengeIndex][2]]: 0,
+  [POSES[challengeIndex][3]]: 0,
+  [POSES[challengeIndex][4]]: 0,
+  [POSES[challengeIndex][5]]: 0,
+  [POSES[challengeIndex][6]]: 0
+}
+
+robotProgressBars = {
+  [POSES[challengeIndex][0]]: document.getElementById("LeftHighRightLowBar"),
+  [POSES[challengeIndex][1]]: document.getElementById("LeftHighRightMedBar"),
+  [POSES[challengeIndex][2]]: document.getElementById("LeftHighRightHighBar"),
+  [POSES[challengeIndex][3]]: document.getElementById("LeftLowRightHighBar"),
+  [POSES[challengeIndex][4]]: document.getElementById("LeftMedRightMedBar"),
+  [POSES[challengeIndex][5]]: document.getElementById("LeftMedRightHighBar")
+}
+
 }
 
 function addNewBlock(blockName, fields = []) {
