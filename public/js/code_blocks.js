@@ -1,5 +1,5 @@
 // Challenge 0 Code Blocks
-Blockly.Blocks.dance = {
+Blockly.Blocks.raise_the_roof = {
   init: function () {
     this.appendDummyInput().appendField("Dance");
     this.setPreviousStatement(true, null);
@@ -16,6 +16,17 @@ Blockly.Blocks.right_wave = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(315);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  },
+};
+
+Blockly.Blocks.left_wave = {
+  init: function () {
+    this.appendDummyInput().appendField("Wave Right Arm");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
     this.setTooltip("");
     this.setHelpUrl("");
   },

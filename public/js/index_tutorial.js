@@ -96,56 +96,50 @@ const ARMSTATES = {
 
 const POSENAMES= [
   [ 
-    "Dance",
+    "Raise the Roof",
     "Wave Right Arm",
     "Wave Left Arm",
     "360 Spin",
-    "Bow",
   ],
   [ 
     "Make Small Sphere",
     "Make Medium Sphere",
     "Make Large Sphere",
     "Place Sphere",
-    "Add Top Hat",
   ],
   [ 
     "Make Small Cake",
     "Make Large Cake",
     "Place Cake",
     "Frost Cake",
-    "Add Decorations",
   ]
 ]
 
 // names of the code blocks
 const POSES = [
   [ 
-    "dance",
+    "raise_the_roof",
     "right_wave",
     "left_wave",
-    "spin_360",
-    "bow",
+    "spin",
     "RunCode",
-    "none"
+    "Reset"
   ],
   [ 
     "make_small_sphere",
     "make_medium_sphere",
     "make_large_sphere",
     "place",
-    "add_top_hat",
     "RunCode",
-    "none"
+    "Reset"
   ],
   [ 
-    "make_small_cake_layer",
-    "make_large_cake_layer",
-    "place_cake_layer",
-    "frost_cake",
-    "add_decorations",
+    "make_small_layer",
+    "make_large_layer",
+    "place_layer",
+    "frost_layer",
     "RunCode",
-    "none"
+    "Reset"
   ]
 ]
 
@@ -183,8 +177,7 @@ var cummulativePoseScores = {
   [POSES[challengeIndex][2]]: 0,
   [POSES[challengeIndex][3]]: 0,
   [POSES[challengeIndex][4]]: 0,
-  [POSES[challengeIndex][5]]: 0,
-  [POSES[challengeIndex][6]]: 0
+  [POSES[challengeIndex][5]]: 0
 };
 
 var poseMapping = {
@@ -211,10 +204,6 @@ var poseMapping = {
   [POSES[challengeIndex][5]]: {
     [ARMS.LEFT]: ARMSTATES.MED,
     [ARMS.RIGHT]: ARMSTATES.HIGH
-  },
-  [POSES[challengeIndex][6]]: {
-    [ARMS.LEFT]: ARMSTATES.NONE,
-    [ARMS.RIGHT]: ARMSTATES.NONE
   }
 };
 
@@ -230,11 +219,11 @@ async function onResults(results) {
       results.poseLandmarks != null) {
       updateArmStateWithDetectPose(results);
     }
-    else { // reset if out of frame long enough
-      armStates = {
-        [ARMS.LEFT]: ARMSTATES.NONE,
-        [ARMS.RIGHT]: ARMSTATES.NONE
-      };
+    //else { // reset if out of frame long enough
+      //armStates = {
+        //[ARMS.LEFT]: ARMSTATES.NONE,
+        //[ARMS.RIGHT]: ARMSTATES.NONE
+      //};
     }
     curArmStates = armStates; // workaround for async
     var bestPose = updateProgressBars(curArmStates, deltaTime);
@@ -321,15 +310,11 @@ function checkBarFull(bestPose) {
     return true;
   }
   else if (bestPose == POSES[challengeIndex][4]) {
-    codeBlock4();
-    return true;
-  }
-  else if (bestPose == POSES[challengeIndex][5]) {
     resetGUI();
     runCode();
     return true;
   }
-  else if (bestPose == POSES[challengeIndex][6]) {
+  else if (bestPose == POSES[challengeIndex][5]) {
     console.log("reset");
     resetAllBlocks();
     return true;
@@ -510,9 +495,9 @@ function initApi(interpreter, globalObject) {
   );
   interpreter.setProperty(
     globalObject,
-    "dance",
+    "raise_the_roof",
     interpreter.createNativeFunction(function (text) {
-      dance();
+      raise_the_roof();
     })
   );
   interpreter.setProperty(
@@ -612,6 +597,7 @@ function stepThroughAllCode() {
 function stepCode() {
   resetStepUi(true);
   myInterpreter = new Interpreter(latestCode, initApi);
+  console.log(latestCode);
   var regex_challenge1 = /highlightBlock\(.*\);[\r\n]dance\(\);/ //TODO: replace with regex for multiple dance move blocks
   var regex_challenge2 = /highlightBlock\(.*\);[\r\n]makeLargeSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeMediumSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeSmallSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);/
   var regex_challenge3 = /highlightBlock\(.*\);[\r\n]dance\(\);/ //TODO: replace with regex for multiple cake building blocks

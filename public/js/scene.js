@@ -157,11 +157,11 @@ function placeSphereCode() {
   idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 }
 
-Blockly.JavaScript.dance = function (block) {
-  const code = 'dance();\n';
+Blockly.JavaScript.raise_the_roof = function (block) {
+  const code = 'raise_the_roof();\n';
   return code;
 };
-function dance() {
+function raise_the_roof() {
   music = new Audio("sounds/dance.wav");
   idleAnim.stop();
   setTimeout(() => {
