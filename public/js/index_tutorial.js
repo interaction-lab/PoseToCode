@@ -505,13 +505,41 @@ function initApi(interpreter, globalObject) {
       alert(text);
     })
   );
+
+  //Dance functions
   interpreter.setProperty(
     globalObject,
-    "dance",
+    "raiseTheRoof",
     interpreter.createNativeFunction(function (text) {
-      dance();
+      raiseTheRoof();
     })
   );
+
+  interpreter.setProperty(
+    globalObject,
+    "rightWave",
+    interpreter.createNativeFunction(function (text) {
+      leftWave();
+    })
+  );
+
+  interpreter.setProperty(
+    globalObject,
+    "leftWave",
+    interpreter.createNativeFunction(function (text) {
+      leftWave();
+    })
+  );
+
+  interpreter.setProperty(
+    globalObject,
+    "spin",
+    interpreter.createNativeFunction(function (text) {
+      spin();
+    })
+  );
+
+  //Snowman functions
   interpreter.setProperty(
     globalObject,
     "placeSphereCode",
@@ -540,6 +568,40 @@ function initApi(interpreter, globalObject) {
       makeSphere("large");
     })
   );
+
+  //Cake functions
+  interpreter.setProperty(
+    globalObject,
+    "makeSmallLayer",
+    interpreter.createNativeFunction(function (text) {
+      makeLayer("small");
+    })
+  );
+
+  interpreter.setProperty(
+    globalObject,
+    "makeLargeLayer",
+    interpreter.createNativeFunction(function (text) {
+      makeLayer("large");
+    })
+  );
+
+  interpreter.setProperty(
+    globalObject,
+    "frostLayer",
+    interpreter.createNativeFunction(function (text) {
+      frostLayer();
+    })
+  );
+
+  interpreter.setProperty(
+    globalObject,
+    "placeLayer",
+    interpreter.createNativeFunction(function (text) {
+      placeLayer();
+    })
+  );
+  
   var wrapper = function (id) {
     id = String(id || "");
     return interpreter.createPrimitive(highlightBlock(id));
