@@ -44,13 +44,11 @@ let childBlock = null;
 /* keep track of all blocks for resetting */
 const allBlocks = [];
 
-let sphereSizeFlag = false;
-let sleepFlag = false;
-
 const videoElement = document.getElementsByClassName("input_video")[0];
 const canvasElement = document.getElementsByClassName("output_canvas")[0];
 const canvasCtx = canvasElement.getContext("2d");
 
+var challengeIndex = 0;
 var completedChallenge1 = false;
 var challenge1Alert = false;
 var completedChallenge2 = false;
@@ -96,15 +94,60 @@ const ARMSTATES = {
   HIGH: "High"
 }
 
-const POSES = {
-  MAKESPHERESMALL: "MakeSphereSmall",
-  MAKESPHEREMEDIUM: "MakeSphereMedium",
-  MAKESPHERELARGE: "MakeSphereLarge",
-  PLACESPHERE: "PlaceSphere",
-  DANCE: "Dance",
-  RUNCODE: "RunCode",
-  NONE: "none"
-}
+const POSENAMES= [
+  [ 
+    "Dance",
+    "Wave Right Arm",
+    "Wave Left Arm",
+    "360 Spin",
+    "Bow",
+  ],
+  [ 
+    "Make Small Sphere",
+    "Make Medium Sphere",
+    "Make Large Sphere",
+    "Place Sphere",
+    "Add Top Hat",
+  ],
+  [ 
+    "Make Small Cake",
+    "Make Large Cake",
+    "Place Cake",
+    "Frost Cake",
+    "Add Decorations",
+  ]
+]
+
+// names of the code blocks
+const POSES = [
+  [ 
+    "dance",
+    "right_wave",
+    "left_wave",
+    "spin_360",
+    "bow",
+    "RunCode",
+    "none"
+  ],
+  [ 
+    "make_small_sphere",
+    "make_medium_sphere",
+    "make_large_sphere",
+    "place",
+    "add_top_hat",
+    "RunCode",
+    "none"
+  ],
+  [ 
+    "make_small_cake_layer",
+    "make_large_cake_layer",
+    "place_cake_layer",
+    "frost_cake",
+    "add_decorations",
+    "RunCode",
+    "none"
+  ]
+]
 
 const BLOCKTYPES = {
   CREATESMALLSPHERE: "make_small_sphere",
@@ -114,6 +157,7 @@ const BLOCKTYPES = {
   DANCE: "dance"
 }
 
+//TODO: add times for other code blocks
 createSphereTiming = 2000;
 const BLOCKTIMINGMAP = {
   CREATESMALLSPHERE: createSphereTiming,
@@ -124,66 +168,53 @@ const BLOCKTIMINGMAP = {
 }
 
 // States / Globals
-progressBars = {
-  [ARMS.LEFT]: {
-    [ARMSTATES.LOW]: document.getElementById("leftArmLowBar"),
-    [ARMSTATES.MED]: document.getElementById("leftArmMedBar"),
-    [ARMSTATES.HIGH]: document.getElementById("leftArmHighBar")
-  },
-  [ARMS.RIGHT]: {
-    [ARMSTATES.LOW]: document.getElementById("rightArmLowBar"),
-    [ARMSTATES.MED]: document.getElementById("rightArmMedBar"),
-    [ARMSTATES.HIGH]: document.getElementById("rightArmHighBar")
-  }
-}
-
 robotProgressBars = {
-  [POSES.MAKESPHERESMALL]: document.getElementById("makeSphereSmallBar"),
-  [POSES.MAKESPHEREMEDIUM]: document.getElementById("makeSphereMediumBar"),
-  [POSES.MAKESPHERELARGE]: document.getElementById("makeSphereLargeBar"),
-  [POSES.PLACESPHERE]: document.getElementById("placeSphereBar"),
-  [POSES.DANCE]: document.getElementById("danceBar"),
-  [POSES.RUNCODE]: document.getElementById("runCodeBar")
+  [POSES[challengeIndex][0]]: document.getElementById("LeftHighRightLowBar"),
+  [POSES[challengeIndex][1]]: document.getElementById("LeftHighRightMedBar"),
+  [POSES[challengeIndex][2]]: document.getElementById("LeftHighRightHighBar"),
+  [POSES[challengeIndex][3]]: document.getElementById("LeftLowRightHighBar"),
+  [POSES[challengeIndex][4]]: document.getElementById("LeftMedRightMedBar"),
+  [POSES[challengeIndex][5]]: document.getElementById("LeftMedRightHighBar")
 }
 
 cummulativePoseScores = {
-  [POSES.MAKESPHERESMALL]: 0,
-  [POSES.MAKESPHEREMEDIUM]: 0,
-  [POSES.MAKESPHERELARGE]: 0,
-  [POSES.PLACESPHERE]: 0,
-  [POSES.DANCE]: 0,
-  [POSES.RUNCODE]: 0,
-  [POSES.NONE]: 0
+  [POSES[challengeIndex][0]]: 0,
+  [POSES[challengeIndex][1]]: 0,
+  [POSES[challengeIndex][2]]: 0,
+  [POSES[challengeIndex][3]]: 0,
+  [POSES[challengeIndex][4]]: 0,
+  [POSES[challengeIndex][5]]: 0,
+  [POSES[challengeIndex][6]]: 0
 };
 
 const poseMapping = {
-  [POSES.MAKESPHERESMALL]: {
+    [POSES[challengeIndex][0]]: {
     [ARMS.LEFT]: ARMSTATES.HIGH,
     [ARMS.RIGHT]: ARMSTATES.LOW
   },
-  [POSES.MAKESPHEREMEDIUM]: {
+  [POSES[challengeIndex][1]]: {
     [ARMS.LEFT]: ARMSTATES.HIGH,
     [ARMS.RIGHT]: ARMSTATES.MED
   },
-  [POSES.MAKESPHERELARGE]: {
+  [POSES[challengeIndex][2]]: {
     [ARMS.LEFT]: ARMSTATES.HIGH,
     [ARMS.RIGHT]: ARMSTATES.HIGH
   },
-  [POSES.PLACESPHERE]: {
+  [POSES[challengeIndex][3]]: {
     [ARMS.LEFT]: ARMSTATES.LOW,
     [ARMS.RIGHT]: ARMSTATES.HIGH
   },
-  [POSES.DANCE]: {
+  [POSES[challengeIndex][4]]: {
     [ARMS.LEFT]: ARMSTATES.MED,
     [ARMS.RIGHT]: ARMSTATES.MED
   },
-  [POSES.RUNCODE]: {
+  [POSES[challengeIndex][5]]: {
     [ARMS.LEFT]: ARMSTATES.MED,
     [ARMS.RIGHT]: ARMSTATES.HIGH
   },
-  [POSES.NONE]: {
-    [ARMS.LEFT]: ARMSTATES.LOW,
-    [ARMS.RIGHT]: ARMSTATES.LOW
+  [POSES[challengeIndex][6]]: {
+    [ARMS.LEFT]: ARMSTATES.NONE,
+    [ARMS.RIGHT]: ARMSTATES.NONE
   }
 };
 
@@ -255,6 +286,7 @@ function cArm(armState, compareTo) {
 function updateProgressBars(bestArmScores, deltaTime) {
   var curPoseDetected = updateCumulativePoseStates(bestArmScores, deltaTime);
   for (let pose in robotProgressBars) {
+    console.log(pose);
     console.log((cummulativePoseScores[pose] / timeToHoldPoseMS));
     robotProgressBars[pose].style.height = (cummulativePoseScores[pose] / timeToHoldPoseMS) * 100 + "%";
   }
@@ -269,32 +301,32 @@ function checkBarFull(bestPose) {
   if (!poseScoresOverThreshHold(bestPose)) {
     return false;
   }
-  if (bestPose == POSES.DANCE) {
-    addDanceBlock();
+  if (bestPose == POSES[challengeIndex][0]) {
+    codeBlock0();
     return true;
   }
-  else if (bestPose == POSES.RUNCODE) {
+  else if (bestPose == POSES[challengeIndex][1]) {
+    codeBlock1();
+    return true;
+  }
+  else if (bestPose == POSES[challengeIndex][2]) {
+    codeBlock2();
+    return true;
+  }
+  else if (bestPose == POSES[challengeIndex][3]) {
+    codeBlock3();
+    return true;
+  }
+  else if (bestPose == POSES[challengeIndex][4]) {
+    codeBlock4();
+    return true;
+  }
+  else if (bestPose == POSES[challengeIndex][5]) {
     resetGUI();
     runCode();
     return true;
   }
-  else if (bestPose == POSES.PLACESPHERE) {
-    placeSphere();
-    return true;
-  }
-  else if (bestPose == POSES.MAKESPHERESMALL) {
-    makeSmallSphereBlock();
-    return true;
-  }
-  else if (bestPose == POSES.MAKESPHEREMEDIUM) {
-    makeMediumSphereBlock();
-    return true;
-  }
-  else if (bestPose == POSES.MAKESPHERELARGE) {
-    makeLargeSphereBlock();
-    return true;
-  }
-  else if (bestPose == POSES.NONE) {
+  else if (bestPose == POSES[challengeIndex][6]) {
     console.log("reset");
     resetAllBlocks();
     return true;
@@ -302,13 +334,11 @@ function checkBarFull(bestPose) {
   return false;
 }
 
-
 function resetAllPoseProgress() {
   for (let pose in robotProgressBars) {
     cummulativePoseScores[pose] = 0;
   }
 }
-
 
 armInputsR = [
   0, 9, 11, 12, 13, 15, 17, 19, 21, 23
@@ -343,7 +373,6 @@ const rightModelInfo = {
 };
 rightBrain.load(rightModelInfo, rightBrainLoaded);
 
-
 rBrainLoaded = false;
 function rightBrainLoaded() {
   rBrainLoaded = true;
@@ -352,7 +381,6 @@ lBrainLoaded = false;
 function leftBrainLoaded() {
   lBrainLoaded = true;
 }
-
 
 // Assumes results.poseLandmarks != null
 armStates = {
@@ -557,6 +585,8 @@ function stepThroughAllCode() {
       alert("Congratulations! You completed Challenge 1: Dance Routine!");
       alert("Challenge 2: Build a Snowman. Construct a snowman by creating and placing differently sized spheres.");
       challenge1Alert = true;
+      challengeIndex++;
+      resetPoseNames();
       resetAllBlocks();
       document.getElementById("snowmanImage").style.display = "block";
     }
@@ -564,12 +594,15 @@ function stepThroughAllCode() {
       alert("Congratulations! You completed Challenge 2: Build a Snowman!");
       alert("Challenge 3: Make a Cake. Construct a frosted cake with two layers!");
       challenge2Alert = true;
+      challengeIndex++;
+      resetPoseNames();
       resetAllBlocks();
     }
     else if (completedChallenge3) {
       alert("Congratulations! You completed the tutorial!");
     }
     document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "white";
+    codeIsRunning = false;
   }
 }
 
@@ -608,7 +641,14 @@ function resetAllBlocks() {
   parentBlock = null;
   resetGUI();
   time = 0;
+}
 
+function resetPoseNames() { 
+  document.getElementById("pose0").innerHTML = POSENAMES[challengeIndex][0];
+  document.getElementById("pose1").innerHTML = POSENAMES[challengeIndex][1];
+  document.getElementById("pose2").innerHTML = POSENAMES[challengeIndex][2];
+  document.getElementById("pose3").innerHTML = POSENAMES[challengeIndex][3];
+  document.getElementById("pose4").innerHTML = POSENAMES[challengeIndex][4];
 }
 
 function addNewBlock(blockName, fields = []) {
@@ -626,27 +666,22 @@ function addNewBlock(blockName, fields = []) {
   allBlocks.push(parentBlock);
 }
 
-function placeSphere() {
-  addNewBlock(BLOCKTYPES.PLACESPHERE);
-  console.log("place sphere block added");
+function codeBlock0() {
+  addNewBlock(POSES[challengeIndex][0]);
 }
 
-function addDanceBlock() {
-  addNewBlock(BLOCKTYPES.DANCE);
-  console.log("dance block added");
+function codeBlock1() {
+  addNewBlock(POSES[challengeIndex][1]);
 }
 
-function makeSmallSphereBlock() {
-  addNewBlock(BLOCKTYPES.CREATESMALLSPHERE);
-  console.log("create small sphere block");
+function codeBlock2() {
+  addNewBlock(POSES[challengeIndex][2]);
 }
 
-function makeMediumSphereBlock() {
-  addNewBlock(BLOCKTYPES.CREATEMEDIUMSPHERE);
-  console.log("create medium sphere block");
+function codeBlock3() {
+  addNewBlock(POSES[challengeIndex][3]);
 }
 
-function makeLargeSphereBlock() {
-  addNewBlock(BLOCKTYPES.CREATELARGESPHERE);
-  console.log("create large sphere block");
+function codeBlock4() {
+  addNewBlock(POSES[challengeIndex][4]);
 }

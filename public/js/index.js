@@ -292,13 +292,11 @@ function checkBarFull(bestPose) {
   return false;
 }
 
-
 function resetAllPoseProgress() {
   for (let pose in robotProgressBars) {
     cummulativePoseScores[pose] = 0;
   }
 }
-
 
 armInputsR = [
   0, 9, 11, 12, 13, 15, 17, 19, 21, 23
