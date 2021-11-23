@@ -158,10 +158,10 @@ function placeSphereCode() {
 }
 
 Blockly.JavaScript.raise_the_roof = function (block) {
-  const code = 'raise_the_roof();\n';
+  const code = 'raiseTheRoof();\n';
   return code;
 };
-function raise_the_roof() {
+function raiseTheRoof() {
   music = new Audio("sounds/dance.wav");
   idleAnim.stop();
   setTimeout(() => {

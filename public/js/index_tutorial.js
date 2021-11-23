@@ -219,12 +219,6 @@ async function onResults(results) {
       results.poseLandmarks != null) {
       updateArmStateWithDetectPose(results);
     }
-    //else { // reset if out of frame long enough
-      //armStates = {
-        //[ARMS.LEFT]: ARMSTATES.NONE,
-        //[ARMS.RIGHT]: ARMSTATES.NONE
-      //};
-    //}
     curArmStates = armStates; // workaround for async
     var bestPose = updateProgressBars(curArmStates, deltaTime);
     console.log(bestPose);
@@ -507,7 +501,7 @@ function initApi(interpreter, globalObject) {
     globalObject,
     "rightWave",
     interpreter.createNativeFunction(function (text) {
-      leftWave();
+      rightWave();
     })
   );
 
@@ -660,7 +654,7 @@ function stepCode() {
   resetStepUi(true);
   myInterpreter = new Interpreter(latestCode, initApi);
   console.log(latestCode);
-  var regex_challenge1 = /highlightBlock\(.*\);[\r\n]dance\(\);/ //TODO: replace with regex for multiple dance move blocks
+  var regex_challenge1 = /highlightBlock\(.*\);[\r\n]raiseTheRoof\(\);/ //TODO: replace with regex for multiple dance move blocks
   var regex_challenge2 = /highlightBlock\(.*\);[\r\n]makeLargeSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeMediumSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeSmallSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);/
   var regex_challenge3 = /highlightBlock\(.*\);[\r\n]dance\(\);/ //TODO: replace with regex for multiple cake building blocks
   if (latestCode.match(regex_challenge1)) {
@@ -699,57 +693,51 @@ function resetPoseNames() {
   document.getElementById("pose1").innerHTML = POSENAMES[challengeIndex][1];
   document.getElementById("pose2").innerHTML = POSENAMES[challengeIndex][2];
   document.getElementById("pose3").innerHTML = POSENAMES[challengeIndex][3];
-  document.getElementById("pose4").innerHTML = POSENAMES[challengeIndex][4];
 
+  cummulativePoseScores = {
+    [POSES[challengeIndex][0]]: 0,
+    [POSES[challengeIndex][1]]: 0,
+    [POSES[challengeIndex][2]]: 0,
+    [POSES[challengeIndex][3]]: 0,
+    [POSES[challengeIndex][4]]: 0,
+    [POSES[challengeIndex][5]]: 0
+  };
+  
   poseMapping = {
-    [POSES[challengeIndex][0]]: {
-    [ARMS.LEFT]: ARMSTATES.HIGH,
-    [ARMS.RIGHT]: ARMSTATES.LOW
-  },
-  [POSES[challengeIndex][1]]: {
-    [ARMS.LEFT]: ARMSTATES.HIGH,
-    [ARMS.RIGHT]: ARMSTATES.MED
-  },
-  [POSES[challengeIndex][2]]: {
-    [ARMS.LEFT]: ARMSTATES.HIGH,
-    [ARMS.RIGHT]: ARMSTATES.HIGH
-  },
-  [POSES[challengeIndex][3]]: {
-    [ARMS.LEFT]: ARMSTATES.LOW,
-    [ARMS.RIGHT]: ARMSTATES.HIGH
-  },
-  [POSES[challengeIndex][4]]: {
-    [ARMS.LEFT]: ARMSTATES.MED,
-    [ARMS.RIGHT]: ARMSTATES.MED
-  },
-  [POSES[challengeIndex][5]]: {
-    [ARMS.LEFT]: ARMSTATES.MED,
-    [ARMS.RIGHT]: ARMSTATES.HIGH
-  },
-  [POSES[challengeIndex][6]]: {
-    [ARMS.LEFT]: ARMSTATES.NONE,
-    [ARMS.RIGHT]: ARMSTATES.NONE
+      [POSES[challengeIndex][0]]: {
+      [ARMS.LEFT]: ARMSTATES.LOW,
+      [ARMS.RIGHT]: ARMSTATES.HIGH
+    },
+    [POSES[challengeIndex][1]]: {
+      [ARMS.LEFT]: ARMSTATES.MED,
+      [ARMS.RIGHT]: ARMSTATES.MED
+    },
+    [POSES[challengeIndex][2]]: {
+      [ARMS.LEFT]: ARMSTATES.MED,
+      [ARMS.RIGHT]: ARMSTATES.HIGH
+    },
+    [POSES[challengeIndex][3]]: {
+      [ARMS.LEFT]: ARMSTATES.HIGH,
+      [ARMS.RIGHT]: ARMSTATES.LOW
+    },
+    [POSES[challengeIndex][4]]: {
+      [ARMS.LEFT]: ARMSTATES.HIGH,
+      [ARMS.RIGHT]: ARMSTATES.MED
+    },
+    [POSES[challengeIndex][5]]: {
+      [ARMS.LEFT]: ARMSTATES.HIGH,
+      [ARMS.RIGHT]: ARMSTATES.HIGH
+    }
+  };
+
+  robotProgressBars = {
+    [POSES[challengeIndex][0]]: document.getElementById("LeftLowRightHighBar"),
+    [POSES[challengeIndex][1]]: document.getElementById("LeftMedRightMedBar"),
+    [POSES[challengeIndex][2]]: document.getElementById("LeftMedRightHighBar"),
+    [POSES[challengeIndex][3]]: document.getElementById("LeftHighRightLowBar"),
+    [POSES[challengeIndex][4]]: document.getElementById("LeftHighRightMedBar"),
+    [POSES[challengeIndex][5]]: document.getElementById("LeftHighRightHighBar")
   }
-}
-
-cummulativePoseScores = {
-  [POSES[challengeIndex][0]]: 0,
-  [POSES[challengeIndex][1]]: 0,
-  [POSES[challengeIndex][2]]: 0,
-  [POSES[challengeIndex][3]]: 0,
-  [POSES[challengeIndex][4]]: 0,
-  [POSES[challengeIndex][5]]: 0,
-  [POSES[challengeIndex][6]]: 0
-}
-
-robotProgressBars = {
-  [POSES[challengeIndex][0]]: document.getElementById("LeftHighRightLowBar"),
-  [POSES[challengeIndex][1]]: document.getElementById("LeftHighRightMedBar"),
-  [POSES[challengeIndex][2]]: document.getElementById("LeftHighRightHighBar"),
-  [POSES[challengeIndex][3]]: document.getElementById("LeftLowRightHighBar"),
-  [POSES[challengeIndex][4]]: document.getElementById("LeftMedRightMedBar"),
-  [POSES[challengeIndex][5]]: document.getElementById("LeftMedRightHighBar")
-}
 
 }
 
