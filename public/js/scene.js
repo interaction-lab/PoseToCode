@@ -161,7 +161,7 @@ Blockly.JavaScript.dance = function (block) {
   const code = 'dance();\n';
   return code;
 };
-function dance() {
+function dance() { //TODO: pass in dance move
   music = new Audio("sounds/dance.wav");
   idleAnim.stop();
   setTimeout(() => {
@@ -174,6 +174,14 @@ function dance() {
   music.pause();
   idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 }
+
+//dance functions to pass to generic dance()
+
+//cake functions
+  //place layer
+  //frost layer
+  //make layer -> see make sphere logic (2 options)
+
 
 // Helper functions
 function setUpScene(camera, camera1, light, light1) {
