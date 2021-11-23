@@ -99,7 +99,7 @@ const POSENAMES= [
     "Raise the Roof",
     "Wave Right Arm",
     "Wave Left Arm",
-    "360 Spin",
+    "Spin",
   ],
   [ 
     "Make Small Sphere",
@@ -163,12 +163,12 @@ const BLOCKTIMINGMAP = {
 
 // States / Globals
 var robotProgressBars = {
-  [POSES[challengeIndex][0]]: document.getElementById("LeftHighRightLowBar"),
-  [POSES[challengeIndex][1]]: document.getElementById("LeftHighRightMedBar"),
-  [POSES[challengeIndex][2]]: document.getElementById("LeftHighRightHighBar"),
-  [POSES[challengeIndex][3]]: document.getElementById("LeftLowRightHighBar"),
-  [POSES[challengeIndex][4]]: document.getElementById("LeftMedRightMedBar"),
-  [POSES[challengeIndex][5]]: document.getElementById("LeftMedRightHighBar")
+  [POSES[challengeIndex][0]]: document.getElementById("LeftLowRightHighBar"),
+  [POSES[challengeIndex][1]]: document.getElementById("LeftMedRightMedBar"),
+  [POSES[challengeIndex][2]]: document.getElementById("LeftMedRightHighBar"),
+  [POSES[challengeIndex][3]]: document.getElementById("LeftHighRightLowBar"),
+  [POSES[challengeIndex][4]]: document.getElementById("LeftHighRightMedBar"),
+  [POSES[challengeIndex][5]]: document.getElementById("LeftHighRightHighBar")
 }
 
 var cummulativePoseScores = {
@@ -182,27 +182,27 @@ var cummulativePoseScores = {
 
 var poseMapping = {
     [POSES[challengeIndex][0]]: {
-    [ARMS.LEFT]: ARMSTATES.HIGH,
-    [ARMS.RIGHT]: ARMSTATES.LOW
-  },
-  [POSES[challengeIndex][1]]: {
-    [ARMS.LEFT]: ARMSTATES.HIGH,
-    [ARMS.RIGHT]: ARMSTATES.MED
-  },
-  [POSES[challengeIndex][2]]: {
-    [ARMS.LEFT]: ARMSTATES.HIGH,
-    [ARMS.RIGHT]: ARMSTATES.HIGH
-  },
-  [POSES[challengeIndex][3]]: {
     [ARMS.LEFT]: ARMSTATES.LOW,
     [ARMS.RIGHT]: ARMSTATES.HIGH
   },
-  [POSES[challengeIndex][4]]: {
+  [POSES[challengeIndex][1]]: {
     [ARMS.LEFT]: ARMSTATES.MED,
     [ARMS.RIGHT]: ARMSTATES.MED
   },
-  [POSES[challengeIndex][5]]: {
+  [POSES[challengeIndex][2]]: {
     [ARMS.LEFT]: ARMSTATES.MED,
+    [ARMS.RIGHT]: ARMSTATES.HIGH
+  },
+  [POSES[challengeIndex][3]]: {
+    [ARMS.LEFT]: ARMSTATES.HIGH,
+    [ARMS.RIGHT]: ARMSTATES.LOW
+  },
+  [POSES[challengeIndex][4]]: {
+    [ARMS.LEFT]: ARMSTATES.HIGH,
+    [ARMS.RIGHT]: ARMSTATES.MED
+  },
+  [POSES[challengeIndex][5]]: {
+    [ARMS.LEFT]: ARMSTATES.HIGH,
     [ARMS.RIGHT]: ARMSTATES.HIGH
   }
 };
@@ -224,7 +224,7 @@ async function onResults(results) {
         //[ARMS.LEFT]: ARMSTATES.NONE,
         //[ARMS.RIGHT]: ARMSTATES.NONE
       //};
-    }
+    //}
     curArmStates = armStates; // workaround for async
     var bestPose = updateProgressBars(curArmStates, deltaTime);
     console.log(bestPose);
