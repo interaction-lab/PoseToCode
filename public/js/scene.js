@@ -76,7 +76,18 @@ const createScene = function () {
       idleAnim = scene.getAnimationGroupByName("Idle");
       makeSphereAnim = scene.getAnimationGroupByName("MakeSphere");
       placeSphereAnim = scene.getAnimationGroupByName("PlaceSphere");
-      danceAnim = scene.getAnimationGroupByName("Dance");
+      danceAnim = scene.getAnimationGroupByName("Dance"); //TODO: convert to RaiseTheRoof
+
+      //dance animations
+      raiseTheRoofAnim = scene.getAnimationGroupByName("RaiseTheRoof");
+      leftWaveAnim = scene.getAnimationGroupByName("LeftWave");
+      rightWaveAnim = scene.getAnimationGroupByName("RightWave");
+      spinAnim = scene.getAnimationGroupByName("Spin");
+
+      //cake animations
+      placeLayerAnim = scene.getAnimationGroupByName("PlaceLayer");
+      makeLayerAnim = scene.getAnimationGroupByName("MakeLayer");
+      frostLayerAnim = scene.getAnimationGroupByName("FrostLayer");
 
       // enable animation blending
       idleAnim.enableBlending = true;
@@ -158,10 +169,34 @@ function placeSphereCode() {
 }
 
 Blockly.JavaScript.raise_the_roof = function (block) {
+  danceOption = "raise_the_roof";
   const code = 'raiseTheRoof();\n';
   return code;
 };
-function dance() { //TODO: pass in dance move
+
+Blockly.JavaScript.left_wave = function (block) {
+  danceOption = "left_wave";
+  var code = 'leftWave();\n';
+  return code;
+};
+
+Blockly.JavaScript.right_wave = function (block) {
+  danceOption = "right_wave";
+  const code = 'rightWave();\n';
+  return code;
+};
+
+Blockly.JavaScript.spin = function (block) {
+  danceOption = "spin";
+  const code = 'spin();\n';
+  return code;
+};
+
+function dance() {
+  if(danceOption == "raise_the_roof") danceAnim = raiseTheRoofAnim;
+  else if(danceOption == "right_wave") danceAnim = rightWaveAnim;
+  else if (danceOption == "left_wave") danceAnim = leftWaveAnim;
+  else if (danceOption == "spin") danceAnim = spin;
   music = new Audio("sounds/dance.wav");
   idleAnim.stop();
   setTimeout(() => {
@@ -175,13 +210,73 @@ function dance() { //TODO: pass in dance move
   idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 }
 
-//dance functions to pass to generic dance()
+Blockly.JavaScript.placeLayer = function (block) {
+  const code = 'placeLayer();\n';
+  return code;
+};
 
-//cake functions
-  //place layer
-  //frost layer
-  //make layer -> see make sphere logic (2 options)
+Blockly.JavaScript.frostLayer = function (block) {
+  const code = 'frostLayer();\n';
+  return code;
+};
 
+Blockly.JavaScript.make_small_layer = function (block) {
+  currSphereSize = "small";
+  var code = 'makeSmallLayer();\n';
+  return code;
+};
+
+Blockly.JavaScript.make_large_layer = function (block) {
+  currSphereSize = "large";
+  const code = 'makeLargeLayer();\n';
+  return code;
+};
+
+//TODO: Adapt to new placeLayer animation
+function placeLayer() {
+  idleAnim.stop();
+  setTimeout(() => {
+    placeLayerAnim.start(false, 1.0, placeLayerAnim.from, placeLayerAnim.to, false);
+  }, 0);
+  // setTimeout(() => {
+  //   if (currSphereSize == "small") {
+  //     endYPosition += 0.15;
+  //     moveSphere(new BABYLON.Vector3(endXPosition, endYPosition, endZPosition), currSphere);
+  //     currHeight += smallSphereDiameter / 2;
+  //   } else if (currSphereSize == "large") {
+  //     endYPosition += 0.5;
+  //     moveSphere(new BABYLON.Vector3(endXPosition, endYPosition, endZPosition), currSphere);
+  //     currHeight += largeSphereDiameter / 2;
+  //   }
+  // }, placeSphereDelay);
+  // delay += placeSphereDelay;
+  idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
+}
+
+//TODO: Adapt to makeLayer animation
+function makeLayer(currLayerSize) {
+  makeLayerAnim.start(false, 1.0, makeLayerAnim.from, makeLayerAnim.to, false);
+  // setTimeout(() => {
+  //   startYPosition += 0.5;
+  //   if (currSphereSize == "small") diam = smallSphereDiameter;
+  //   else if (currSphereSize == "medium") diam = mediumSphereDiameter;
+  //   else if (currSphereSize == "large") diam = largeSphereDiameter;
+  //   // create a new snowball at the position of the robot's hands
+  //   currSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {
+  //     diameter: diam,
+  //     segments: 32,
+  //   });
+  //   currSphere.position = new BABYLON.Vector3(0, 1.5, .5);
+  //   guiElements.push(currSphere);
+  // }, 200);
+  // delay += makeSphereDelay;
+  // levelOneDoneDelay += makeSphereDelay;
+}
+
+//TODO: Adapt to frostLayer animation
+function frostLayer() {
+
+}
 
 // Helper functions
 function setUpScene(camera, camera1, light, light1) {
