@@ -157,8 +157,8 @@ function placeSphereCode() {
   idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 }
 
-Blockly.JavaScript.dance = function (block) {
-  const code = 'dance();\n';
+Blockly.JavaScript.raise_the_roof = function (block) {
+  const code = 'raiseTheRoof();\n';
   return code;
 };
 function dance() { //TODO: pass in dance move
