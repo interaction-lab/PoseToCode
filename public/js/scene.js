@@ -63,8 +63,8 @@ const createScene = function () {
   // Load robot character and robot animations
   BABYLON.SceneLoader.ImportMesh(
     "",
-    "https://raw.githubusercontent.com/interaction-lab/PoseToCode/current-main/public/Robot/",
-    "blue_robo_finalish.glb",
+    "https://raw.githubusercontent.com/interaction-lab/PoseToCode/challenge-expansion/public/Robot/",
+    "blue-robot-dance-anims.glb",
     scene,
     function (newMeshes, particleSystems, skeletons, animationGroups) {
       const robot = newMeshes[0];
@@ -81,13 +81,13 @@ const createScene = function () {
       //dance animations
       raiseTheRoofAnim = scene.getAnimationGroupByName("RaiseTheRoof");
       leftWaveAnim = scene.getAnimationGroupByName("LeftWave");
-      rightWaveAnim = scene.getAnimationGroupByName("RightWave");
+      rightWaveAnim = scene.getAnimationGroupByName("RightWaveFinal");
       spinAnim = scene.getAnimationGroupByName("Spin");
 
       //cake animations
-      placeLayerAnim = scene.getAnimationGroupByName("PlaceLayer");
-      makeLayerAnim = scene.getAnimationGroupByName("MakeLayer");
-      frostLayerAnim = scene.getAnimationGroupByName("FrostLayer");
+      //placeLayerAnim = scene.getAnimationGroupByName("PlaceLayer");
+      //makeLayerAnim = scene.getAnimationGroupByName("MakeLayer");
+      //frostLayerAnim = scene.getAnimationGroupByName("FrostLayer");
 
       // enable animation blending
       idleAnim.enableBlending = true;
