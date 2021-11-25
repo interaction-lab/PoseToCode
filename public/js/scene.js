@@ -76,7 +76,7 @@ const createScene = function () {
       idleAnim = scene.getAnimationGroupByName("Idle");
       makeSphereAnim = scene.getAnimationGroupByName("MakeSphere");
       placeSphereAnim = scene.getAnimationGroupByName("PlaceSphere");
-      danceAnim = scene.getAnimationGroupByName("Dance"); //TODO: convert to RaiseTheRoof
+      danceAnim = scene.getAnimationGroupByName("RaiseTheRoof"); //TODO: convert to RaiseTheRoof
 
       //dance animations
       raiseTheRoofAnim = scene.getAnimationGroupByName("RaiseTheRoof");
