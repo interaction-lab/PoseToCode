@@ -493,7 +493,7 @@ function initApi(interpreter, globalObject) {
     globalObject,
     "raiseTheRoof",
     interpreter.createNativeFunction(function (text) {
-      raiseTheRoof();
+      dance("raise_the_roof");
     })
   );
 
@@ -501,7 +501,7 @@ function initApi(interpreter, globalObject) {
     globalObject,
     "rightWave",
     interpreter.createNativeFunction(function (text) {
-      rightWave();
+      dance("right_wave");
     })
   );
 
@@ -509,7 +509,7 @@ function initApi(interpreter, globalObject) {
     globalObject,
     "leftWave",
     interpreter.createNativeFunction(function (text) {
-      leftWave();
+      dance("left_wave");
     })
   );
 
@@ -517,7 +517,7 @@ function initApi(interpreter, globalObject) {
     globalObject,
     "spin",
     interpreter.createNativeFunction(function (text) {
-      spin();
+      dance("spin");
     })
   );
 

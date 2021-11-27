@@ -192,7 +192,7 @@ Blockly.JavaScript.spin = function (block) {
   return code;
 };
 
-function dance() {
+function dance(danceOption) {
   if(danceOption == "raise_the_roof") danceAnim = raiseTheRoofAnim;
   else if(danceOption == "right_wave") danceAnim = rightWaveAnim;
   else if (danceOption == "left_wave") danceAnim = leftWaveAnim;
