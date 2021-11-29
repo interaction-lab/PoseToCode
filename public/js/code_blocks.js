@@ -1,3 +1,49 @@
+// Challenge 0 Code Blocks
+Blockly.Blocks.raise_the_roof = {
+  init: function () {
+    this.appendDummyInput().appendField("Raise the Roof");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(195);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  },
+};
+
+Blockly.Blocks.right_wave = {
+  init: function () {
+    this.appendDummyInput().appendField("Wave Right Arm");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(315);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  },
+};
+
+Blockly.Blocks.left_wave = {
+  init: function () {
+    this.appendDummyInput().appendField("Wave Left Arm");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  },
+};
+
+Blockly.Blocks.spin = {
+  init: function () {
+    this.appendDummyInput().appendField("Spin");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(100);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  },
+};
+
+// Challenge 1 Code Blocks
 Blockly.Blocks.make_small_sphere = {
   init: function () {
     this.appendDummyInput().appendField("Make Small Sphere");
@@ -41,17 +87,6 @@ Blockly.Blocks.place = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(195);
-    this.setTooltip("");
-    this.setHelpUrl("");
-  },
-};
-
-Blockly.Blocks.dance = {
-  init: function () {
-    this.appendDummyInput().appendField("Dance");
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(315);
     this.setTooltip("");
     this.setHelpUrl("");
   },

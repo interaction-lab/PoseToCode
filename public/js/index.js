@@ -172,13 +172,11 @@ const poseMapping = {
     [ARMS.RIGHT]: ARMSTATES.HIGH
   },
   [POSES.NONE]: {
-    [ARMS.LEFT]: ARMSTATES.LOW,
-    [ARMS.RIGHT]: ARMSTATES.LOW
+    [ARMS.LEFT]: ARMSTATES.NONE,
+    [ARMS.RIGHT]: ARMSTATES.NONE
   }
 };
 
-leftProgressheader = document.getElementById("leftProgressHeader");
-rightProgressheader = document.getElementById("rightProgressHeader");
 var codeIsRunning = false;
 
 // Main
@@ -294,13 +292,11 @@ function checkBarFull(bestPose) {
   return false;
 }
 
-
 function resetAllPoseProgress() {
   for (let pose in robotProgressBars) {
     cummulativePoseScores[pose] = 0;
   }
 }
-
 
 armInputsR = [
   0, 9, 11, 12, 13, 15, 17, 19, 21, 23
@@ -431,18 +427,6 @@ const camera = new Camera(videoElement, {
 });
 camera.start();
 
-const modal = document.getElementById("levelUpModal");
-const span = document.getElementsByClassName("close")[0];
-span.onclick = function () {
-  modal.style.display = "none";
-};
-
-window.onclick = function (event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-};
-
 function resetCanvas() {
   canvasCtx.save();
   canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
@@ -550,6 +534,7 @@ function generateCodeAndLoadIntoInterpreter() {
 
 function stepThroughAllCode() {
   codeIsRunning = true;
+  document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "#228B22";
   if (myInterpreter.step()) {
     myInterpreter.step();
     myInterpreter.step(); // not sure why but this is needed to run 3 times?
@@ -557,6 +542,7 @@ function stepThroughAllCode() {
   }
   else {
     codeIsRunning = false;
+    document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "white";
   }
 }
 
