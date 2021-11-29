@@ -63,7 +63,7 @@ const createScene = function () {
   // Load robot character and robot animations
   BABYLON.SceneLoader.ImportMesh(
     "",
-    "https://raw.githubusercontent.com/interaction-lab/PoseToCode/challenge-expansion/public/Robot/",
+    "https://raw.githubusercontent.com/interaction-lab/PoseToCode/main/public/Robot/",
     "blue-robot-dance-anims.glb",
     scene,
     function (newMeshes, particleSystems, skeletons, animationGroups) {
