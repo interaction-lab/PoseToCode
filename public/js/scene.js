@@ -217,7 +217,7 @@ function dance(danceMove) {
   idleAnim.stop();
   setTimeout(() => {
     danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
-    music.play();
+    //music.play();
   }, 0);
   delay += danceDelay;
   levelOneDoneDelay += danceDelay;
