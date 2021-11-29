@@ -192,12 +192,28 @@ Blockly.JavaScript.spin = function (block) {
   return code;
 };
 
-function dance(danceOption) {
-  if(danceOption == "raise_the_roof") danceAnim = raiseTheRoofAnim;
-  else if(danceOption == "right_wave") danceAnim = rightWaveAnim;
-  else if (danceOption == "left_wave") danceAnim = leftWaveAnim;
-  else if (danceOption == "spin") danceAnim = spin;
-  music = new Audio("sounds/dance.wav");
+function spin() {
+  dance("spin");
+}
+
+function rightWave() {
+  dance("right_wave");
+}
+
+function leftWave() {
+  dance("left_wave");
+}
+
+function raiseTheRoof() {
+  dance("raise_the_roof");
+}
+
+function dance(danceMove) {
+  if(danceMove == "raise_the_roof") danceAnim = raiseTheRoofAnim;
+  else if(danceMove == "right_wave") danceAnim = rightWaveAnim;
+  else if (danceMove == "left_wave") danceAnim = leftWaveAnim;
+  else if (danceMove == "spin") danceAnim = spinAnim;
+  //music = new Audio("sounds/dance.wav");
   idleAnim.stop();
   setTimeout(() => {
     danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
@@ -206,7 +222,7 @@ function dance(danceOption) {
   delay += danceDelay;
   levelOneDoneDelay += danceDelay;
   danceAnim.stop();
-  music.pause();
+  //music.pause();
   idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 }
 
