@@ -94,7 +94,7 @@ const ARMSTATES = {
   HIGH: "High"
 }
 
-const POSENAMES= [
+const POSENAMES = [
   [ 
     "Raise the Roof",
     "Wave Right Arm",
@@ -214,6 +214,7 @@ async function onResults(results) {
   deltaTime = getDeltaTimeMS();
   resetCanvas();
   drawPoseSkeleton(results);
+  console.log(codeIsRunning);
   if (!codeIsRunning) {
     if (results != null &&
       results.poseLandmarks != null) {
@@ -238,7 +239,6 @@ function updateCumulativePoseStates(bestArmScores, deltaTime) {
   var decayFactor = 0.8 * deltaTime;
   var bestPose;
   for (let pose in poseMapping) {
-    console.log(pose);
     if (cArm(bestArmScores, poseMapping[pose])) {
       addToPoseState(pose, deltaTime, scaledTimeToHoldPose);
       bestPose = pose;
@@ -271,20 +271,18 @@ function cArm(armState, compareTo) {
 function updateProgressBars(bestArmScores, deltaTime) {
   var curPoseDetected = updateCumulativePoseStates(bestArmScores, deltaTime);
   for (let pose in robotProgressBars) {
-    console.log((cummulativePoseScores[pose] / timeToHoldPoseMS));
+    //console.log((cummulativePoseScores[pose] / timeToHoldPoseMS));
     robotProgressBars[pose].style.height = (cummulativePoseScores[pose] / timeToHoldPoseMS) * 100 + "%";
   }
   return curPoseDetected;
 }
 
 function poseScoresOverThreshHold(bestPose) {
-  console.log("cumulative: " + cummulativePoseScores[bestPose]);
   return cummulativePoseScores[bestPose] >= timeToHoldPoseMS;
 }
 
 function checkBarFull(bestPose) {
   if (!poseScoresOverThreshHold(bestPose)) {
-    console.log("not over threshold");
     return false;
   }
   if (bestPose == POSES[challengeIndex][0]) {
@@ -619,6 +617,7 @@ function generateCodeAndLoadIntoInterpreter() {
 function stepThroughAllCode() {
   codeIsRunning = true;
   document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "#228B22";
+  
   if (myInterpreter.step()) {
     myInterpreter.step();
     myInterpreter.step(); // not sure why but this is needed to run 3 times?
@@ -626,24 +625,32 @@ function stepThroughAllCode() {
   }
   else {
     if(!challenge1Alert && completedChallenge1) {
-      alert("Congratulations! You completed Challenge 1: Dance Routine!");
-      alert("Challenge 2: Build a Snowman. Construct a snowman by creating and placing differently sized spheres.");
-      challenge1Alert = true;
-      challengeIndex++;
-      resetPoseNames();
-      resetAllBlocks();
-      document.getElementById("snowmanImage").style.display = "block";
+      setTimeout(() => {
+        alert("Congratulations! You completed Challenge 1: Dance Routine!");
+        alert("Challenge 2: Build a Snowman. Construct a snowman by creating and placing differently sized spheres.");
+        challenge1Alert = true;
+        challengeIndex++;
+        resetPoseNames();
+        resetAllBlocks();
+        document.getElementById("snowmanImage").style.display = "block";
+      }, 1000);
     }
     else if (!challenge2Alert && completedChallenge2) {
-      alert("Congratulations! You completed Challenge 2: Build a Snowman!");
-      alert("Challenge 3: Make a Cake. Construct a frosted cake with two layers!");
-      challenge2Alert = true;
-      challengeIndex++;
-      resetPoseNames();
-      resetAllBlocks();
+      setTimeout(() => {
+        alert("Congratulations! You completed Challenge 2: Build a Snowman!");
+        alert("Challenge 3: Make a Cake. Construct a frosted cake with two layers!");
+        challenge2Alert = true;
+        challengeIndex++;
+        resetPoseNames();
+        resetAllPoseProgress();
+        resetAllBlocks();
+        document.getElementById("snowmanImage").style.display = "none";
+      }, 2000);
     }
     else if (completedChallenge3) {
-      alert("Congratulations! You completed the tutorial!");
+      setTimeout(() => {
+        alert("Congratulations! You completed the tutorial!");
+      }, 3000);
     }
     document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "white";
     codeIsRunning = false;
@@ -689,6 +696,7 @@ function resetAllBlocks() {
 }
 
 function resetPoseNames() { 
+  console.log(challengeIndex);
   document.getElementById("pose0").innerHTML = POSENAMES[challengeIndex][0];
   document.getElementById("pose1").innerHTML = POSENAMES[challengeIndex][1];
   document.getElementById("pose2").innerHTML = POSENAMES[challengeIndex][2];
@@ -757,6 +765,7 @@ function addNewBlock(blockName, fields = []) {
 }
 
 function codeBlock0() {
+  console.log(challengeIndex);
   addNewBlock(POSES[challengeIndex][0]);
 }
 

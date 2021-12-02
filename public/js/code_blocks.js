@@ -91,3 +91,48 @@ Blockly.Blocks.place = {
     this.setHelpUrl("");
   },
 };
+
+// Challenge 2 Code Blocks
+Blockly.Blocks.make_small_layer = {
+  init: function () {
+    this.appendDummyInput().appendField("Raise the Roof");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(195);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  },
+};
+
+Blockly.Blocks.make_large_layer = {
+  init: function () {
+    this.appendDummyInput().appendField("Wave Right Arm");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(315);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  },
+};
+
+Blockly.Blocks.place_layer = {
+  init: function () {
+    this.appendDummyInput().appendField("Wave Left Arm");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  },
+};
+
+Blockly.Blocks.frost_layer = {
+  init: function () {
+    this.appendDummyInput().appendField("Spin");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(100);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  },
+};

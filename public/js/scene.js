@@ -3,6 +3,7 @@ const canvas = document.getElementById("renderCanvas");
 const engine = new BABYLON.Engine(canvas, true);
 const scene = new BABYLON.Scene(engine);
 var currSphereSize;
+var currCylinderSize;
 var idleAnim, makeSphereAnim, placeSphereAnim, danceAnim;
 // Create GUI
 const gui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
@@ -20,17 +21,17 @@ const placeSphereDelay = 2000;
 const danceDelay = 2000;
 
 // Keep track of sphere coordinates
-let startYPosition = 1.3;
-let endYPosition = -3;
+let sphere_startYPosition = 1.3;
+let sphere_endYPosition = -3;
+let currSphereHeight = 0;
+
+//Keep track of cylinder coordinates
+let cylinder_startYPosition = 1.3;
+let cylinder_endYPosition = -3;
+let currCylinderHeight = 0;
+
 const endXPosition = 0.7;
 const endZPosition = 0.2;
-let currHeight = 0;
-
-let level = 1;
-const levelOneDone = false;
-// Can initialize ahead of time because we know these six actions MUST happen
-// in order for a user to pass level one
-let levelOneDoneDelay = 3 * makeSphereDelay + 3 * placeSphereDelay;
 
 /***** create scene function ******/
 const createScene = function () {
@@ -124,7 +125,7 @@ Blockly.JavaScript.make_large_sphere = function (block) {
 function makeSphere(currSphereSize) {
   makeSphereAnim.start(false, 1.0, makeSphereAnim.from, makeSphereAnim.to, false);
   setTimeout(() => {
-    startYPosition += 0.5;
+    sphere_startYPosition += 0.5;
     if (currSphereSize == "small") diam = smallSphereDiameter;
     else if (currSphereSize == "medium") diam = mediumSphereDiameter;
     else if (currSphereSize == "large") diam = largeSphereDiameter;
@@ -137,7 +138,6 @@ function makeSphere(currSphereSize) {
     guiElements.push(currSphere);
   }, 200);
   delay += makeSphereDelay;
-  levelOneDoneDelay += makeSphereDelay;
 }
 
 Blockly.JavaScript.place = function (block) {
@@ -151,17 +151,17 @@ function placeSphereCode() {
   }, 0);
   setTimeout(() => {
     if (currSphereSize == "small") {
-      endYPosition += 0.15;
-      moveSphere(new BABYLON.Vector3(endXPosition, endYPosition, endZPosition), currSphere);
-      currHeight += smallSphereDiameter / 2;
+      sphere_endYPosition += 0.15;
+      moveSphere(new BABYLON.Vector3(endXPosition, sphere_endYPosition, endZPosition), currSphere, currSphereHeight);
+      currSphereHeight += smallSphereDiameter / 2;
     } else if (currSphereSize == "medium") {
-      endYPosition += 0.25;
-      moveSphere(new BABYLON.Vector3(endXPosition, endYPosition, endZPosition), currSphere);
-      currHeight += mediumSphereDiameter / 2;
+      sphere_endYPosition += 0.25;
+      moveSphere(new BABYLON.Vector3(endXPosition, sphere_endYPosition, endZPosition), currSphere, currSphereHeight);
+      currSphereHeight += mediumSphereDiameter / 2;
     } else if (currSphereSize == "large") {
-      endYPosition += 0.5;
-      moveSphere(new BABYLON.Vector3(endXPosition, endYPosition, endZPosition), currSphere);
-      currHeight += largeSphereDiameter / 2;
+      sphere_endYPosition += 0.5;
+      moveSphere(new BABYLON.Vector3(endXPosition, sphere_endYPosition, endZPosition), currSphere, currSphereHeight);
+      currSphereHeight += largeSphereDiameter / 2;
     }
   }, placeSphereDelay);
   delay += placeSphereDelay;
@@ -220,73 +220,78 @@ function dance(danceMove) {
     //music.play();
   }, 0);
   delay += danceDelay;
-  levelOneDoneDelay += danceDelay;
   danceAnim.stop();
   //music.pause();
   idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 }
 
-Blockly.JavaScript.placeLayer = function (block) {
+Blockly.JavaScript.place_layer = function (block) {
   const code = 'placeLayer();\n';
   return code;
 };
 
-Blockly.JavaScript.frostLayer = function (block) {
+Blockly.JavaScript.frost_layer = function (block) {
   const code = 'frostLayer();\n';
   return code;
 };
 
 Blockly.JavaScript.make_small_layer = function (block) {
-  currSphereSize = "small";
+  currCylinderSize = "small";
   var code = 'makeSmallLayer();\n';
   return code;
 };
 
 Blockly.JavaScript.make_large_layer = function (block) {
-  currSphereSize = "large";
+  currCylinderSize = "large";
   const code = 'makeLargeLayer();\n';
   return code;
 };
+
+function makeSmallLayer() {
+  makeLayer("small");
+}
+
+function makeLargeLayer() {
+  makeLayer("large");
+}
 
 //TODO: Adapt to new placeLayer animation
 function placeLayer() {
   idleAnim.stop();
   setTimeout(() => {
-    placeLayerAnim.start(false, 1.0, placeLayerAnim.from, placeLayerAnim.to, false);
+    placeSphereAnim.start(false, 1.0, placeSphereAnim.from, placeSphereAnim.to, false);
   }, 0);
-  // setTimeout(() => {
-  //   if (currSphereSize == "small") {
-  //     endYPosition += 0.15;
-  //     moveSphere(new BABYLON.Vector3(endXPosition, endYPosition, endZPosition), currSphere);
-  //     currHeight += smallSphereDiameter / 2;
-  //   } else if (currSphereSize == "large") {
-  //     endYPosition += 0.5;
-  //     moveSphere(new BABYLON.Vector3(endXPosition, endYPosition, endZPosition), currSphere);
-  //     currHeight += largeSphereDiameter / 2;
-  //   }
-  // }, placeSphereDelay);
-  // delay += placeSphereDelay;
+  setTimeout(() => {
+    if (currCylinderSize == "small") {
+      cylinder_endYPosition += 0.15;
+      moveSphere(new BABYLON.Vector3(endXPosition, cylinder_endYPosition, endZPosition), currCylinder, currCylinderHeight);
+      currCylinderHeight += 1;
+    } else if (currCylinderSize == "large") {
+      cylinder_endYPosition += 0.5;
+      moveSphere(new BABYLON.Vector3(endXPosition, cylinder_endYPosition, endZPosition), currCylinder, currCylinderHeight);
+      currCylinderHeight += 1.5;
+    }
+  }, placeSphereDelay);
+  delay += placeSphereDelay;
   idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 }
 
 //TODO: Adapt to makeLayer animation
-function makeLayer(currLayerSize) {
-  makeLayerAnim.start(false, 1.0, makeLayerAnim.from, makeLayerAnim.to, false);
-  // setTimeout(() => {
-  //   startYPosition += 0.5;
-  //   if (currSphereSize == "small") diam = smallSphereDiameter;
-  //   else if (currSphereSize == "medium") diam = mediumSphereDiameter;
-  //   else if (currSphereSize == "large") diam = largeSphereDiameter;
-  //   // create a new snowball at the position of the robot's hands
-  //   currSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {
-  //     diameter: diam,
-  //     segments: 32,
-  //   });
-  //   currSphere.position = new BABYLON.Vector3(0, 1.5, .5);
-  //   guiElements.push(currSphere);
-  // }, 200);
-  // delay += makeSphereDelay;
-  // levelOneDoneDelay += makeSphereDelay;
+function makeLayer(currCylinderSize) {
+  makeSphereAnim.start(false, 1.0, makeSphereAnim.from, makeSphereAnim.to, false);
+  setTimeout(() => {
+    cylinder_startYPosition += 0.5;
+    if (currCylinderSize == "small") diam = 1;
+    else if (currCylinderSize == "large") diam = 1.5;
+    // create a new cake at the position of the robot's hands
+    currCylinder = BABYLON.MeshBuilder.CreateCylinder("cylinder", {
+      diameter: diam,
+      height: 0.5
+    });
+    currCylinder.position = new BABYLON.Vector3(0, 1.5, 1.5);
+    guiElements.push(currCylinder);
+  }, 200);
+  delay += makeSphereDelay;
 }
 
 //TODO: Adapt to frostLayer animation
@@ -308,7 +313,7 @@ function setUpScene(camera, camera1, light, light1) {
   camera1.wheelDeltaPercentage = 0.1;
 }
 
-function moveSphere(translate, currSphere) {
+function moveSphere(translate, currSphere, currHeight) {
   let j = 0;
   const deltaDistance = 0.1;
   const dist = translate.length() - currHeight;
@@ -324,19 +329,6 @@ function moveRobotUp(robot, delay) {
   setTimeout(() => {
     robot.position.y += 0.5;
   }, 0);
-}
-
-function runOnGUI() {
-  if (level == 1 && detectLevelOneDone()) {
-    setTimeout(() => {
-      const audio = new Audio("sounds/party_horn.mp3");
-      audio.play();
-      document.getElementById("levelUpModal").style.display = "block";
-      document.getElementById("levelUpModal").querySelector("p").innerHTML =
-        "You passed level 1!";
-      level++;
-    }, levelOneDoneDelay);
-  }
 }
 
 function resetGUI() {
