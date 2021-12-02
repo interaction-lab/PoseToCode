@@ -95,7 +95,7 @@ Blockly.Blocks.place = {
 // Challenge 2 Code Blocks
 Blockly.Blocks.make_small_layer = {
   init: function () {
-    this.appendDummyInput().appendField("Raise the Roof");
+    this.appendDummyInput().appendField("Make Small Layer");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(195);
@@ -106,7 +106,7 @@ Blockly.Blocks.make_small_layer = {
 
 Blockly.Blocks.make_large_layer = {
   init: function () {
-    this.appendDummyInput().appendField("Wave Right Arm");
+    this.appendDummyInput().appendField("Make Large Layer");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(315);
@@ -117,7 +117,7 @@ Blockly.Blocks.make_large_layer = {
 
 Blockly.Blocks.place_layer = {
   init: function () {
-    this.appendDummyInput().appendField("Wave Left Arm");
+    this.appendDummyInput().appendField("Place Layer");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(230);
@@ -128,7 +128,7 @@ Blockly.Blocks.place_layer = {
 
 Blockly.Blocks.frost_layer = {
   init: function () {
-    this.appendDummyInput().appendField("Spin");
+    this.appendDummyInput().appendField("Frost Layer");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(100);

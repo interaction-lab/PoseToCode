@@ -214,7 +214,6 @@ async function onResults(results) {
   deltaTime = getDeltaTimeMS();
   resetCanvas();
   drawPoseSkeleton(results);
-  console.log(codeIsRunning);
   if (!codeIsRunning) {
     if (results != null &&
       results.poseLandmarks != null) {
@@ -766,6 +765,7 @@ function addNewBlock(blockName, fields = []) {
 
 function codeBlock0() {
   console.log(challengeIndex);
+  console.log(POSES[challengeIndex][0]);
   addNewBlock(POSES[challengeIndex][0]);
 }
 

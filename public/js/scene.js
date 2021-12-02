@@ -288,7 +288,7 @@ function makeLayer(currCylinderSize) {
       diameter: diam,
       height: 0.5
     });
-    currCylinder.position = new BABYLON.Vector3(0, 1.5, 1.5);
+    currCylinder.position = new BABYLON.Vector3(0, 1.8, 1.5);
     guiElements.push(currCylinder);
   }, 200);
   delay += makeSphereDelay;
