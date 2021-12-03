@@ -65,9 +65,9 @@
       </thead>
       <tbody>
         <tr>
-          <td class="tg-c3ow">Place Sphere</td>
-          <td class="tg-c3ow">Dance</td>
-          <td class="tg-c3ow"> Run Code </td>
+          <td class="tg-c3ow" id="pose0">Raise the Roof</td>
+          <td class="tg-c3ow" id="pose1">Wave Right Arm</td>
+          <td class="tg-c3ow" id="pose2">Wave Left Arm</td>
         </tr>
       </tbody>
     </table>
@@ -88,9 +88,9 @@
       </thead>
       <tbody>
         <tr>
-          <td class="tg-c3ow">Make Sphere Small</td>
-          <td class="tg-c3ow">Make Sphere Medium</td>
-          <td class="tg-c3ow">Make Sphere Large</td>
+          <td class="tg-c3ow" id="pose3">Spin</td>
+          <td class="tg-c3ow"> Run Code </td>
+          <td class="tg-c3ow">Reset</td>
         </tr>
       </tbody>
     </table>
@@ -104,6 +104,7 @@
     <sep></sep>
   </xml>
   <xml xmlns="https://developers.google.com/blockly/xml" id="workspaceBlocks" style="display: none"></xml>
+
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
@@ -130,9 +131,12 @@
       }
       else if (e.keyCode == 81) { // q
         generateCodeAndLoadIntoInterpreter();
-        makeLargeSphereBlock();
-        placeSphere();
-        addDanceBlock();
+        codeBlock1();
+        codeBlock2();
+        codeBlock3();
+        codeBlock0();
+        codeBlock2();
+        codeBlock3();
       }
       else if (e.keyCode == 87) { // w
         resetGUI();
@@ -142,7 +146,7 @@
   </script>
 
   <script src="js/log.js"></script>
-  <script src="js/index_tutorial.js"></script>
+  <script src="js/index.js"></script>
   <script src="js/scene.js"></script>
 </body>
 

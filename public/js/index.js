@@ -44,12 +44,20 @@ let childBlock = null;
 /* keep track of all blocks for resetting */
 const allBlocks = [];
 
-let sphereSizeFlag = false;
-let sleepFlag = false;
-
 const videoElement = document.getElementsByClassName("input_video")[0];
 const canvasElement = document.getElementsByClassName("output_canvas")[0];
 const canvasCtx = canvasElement.getContext("2d");
+
+var challengeIndex = 0;
+var completedChallenge1 = false;
+var challenge1Alert = false;
+var completedChallenge2 = false;
+var challenge2Alert = false;
+var completedChallenge3 = false;
+
+function startTutorial() {
+  alert("Challenge 1: Make the Robot Dance!");
+}
 
 // Helpers
 function sleep(milliseconds) {
@@ -86,15 +94,54 @@ const ARMSTATES = {
   HIGH: "High"
 }
 
-const POSES = {
-  MAKESPHERESMALL: "MakeSphereSmall",
-  MAKESPHEREMEDIUM: "MakeSphereMedium",
-  MAKESPHERELARGE: "MakeSphereLarge",
-  PLACESPHERE: "PlaceSphere",
-  DANCE: "Dance",
-  RUNCODE: "RunCode",
-  NONE: "none"
-}
+const POSENAMES = [
+  [ 
+    "Raise the Roof",
+    "Wave Right Arm",
+    "Wave Left Arm",
+    "Spin",
+  ],
+  [ 
+    "Make Small Sphere",
+    "Make Medium Sphere",
+    "Make Large Sphere",
+    "Place Sphere",
+  ],
+  [ 
+    "Make Small Cake",
+    "Make Large Cake",
+    "Place Cake",
+    "Frost Cake",
+  ]
+]
+
+// names of the code blocks
+const POSES = [
+  [ 
+    "raise_the_roof",
+    "right_wave",
+    "left_wave",
+    "spin",
+    "RunCode",
+    "Reset"
+  ],
+  [ 
+    "make_small_sphere",
+    "make_medium_sphere",
+    "make_large_sphere",
+    "place",
+    "RunCode",
+    "Reset"
+  ],
+  [ 
+    "make_small_layer",
+    "make_large_layer",
+    "place_layer",
+    "frost_layer",
+    "RunCode",
+    "Reset"
+  ]
+]
 
 const BLOCKTYPES = {
   CREATESMALLSPHERE: "make_small_sphere",
@@ -104,6 +151,7 @@ const BLOCKTYPES = {
   DANCE: "dance"
 }
 
+//TODO: add times for other code blocks
 createSphereTiming = 2000;
 const BLOCKTIMINGMAP = {
   CREATESMALLSPHERE: createSphereTiming,
@@ -114,66 +162,48 @@ const BLOCKTIMINGMAP = {
 }
 
 // States / Globals
-progressBars = {
-  [ARMS.LEFT]: {
-    [ARMSTATES.LOW]: document.getElementById("leftArmLowBar"),
-    [ARMSTATES.MED]: document.getElementById("leftArmMedBar"),
-    [ARMSTATES.HIGH]: document.getElementById("leftArmHighBar")
-  },
-  [ARMS.RIGHT]: {
-    [ARMSTATES.LOW]: document.getElementById("rightArmLowBar"),
-    [ARMSTATES.MED]: document.getElementById("rightArmMedBar"),
-    [ARMSTATES.HIGH]: document.getElementById("rightArmHighBar")
-  }
+var robotProgressBars = {
+  [POSES[challengeIndex][0]]: document.getElementById("LeftLowRightHighBar"),
+  [POSES[challengeIndex][1]]: document.getElementById("LeftMedRightMedBar"),
+  [POSES[challengeIndex][2]]: document.getElementById("LeftMedRightHighBar"),
+  [POSES[challengeIndex][3]]: document.getElementById("LeftHighRightLowBar"),
+  [POSES[challengeIndex][4]]: document.getElementById("LeftHighRightMedBar"),
+  [POSES[challengeIndex][5]]: document.getElementById("LeftHighRightHighBar")
 }
 
-robotProgressBars = {
-  [POSES.MAKESPHERESMALL]: document.getElementById("makeSphereSmallBar"),
-  [POSES.MAKESPHEREMEDIUM]: document.getElementById("makeSphereMediumBar"),
-  [POSES.MAKESPHERELARGE]: document.getElementById("makeSphereLargeBar"),
-  [POSES.PLACESPHERE]: document.getElementById("placeSphereBar"),
-  [POSES.DANCE]: document.getElementById("danceBar"),
-  [POSES.RUNCODE]: document.getElementById("runCodeBar")
-}
-
-cummulativePoseScores = {
-  [POSES.MAKESPHERESMALL]: 0,
-  [POSES.MAKESPHEREMEDIUM]: 0,
-  [POSES.MAKESPHERELARGE]: 0,
-  [POSES.PLACESPHERE]: 0,
-  [POSES.DANCE]: 0,
-  [POSES.RUNCODE]: 0,
-  [POSES.NONE]: 0
+var cummulativePoseScores = {
+  [POSES[challengeIndex][0]]: 0,
+  [POSES[challengeIndex][1]]: 0,
+  [POSES[challengeIndex][2]]: 0,
+  [POSES[challengeIndex][3]]: 0,
+  [POSES[challengeIndex][4]]: 0,
+  [POSES[challengeIndex][5]]: 0
 };
 
-const poseMapping = {
-  [POSES.MAKESPHERESMALL]: {
-    [ARMS.LEFT]: ARMSTATES.HIGH,
-    [ARMS.RIGHT]: ARMSTATES.LOW
-  },
-  [POSES.MAKESPHEREMEDIUM]: {
-    [ARMS.LEFT]: ARMSTATES.HIGH,
-    [ARMS.RIGHT]: ARMSTATES.MED
-  },
-  [POSES.MAKESPHERELARGE]: {
-    [ARMS.LEFT]: ARMSTATES.HIGH,
-    [ARMS.RIGHT]: ARMSTATES.HIGH
-  },
-  [POSES.PLACESPHERE]: {
+var poseMapping = {
+    [POSES[challengeIndex][0]]: {
     [ARMS.LEFT]: ARMSTATES.LOW,
     [ARMS.RIGHT]: ARMSTATES.HIGH
   },
-  [POSES.DANCE]: {
+  [POSES[challengeIndex][1]]: {
     [ARMS.LEFT]: ARMSTATES.MED,
     [ARMS.RIGHT]: ARMSTATES.MED
   },
-  [POSES.RUNCODE]: {
+  [POSES[challengeIndex][2]]: {
     [ARMS.LEFT]: ARMSTATES.MED,
     [ARMS.RIGHT]: ARMSTATES.HIGH
   },
-  [POSES.NONE]: {
-    [ARMS.LEFT]: ARMSTATES.NONE,
-    [ARMS.RIGHT]: ARMSTATES.NONE
+  [POSES[challengeIndex][3]]: {
+    [ARMS.LEFT]: ARMSTATES.HIGH,
+    [ARMS.RIGHT]: ARMSTATES.LOW
+  },
+  [POSES[challengeIndex][4]]: {
+    [ARMS.LEFT]: ARMSTATES.HIGH,
+    [ARMS.RIGHT]: ARMSTATES.MED
+  },
+  [POSES[challengeIndex][5]]: {
+    [ARMS.LEFT]: ARMSTATES.HIGH,
+    [ARMS.RIGHT]: ARMSTATES.HIGH
   }
 };
 
@@ -189,14 +219,9 @@ async function onResults(results) {
       results.poseLandmarks != null) {
       updateArmStateWithDetectPose(results);
     }
-    else { // reset if out of frame long enough
-      armStates = {
-        [ARMS.LEFT]: ARMSTATES.NONE,
-        [ARMS.RIGHT]: ARMSTATES.NONE
-      };
-    }
     curArmStates = armStates; // workaround for async
     var bestPose = updateProgressBars(curArmStates, deltaTime);
+    console.log(bestPose);
     if (checkBarFull(bestPose)) {
       // Logger.update(Date.now(), results.poseLandmarks, 1); TODO: uncomment when deploying
       resetAllPoseProgress();
@@ -245,7 +270,7 @@ function cArm(armState, compareTo) {
 function updateProgressBars(bestArmScores, deltaTime) {
   var curPoseDetected = updateCumulativePoseStates(bestArmScores, deltaTime);
   for (let pose in robotProgressBars) {
-    console.log((cummulativePoseScores[pose] / timeToHoldPoseMS));
+    //console.log((cummulativePoseScores[pose] / timeToHoldPoseMS));
     robotProgressBars[pose].style.height = (cummulativePoseScores[pose] / timeToHoldPoseMS) * 100 + "%";
   }
   return curPoseDetected;
@@ -259,32 +284,28 @@ function checkBarFull(bestPose) {
   if (!poseScoresOverThreshHold(bestPose)) {
     return false;
   }
-  if (bestPose == POSES.DANCE) {
-    addDanceBlock();
+  if (bestPose == POSES[challengeIndex][0]) {
+    codeBlock0();
     return true;
   }
-  else if (bestPose == POSES.RUNCODE) {
+  else if (bestPose == POSES[challengeIndex][1]) {
+    codeBlock1();
+    return true;
+  }
+  else if (bestPose == POSES[challengeIndex][2]) {
+    codeBlock2();
+    return true;
+  }
+  else if (bestPose == POSES[challengeIndex][3]) {
+    codeBlock3();
+    return true;
+  }
+  else if (bestPose == POSES[challengeIndex][4]) {
     resetGUI();
     runCode();
     return true;
   }
-  else if (bestPose == POSES.PLACESPHERE) {
-    placeSphere();
-    return true;
-  }
-  else if (bestPose == POSES.MAKESPHERESMALL) {
-    makeSmallSphereBlock();
-    return true;
-  }
-  else if (bestPose == POSES.MAKESPHEREMEDIUM) {
-    makeMediumSphereBlock();
-    return true;
-  }
-  else if (bestPose == POSES.MAKESPHERELARGE) {
-    makeLargeSphereBlock();
-    return true;
-  }
-  else if (bestPose == POSES.NONE) {
+  else if (bestPose == POSES[challengeIndex][5]) {
     console.log("reset");
     resetAllBlocks();
     return true;
@@ -331,7 +352,6 @@ const rightModelInfo = {
 };
 rightBrain.load(rightModelInfo, rightBrainLoaded);
 
-
 rBrainLoaded = false;
 function rightBrainLoaded() {
   rBrainLoaded = true;
@@ -340,7 +360,6 @@ lBrainLoaded = false;
 function leftBrainLoaded() {
   lBrainLoaded = true;
 }
-
 
 // Assumes results.poseLandmarks != null
 armStates = {
@@ -465,13 +484,41 @@ function initApi(interpreter, globalObject) {
       alert(text);
     })
   );
+
+  //Dance functions
   interpreter.setProperty(
     globalObject,
-    "dance",
+    "raiseTheRoof",
     interpreter.createNativeFunction(function (text) {
-      dance();
+      dance("raise_the_roof");
     })
   );
+
+  interpreter.setProperty(
+    globalObject,
+    "rightWave",
+    interpreter.createNativeFunction(function (text) {
+      dance("right_wave");
+    })
+  );
+
+  interpreter.setProperty(
+    globalObject,
+    "leftWave",
+    interpreter.createNativeFunction(function (text) {
+      dance("left_wave");
+    })
+  );
+
+  interpreter.setProperty(
+    globalObject,
+    "spin",
+    interpreter.createNativeFunction(function (text) {
+      dance("spin");
+    })
+  );
+
+  //Snowman functions
   interpreter.setProperty(
     globalObject,
     "placeSphereCode",
@@ -500,6 +547,40 @@ function initApi(interpreter, globalObject) {
       makeSphere("large");
     })
   );
+
+  //Cake functions
+  interpreter.setProperty(
+    globalObject,
+    "makeSmallLayer",
+    interpreter.createNativeFunction(function (text) {
+      makeLayer("small");
+    })
+  );
+
+  interpreter.setProperty(
+    globalObject,
+    "makeLargeLayer",
+    interpreter.createNativeFunction(function (text) {
+      makeLayer("large");
+    })
+  );
+
+  interpreter.setProperty(
+    globalObject,
+    "frostLayer",
+    interpreter.createNativeFunction(function (text) {
+      frostLayer();
+    })
+  );
+
+  interpreter.setProperty(
+    globalObject,
+    "placeLayer",
+    interpreter.createNativeFunction(function (text) {
+      placeLayer();
+    })
+  );
+  
   var wrapper = function (id) {
     id = String(id || "");
     return interpreter.createPrimitive(highlightBlock(id));
@@ -540,10 +621,8 @@ function stepThroughAllCode() {
     myInterpreter.step(); // not sure why but this is needed to run 3 times?
     setTimeout(stepThroughAllCode, 500); // need the correct timing
   }
-  else {
-    codeIsRunning = false;
-    document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "white";
-  }
+  document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "white";
+  codeIsRunning = false;
 }
 
 function stepCode() {
@@ -569,6 +648,59 @@ function resetAllBlocks() {
   parentBlock = null;
   resetGUI();
   time = 0;
+}
+
+function resetPoseNames() { 
+  console.log(challengeIndex);
+  document.getElementById("pose0").innerHTML = POSENAMES[challengeIndex][0];
+  document.getElementById("pose1").innerHTML = POSENAMES[challengeIndex][1];
+  document.getElementById("pose2").innerHTML = POSENAMES[challengeIndex][2];
+  document.getElementById("pose3").innerHTML = POSENAMES[challengeIndex][3];
+
+  cummulativePoseScores = {
+    [POSES[challengeIndex][0]]: 0,
+    [POSES[challengeIndex][1]]: 0,
+    [POSES[challengeIndex][2]]: 0,
+    [POSES[challengeIndex][3]]: 0,
+    [POSES[challengeIndex][4]]: 0,
+    [POSES[challengeIndex][5]]: 0
+  };
+  
+  poseMapping = {
+      [POSES[challengeIndex][0]]: {
+      [ARMS.LEFT]: ARMSTATES.LOW,
+      [ARMS.RIGHT]: ARMSTATES.HIGH
+    },
+    [POSES[challengeIndex][1]]: {
+      [ARMS.LEFT]: ARMSTATES.MED,
+      [ARMS.RIGHT]: ARMSTATES.MED
+    },
+    [POSES[challengeIndex][2]]: {
+      [ARMS.LEFT]: ARMSTATES.MED,
+      [ARMS.RIGHT]: ARMSTATES.HIGH
+    },
+    [POSES[challengeIndex][3]]: {
+      [ARMS.LEFT]: ARMSTATES.HIGH,
+      [ARMS.RIGHT]: ARMSTATES.LOW
+    },
+    [POSES[challengeIndex][4]]: {
+      [ARMS.LEFT]: ARMSTATES.HIGH,
+      [ARMS.RIGHT]: ARMSTATES.MED
+    },
+    [POSES[challengeIndex][5]]: {
+      [ARMS.LEFT]: ARMSTATES.HIGH,
+      [ARMS.RIGHT]: ARMSTATES.HIGH
+    }
+  };
+
+  robotProgressBars = {
+    [POSES[challengeIndex][0]]: document.getElementById("LeftLowRightHighBar"),
+    [POSES[challengeIndex][1]]: document.getElementById("LeftMedRightMedBar"),
+    [POSES[challengeIndex][2]]: document.getElementById("LeftMedRightHighBar"),
+    [POSES[challengeIndex][3]]: document.getElementById("LeftHighRightLowBar"),
+    [POSES[challengeIndex][4]]: document.getElementById("LeftHighRightMedBar"),
+    [POSES[challengeIndex][5]]: document.getElementById("LeftHighRightHighBar")
+  }
 
 }
 
@@ -587,27 +719,24 @@ function addNewBlock(blockName, fields = []) {
   allBlocks.push(parentBlock);
 }
 
-function placeSphere() {
-  addNewBlock(BLOCKTYPES.PLACESPHERE);
-  console.log("place sphere block added");
+function codeBlock0() {
+  console.log(challengeIndex);
+  console.log(POSES[challengeIndex][0]);
+  addNewBlock(POSES[challengeIndex][0]);
 }
 
-function addDanceBlock() {
-  addNewBlock(BLOCKTYPES.DANCE);
-  console.log("dance block added");
+function codeBlock1() {
+  addNewBlock(POSES[challengeIndex][1]);
 }
 
-function makeSmallSphereBlock() {
-  addNewBlock(BLOCKTYPES.CREATESMALLSPHERE);
-  console.log("create small sphere block");
+function codeBlock2() {
+  addNewBlock(POSES[challengeIndex][2]);
 }
 
-function makeMediumSphereBlock() {
-  addNewBlock(BLOCKTYPES.CREATEMEDIUMSPHERE);
-  console.log("create medium sphere block");
+function codeBlock3() {
+  addNewBlock(POSES[challengeIndex][3]);
 }
 
-function makeLargeSphereBlock() {
-  addNewBlock(BLOCKTYPES.CREATELARGESPHERE);
-  console.log("create large sphere block");
+function codeBlock4() {
+  addNewBlock(POSES[challengeIndex][4]);
 }

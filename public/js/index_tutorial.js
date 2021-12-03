@@ -650,6 +650,7 @@ function stepThroughAllCode() {
     else if (completedChallenge3) {
       setTimeout(() => {
         alert("Congratulations! You completed the tutorial!");
+        location.href = 'https://posetocode.web.app/freeplay.html';
       }, 3000);
     }
     document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "white";
