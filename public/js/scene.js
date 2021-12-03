@@ -217,7 +217,6 @@ Blockly.JavaScript.make_large_layer = function (block) {
 
 function makeLayer(size) {
   currCylinderSize = size;
-  console.log("make: " + currCylinderSize);
   makeSphereAnim.start(false, 1.0, makeSphereAnim.from, makeSphereAnim.to, false);
   setTimeout(() => {
     cylinder_startYPosition += 0.5;
@@ -245,7 +244,6 @@ function placeLayer() {
     placeSphereAnim.start(false, 1.0, placeSphereAnim.from, placeSphereAnim.to, false);
   }, 0);
   setTimeout(() => {
-    console.log("place: " + currCylinderSize);
     cylinder_endYPosition += 0.25;
     moveSphere(new BABYLON.Vector3(0, cylinder_endYPosition, 1.5), currCylinder, currCylinderHeight);
     currCylinderHeight += 0.45;
@@ -260,8 +258,6 @@ Blockly.JavaScript.frost_layer = function (block) {
 };
 
 function frostLayer() {
-  console.log("frost: " + currCylinderSize);
-
   idleAnim.stop();
   setTimeout(() => {
     placeSphereAnim.start(false, 1.0, placeSphereAnim.from, placeSphereAnim.to, false);
