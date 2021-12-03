@@ -644,6 +644,7 @@ function stepThroughAllCode() {
         resetAllPoseProgress();
         resetAllBlocks();
         document.getElementById("snowmanImage").style.display = "none";
+        document.getElementById("cakeImage").style.display = "block";
       }, 2000);
     }
     else if (completedChallenge3) {
@@ -660,6 +661,7 @@ function stepCode() {
   resetStepUi(true);
   myInterpreter = new Interpreter(latestCode, initApi);
   console.log(latestCode);
+  // TODO: change regex statements
   var regex_challenge1 = /highlightBlock\(.*\);[\r\n]raiseTheRoof\(\);/ //TODO: replace with regex for multiple dance move blocks
   var regex_challenge2 = /highlightBlock\(.*\);[\r\n]makeLargeSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeMediumSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeSmallSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);/
   var regex_challenge3 = /highlightBlock\(.*\);[\r\n]dance\(\);/ //TODO: replace with regex for multiple cake building blocks

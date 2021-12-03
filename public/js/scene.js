@@ -24,14 +24,13 @@ const danceDelay = 2000;
 let sphere_startYPosition = 1.3;
 let sphere_endYPosition = -3;
 let currSphereHeight = 0;
+const endXPosition = 0.7;
+const endZPosition = 0.2;
 
-//Keep track of cylinder coordinates
+// Keep track of cylinder coordinates
 let cylinder_startYPosition = 1.3;
 let cylinder_endYPosition = -3;
 let currCylinderHeight = 0;
-
-const endXPosition = 0.7;
-const endZPosition = 0.2;
 
 /***** create scene function ******/
 const createScene = function () {
@@ -77,18 +76,13 @@ const createScene = function () {
       idleAnim = scene.getAnimationGroupByName("Idle");
       makeSphereAnim = scene.getAnimationGroupByName("MakeSphere");
       placeSphereAnim = scene.getAnimationGroupByName("PlaceSphere");
-      danceAnim = scene.getAnimationGroupByName("RaiseTheRoof"); //TODO: convert to RaiseTheRoof
+      danceAnim = scene.getAnimationGroupByName("RaiseTheRoof");
 
       //dance animations
       raiseTheRoofAnim = scene.getAnimationGroupByName("RaiseTheRoof");
       leftWaveAnim = scene.getAnimationGroupByName("LeftWave");
       rightWaveAnim = scene.getAnimationGroupByName("RightWaveFinal");
       spinAnim = scene.getAnimationGroupByName("Spin");
-
-      //cake animations
-      //placeLayerAnim = scene.getAnimationGroupByName("PlaceLayer");
-      //makeLayerAnim = scene.getAnimationGroupByName("MakeLayer");
-      //frostLayerAnim = scene.getAnimationGroupByName("FrostLayer");
 
       // enable animation blending
       idleAnim.enableBlending = true;
@@ -192,22 +186,6 @@ Blockly.JavaScript.spin = function (block) {
   return code;
 };
 
-function spin() {
-  dance("spin");
-}
-
-function rightWave() {
-  dance("right_wave");
-}
-
-function leftWave() {
-  dance("left_wave");
-}
-
-function raiseTheRoof() {
-  dance("raise_the_roof");
-}
-
 function dance(danceMove) {
   if(danceMove == "raise_the_roof") danceAnim = raiseTheRoofAnim;
   else if(danceMove == "right_wave") danceAnim = rightWaveAnim;
@@ -225,59 +203,21 @@ function dance(danceMove) {
   idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 }
 
-Blockly.JavaScript.place_layer = function (block) {
-  const code = 'placeLayer();\n';
-  return code;
-};
-
-Blockly.JavaScript.frost_layer = function (block) {
-  const code = 'frostLayer();\n';
-  return code;
-};
-
 Blockly.JavaScript.make_small_layer = function (block) {
-  currCylinderSize = "small";
+  // currCylinderSize = "small";
   var code = 'makeSmallLayer();\n';
   return code;
 };
 
 Blockly.JavaScript.make_large_layer = function (block) {
-  currCylinderSize = "large";
+  // currCylinderSize = "large";
   const code = 'makeLargeLayer();\n';
   return code;
 };
 
-function makeSmallLayer() {
-  makeLayer("small");
-}
-
-function makeLargeLayer() {
-  makeLayer("large");
-}
-
-//TODO: Adapt to new placeLayer animation
-function placeLayer() {
-  idleAnim.stop();
-  setTimeout(() => {
-    placeSphereAnim.start(false, 1.0, placeSphereAnim.from, placeSphereAnim.to, false);
-  }, 0);
-  setTimeout(() => {
-    if (currCylinderSize == "small") {
-      cylinder_endYPosition += 0.15;
-      moveSphere(new BABYLON.Vector3(endXPosition, cylinder_endYPosition, endZPosition), currCylinder, currCylinderHeight);
-      currCylinderHeight += 1;
-    } else if (currCylinderSize == "large") {
-      cylinder_endYPosition += 0.5;
-      moveSphere(new BABYLON.Vector3(endXPosition, cylinder_endYPosition, endZPosition), currCylinder, currCylinderHeight);
-      currCylinderHeight += 1.5;
-    }
-  }, placeSphereDelay);
-  delay += placeSphereDelay;
-  idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
-}
-
-//TODO: Adapt to makeLayer animation
-function makeLayer(currCylinderSize) {
+function makeLayer(size) {
+  currCylinderSize = size;
+  console.log("make: " + currCylinderSize);
   makeSphereAnim.start(false, 1.0, makeSphereAnim.from, makeSphereAnim.to, false);
   setTimeout(() => {
     cylinder_startYPosition += 0.5;
@@ -294,9 +234,68 @@ function makeLayer(currCylinderSize) {
   delay += makeSphereDelay;
 }
 
-//TODO: Adapt to frostLayer animation
-function frostLayer() {
+Blockly.JavaScript.place_layer = function (block) {
+  const code = 'placeLayer();\n';
+  return code;
+};
 
+function placeLayer() {
+  idleAnim.stop();
+  setTimeout(() => {
+    placeSphereAnim.start(false, 1.0, placeSphereAnim.from, placeSphereAnim.to, false);
+  }, 0);
+  setTimeout(() => {
+    console.log("place: " + currCylinderSize);
+    cylinder_endYPosition += 0.25;
+    moveSphere(new BABYLON.Vector3(0, cylinder_endYPosition, 1.5), currCylinder, currCylinderHeight);
+    currCylinderHeight += 0.45;
+  }, placeSphereDelay);
+  delay += placeSphereDelay;
+  idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
+}
+
+Blockly.JavaScript.frost_layer = function (block) {
+  const code = 'frostLayer();\n';
+  return code;
+};
+
+function frostLayer() {
+  console.log("frost: " + currCylinderSize);
+
+  idleAnim.stop();
+  setTimeout(() => {
+    placeSphereAnim.start(false, 1.0, placeSphereAnim.from, placeSphereAnim.to, false);
+  }, 0);
+  setTimeout(() => {
+    cylinder_startYPosition += 0.5;
+    if (currCylinderSize == "small") diam = 1;
+    else if (currCylinderSize == "large") diam = 1.5;
+    // create a new cake at the position of the robot's hands
+    var faceColors = new Array(3);
+    faceColors[0] = new BABYLON.Color4(1,0,1,0.5);
+    faceColors[1] = new BABYLON.Color4(1,0,1,0.5); 
+    faceColors[2] = new BABYLON.Color4(1,0,1,0.5); 
+    currCylinder = BABYLON.MeshBuilder.CreateCylinder("cylinder", {
+      diameter: diam,
+      height: 0.1,
+      faceColors: faceColors
+    });
+    currCylinder.position = new BABYLON.Vector3(0, 2, 1.5);
+    guiElements.push(currCylinder);
+  }, 200);
+  setTimeout(() => {
+    if (currCylinderSize == "small") {
+      cylinder_endYPosition -= 0.4;
+      moveSphere(new BABYLON.Vector3(0, cylinder_endYPosition, 1.5), currCylinder, currCylinderHeight);
+      currCylinderHeight += 0.05;
+    } else if (currCylinderSize == "large") {
+      cylinder_endYPosition -= 0.4;
+      moveSphere(new BABYLON.Vector3(0, cylinder_endYPosition, 1.5), currCylinder, currCylinderHeight);
+      currCylinderHeight += 0.05;
+    }
+  }, placeSphereDelay);
+  delay += placeSphereDelay;
+  idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 }
 
 // Helper functions
@@ -339,6 +338,8 @@ function resetGUI() {
   setTimeout(function () {
     document.activeElement.blur();
   }, 150);
+  sphere_endYPosition = -3;
+  cylinder_endYPosition = -3;
 }
 
 // Returns flag for whether the user's programmed sequence of events will
