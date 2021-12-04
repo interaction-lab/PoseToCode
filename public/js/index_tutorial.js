@@ -56,7 +56,7 @@ var challenge2Alert = false;
 var completedChallenge3 = false;
 
 function startTutorial() {
-  alert("Challenge 1: Make the Robot Dance!");
+  alert("Challenge 1: Make the Robot Dance! Create a dance routine with at least 4 dance moves.");
 }
 
 // Helpers
@@ -662,8 +662,6 @@ function stepCode() {
   resetStepUi(true);
   myInterpreter = new Interpreter(latestCode, initApi);
   console.log(latestCode);
-  // TODO: change regex statements
-  var regex_challenge1 = /highlightBlock\(.*\);[\r\n]raiseTheRoof\(\);/ //TODO: replace with regex for multiple dance move blocks
   var regex_challenge2 = /highlightBlock\(.*\);[\r\n]makeLargeSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeMediumSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeSmallSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);/
   var regex_challenge3 = /highlightBlock\(.*\);[\r\n]makeLargeLayer\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeLayer\(\);[\r\n]highlightBlock\(.*\);[\r\n]frostLayer\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeSmallLayer\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeLayer\(\);[\r\n]highlightBlock\(.*\);[\r\n]frostLayer\(\);/
   const count = (str) => {
