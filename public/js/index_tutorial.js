@@ -670,8 +670,7 @@ function stepCode() {
     const re = /\(\)/g
     return ((str || '').match(re) || []).length
   }
-  if (count(latestCode) == 4) {
-  //if (latestCode.match(regex_challenge1)) {
+  if (count(latestCode) >= 4) {
     completedChallenge1 = true;
   }
   if (completedChallenge1 && latestCode.match(regex_challenge2)) {
