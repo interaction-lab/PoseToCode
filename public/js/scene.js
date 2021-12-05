@@ -191,15 +191,12 @@ function dance(danceMove) {
   else if(danceMove == "right_wave") danceAnim = rightWaveAnim;
   else if (danceMove == "left_wave") danceAnim = leftWaveAnim;
   else if (danceMove == "spin") danceAnim = spinAnim;
-  //music = new Audio("sounds/dance.wav");
   idleAnim.stop();
   setTimeout(() => {
     danceAnim.start(false, 1.0, danceAnim.from, danceAnim.to, false);
-    //music.play();
   }, 0);
   delay += danceDelay;
   danceAnim.stop();
-  //music.pause();
   idleAnim.start(true, 1.0, idleAnim.from, idleAnim.to, false);
 }
 

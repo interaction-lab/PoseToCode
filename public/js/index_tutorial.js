@@ -38,6 +38,7 @@ Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
 click = new Audio("sounds/click.wav");
 calculate = new Audio("sounds/calculate.wav");
 loading = new Audio("sounds/loading.mp3");
+music = new Audio("sounds/dance_long.wav");
 /* variables to hold current parent block and child block */
 let parentBlock = null;
 let childBlock = null;
@@ -614,6 +615,9 @@ function generateCodeAndLoadIntoInterpreter() {
 }
 
 function stepThroughAllCode() {
+  if(challengeIndex == 0) {
+    music.play();
+  }
   codeIsRunning = true;
   document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "#228B22";
   
@@ -655,6 +659,9 @@ function stepThroughAllCode() {
     }
     document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "white";
     codeIsRunning = false;
+    if(challengeIndex == 0) {
+      music.pause();
+    }
   }
 }
 
