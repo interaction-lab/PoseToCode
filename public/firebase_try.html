@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Firebase File Upload</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+</head>
+
+<body>
+
+    <div>
+        Upload Files<br />
+        <button id="upload">Upload</button>
+        <p id="uploading"></p>
+    </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-storage.js"></script>
+
+
+    <script>
+        function uploadjson() {
+            var dictObj = {
+                "data": {
+                    "x": 0,
+                    "y": 1
+                }
+            };
+            // convert your object into a JSON-string
+            var jsonString = JSON.stringify(dictObj);
+            // create a Blob from the JSON-string
+            var blob = new Blob([jsonString], { type: "application/json" })
+
+            var storageRef = firebase.storage().ref();
+            var jsonFolder = storageRef.child("json_test");
+            var jsonFileRef = jsonFolder.child("potato_test.json");
+
+
+            //upload file
+            var upload = jsonFileRef.put(blob);
+
+            //update progress bar
+            upload.on(
+                "state_changed",
+                function progress(snapshot) {
+                    var percentage =
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log(percentage);
+                    console.log(snapshot);
+
+                },
+                function error() {
+                    alert("error uploading file");
+                },
+
+                function complete() {
+                    console.log("complete");
+                }
+            );
+
+        }
+
+        function idk() {
+            console.log("cdsf");
+        }
+        const firebaseConfig = {
+            apiKey: "AIzaSyAO65WOMDS6I-sVQT1-nB-7NiDoaOmy57M",
+            authDomain: "robotblocks-c0d53.firebaseapp.com",
+            projectId: "robotblocks-c0d53",
+            storageBucket: "robotblocks-c0d53.appspot.com",
+            messagingSenderId: "285104221142",
+            appId: "1:285104221142:web:72bf8f6661e6e32e1b9277"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        document.getElementById("upload").onclick = uploadjson;
+    </script>
+</body>
+
+</html>
