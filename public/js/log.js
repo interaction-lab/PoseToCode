@@ -48,7 +48,7 @@ class Log {
 	}
 
 
-	upload(urlRedirect) {
+	upload(urlRedirect, funcCallback) {
 		if (this.uploading || this.uploaded) {
 			return; // double calls for some reason
 		}
@@ -83,6 +83,9 @@ class Log {
 				this.uploaded = true;
 				if (urlRedirect) {
 					window.location.href = urlRedirect;
+				}
+				else{
+					funcCallback();
 				}
 			}
 		);

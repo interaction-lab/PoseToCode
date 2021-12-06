@@ -18,10 +18,10 @@ var postSurveyCDOURL = "https://usc.qualtrics.com/jfe/form/SV_8bNo1pXiILq7rBI";
 var junkSurveyURL = "https://usc.qualtrics.com/jfe/form/SV_exQl4oNMqBuT6gm";
 
 
-function minToMilSec(min){
+function minToMilSec(min) {
     return min * 60000;
 }
-var timeoutTimeMS = minToMilSec(15);
+var timeoutTimeMS = 10000;//minToMilSec(15);
 
 // unique id passed around via urls
 var userSTUID = uuidv4();
@@ -33,17 +33,27 @@ function uuidv4() {
     );
 }
 
-function openURL(url) {
-    var wnd = window.open(url +
+var child_wnd = null;
+function openURL(url, isP2CURL) {
+    child_wnd = window.open(url +
         "?" + idFieldString + "=" + userSTUID +
         "&" + firstActFieldString + "=" + firstAct);
-    setTimeout(function () {
-        wnd.close();
-    }, timeoutTimeMS);
+
+    if (isP2CURL) {
+        setTimeout(function () {
+            child_wnd.uploadAndClose();
+        }, timeoutTimeMS);
+    }
     return false;
 }
 
+function closeChildWindow(){
+    if(child_wnd && !child_wnd.closed){
+        child_wnd.close();
+    }
+}
+
 function main() {
-    openURL(junkSurveyURL);
+    openURL(poseToCodeURL, true);
 }
 window.onload = main;

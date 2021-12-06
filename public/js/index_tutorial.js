@@ -36,10 +36,14 @@ const options = {
 
 /* Instantiate log */
 const Logger = new Log(queryStringParams[idFieldString], thisActivityString); //TODO: uncomment this, used to debug rn to avoid errors
-window.onbeforeunload = function () {
-  Logger.upload();
+
+function tellParentToClose(){
+  window.opener.closeChildWindow();
 }
 
+function uploadAndClose(){
+  Logger.upload(null, tellParentToClose);
+}
 
 /* Inject your Blockly workspace */
 const blocklyDiv = document.getElementById("blocklyDiv");
@@ -662,7 +666,7 @@ function stepThroughAllCode() {
       Logger.upload("./freeplay.html" +
         "?" + idFieldString + "=" + queryStringParams[idFieldString] +
         "&" + firstActFieldString + "=" + queryStringParams[firstActFieldString]);
-        alert("Congratulations! You completed the tutorial! Uploading data and then moving to freeplay.");
+      alert("Congratulations! You completed the tutorial! Uploading data and then moving to freeplay.");
     }
     document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "white";
     codeIsRunning = false;
