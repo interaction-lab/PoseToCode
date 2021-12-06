@@ -21,7 +21,7 @@ var junkSurveyURL = "https://usc.qualtrics.com/jfe/form/SV_exQl4oNMqBuT6gm";
 function minToMilSec(min) {
     return min * 60000;
 }
-var timeoutTimeMS = 10000;//minToMilSec(15);
+var timeoutTimeMS = 20000;//minToMilSec(15);
 
 // unique id passed around via urls
 var userSTUID = uuidv4();
@@ -33,27 +33,55 @@ function uuidv4() {
     );
 }
 
+function isSurveyURL(url){
+    return url.includes("qualtrics");
+}
+
+function isCodeDotOrgURL(url){
+    return url.includes("code.org");
+}
+
+function isP2CURL(url){
+    return !isSurveyURL(url) && !isCodeDotOrgURL(url);
+}
+
 var child_wnd = null;
-function openURL(url, isP2CURL) {
+function openURL(url) {
     child_wnd = window.open(url +
         "?" + idFieldString + "=" + userSTUID +
         "&" + firstActFieldString + "=" + firstAct);
-
-    if (isP2CURL) {
+    if (!isSurveyURL(url)) {
         setTimeout(function () {
-            child_wnd.uploadAndClose();
+            if (isP2CURL(url)) {
+                child_wnd.uploadAndClose();
+            }
+            else{
+                child_wnd.close();
+            }
         }, timeoutTimeMS);
     }
     return false;
 }
 
-function closeChildWindow(){
-    if(child_wnd && !child_wnd.closed){
+function closeChildWindow() {
+    if (child_wnd && !child_wnd.closed) {
         child_wnd.close();
     }
 }
 
+var cycleIndex = 0;
+var urlArr = [preSurveyURL, poseToCodeURL, postSurveyP2CURL, codeDotOrgURL, postSurveyCDOURL];
+
+function cycleUrl(){
+    if(cycleIndex < urlArr.length){
+        openURL(urlArr[cycleIndex++]);
+    }
+    else{
+        // done
+    }
+}
+
 function main() {
-    openURL(poseToCodeURL, true);
+    document.getElementById("next_button").onclick = cycleUrl;
 }
 window.onload = main;

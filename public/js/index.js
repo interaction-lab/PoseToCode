@@ -37,6 +37,14 @@ const options = {
 /* Instantiate log */
 const Logger = new Log(queryStringParams[idFieldString], thisActivityString); //TODO: uncomment this, used to debug rn to avoid errors
 
+function tellParentToClose(){
+  window.opener.closeChildWindow();
+}
+
+function uploadAndClose(){
+  Logger.upload(null, tellParentToClose);
+}
+
 /* Inject your Blockly workspace */
 const blocklyDiv = document.getElementById("blocklyDiv");
 const workspace = Blockly.inject(blocklyDiv, options);
