@@ -1,16 +1,27 @@
 class Log {
-	constructor(STUID_in) {
+	constructor(STUID_in, ACT_in) {
 		this.db = firebase.firestore();
 		this.count = 0;
-		this.STUID = STUID_in
-		this.filename = this.STUID + Date.now() + ".json";
+		this.STUID = STUID_in;
+		this.ACT = ACT_in;
+		this.filename = this.STUID + "_" + Date.now() + "_" + this.ACT + ".json";
 		this.jsonObject = {};
+		this.uploading = false;
 		this.uploaded = false;
+		this.landMarkMapTimings = new Set();
 	}
 
+	addMapAtTime(time, newMap) {
+		if (!(time in this.jsonObject)) {
+			this.jsonObject[time] = newMap;
+		}
+		else {
+			this.jsonObject[time] = new Map([this.jsonObject[time], newMap]);
+		}
+	}
 
-	update(time, landmarks, poseDetected) {
-		if (this.uploaded) {
+	updateLandmarksAndPoseDetected(time, landmarks, poseDetected) {
+		if (this.uploading || this.uploaded) {
 			return;
 		}
 		const landmarksMap = { ...landmarks };
@@ -22,11 +33,26 @@ class Log {
 			}
 		}
 		flattenedData.set('poseDetected', poseDetected);
-		this.jsonObject[time] = flattenedData;
+		if (!this.landMarkMapTimings.has(time)) {
+			this.addMapAtTime(time, flattenedData);
+			this.landMarkMapTimings.add(time); // do not want duplicates as it inflates file
+		}
 	}
 
-	upload() {
-		this.uploaded = true;
+	updateCodeState(time, codeState) {
+		var blocknames = [];
+		for (var i = 0; i < codeState.length; ++i) {
+			blocknames.push(codeState[i].type);
+		}
+		this.addMapAtTime(time, new Map([["codestate", blocknames]]));
+	}
+
+
+	upload(urlRedirect) {
+		if (this.uploading || this.uploaded) {
+			return; // double calls for some reason
+		}
+		this.uploading = true;
 		var jsonString = JSON.stringify(this.jsonObject);
 		// create a Blob from the JSON-string
 		var blob = new Blob([jsonString], { type: "application/json" })
@@ -49,11 +75,15 @@ class Log {
 			},
 			function error() {
 				alert("error uploading file");
+				this.uploaded = true;
 			},
 
 			function complete() {
 				console.log("complete");
-				window.location.href = "http://www.w3schools.com";
+				this.uploaded = true;
+				if (urlRedirect) {
+					window.location.href = urlRedirect;
+				}
 			}
 		);
 	}

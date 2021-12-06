@@ -4,6 +4,7 @@ const queryStringParams = Object.fromEntries(urlSearchParams.entries());
 
 var idFieldString = "STUID";
 var firstActFieldString = "FIRAC";
+var thisActivityString = "FREEPLAY";
 
 const toolbox = document.getElementById("toolbox");
 var time = 0;
@@ -34,7 +35,7 @@ const options = {
 };
 
 /* Instantiate log */
-const Logger = new Log("rand_guid"); //TODO: uncomment this, used to debug rn to avoid errors
+const Logger = new Log(queryStringParams[idFieldString], thisActivityString); //TODO: uncomment this, used to debug rn to avoid errors
 
 /* Inject your Blockly workspace */
 const blocklyDiv = document.getElementById("blocklyDiv");
@@ -218,15 +219,7 @@ var codeIsRunning = false;
 
 
 // Main
-firstTime = true;
 async function onResults(results) {
-  if(firstTime){
-    setTimeout(function () {
-      console.log("here")
-      Logger.upload();
-    }, 60000); // 1 minute file
-    firstTime = false;
-  }
   deltaTime = getDeltaTimeMS();
   resetCanvas();
   drawPoseSkeleton(results);
@@ -237,7 +230,7 @@ async function onResults(results) {
     }
     curArmStates = armStates; // workaround for async
     var bestPose = updateProgressBars(curArmStates, deltaTime);
-    Logger.update(Date.now(), results.poseLandmarks, bestPose); //TODO: uncomment when deploying
+    Logger.updateLandmarksAndPoseDetected(Date.now(), results.poseLandmarks, bestPose); //TODO: uncomment when deploying
     if (checkBarFull(bestPose)) {
       resetAllPoseProgress();
     }
@@ -661,6 +654,7 @@ function resetAllBlocks() {
   parentBlock = null;
   resetGUI();
   time = 0;
+  Logger.updateCodeState(Date.now(), allBlocks);
 }
 
 function resetPoseNames() {
@@ -730,6 +724,7 @@ function addNewBlock(blockName, fields = []) {
   }
   parentBlock = block;
   allBlocks.push(parentBlock);
+  Logger.updateCodeState(Date.now(), allBlocks);
 }
 
 function codeBlock0() {

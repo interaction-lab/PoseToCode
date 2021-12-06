@@ -4,6 +4,7 @@ const queryStringParams = Object.fromEntries(urlSearchParams.entries());
 
 var idFieldString = "STUID";
 var firstActFieldString = "FIRAC";
+var thisActivityString = "MAIN";
 
 const toolbox = document.getElementById("toolbox");
 var time = 0;
@@ -34,7 +35,11 @@ const options = {
 };
 
 /* Instantiate log */
-//const Logger = new Log("rand_guid"); //TODO: uncomment this, used to debug rn to avoid errors
+const Logger = new Log(queryStringParams[idFieldString], thisActivityString); //TODO: uncomment this, used to debug rn to avoid errors
+window.onbeforeunload = function () {
+  Logger.upload();
+}
+
 
 /* Inject your Blockly workspace */
 const blocklyDiv = document.getElementById("blocklyDiv");
@@ -229,7 +234,7 @@ async function onResults(results) {
     }
     curArmStates = armStates; // workaround for async
     var bestPose = updateProgressBars(curArmStates, deltaTime);
-    // Logger.update(Date.now(), results.poseLandmarks, bestPose); // uncomment when deploying
+    Logger.updateLandmarksAndPoseDetected(Date.now(), results.poseLandmarks, bestPose); // uncomment when deploying
     if (checkBarFull(bestPose)) {
       resetAllPoseProgress();
     }
@@ -623,7 +628,6 @@ function stepThroughAllCode() {
   }
   codeIsRunning = true;
   document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "#228B22";
-
   if (myInterpreter.step()) {
     myInterpreter.step();
     myInterpreter.step(); // not sure why but this is needed to run 3 times?
@@ -655,9 +659,10 @@ function stepThroughAllCode() {
       }, 2000);
     }
     else if (completedChallenge3) {
-      setTimeout(() => {
-        alert("Congratulations! You completed the tutorial!");
-      }, 3000);
+      Logger.upload("./freeplay.html" +
+        "?" + idFieldString + "=" + queryStringParams[idFieldString] +
+        "&" + firstActFieldString + "=" + queryStringParams[firstActFieldString]);
+        alert("Congratulations! You completed the tutorial! Uploading data and then moving to freeplay.");
     }
     document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "white";
     codeIsRunning = false;
@@ -706,6 +711,7 @@ function resetAllBlocks() {
   parentBlock = null;
   resetGUI();
   time = 0;
+  Logger.updateCodeState(Date.now(), allBlocks);
 }
 
 function resetPoseNames() {
@@ -759,7 +765,6 @@ function resetPoseNames() {
     [POSES[challengeIndex][4]]: document.getElementById("LeftHighRightMedBar"),
     [POSES[challengeIndex][5]]: document.getElementById("LeftHighRightHighBar")
   }
-
 }
 
 function addNewBlock(blockName, fields = []) {
@@ -775,6 +780,7 @@ function addNewBlock(blockName, fields = []) {
   }
   parentBlock = block;
   allBlocks.push(parentBlock);
+  Logger.updateCodeState(Date.now(), allBlocks);
 }
 
 function codeBlock0() {
