@@ -34,7 +34,7 @@ const options = {
 };
 
 /* Instantiate log */
-// const Logger = new Log(); TODO: uncomment this, used to debug rn to avoid errors
+//const Logger = new Log("rand_guid"); //TODO: uncomment this, used to debug rn to avoid errors
 
 /* Inject your Blockly workspace */
 const blocklyDiv = document.getElementById("blocklyDiv");
@@ -103,19 +103,19 @@ const ARMSTATES = {
 }
 
 const POSENAMES = [
-  [ 
+  [
     "Raise the Roof",
     "Wave Right Arm",
     "Wave Left Arm",
     "Spin",
   ],
-  [ 
+  [
     "Make Small Sphere",
     "Make Medium Sphere",
     "Make Large Sphere",
     "Place Sphere",
   ],
-  [ 
+  [
     "Make Small Cake",
     "Make Large Cake",
     "Place Cake",
@@ -125,7 +125,7 @@ const POSENAMES = [
 
 // names of the code blocks
 const POSES = [
-  [ 
+  [
     "raise_the_roof",
     "right_wave",
     "left_wave",
@@ -133,7 +133,7 @@ const POSES = [
     "RunCode",
     "Reset"
   ],
-  [ 
+  [
     "make_small_sphere",
     "make_medium_sphere",
     "make_large_sphere",
@@ -141,7 +141,7 @@ const POSES = [
     "RunCode",
     "Reset"
   ],
-  [ 
+  [
     "make_small_layer",
     "make_large_layer",
     "place_layer",
@@ -189,7 +189,7 @@ var cummulativePoseScores = {
 };
 
 var poseMapping = {
-    [POSES[challengeIndex][0]]: {
+  [POSES[challengeIndex][0]]: {
     [ARMS.LEFT]: ARMSTATES.LOW,
     [ARMS.RIGHT]: ARMSTATES.HIGH
   },
@@ -229,12 +229,9 @@ async function onResults(results) {
     }
     curArmStates = armStates; // workaround for async
     var bestPose = updateProgressBars(curArmStates, deltaTime);
-    console.log(bestPose);
+    // Logger.update(Date.now(), results.poseLandmarks, bestPose); // uncomment when deploying
     if (checkBarFull(bestPose)) {
-      // Logger.update(Date.now(), results.poseLandmarks, 1); TODO: uncomment when deploying
       resetAllPoseProgress();
-    } else {
-      // Logger.update(Date.now(), results.poseLandmarks, 0); TODO: uncomment when deployign
     }
   }
 }
@@ -278,7 +275,6 @@ function cArm(armState, compareTo) {
 function updateProgressBars(bestArmScores, deltaTime) {
   var curPoseDetected = updateCumulativePoseStates(bestArmScores, deltaTime);
   for (let pose in robotProgressBars) {
-    //console.log((cummulativePoseScores[pose] / timeToHoldPoseMS));
     robotProgressBars[pose].style.height = (cummulativePoseScores[pose] / timeToHoldPoseMS) * 100 + "%";
   }
   return curPoseDetected;
@@ -588,7 +584,7 @@ function initApi(interpreter, globalObject) {
       placeLayer();
     })
   );
-  
+
   var wrapper = function (id) {
     id = String(id || "");
     return interpreter.createPrimitive(highlightBlock(id));
@@ -622,19 +618,19 @@ function generateCodeAndLoadIntoInterpreter() {
 }
 
 function stepThroughAllCode() {
-  if(challengeIndex == 0) {
+  if (challengeIndex == 0) {
     music.play();
   }
   codeIsRunning = true;
   document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "#228B22";
-  
+
   if (myInterpreter.step()) {
     myInterpreter.step();
     myInterpreter.step(); // not sure why but this is needed to run 3 times?
     setTimeout(stepThroughAllCode, 500); // need the correct timing
   }
   else {
-    if(!challenge1Alert && completedChallenge1) {
+    if (!challenge1Alert && completedChallenge1) {
       setTimeout(() => {
         alert("Congratulations! You completed Challenge 1: Dance Routine!");
         alert("Challenge 2: Build a Snowman. Construct a snowman by creating and placing differently sized spheres.");
@@ -665,7 +661,7 @@ function stepThroughAllCode() {
     }
     document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "white";
     codeIsRunning = false;
-    if(challengeIndex == 0) {
+    if (challengeIndex == 0) {
       music.pause();
     }
   }
@@ -685,10 +681,10 @@ function stepCode() {
     completedChallenge1 = true;
   }
   if (completedChallenge1 && latestCode.match(regex_challenge2)) {
-    completedChallenge2 =  true;
+    completedChallenge2 = true;
   }
   if (completedChallenge2 && latestCode.match(regex_challenge3)) {
-    completedChallenge3 =  true;
+    completedChallenge3 = true;
   }
   myInterpreter.step(); // dummy first step
   stepThroughAllCode();
@@ -712,7 +708,7 @@ function resetAllBlocks() {
   time = 0;
 }
 
-function resetPoseNames() { 
+function resetPoseNames() {
   console.log(challengeIndex);
   document.getElementById("pose0").innerHTML = POSENAMES[challengeIndex][0];
   document.getElementById("pose1").innerHTML = POSENAMES[challengeIndex][1];
@@ -727,9 +723,9 @@ function resetPoseNames() {
     [POSES[challengeIndex][4]]: 0,
     [POSES[challengeIndex][5]]: 0
   };
-  
+
   poseMapping = {
-      [POSES[challengeIndex][0]]: {
+    [POSES[challengeIndex][0]]: {
       [ARMS.LEFT]: ARMSTATES.LOW,
       [ARMS.RIGHT]: ARMSTATES.HIGH
     },

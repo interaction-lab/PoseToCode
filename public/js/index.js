@@ -34,7 +34,7 @@ const options = {
 };
 
 /* Instantiate log */
-// const Logger = new Log(); TODO: uncomment this, used to debug rn to avoid errors
+const Logger = new Log("rand_guid"); //TODO: uncomment this, used to debug rn to avoid errors
 
 /* Inject your Blockly workspace */
 const blocklyDiv = document.getElementById("blocklyDiv");
@@ -102,19 +102,19 @@ const ARMSTATES = {
 }
 
 const POSENAMES = [
-  [ 
+  [
     "Raise the Roof",
     "Wave Right Arm",
     "Wave Left Arm",
     "Spin",
   ],
-  [ 
+  [
     "Make Small Sphere",
     "Make Medium Sphere",
     "Make Large Sphere",
     "Place Sphere",
   ],
-  [ 
+  [
     "Make Small Cake",
     "Make Large Cake",
     "Place Cake",
@@ -124,7 +124,7 @@ const POSENAMES = [
 
 // names of the code blocks
 const POSES = [
-  [ 
+  [
     "raise_the_roof",
     "right_wave",
     "left_wave",
@@ -132,7 +132,7 @@ const POSES = [
     "RunCode",
     "Reset"
   ],
-  [ 
+  [
     "make_small_sphere",
     "make_medium_sphere",
     "make_large_sphere",
@@ -140,7 +140,7 @@ const POSES = [
     "RunCode",
     "Reset"
   ],
-  [ 
+  [
     "make_small_layer",
     "make_large_layer",
     "place_layer",
@@ -188,7 +188,7 @@ var cummulativePoseScores = {
 };
 
 var poseMapping = {
-    [POSES[challengeIndex][0]]: {
+  [POSES[challengeIndex][0]]: {
     [ARMS.LEFT]: ARMSTATES.LOW,
     [ARMS.RIGHT]: ARMSTATES.HIGH
   },
@@ -216,8 +216,17 @@ var poseMapping = {
 
 var codeIsRunning = false;
 
+
 // Main
+firstTime = true;
 async function onResults(results) {
+  if(firstTime){
+    setTimeout(function () {
+      console.log("here")
+      Logger.upload();
+    }, 60000); // 1 minute file
+    firstTime = false;
+  }
   deltaTime = getDeltaTimeMS();
   resetCanvas();
   drawPoseSkeleton(results);
@@ -228,12 +237,9 @@ async function onResults(results) {
     }
     curArmStates = armStates; // workaround for async
     var bestPose = updateProgressBars(curArmStates, deltaTime);
-    console.log(bestPose);
+    Logger.update(Date.now(), results.poseLandmarks, bestPose); //TODO: uncomment when deploying
     if (checkBarFull(bestPose)) {
-      // Logger.update(Date.now(), results.poseLandmarks, 1); TODO: uncomment when deploying
       resetAllPoseProgress();
-    } else {
-      // Logger.update(Date.now(), results.poseLandmarks, 0); TODO: uncomment when deployign
     }
   }
 }
@@ -373,9 +379,9 @@ armStates = {
   [ARMS.LEFT]: ARMSTATES.NONE,
   [ARMS.RIGHT]: ARMSTATES.NONE
 }
+
 function updateArmStateWithDetectPose(results) {
   if (!lBrainLoaded || !rBrainLoaded) {
-    console.log(lBrainLoaded);
     return armStates;
   }
   classifyPose(results.poseLandmarks, armInputsL, leftBrain, ARMS.LEFT);
@@ -587,7 +593,7 @@ function initApi(interpreter, globalObject) {
       placeLayer();
     })
   );
-  
+
   var wrapper = function (id) {
     id = String(id || "");
     return interpreter.createPrimitive(highlightBlock(id));
@@ -657,7 +663,7 @@ function resetAllBlocks() {
   time = 0;
 }
 
-function resetPoseNames() { 
+function resetPoseNames() {
   console.log(challengeIndex);
   document.getElementById("pose0").innerHTML = POSENAMES[challengeIndex][0];
   document.getElementById("pose1").innerHTML = POSENAMES[challengeIndex][1];
@@ -672,9 +678,9 @@ function resetPoseNames() {
     [POSES[challengeIndex][4]]: 0,
     [POSES[challengeIndex][5]]: 0
   };
-  
+
   poseMapping = {
-      [POSES[challengeIndex][0]]: {
+    [POSES[challengeIndex][0]]: {
       [ARMS.LEFT]: ARMSTATES.LOW,
       [ARMS.RIGHT]: ARMSTATES.HIGH
     },

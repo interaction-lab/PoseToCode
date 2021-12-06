@@ -1,20 +1,18 @@
 class Log {
-	constructor() {
+	constructor(STUID_in) {
 		this.db = firebase.firestore();
-		// Participant IP address fetch
-		this.IPAddress = "";
-		let apiKey = '97da8bc6edef8922e8332eef9df13875c2cb3dbdb8175607d62c5c67';
-		this.json("https://api.ipdata.co?api-key=" + apiKey).then(data => {
-			this.IPAddress = data.ip;
-			this.db.collection('participants').doc(this.IPAddress).collection('timestamps').doc('initial').set({
-				creationTime: Date.now(),
-			})
-		});
 		this.count = 0;
+		this.STUID = STUID_in
+		this.filename = this.STUID + Date.now() + ".json";
+		this.jsonObject = {};
+		this.uploaded = false;
 	}
 
 
 	update(time, landmarks, poseDetected) {
+		if (this.uploaded) {
+			return;
+		}
 		const landmarksMap = { ...landmarks };
 		const flattenedData = new Map();
 		for (var key in landmarksMap) {
@@ -24,18 +22,39 @@ class Log {
 			}
 		}
 		flattenedData.set('poseDetected', poseDetected);
-		this.db.collection('participants').doc(this.IPAddress).collection('timestamps').doc(time.toString()).set(this.strMapToObj(flattenedData));
+		this.jsonObject[time] = flattenedData;
 	}
 
-	json(url) {
-		return fetch(url).then(res => res.json());
-	}
+	upload() {
+		this.uploaded = true;
+		var jsonString = JSON.stringify(this.jsonObject);
+		// create a Blob from the JSON-string
+		var blob = new Blob([jsonString], { type: "application/json" })
 
-	strMapToObj(strMap) {
-		let obj = Object.create(null);
-		for (let [k, v] of strMap) {
-			obj[k] = v;
-		}
-		return obj;
+		var storageRef = firebase.storage().ref();
+		var jsonFolder = storageRef.child("json_test");
+		var jsonFileRef = jsonFolder.child(this.filename);
+
+		//upload file
+		var upload = jsonFileRef.put(blob);
+
+		//update progress bar
+		upload.on(
+			"state_changed",
+			function progress(snapshot) {
+				var percentage =
+					(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+				console.log(percentage);
+
+			},
+			function error() {
+				alert("error uploading file");
+			},
+
+			function complete() {
+				console.log("complete");
+				window.location.href = "http://www.w3schools.com";
+			}
+		);
 	}
 }
