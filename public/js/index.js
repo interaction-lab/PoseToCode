@@ -1,3 +1,10 @@
+// Query string params
+const urlSearchParams = new URLSearchParams(window.location.search);
+const queryStringParams = Object.fromEntries(urlSearchParams.entries());
+
+var idFieldString = "STUID";
+var firstActFieldString = "FIRAC";
+
 const toolbox = document.getElementById("toolbox");
 var time = 0;
 const options = {
