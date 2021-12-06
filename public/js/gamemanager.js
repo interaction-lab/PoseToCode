@@ -33,15 +33,15 @@ function uuidv4() {
     );
 }
 
-function isSurveyURL(url){
+function isSurveyURL(url) {
     return url.includes("qualtrics");
 }
 
-function isCodeDotOrgURL(url){
+function isCodeDotOrgURL(url) {
     return url.includes("code.org");
 }
 
-function isP2CURL(url){
+function isP2CURL(url) {
     return !isSurveyURL(url) && !isCodeDotOrgURL(url);
 }
 
@@ -55,7 +55,7 @@ function openURL(url) {
             if (isP2CURL(url)) {
                 child_wnd.uploadAndClose();
             }
-            else{
+            else {
                 child_wnd.close();
             }
         }, timeoutTimeMS);
@@ -72,16 +72,24 @@ function closeChildWindow() {
 var cycleIndex = 0;
 var urlArr = [preSurveyURL, poseToCodeURL, postSurveyP2CURL, codeDotOrgURL, postSurveyCDOURL];
 
-function cycleUrl(){
-    if(cycleIndex < urlArr.length){
+var colors = ["#9400D3", "#0000FF", "#48A14D", "#FF7F00", "#FF0000"];
+function cycleUrl() {
+    if (cycleIndex < urlArr.length) {
         openURL(urlArr[cycleIndex++]);
+        if (cycleIndex < urlArr.length) {
+            document.getElementById("next_button").style.background = colors[cycleIndex];
+        }
+        else{
+            document.getElementById("next_button").innerHTML = "Done!";
+        }
     }
-    else{
-        // done
+    else {
+        alert("Completed everything!")
     }
 }
 
 function main() {
+    document.getElementById("next_button").style.background = colors[0];
     document.getElementById("next_button").onclick = cycleUrl;
 }
 window.onload = main;
