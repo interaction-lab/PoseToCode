@@ -15,7 +15,7 @@ const options = {
   disable: true,
   maxBlocks: Infinity,
   trashcan: true,
-  horizontalLayout: false,
+  horizontalLayout: true,
   toolboxPosition: "start",
   css: true,
   media: "https://blockly-demo.appspot.com/static/media/",
