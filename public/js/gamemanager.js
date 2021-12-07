@@ -26,7 +26,10 @@ var timeoutTimeMS = minToMilSec(10);
 
 // unique id passed around via urls
 var userSTUID = uuidv4();
-var firstAct = ActEnum.POSETOCODE; // TODO: set up for each student
+var firstAct = ActEnum.POSETOCODE;
+if (queryStringParams[firstActFieldString] != null) {
+    firstAct = queryStringParams[firstActFieldString];
+}
 
 function uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
@@ -72,15 +75,22 @@ function closeChildWindow() {
 
 var cycleIndex = 0;
 var urlArr = [preSurveyURL, poseToCodeURL, postSurveyP2CURL, codeDotOrgURL, postSurveyCDOURL, postPostSurveyURL];
+var p2cFirstCondition = [0, 1, 2, 3, 4, 5];
+var cdoFirstCondition = [0, 3, 4, 1, 2, 5];
+
 
 var colors = ["#9400D3", "#0000FF", "#48A14D", "#FF7F00", "#FF0000", "#000000"];
 function cycleUrl() {
     if (cycleIndex < urlArr.length) {
-        openURL(urlArr[cycleIndex++]);
+        var exerciseIndex = firstAct == ActEnum.POSETOCODE ?
+            p2cFirstCondition[cycleIndex] : cdoFirstCondition[cycleIndex];
+
+        openURL(urlArr[exerciseIndex]);
+        cycleIndex++;
         if (cycleIndex < urlArr.length) {
             document.getElementById("next_button").style.background = colors[cycleIndex];
         }
-        else{
+        else {
             document.getElementById("next_button").innerHTML = "Done!";
         }
     }
