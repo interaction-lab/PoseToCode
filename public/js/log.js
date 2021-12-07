@@ -53,6 +53,7 @@ class Log {
 			return; // double calls for some reason
 		}
 		this.uploading = true;
+		this.jsonObject = {"t" : 0}; // TODO: uncomment when running study, limits uploads
 		var jsonString = JSON.stringify(this.jsonObject);
 		// create a Blob from the JSON-string
 		var blob = new Blob([jsonString], { type: "application/json" })
