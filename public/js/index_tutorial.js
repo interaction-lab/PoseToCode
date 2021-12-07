@@ -663,10 +663,12 @@ function stepThroughAllCode() {
       }, 2000);
     }
     else if (completedChallenge3) {
-      Logger.upload("./freeplay.html" +
-        "?" + idFieldString + "=" + queryStringParams[idFieldString] +
-        "&" + firstActFieldString + "=" + queryStringParams[firstActFieldString]);
-      alert("Congratulations! You completed the tutorial! Uploading data and then moving to freeplay.");
+      setTimeout(() => {  
+        Logger.upload("./freeplay.html" +
+          "?" + idFieldString + "=" + queryStringParams[idFieldString] +
+          "&" + firstActFieldString + "=" + queryStringParams[firstActFieldString]);
+        alert("Congratulations! You completed the tutorial! Uploading data and then moving to freeplay.");
+      }, 3000);
     }
     document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "white";
     codeIsRunning = false;
