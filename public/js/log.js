@@ -152,7 +152,7 @@ class Log {
 
 		//upload file
 		this.showLoading();
-		//this.realUpload(blob, urlRedirect, funcCallback, jsonFileRef);
-		this.fakeUpload(urlRedirect, funcCallback);
+		this.realUpload(blob, urlRedirect, funcCallback, jsonFileRef);
+		//this.fakeUpload(urlRedirect, funcCallback);
 	}
 }

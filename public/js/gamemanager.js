@@ -22,7 +22,7 @@ var postPostSurveyURL = "https://usc.qualtrics.com/jfe/form/SV_8qcr7Ft7NReceWO";
 function minToMilSec(min) {
     return min * 60000;
 }
-var timeoutTimeMS = 10000;//minToMilSec(10);
+var timeoutTimeMS = minToMilSec(10);
 
 // unique id passed around via urls
 var userSTUID = uuidv4();
@@ -99,7 +99,10 @@ function cycleUrl() {
         openURL(urlArr[exerciseIndex]);
         cycleIndex++;
         if (cycleIndex < urlArr.length) {
-            document.getElementById("next_button").style.background = colors[cycleIndex];
+            if(cycleIndex == urlArr.length - 1){
+                document.getElementById("next_button").innerHTML = "Do Last Activity";
+            }
+            document.getElementById("next_button").style.background = colors[exerciseIndex];
         }
         else {
             document.getElementById("next_button").innerHTML = "Done!";
