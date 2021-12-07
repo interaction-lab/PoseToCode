@@ -26,7 +26,7 @@ const options = {
   zoom: {
     controls: true,
     wheel: true,
-    startScale: 2,
+    startScale: 1.6,
     maxScale: 3,
     minScale: 0.3,
     scaleSpeed: 1.2,
@@ -684,6 +684,7 @@ function stepThroughAllCode() {
 function stepCode() {
   resetStepUi(true);
   myInterpreter = new Interpreter(latestCode, initApi);
+  Logger.updateRunCode(Date.now());
   myInterpreter.step(); // dummy first step
   stepThroughAllCode();
 }

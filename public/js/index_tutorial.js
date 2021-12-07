@@ -26,7 +26,7 @@ const options = {
   zoom: {
     controls: true,
     wheel: true,
-    startScale: 2,
+    startScale: 1.6,
     maxScale: 3,
     minScale: 0.3,
     scaleSpeed: 1.2,
@@ -716,7 +716,8 @@ function stepThroughAllCode() {
 function stepCode() {
   resetStepUi(true);
   myInterpreter = new Interpreter(latestCode, initApi);
-  console.log(latestCode);
+  Logger.updateRunCode(Date.now());
+
   var regex_challenge2 = /highlightBlock\(.*\);[\r\n]makeLargeSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeMediumSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeSmallSphere\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeSphereCode\(\);/
   var regex_challenge3 = /highlightBlock\(.*\);[\r\n]makeLargeLayer\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeLayer\(\);[\r\n]highlightBlock\(.*\);[\r\n]frostLayer\(\);[\r\n]highlightBlock\(.*\);[\r\n]makeSmallLayer\(\);[\r\n]highlightBlock\(.*\);[\r\n]placeLayer\(\);[\r\n]highlightBlock\(.*\);[\r\n]frostLayer\(\);/
   const count = (str) => {

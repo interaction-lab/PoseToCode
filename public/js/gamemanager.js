@@ -22,12 +22,14 @@ var postPostSurveyURL = "https://usc.qualtrics.com/jfe/form/SV_8qcr7Ft7NReceWO";
 function minToMilSec(min) {
     return min * 60000;
 }
-var timeoutTimeMS = minToMilSec(10);
+var timeoutTimeMS = 10000;//minToMilSec(10);
 
 // unique id passed around via urls
 var userSTUID = uuidv4();
 var firstAct = ActEnum.POSETOCODE;
-if (queryStringParams[firstActFieldString] != null) {
+if (queryStringParams[firstActFieldString] != null &&
+    (queryStringParams[firstActFieldString] == 0 ||
+        queryStringParams[firstActFieldString] == 1)) {
     firstAct = queryStringParams[firstActFieldString];
 }
 
@@ -50,12 +52,17 @@ function isP2CURL(url) {
 }
 
 var child_wnd = null;
+var curTimeOutEvent = null;
 function openURL(url) {
+    if (curTimeOutEvent != null) {
+        clearTimeout(curTimeOutEvent);
+        curTimeOutEvent = null;
+    }
     child_wnd = window.open(url +
         "?" + idFieldString + "=" + userSTUID +
         "&" + firstActFieldString + "=" + firstAct);
     if (!isSurveyURL(url)) {
-        setTimeout(function () {
+        curTimeOutEvent = setTimeout(function () {
             if (isP2CURL(url)) {
                 child_wnd.uploadAndClose();
             }
@@ -70,6 +77,10 @@ function openURL(url) {
 function closeChildWindow() {
     if (child_wnd && !child_wnd.closed) {
         child_wnd.close();
+        if (curTimeOutEvent != null) {
+            clearTimeout(curTimeOutEvent);
+            curTimeOutEvent = null;
+        }
     }
 }
 

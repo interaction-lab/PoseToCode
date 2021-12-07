@@ -58,6 +58,10 @@ class Log {
 		this.addMapAtTime(time, new Map([["codestate", blocknames]]));
 	}
 
+	updateRunCode(time){
+		this.addMapAtTime(time, new Map([["runCode", 1]]));
+	}
+
 	updateButtonPress(time, buttonPressed) {
 		this.addMapAtTime(time, new Map([["buttonPressed", buttonPressed]]));
 	}
@@ -148,7 +152,7 @@ class Log {
 
 		//upload file
 		this.showLoading();
-		this.realUpload(blob, urlRedirect, funcCallback, jsonFileRef);
-		//this.fakeUpload(urlRedirect, funcCallback);
+		//this.realUpload(blob, urlRedirect, funcCallback, jsonFileRef);
+		this.fakeUpload(urlRedirect, funcCallback);
 	}
 }
