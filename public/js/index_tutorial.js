@@ -670,6 +670,7 @@ function stepThroughAllCode() {
   }
   else {
     if (!challenge1Alert && completedChallenge1) {
+      Logger.updateCompletedExercise(Date.now(), 1);
       setTimeout(() => {
         alert("Congratulations! You completed Challenge 1: Dance Routine!");
         alert("Challenge 2: Build a Snowman. Construct a snowman by creating and placing differently sized spheres.");
@@ -681,6 +682,7 @@ function stepThroughAllCode() {
       }, 1000);
     }
     else if (!challenge2Alert && completedChallenge2) {
+      Logger.updateCompletedExercise(Date.now(), 2);
       setTimeout(() => {
         alert("Congratulations! You completed Challenge 2: Build a Snowman!");
         alert("Challenge 3: Make a Cake. Construct a frosted cake with two layers!");
@@ -694,6 +696,7 @@ function stepThroughAllCode() {
       }, 2000);
     }
     else if (completedChallenge3) {
+      Logger.updateCompletedExercise(Date.now(), 3);
       setTimeout(() => {
         Logger.upload("./freeplay.html" +
           "?" + idFieldString + "=" + queryStringParams[idFieldString] +

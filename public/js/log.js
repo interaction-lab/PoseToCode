@@ -51,8 +51,12 @@ class Log {
 		this.addMapAtTime(time, new Map([["codestate", blocknames]]));
 	}
 
-	updateButtonPress(time, buttonPressed){
+	updateButtonPress(time, buttonPressed) {
 		this.addMapAtTime(time, new Map([["buttonPressed", buttonPressed]]));
+	}
+
+	updateCompletedExercise(time, exercise) {
+		this.addMapAtTime(time, new Map([["completedExercise", exercise]]));
 	}
 
 	showLoading() {
@@ -67,7 +71,6 @@ class Log {
 		this.loadingbar.style.width = percentage + "%";
 		this.loadingbar.innerHTML = "Uploading, please wait:" + percentage + "%";
 	}
-
 
 	fakeUpload(urlRedirect, funcCallback) {
 		this.width = 0;
