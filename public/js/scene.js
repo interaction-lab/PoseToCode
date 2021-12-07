@@ -333,6 +333,8 @@ function resetGUI() {
   }, 150);
   sphere_endYPosition = -3;
   cylinder_endYPosition = -3;
+  currSphereHeight = 0;
+  currCylinderHeight = 0;
 }
 
 // Returns flag for whether the user's programmed sequence of events will
