@@ -15,11 +15,7 @@ body {
 }
 
 .poseDiv {
-<<<<<<< HEAD
-  width: 40%;
-=======
   width: 38%;
->>>>>>> 0ce84f3b55f1413d3f2549e9c7113d590cd09855
   height: 100%;
   background-color: lightgrey;
   float: left;
@@ -27,11 +23,7 @@ body {
 
 #blocklyDiv {
   height: 100%;
-<<<<<<< HEAD
-  width: 30%;
-=======
   width: 32%;
->>>>>>> 0ce84f3b55f1413d3f2549e9c7113d590cd09855
   float: right;
 }
 
