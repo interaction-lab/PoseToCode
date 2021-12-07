@@ -39,7 +39,6 @@ const Logger = new Log(queryStringParams[idFieldString], thisActivityString); //
 
 window.onbeforeunload = function(evt) {
   var returnString = "Please do not exit";
-  Logger.upload();
   // Cancel the event (if necessary)
   evt.preventDefault();
 
