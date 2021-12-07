@@ -678,6 +678,7 @@ function stepThroughAllCode() {
         challengeIndex++;
         resetPoseNames();
         resetAllBlocks();
+        document.getElementById("danceImage").style.display = "none";
         document.getElementById("snowmanImage").style.display = "block";
       }, 1000);
     }
