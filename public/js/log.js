@@ -32,8 +32,15 @@ class Log {
 		const flattenedData = new Map();
 		for (var key in landmarksMap) {
 			const coordinates = landmarks[key];
+			if(coordinates['visibility'] < 0.5){ // ignore invisible points, cuts down on log size
+				continue;
+			}
 			for (var cKey in coordinates) {
-				flattenedData.set(cKey + key, coordinates[cKey]);
+				var skey = cKey;
+				if(skey == "visibility"){
+					skey = "v"; // smaller
+				}
+				flattenedData.set(skey + key, coordinates[cKey].toFixed(6)); // fixed size for smaller files
 			}
 		}
 		flattenedData.set('poseDetected', poseDetected);
