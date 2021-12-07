@@ -37,7 +37,7 @@ const options = {
 /* Instantiate log */
 const Logger = new Log(queryStringParams[idFieldString], thisActivityString); //TODO: uncomment this, used to debug rn to avoid errors
 
-window.onbeforeunload = function(evt) {
+window.onbeforeunload = function (evt) {
   var returnString = "Please do not exit";
   // Cancel the event (if necessary)
   evt.preventDefault();
@@ -48,11 +48,11 @@ window.onbeforeunload = function(evt) {
   return returnString;
 };
 
-function tellParentToClose(){
+function tellParentToClose() {
   window.opener.closeChildWindow();
 }
 
-function uploadAndClose(){
+function uploadAndClose() {
   Logger.upload(null, tellParentToClose);
 }
 
@@ -236,12 +236,29 @@ var poseMapping = {
 };
 
 var codeIsRunning = false;
+lastUpdateDrawTime = curDrawTime = null;
+function getDeltaDrawTimeMS() {
+  if (lastUpdateDrawTime == null) {
+    lastUpdateDrawTime = Date.now();
+  }
+  curDrawTime = Date.now();
+  deltaTime = curDrawTime - lastUpdateDrawTime;
+  if (deltaTime > 16) {
+    lastUpdateDrawTime = curDrawTime;
+    return true;
+  }
+  return false;
+}
+
 
 // Main
 async function onResults(results) {
   deltaTime = getDeltaTimeMS();
-  resetCanvas();
-  drawPoseSkeleton(results);
+  // only draw at 60HZ max
+  if (getDeltaDrawTimeMS()) {
+    resetCanvas();
+    drawPoseSkeleton(results);
+  }
   if (!codeIsRunning) {
     if (results != null &&
       results.poseLandmarks != null) {
@@ -674,7 +691,7 @@ function stepThroughAllCode() {
       }, 2000);
     }
     else if (completedChallenge3) {
-      setTimeout(() => {  
+      setTimeout(() => {
         Logger.upload("./freeplay.html" +
           "?" + idFieldString + "=" + queryStringParams[idFieldString] +
           "&" + firstActFieldString + "=" + queryStringParams[firstActFieldString]);
