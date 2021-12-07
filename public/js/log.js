@@ -91,22 +91,23 @@ class Log {
 
 	realUpload(blob, urlRedirect, funcCallback, jsonFileRef) {
 		var upload = jsonFileRef.put(blob);
+		upload.logOBJ = this; // hacky workaround to `this`
 		upload.on(
 			"state_changed",
 			function progress(snapshot) {
 				var percentage =
 					(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-				this.updateLoadingPerc(percentage);
+				upload.logOBJ.updateLoadingPerc(percentage);
 			},
 			function error() {
 				alert("error uploading file");
-				this.uploaded = true;
+				upload.logOBJ.uploaded = true;
 			},
 
 			function complete() {
 				console.log("complete");
-				this.uploaded = true;
-				this.hideLoading();
+				upload.logOBJ.uploaded = true;
+				upload.logOBJ.hideLoading();
 				if (urlRedirect) {
 					window.location.href = urlRedirect;
 				}
@@ -133,7 +134,7 @@ class Log {
 
 		//upload file
 		this.showLoading();
-		//this.realUpload(blob, urlRedirect, funcCallback, jsonFileRef);
-		this.fakeUpload(urlRedirect, funcCallback);
+		this.realUpload(blob, urlRedirect, funcCallback, jsonFileRef);
+		//this.fakeUpload(urlRedirect, funcCallback);
 	}
 }

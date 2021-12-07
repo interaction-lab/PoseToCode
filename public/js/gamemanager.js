@@ -22,7 +22,7 @@ var postPostSurveyURL = "https://usc.qualtrics.com/jfe/form/SV_8qcr7Ft7NReceWO";
 function minToMilSec(min) {
     return min * 60000;
 }
-var timeoutTimeMS = 10000;//minToMilSec(10);
+var timeoutTimeMS = minToMilSec(10);
 
 // unique id passed around via urls
 var userSTUID = uuidv4();
