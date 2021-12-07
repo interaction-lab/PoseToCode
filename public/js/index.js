@@ -56,6 +56,9 @@ function uploadAndClose() {
   Logger.upload(null, tellParentToClose);
 }
 
+// Add funcitonaility to close early if desired
+document.getElementById("finishEarlyButton").onclick = uploadAndClose;
+
 /* Inject your Blockly workspace */
 const blocklyDiv = document.getElementById("blocklyDiv");
 const workspace = Blockly.inject(blocklyDiv, options);
