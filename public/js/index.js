@@ -38,7 +38,7 @@ const options = {
 const Logger = new Log(queryStringParams[idFieldString], thisActivityString); //TODO: uncomment this, used to debug rn to avoid errors
 
 window.onbeforeunload = function (evt) {
-  if(Logger.uploaded){
+  if (Logger.uploaded) {
     return;
   }
 
@@ -59,8 +59,13 @@ function uploadAndClose() {
   Logger.upload(null, tellParentToClose);
 }
 
+function logButtonAndClose() {
+  Logger.updateButtonPress(Date.now(), "finishEarlyButton");
+  uploadAndClose();
+}
+
 // Add funcitonaility to close early if desired
-document.getElementById("finishEarlyButton").onclick = uploadAndClose;
+document.getElementById("finishEarlyButton").onclick = logButtonAndClose;
 
 /* Inject your Blockly workspace */
 const blocklyDiv = document.getElementById("blocklyDiv");
@@ -670,8 +675,10 @@ function stepThroughAllCode() {
     myInterpreter.step(); // not sure why but this is needed to run 3 times?
     setTimeout(stepThroughAllCode, 500); // need the correct timing
   }
-  document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "white";
-  codeIsRunning = false;
+  else {
+    document.getElementsByClassName("blocklySvg")[0].style.backgroundColor = "white";
+    codeIsRunning = false;
+  }
 }
 
 function stepCode() {

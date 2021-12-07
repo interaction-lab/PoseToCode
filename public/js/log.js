@@ -51,6 +51,10 @@ class Log {
 		this.addMapAtTime(time, new Map([["codestate", blocknames]]));
 	}
 
+	updateButtonPress(time, buttonPressed){
+		this.addMapAtTime(time, new Map([["buttonPressed", buttonPressed]]));
+	}
+
 	showLoading() {
 		this.loadingbar.style.display = "block";
 	}
