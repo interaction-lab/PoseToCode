@@ -89,23 +89,8 @@ class Log {
 		}
 	}
 
-	upload(urlRedirect, funcCallback) {
-		if (this.uploading || this.uploaded) {
-			return; // double calls for some reason
-		}
-		this.uploading = true;
-		//this.jsonObject = {"t" : 0}; // TODO: uncomment when running study, limits uploads
-		var jsonString = JSON.stringify(this.jsonObject);
-		// create a Blob from the JSON-string
-		var blob = new Blob([jsonString], { type: "application/json" })
-
-		var storageRef = firebase.storage().ref();
-		var jsonFolder = storageRef.child("json_test");
-		var jsonFileRef = jsonFolder.child(this.filename);
-
-		//upload file
+	realUpload(blob, urlRedirect, funcCallback, jsonFileRef) {
 		var upload = jsonFileRef.put(blob);
-		this.showLoading();
 		upload.on(
 			"state_changed",
 			function progress(snapshot) {
@@ -130,5 +115,25 @@ class Log {
 				}
 			}
 		);
+	}
+
+	upload(urlRedirect, funcCallback) {
+		if (this.uploading || this.uploaded) {
+			return; // double calls for some reason
+		}
+		this.uploading = true;
+		//this.jsonObject = {"t" : 0}; // TODO: uncomment when running study, limits uploads
+		var jsonString = JSON.stringify(this.jsonObject);
+		// create a Blob from the JSON-string
+		var blob = new Blob([jsonString], { type: "application/json" })
+
+		var storageRef = firebase.storage().ref();
+		var jsonFolder = storageRef.child("json_test");
+		var jsonFileRef = jsonFolder.child(this.filename);
+
+		//upload file
+		this.showLoading();
+		//this.realUpload(blob, urlRedirect, funcCallback, jsonFileRef);
+		this.fakeUpload(urlRedirect, funcCallback);
 	}
 }
