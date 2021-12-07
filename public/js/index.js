@@ -37,6 +37,18 @@ const options = {
 /* Instantiate log */
 const Logger = new Log(queryStringParams[idFieldString], thisActivityString); //TODO: uncomment this, used to debug rn to avoid errors
 
+window.onbeforeunload = function(evt) {
+  var returnString = "Please do not exit";
+  Logger.upload();
+  // Cancel the event (if necessary)
+  evt.preventDefault();
+
+  // Google Chrome requires returnValue to be set
+  evt.returnValue = returnString;
+
+  return returnString;
+};
+
 function tellParentToClose(){
   window.opener.closeChildWindow();
 }
