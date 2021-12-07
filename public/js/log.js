@@ -9,7 +9,11 @@ class Log {
 		this.uploading = false;
 		this.uploaded = false;
 		this.landMarkMapTimings = new Set();
+		this.loadingbar = document.getElementById("loading");
+		this.hideLoading();
 	}
+
+
 
 	addMapAtTime(time, newMap) {
 		if (!(time in this.jsonObject)) {
@@ -47,6 +51,43 @@ class Log {
 		this.addMapAtTime(time, new Map([["codestate", blocknames]]));
 	}
 
+	showLoading() {
+		this.loadingbar.style.display = "block";
+	}
+	hideLoading() {
+		this.loadingbar.style.display = "none";
+	}
+
+	updateLoadingPerc(percentage) {
+		console.log(percentage);
+		this.loadingbar.style.width = percentage + "%";
+		this.loadingbar.innerHTML = "Uploading, please wait:" + percentage + "%";
+	}
+
+
+	fakeUpload(urlRedirect, funcCallback) {
+		this.width = 0;
+		this.frame(urlRedirect, funcCallback);
+	}
+
+	frame(urlRedirect, funcCallback) {
+		if (this.width >= 100) {
+			clearInterval(this.id);
+			console.log("dk");
+			this.uploaded = true;
+			this.hideLoading();
+			if (urlRedirect) {
+				window.location.href = urlRedirect;
+			}
+			else {
+				funcCallback();
+			}
+		} else {
+			this.width++;
+			this.updateLoadingPerc(this.width);
+			setTimeout(() => { this.frame(urlRedirect, funcCallback); }, 10);
+		}
+	}
 
 	upload(urlRedirect, funcCallback) {
 		if (this.uploading || this.uploaded) {
@@ -64,15 +105,13 @@ class Log {
 
 		//upload file
 		var upload = jsonFileRef.put(blob);
-
-		//update progress bar
+		this.showLoading();
 		upload.on(
 			"state_changed",
 			function progress(snapshot) {
 				var percentage =
 					(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-				console.log(percentage);
-
+				this.updateLoadingPerc(percentage);
 			},
 			function error() {
 				alert("error uploading file");
@@ -82,6 +121,7 @@ class Log {
 			function complete() {
 				console.log("complete");
 				this.uploaded = true;
+				this.hideLoading();
 				if (urlRedirect) {
 					window.location.href = urlRedirect;
 				}

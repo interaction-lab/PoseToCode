@@ -5,6 +5,64 @@
     <title>Firebase File Upload</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <style>
+        #myProgress {
+            width: 100%;
+            background-color: #ddd;
+        }
+
+        #myBar {
+            width: 10%;
+            height: 30px;
+            background-color: #04AA6D;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+        }
+
+        div.full {
+            position: absolute;
+            /*position: fixed;*/
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /*You can add anything else to this like image, background-color, etc.*/
+        }
+
+
+        .page {
+            display: none;
+            padding: 0 0.5em;
+        }
+
+        .page h1 {
+            font-size: 2em;
+            line-height: 1em;
+            margin-top: 1.1em;
+            font-weight: bold;
+        }
+
+        .page p {
+            font-size: 1.5em;
+            line-height: 1.275em;
+            margin-top: 0.15em;
+        }
+
+        #loading {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(192, 192, 192, 0.5);
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -14,6 +72,8 @@
         <button id="upload">Upload</button>
         <p id="uploading"></p>
     </div>
+
+    <div id="loading"></div>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
@@ -41,6 +101,7 @@
 
             //upload file
             var upload = jsonFileRef.put(blob);
+            var bar = document.getElementById("loading");
 
             //update progress bar
             upload.on(
@@ -48,8 +109,8 @@
                 function progress(snapshot) {
                     var percentage =
                         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log(percentage);
-                    console.log(snapshot);
+                    bar.style.width = percentage + "%";
+                    bar.innerHTML = percentage + "%";
 
                 },
                 function error() {
